@@ -1,0 +1,74 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+
+	<ScrollingMessageFrame name="MessageNotifierFrame" enableMouse="true" hidden="true" fade="false" maxLines="128" movable="true">
+		<Size>
+			<AbsDimension x="400" y="200" />
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" />
+		</Anchors>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture name="$parentBG">
+          <Color r="0.0" g="0.0" b="0.0" a="0.5"/>
+        </Texture>
+      </Layer>
+    </Layers>
+		<FontString inherits="ChatFontNormal" justifyH="LEFT" />
+		<TextInsets>
+			<AbsInset left="5" right="5" top="5" bottom="5" />
+		</TextInsets>
+		<Scripts>
+			<OnLoad>
+				MessageNotifier:OnLoad();
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+      <OnUpdate>
+        MessageNotifier:OnUpdate(arg1);
+      </OnUpdate>			
+			<OnMouseWheel>
+				if(arg1 > 0) then
+					if( IsShiftKeyDown() ) then
+						this:PageUp();
+					else
+						this:ScrollUp();
+					end
+				else
+					if( IsShiftKeyDown() ) then
+						this:PageDown();
+					else
+						this:ScrollDown();
+					end
+				end
+			</OnMouseWheel>
+			<OnDragStart>
+				this:StartMoving();
+				this.isMoving = true;
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+				this.isMoving = false;
+			</OnDragStop>
+			<OnHide>
+				MessageNotifier:OnHide();
+			</OnHide>
+		</Scripts>
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+		</Frames>
+			
+	
+	</ScrollingMessageFrame>
+
+  </Ui>
