@@ -16,12 +16,25 @@ function MessageNotifier:OnLoad()
 	MessageNotifierFrame:SetScale(2.0)
 	
 	-- Slash commands.
-	SLASH_MessageNotifier1 = "/popup";
+	SLASH_MessageNotifier1 = "/mn";
 	SlashCmdList["MessageNotifier"] = function() self:OnSlashCommand(cmd) end
 	
 	table.insert(UISpecialFrames, "MessageNotifierFrame")
 	
-	
+	this:RegisterEvent("VARIABLES_LOADED")
+end
+
+function MessageNotifier:OnEvent()
+	if event == "VARIABLES_LOADED" then
+		self:Initialize()		
+	end
+end
+
+function MessageNotifier:Initialize()
+	if not MessageNotifierDB then	
+		MessageNotifierDB = {}
+	end
+	self.db = MessageNotifierDB	
 end
 
 function MessageNotifier:OnHide()
@@ -41,8 +54,8 @@ function MessageNotifier:OnUpdate(elapsed)
 end
 
 function MessageNotifier:OnSlashCommand(msg)
-	self.enabled = not self.enabled
-	if self.enabled then
+	self.db.enabled = not self.db.enabled
+	if self.db.enabled then
 		DEFAULT_CHAT_FRAME:AddMessage("MessageNotifier enabled.", 0, 0, 1)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("MessageNotifier disabled.", 0, 0, 1)
@@ -51,7 +64,7 @@ end
 
 function MessageNotifier:AddMessage(id, text, r, g, b, a)
 
-	if not self.enabled then return end
+	if not self.db.enabled then return end
 	
 	if getglobal('event') == 'CHAT_MSG_WHISPER' or string.find(text, self.playerName, 1, true) then
 		MessageNotifierFrame:AddMessage('[' .. id .. ']' .. text, r, g, b, a)
