@@ -26,6 +26,9 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 				MessageNotifier:OnLoad();
 				this:RegisterForDrag("LeftButton");
 			</OnLoad>
+			<OnEvent>
+				MessageNotifier:OnEvent(event);
+			</OnEvent>
       <OnUpdate>
         MessageNotifier:OnUpdate(arg1);
       </OnUpdate>			
