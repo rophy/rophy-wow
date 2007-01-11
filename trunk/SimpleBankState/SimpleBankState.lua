@@ -184,11 +184,12 @@ function SimpleBankState:SaveMailboxData()
 		end
 		
 		for i=1, size, 1 do
-			local name, _, quantity, quality = GetInboxItem(i);
-			if name then
-				table.insert(self.data[realm][me][MAIL_ID], name);
+			local link = GetInboxItemLink(i)
+			if link then
+				local name, _, quantity, quality = GetInboxItem(i);
+				link = self:ToID(link)
+				table.insert(self.data[realm][me][MAIL_ID], link);
 				table.insert(self.data[realm][me][MAIL_ID], quantity);
-				table.insert(self.data[realm][me][MAIL_ID], quality);
 			end
 		end
 	else
@@ -258,39 +259,8 @@ function SimpleBankState:SaveEquipmentData()
 end
 
 
---[[ Access  Functions ]]--
 
---return the full hyperlink of an item.  This is for linking in chat
-function SimpleBankState:GetFullItemLink(item)
-	local link = ( self:GetItemData(item) );
-	
-	if(link) then
-		local name, ilink, quality = GetItemInfo( link );
-		local r,g,b,hex = GetItemQualityColor( quality );
-	
-		return hex .. "|H".. link .. "|h[" .. name .. "]|h|r";
-	end
-end
 
---[[ Removal Functions ]]--
-
---removes all saved data about the given player
-function SimpleBankState:RemovePlayer(player, realm)
-	if(self.data[realm]) then
-		self.data[realm][player] = nil;
-	end
-end
-
---[[ Conversion Functions  ]]--
-
---takes a full item hyperlink and returns the www:xxx:yyy:zzz form
-function SimpleBankState:ToShortLink(fullLink)
-	if(fullLink) then
-		local _, _, w, x, y, z = string.find(fullLink, "(%d+):(%d+):(%d+):(%d+)") ;
-		return w .. ":" .. x .. ":" .. y .. ":" .. z;
-	end
-	return nil;
-end
 
 function SimpleBankState:IsBankBag(bagID)
 	if bagID == BANK_CONTAINER or ( bagID >= 5 and bagID <= 10 ) then
@@ -309,11 +279,18 @@ function SimpleBankState:GetBagType(bagID)
 		return "BAG";
 	end
 end
---takes an item link and returns its ID
-function SimpleBankState:ToID(link)
-	if(link) then
-		local _, _, id = string.find(link, "item:(%d+)");
-		return tonumber(id);
+
+--takes a hyperlink (what you see in chat) and converts it to a shortened item link.
+--a shortened item link is either the item:w:x:y:z form without the 'item:' part, or just the item's ID (the 'w' part)
+function SimpleBankState:ToID(hyperLink)
+	if hyperLink then
+		local from,to,id,b,c,d,e,f,g,h = hyperLink:find("item:(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(%-?%d+):(%-?%d+)")
+		assert(from)
+		if tonumber(b) == 0 and tonumber(c) == 0 and tonumber(d) == 0 and tonumber(e) == 0 and
+			tonumber(f) == 0 and tonumber(g) == 0 and tonumber(h) == 0 then
+			return id
+		end
+		return hyperLink:sub(from,to)
 	end
 end
 
@@ -389,16 +366,10 @@ function SimpleBankState:BuildIndex()
 					--for idx = 1, n, 2 do
 					
 						itemCount = self.data[realm][name][bagID][index+1];
-						if bagType == "MAIL" then
-							itemLink = false;
-							itemName = self.data[realm][name][bagID][index];
-							itemQuality = self.data[realm][name][bagID][index+2];
-						else						
-							itemID = self.data[realm][name][bagID][index];
+						itemID = self.data[realm][name][bagID][index];
 -- 							itemMem = gcinfo() -- debug
-							itemName, itemLink, itemQuality = GetItemInfo(itemID);
+						itemName, itemLink, itemQuality = GetItemInfo(itemID);
 -- 							itemMemSum = gcinfo() - itemMem + itemMemSum -- debug
-						end
 							
 						-- Rarity filter.
 						if not self.filter.rarity or self.filter.rarity == itemQuality then
@@ -418,11 +389,7 @@ function SimpleBankState:BuildIndex()
 								
 						end
 						
-						if bagType == "MAIL" then
-							index = index + 3;
-						else
-							index = index + 2;
-						end
+						index = index + 2;
 						
 					end	
 					
@@ -603,24 +570,21 @@ function SimpleBankState.RarityDropDown()
 	local self = SimpleBankState
 	
 	if not self.rarities then
-		self.rarities = {
-			"POOR",
-			"NORMAL",
-			"GOOD",
-			"RARE",
-			"EPIC",
-			"LEGENDARY",
-			"ARTIFACT",
-		}
+		local t = {}
+		for i, rarity in ipairs({"POOR","NORMAL","GOOD","RARE","EPIC","LEGENDARY","ARTIFACT"}) do
+			t[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. self.loc[rarity] .. "|r"
+		end
+		self.rarityTexts = t
 	end
 	
-	for i, rarity in pairs(self.rarities) do
+	for i=0, 6, 1 do
+		local text = self.rarityTexts[i]
 		dewdrop:AddLine(
-			'text', self.loc[rarity],
+			'text', text,
 			'func', self.SetFilter,
 			'arg1', self,
 			'arg2', 'rarity',
-			'arg3', i-1,	-- Rarity value begins at 0.
+			'arg3', i,
 			'closeWhenClicked', true
 		)
 	end
@@ -696,10 +660,12 @@ function SimpleBankState:UpdateFrameTitle()
 	end
 	
 	if self.filter.rarity then
-		SBS_SortRarity:SetText(self.loc[ self.rarities[self.filter.rarity+1] ]);
+		SBS_SortRarity:SetText( self.rarityTexts[self.filter.rarity] );
 	else		
 		SBS_SortRarity:SetText(self.loc.RARITY);
 	end
 
 end
+
+
 
