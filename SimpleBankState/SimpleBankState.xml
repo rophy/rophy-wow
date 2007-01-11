@@ -87,7 +87,7 @@
 	</Button>
 	
 	
-	<Frame name="SBS_Frame"  toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true" parent="UIParent">
+	<Frame name="SBS_Frame"  toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true" parent="UIParent" clampedToScreen="true">
 			<Size>
 				<AbsDimension x="435" y="485"/>
 			</Size>
