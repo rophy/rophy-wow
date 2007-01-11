@@ -20,7 +20,7 @@ end
 
 SimpleBankState = {};
 
-SimpleBankState.debug = true;
+-- SimpleBankState.debug = true;
 
 -- Constants
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
@@ -31,8 +31,10 @@ local me = UnitName("player"); --the name of the current player that's logged on
 local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
 
+local MAJOR_VERSION = "1.2"
+local MINOR_VERSION = "$Revision: 5$"
 
-SimpleBankState.version = "1.2.1";
+SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
 
 function SimpleBankState:OnLoad()
 	this:RegisterEvent("UNIT_INVENTORY_CHANGED");
@@ -340,11 +342,15 @@ function SimpleBankState:BuildIndex()
 	
 	local listSize = 0;
 	
-	if self.itemList then
-		reclaim(self.itemList, 1);
+	if not self.itemList then
+		self.itemList = {}
 	end
 	
-	self.itemList = acquire();
+	local itemList = self.itemList
+	for i, itemInfo in ipairs(itemList) do
+		reclaim(itemInfo)
+		itemList[i] = nil
+	end
 	
 	
 -- 	itemMemSum = 0; -- debug
@@ -383,7 +389,7 @@ function SimpleBankState:BuildIndex()
 								itemInfo[4] = itemQuality
 								itemInfo[5] = name
 								itemInfo[6] = bagID
-								table.insert(self.itemList, itemInfo);
+								table.insert(itemList, itemInfo);
 								listSize = listSize + 1;
 							end
 								
@@ -428,7 +434,7 @@ function SimpleBankState:InitGUI()
 	SBS_SortBagType:SetText(self.loc.BAG_TYPE);
 	SBS_SearchBoxText:SetText(self.loc.KEYWORD);
 	SBS_RefreshButton:SetText(self.loc.REFRESH);
-	
+
 	dewdrop:Register(SBS_SortRarity, 
 		'children',  SimpleBankState.RarityDropDown,
 		'point', "TOPLEFT",
@@ -569,7 +575,7 @@ end
 function SimpleBankState.RarityDropDown()
 	local self = SimpleBankState
 	
-	if not self.rarities then
+	if not self.rarityTexts then
 		local t = {}
 		for i, rarity in ipairs({"POOR","NORMAL","GOOD","RARE","EPIC","LEGENDARY","ARTIFACT"}) do
 			t[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. self.loc[rarity] .. "|r"
@@ -667,5 +673,17 @@ function SimpleBankState:UpdateFrameTitle()
 
 end
 
+function SimpleBankState:TitleButton_OnClick(button)
+	local id = this:GetID()
+	if button == "LeftButton" then
+		SimpleBankState:SortItems(id)
+		SimpleBankState:UpdateScrollFrame()
+	end
+end
 
+function SimpleBankState:SBSFrame_OnHide()
+	if dewdrop:IsOpen(SBS_SortRarity) or dewdrop:IsOpen(SBS_SortPlayer) or dewdrop:IsOpen(SBS_SortBagType) then
+		dewdrop:Close()
+	end
+end
 
