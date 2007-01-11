@@ -15,8 +15,7 @@
 		<HighlightFont inherits="GameFontHighlightSmall" justifyH="right"/>
 		<Scripts>
 			<OnClick>
-				SimpleBankState:SortItems(this:GetID());
-				SimpleBankState:UpdateScrollFrame();
+				SimpleBankState:TitleButton_OnClick()
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -457,6 +456,9 @@
 				<OnEvent>
 					SimpleBankState:OnEvent();
 				</OnEvent>
+				<OnHide>
+					SimpleBankState:SBSFrame_OnHide()
+				</OnHide>
 				<OnMouseDown> this:StartMoving();  </OnMouseDown>
 				<OnMouseUp>  this:StopMovingOrSizing(); </OnMouseUp>
 				<OnDragStop> this:StopMovingOrSizing(); </OnDragStop>
