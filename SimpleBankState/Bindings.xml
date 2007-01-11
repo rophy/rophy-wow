@@ -1,0 +1,7 @@
+<Bindings>
+	<Binding name="Simple Bank State" description="Press to toggle SimpleBankState." header="Simple Bank State">
+		if ( keystate == "down" ) then
+			SimpleBankState:ToggleFrame()
+		end
+	</Binding>
+</Bindings>

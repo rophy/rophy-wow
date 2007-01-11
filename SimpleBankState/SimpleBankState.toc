@@ -1,0 +1,13 @@
+## Interface: 20000
+## Title: Simple Bank State
+## Notes: Search all your characters for item by item name keyword.
+## SavedVariables: SBS_Data
+## OptionalDeps: Ace2, DewdropLib
+
+Libs\AceLibrary\AceLibrary.lua
+Libs\Dewdrop-2.0\Dewdrop-2.0.lua
+
+SimpleBankState.lua
+localization.lua
+SimpleBankState.xml
+
