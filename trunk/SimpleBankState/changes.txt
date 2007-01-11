@@ -1,0 +1,5 @@
+1.2 - WoW2.0, Key binding, Esc to close the frame.
+
+1.1 - Limited mailbox support, for the items in mail box, you can't see item link and the item quality may be incorrect.
+
+1.0 - initial release
