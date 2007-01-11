@@ -32,7 +32,7 @@ local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
 
 local MAJOR_VERSION = "1.2"
-local MINOR_VERSION = "$Revision: 5$"
+local MINOR_VERSION = "$Revision$"
 
 SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
 
