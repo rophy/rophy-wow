@@ -15,7 +15,7 @@
 		<HighlightFont inherits="GameFontHighlightSmall" justifyH="right"/>
 		<Scripts>
 			<OnClick>
-				SimpleBankState:TitleButton_OnClick()
+				SimpleBankState:TitleButton_OnClick(arg1)
 			</OnClick>
 		</Scripts>
 	</Button>
