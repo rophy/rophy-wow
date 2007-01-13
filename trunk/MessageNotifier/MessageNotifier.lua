@@ -4,7 +4,7 @@ MessageNotifier.sound = "Interface\\AddOns\\MessageNotifier\\incoming.mp3"
 
 function MessageNotifier:OnLoad()
 
-	self.playerName = UnitName('player')
+	self.playerName = UnitName('player'):lower()
 
 	for i=1, 7, 1 do
 		local frame = getglobal( 'ChatFrame' .. i )
@@ -66,7 +66,7 @@ function MessageNotifier:AddMessage(id, text, r, g, b, a)
 
 	if not self.db.enabled then return end
 	
-	if getglobal('event') == 'CHAT_MSG_WHISPER' or string.find(text, self.playerName, 1, true) then
+	if getglobal('event') == 'CHAT_MSG_WHISPER' or string.find(text:lower(), self.playerName, 1, true) then
 		MessageNotifierFrame:AddMessage('[' .. id .. ']' .. text, r, g, b, a)
 		if not MessageNotifierFrame:IsShown() then
 			MessageNotifierFrame:Show()
