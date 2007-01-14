@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+	<Frame name="HideClassBarFrame">
+	  <Scripts>
+	    <OnLoad>
+				this:RegisterEvent("PLAYER_ENTERING_WORLD");
+	    </OnLoad>
+	    <OnEvent>
+				ShapeshiftBarFrame:Hide();
+	    </OnEvent>
+	  </Scripts>
+	</Frame>
+</Ui>
