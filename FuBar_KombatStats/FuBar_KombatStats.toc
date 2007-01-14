@@ -1,0 +1,20 @@
+## Interface: 20000
+
+## Title: FuBar - |cffffffffKombatStats|r|cff00ff00Fu|r
+## Notes: Enables FuBar support for KombatStats.
+## Author: Rophy
+## Version: 2.0-1.5-0
+
+## X-ReleaseDate: 2006-12-2
+## X-Category: Combat
+## X-eMail: rophy123@gmail.com
+## X-Website: http://www.wowinterface.com/downloads/fileinfo.php?id=4680
+
+## Dependencies: FuBar, KombatStats
+## OptionalDeps: Ace2, FuBarPlugin-2.0
+## LoadOnDemand: 1
+
+Libs\Tablet-2.0\Tablet-2.0.lua
+Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
+
+FuBar_KombatStats.lua
