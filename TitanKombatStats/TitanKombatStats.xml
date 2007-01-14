@@ -1,0 +1,19 @@
+﻿<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="TitanKombatStats.lua"></Script>
+	<Frame parent="UIParent">
+		<Frames>
+			<Button name="TitanPanelKombatStatsButton" inherits="TitanPanelTextTemplate" frameStrata="FULLSCREEN" toplevel="true">
+				<Scripts>
+					<OnLoad>
+						TitanPanelKombatStatsButton_OnLoad();
+						TitanPanelButton_OnLoad();
+					</OnLoad>
+					<OnClick>
+						TitanPanelKombatStatsButton_OnClick(arg1);
+					</OnClick>					
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>	
+</Ui>
