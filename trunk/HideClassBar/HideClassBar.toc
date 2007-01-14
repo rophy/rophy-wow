@@ -1,0 +1,4 @@
+## Interface: 20000
+## Title: HideClassBar Lite
+## Notes: Hides the classbar.
+HideClassBar.xml
