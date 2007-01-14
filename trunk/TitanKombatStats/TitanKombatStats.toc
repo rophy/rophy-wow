@@ -1,0 +1,8 @@
+## Interface: 20000
+## Title: Titan KombatStats
+## Notes: A tiny addon to enable titan support for KombatStats.
+## Author: Rophy
+## SavedVariables: 
+## OptionalDeps: 
+## Dependencies: Titan, KombatStats
+TitanKombatStats.xml
