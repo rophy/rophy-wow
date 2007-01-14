@@ -1,10 +1,9 @@
-## Interface: 20000
+## Interface: 20003
 ## Title: MessageNotifier
 ## Notes: When there are messages for you, show a pop up frame and notify you with sound.
 ## Author: Rophy
 ## SavedVariables: MessageNotifierDB
-## Version: 1.0.$Revision: 135 $
-## X-Date: $Date: 2007-01-04 18:29:42 +0800 (星期四, 04 一月 2007) $
+## Version: 2.0.3.13
 
 MessageNotifier.lua
 NotifyFrame.xml
