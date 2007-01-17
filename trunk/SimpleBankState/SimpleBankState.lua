@@ -18,6 +18,9 @@ local function recycle(t)
 	return t
 end
 
+
+local MAILBOX_SCAN_INTERVAL = 60
+
 SimpleBankState = {};
 
 -- SimpleBankState.debug = true;
@@ -80,9 +83,13 @@ function SimpleBankState:OnEvent()
 	elseif(event == "VARIABLES_LOADED") then
 		self:LoadVariables();
 	elseif event == "UNIT_INVENTORY_CHANGED" then
+	
 		if arg1 == "player" then self:SaveEquipmentData() end
-	elseif event == "MAIL_INBOX_UPDATE" and not arg1 then
+		
+	elseif event == "MAIL_INBOX_UPDATE" and not arg1 then	
+		
 		self:SaveMailboxData();
+		
 	end
 end
 
@@ -177,6 +184,13 @@ function SimpleBankState:SaveBagData(bagID)
 end
 
 function SimpleBankState:SaveMailboxData()
+
+	if self.savingMailboxData then
+		return
+	end
+	
+	self.savingMailboxData = true
+	
 	local size = GetInboxNumItems();
 	if size > 0 then
 		if self.data[realm][me][MAIL_ID] then
@@ -203,6 +217,9 @@ function SimpleBankState:SaveMailboxData()
 		self.data[realm][me][MAIL_ID] = nil
 		
 	end
+	
+	self.savingMailboxData = false
+	
 end
 
 function SimpleBankState:SaveEquipmentData()
