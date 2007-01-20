@@ -1,0 +1,15 @@
+## Interface: 20003
+## Title: rSimpleChatMods
+## Notes: Rophy's version of SimpleChatMods.
+## Author: Rophy
+## Version: 1.0.
+## OptionalDeps: Ace2
+
+buttons.lua
+channelnames.lua
+editbox.lua
+playernames.lua
+scroll.lua
+timestamps.lua
+telltarget.lua
+chatlink.lua
