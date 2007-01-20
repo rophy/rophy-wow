@@ -1,8 +1,6 @@
-Buttons = {}
+scmButtons = {}
 
-local _G = getfenv(0)
-
-function Buttons:Enable()
+function scmButtons:Enable()
 	local a
 	ChatFrameMenuButton:Hide()
 	for i = 1, 7 do
@@ -19,7 +17,8 @@ function Buttons:Enable()
 		a:Hide()
 	end
 end
-function Buttons:Disable()
+
+function scmButtons:Disable()
 	local a
 	ChatFrameMenuButton:Show()
 	for i = 1, 7 do
@@ -37,5 +36,5 @@ function Buttons:Disable()
 	end
 end
 
-Buttons:Enable()
+scmButtons:Enable()
 
