@@ -1,8 +1,6 @@
-Scroll = {}
+scmScroll = {}
 
-local _G = getfenv(0)
-
-function Scroll:Enable()
+function scmScroll:Enable()
 	for i = 1, 7 do
 		local cf = _G["ChatFrame"..i]
 		cf:SetScript("OnMouseWheel", function() self:Scroll() end)
@@ -10,7 +8,7 @@ function Scroll:Enable()
 	end
 end
 
-function Scroll:Disable(msg)
+function scmScroll:Disable(msg)
 	for i = 1, 7 do
 		local cf = _G["ChatFrame"..i]
 		cf:SetScript("OnMouseWheel", nil)
@@ -18,7 +16,7 @@ function Scroll:Disable(msg)
 	end
 end
 
-function Scroll:Scroll()
+function scmScroll:Scroll()
 	if arg1 > 0 then
 		if IsShiftKeyDown() then
 			this:ScrollToTop()
@@ -38,5 +36,5 @@ function Scroll:Scroll()
 	end
 end
 
-Scroll:Enable()
+scmScroll:Enable()
 

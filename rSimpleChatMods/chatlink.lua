@@ -1,10 +1,4 @@
---[[
-	Modification of the ChatLink (originally by Yrys - Hellscream <yrysremove at twparemove dot net>)
-]]
-
-
-local Chatlink = AceLibrary("AceAddon-2.0"):new("AceHook-2.1")
-
+scmChatlink = {}
 
 -- System channel names.
 local	STR_GENERAL = "General -"
@@ -38,21 +32,53 @@ end
 
 
 
-function Chatlink:OnEnable()
-	for i = 1, 7 do
-		self:Hook(_G["ChatFrame"..i], "AddMessage")
+function scmChatlink:Enable()
+
+	local scmAddMessage = function(frame, text, r, g, b, id)
+		self:AddMessage(frame, text, r, g, b, id)
 	end
-	self:Hook("SendChatMessage", true)
+	
+	local scmSendChatMessage = function(msg, chatType, language, channel)
+		self:SendChatMessage(msg, chatType, language, channel)
+	end
+
+	local frame
+
+	-- On first enble, save the reference to the original functions.
+	if not self.hooks then
+		self.hooks = {}
+		for i = 1, 7 do
+			frame = _G["ChatFrame" .. i]
+			self.hooks[frame] = frame.AddMessage
+		end
+		self.hooks["SendChatMessage"] = SendChatMessage
+	end
+	
+	-- Hook the functions.
+	for i = 1, 7 do
+		frame = _G["ChatFrame" .. i]
+		frame.AddMessage = scmAddMessage
+	end
+	SendChatMessage = scmSendChatMessage
+
+end
+
+function scmChatlink:Disable()
+	for i = 1, 7 do
+		local frame = _G["ChatFrame"..i]
+		frame.AddMessage = self.hooks[frame]
+	end
+	SendChatMessage = self.hooks.SendChatMessage
 end
 
 
-function Chatlink:AddMessage(frame, text, r, g, b, id)
-	text = Chatlink:Decompose(text)
-	return self.hooks[frame].AddMessage(frame, text, r, g, b, id)
+function scmChatlink:AddMessage(frame, text, r, g, b, id)
+	text = scmChatlink:Decompose(text)
+	return self.hooks[frame](frame, text, r, g, b, id)
 end
 
 -- Turn CLINKs into normal item and enchant links.
-function Chatlink:Decompose (chatstring)
+function scmChatlink:Decompose (chatstring)
 	if chatstring then
 		chatstring = string.gsub (chatstring, "{CLINK:item:(%x+):(%d-:%d-:%d-:%d-:%d-:%d-:%d-:%d-):([^}]-)}", "|c%1|Hitem:%2|h[%3]|h|r")
 		chatstring = string.gsub (chatstring, "{CLINK:enchant:(%x+):(%d-):([^}]-)}", "|c%1|Henchant:%2|h[%3]|h|r")
@@ -68,7 +94,7 @@ end
 
 
 -- Turn item and enchant links into CLINKs.
-function Chatlink:Compose (chatstring)
+function scmChatlink:Compose (chatstring)
 	if chatstring then
 --		1.10 item links: to possibly be reactivated in a future version.
 --		chatstring = string.gsub (chatstring, "|c(%x+)|H(item):(%d-):(%d-):(%d-):(%d-)|h%[([^%]]-)%]|h|r", "{CLINK:%2:%1:%3:%4:%5:%6:%7}")
@@ -81,7 +107,7 @@ end
 
 
 -- Translate item links into CLINKs on outgoing non-system channel messages.
-function Chatlink:SendChatMessage (msg, chatType, language, channel)
+function scmChatlink:SendChatMessage (msg, chatType, language, channel)
 
 	if chatType == "CHANNEL" then
 		local chan_num, chan_name = GetChannelName (channel)
@@ -99,3 +125,5 @@ function Chatlink:SendChatMessage (msg, chatType, language, channel)
 	-- Pass along to original function.
 	self.hooks.SendChatMessage (msg, chatType, language, channel)
 end
+
+scmChatlink:Enable()
