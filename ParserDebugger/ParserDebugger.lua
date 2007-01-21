@@ -5,14 +5,14 @@ ParserConsole = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "
 
 function ParserConsole:OnInitialize()
 
-	if not ParserConsoleDB then 
-		ParserConsoleDB = {
+	if not ParserDebuggerDB then 
+		ParserDebuggerDB = {
 			frame = 3,
 --			alldata = false,
 		} 		
 	end
 	
-	self.db = ParserConsoleDB
+	self.db = ParserDebuggerDB
 
 	self:RegisterChatCommand( { "/pc" }, {
 		type = 'group',
@@ -28,7 +28,10 @@ function ParserConsole:OnInitialize()
 				name = 'frame',
 				desc = "Specifies which frame to display the warning message.",
 				get = function() return self.db.frame end,
-				set = function(id) self.db.frame = tonumber(id) end,
+				set = function(id) 
+					self.db.frame = tonumber(id)
+					self.printFrame = getglobal("ChatFrame"..id)
+				end,
 -- 				input = true, 	-- dunno why, this isn't working.
 				validate = { '1', '2', '3', '4', '5', '6', '7' },
 				usage = "<ChatFrame ID>",
@@ -65,10 +68,16 @@ function ParserConsole:OnInitialize()
 end
 
 function ParserConsole:OnCombatEvent(bEvent, info)
-
-	local pattern = info.pattern
-	self.db.counter[bEvent][pattern] = self.db.counter[bEvent][pattern] + 1
 	
+	local pattern = info.pattern
+	if info.type == 'unknown' then
+		self:CustomPrint(1,1,1, nil, nil, nil, "Unknown:", bEvent, info.message)
+	else
+		self.db.counter[bEvent][pattern] = self.db.counter[bEvent][pattern] + 1
+	end
+	
+
+
 	if self.db.alldata or info.type == 'unknown' then
 	
 		local clonedInfo = {}
@@ -84,10 +93,6 @@ function ParserConsole:OnCombatEvent(bEvent, info)
 		
 		self.cache:Push( data  )
 		
-		if info.type == 'unknown' then
-			local frame = getglobal("ChatFrame" .. self.db.frame)
-			frame:AddMessage( string.format("Unknown pattern detected: [%s] [%s]", bEvent, info.message) , 1, 0, 0)
-		end
 		
 	end
 	
