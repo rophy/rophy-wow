@@ -450,12 +450,6 @@
 				</ScrollFrame>
 			</Frames>
 			<Scripts>
-				<OnLoad>
-					SimpleBankState:OnLoad();
-				</OnLoad>
-				<OnEvent>
-					SimpleBankState:OnEvent();
-				</OnEvent>
 				<OnHide>
 					SimpleBankState:SBSFrame_OnHide()
 				</OnHide>
