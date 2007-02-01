@@ -1,3 +1,4 @@
+
 -- Mini-Compost --
 local cache = setmetatable({}, {__mode='k'})
 local function acquire()
@@ -18,10 +19,11 @@ local function recycle(t)
 	return t
 end
 
+local UPDATE_DELAY = 3
+local update = false
 
-local MAILBOX_SCAN_INTERVAL = 60
 
-SimpleBankState = {};
+SimpleBankState = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0")
 
 -- SimpleBankState.debug = true;
 
@@ -37,61 +39,119 @@ local atBank; --is the current player at the bank or not
 local MAJOR_VERSION = "1.2"
 local MINOR_VERSION = "$Revision$"
 
-SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
+-- SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
 
-function SimpleBankState:OnLoad()
-	this:RegisterEvent("UNIT_INVENTORY_CHANGED");
-	this:RegisterEvent("BAG_UPDATE");
-	this:RegisterEvent("VARIABLES_LOADED");
-	this:RegisterEvent("BANKFRAME_CLOSED");
-	this:RegisterEvent("BANKFRAME_OPENED");
-	this:RegisterEvent("PLAYERBANKSLOTS_CHANGED");
-	this:RegisterEvent("MAIL_INBOX_UPDATE");
-	this:RegisterEvent("MAIL_SEND_SUCCESS");
-	this:RegisterEvent("MAIL_SEND_INFO_UPDATE");
+function SimpleBankState:OnInitialize()
+	
+	if not SBS_Data then 	
+		SBS_Data = {
+			version = self.version		
+		}		
+	end
+	
+	self.data = SBS_Data;
+	
+	if not self.data[realm]  then
+		self.data[realm] = {};
+	end
+	
+	if not self.data[realm][me]  then
+		self.data[realm][me] = {};
+	end
+	
+	if self.data.version ~= self.version then
+		self:UpdateVersion();
+	end
+	
+	DEFAULT_CHAT_FRAME:AddMessage(self.loc.WELCOME, 03, 0.3, 1);	
+
+	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
+	self:RegisterEvent("BAG_UPDATE")
+	self:RegisterEvent("BANKFRAME_CLOSED")
+	self:RegisterEvent("BANKFRAME_OPENED")
+	self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
+	self:RegisterEvent("MAIL_INBOX_UPDATE")
 	
 	self.filter = {} 
 	
 		-- Slash commands.
-	SLASH_SIMPLEBANKSTATE1 = "/simplebankstate";
-	SLASH_SIMPLEBANKSTATE2 = "/sbs";
+	SLASH_SIMPLEBANKSTATE1 = "/simplebankstate"
+	SLASH_SIMPLEBANKSTATE2 = "/sbs"
 	
-	SlashCmdList["SIMPLEBANKSTATE"] = self.SlashCmdHandler;	
+	SlashCmdList["SIMPLEBANKSTATE"] = self.SlashCmdHandler;
 	
 	-- Load GUI
 	if SBS_Frame then
-		self:InitGUI();
+		self:InitGUI()
 	end
 	
-	table.insert(UISpecialFrames, "SBS_Frame"); 
+	table.insert(UISpecialFrames, "SBS_Frame")
+	
+	self:ScheduleRepeatingEvent(self.OnUpdate, UPDATE_DELAY, self)
+
+	self.pendingBags = {}
+	
+	self:SetDebugging(true)
+	
 end
 
-function SimpleBankState:OnEvent()
-
---	DEFAULT_CHAT_FRAME:AddMessage(string.format("%s, %s, %s, %s, %s, %s", event, arg1 or "nil", arg2 or "nil", arg3 or "nil", arg4 or "nil", arg5 or "nil"))
-	
-	if(event == "BAG_UPDATE") then
-		self:SaveBagData(arg1);
-	elseif(event == "PLAYERBANKSLOTS_CHANGED") then
-		self:SaveBagData(BANK_CONTAINER);
-	elseif(event == "BANKFRAME_CLOSED") then
-		atBank = nil;
-		self:SaveBankData();
-	elseif(event == "BANKFRAME_OPENED") then
-		atBank = 1;
-		self:SaveBankData();
-	elseif(event == "VARIABLES_LOADED") then
-		self:LoadVariables();
-	elseif event == "UNIT_INVENTORY_CHANGED" then
-	
-		if arg1 == "player" then self:SaveEquipmentData() end
-		
-	elseif event == "MAIL_INBOX_UPDATE" and not arg1 then	
-		
-		self:SaveMailboxData();
-		
+function SimpleBankState:UNIT_INVENTORY_CHANGED(unitid)
+	if unitid == 'player' then
+		self.scanEquip = true
 	end
 end
+
+function SimpleBankState:BAG_UPDATE(bagID)
+	self:Debug("BAG_UPDATE", bagID)
+	self.scanBag = bagID
+	self.pendingBags[bagID] = true
+end
+
+function SimpleBankState:BANKFRAME_OPENED()
+	self.atBank = true
+	self.scanBank = true
+end
+
+function SimpleBankState:BANKFRAME_CLOSED()
+	self.atBank = false
+end
+
+function SimpleBankState:PLAYERBANKSLOTS_CHANGED()
+	self.scanBag = BANK_CONTAINER
+end
+
+function SimpleBankState:MAIL_INBOX_UPDATE()
+	self.scanMail = true
+end
+
+
+function SimpleBankState:OnUpdate()
+
+	if self.scanMail then
+		self:SaveMailboxData()
+		self.scanMail = false
+	end
+	
+	if self.scanBag then
+		for bagID in pairs(self.pendingBags) do
+			self:SaveBagData(bagID)
+			self.pendingBags[bagID] = nil
+		end
+		self.scanBag = false
+	end
+	
+	if self.scanEquip then
+		self:SaveEquipmentData()
+		self.scanEquip = false
+	end
+	
+	if self.scanBank then
+		self:SaveBankData()
+		self.scanBank = false
+	end
+	
+end
+
 
 function SimpleBankState:SlashCmdHandler(msg)
 	SimpleBankState:ToggleFrame()
@@ -119,8 +179,7 @@ function SimpleBankState:LoadVariables()
 		self:UpdateVersion();
 	end
 	
-	DEFAULT_CHAT_FRAME:AddMessage(self.loc.WELCOME, 03, 0.3, 1);
-	
+
 end
 
 function SimpleBankState:UpdateVersion()
@@ -135,17 +194,21 @@ end
 
 --save all bank data about the current player
 function SimpleBankState:SaveBankData()
-	self:SaveBagData(BANK_CONTAINER);
+	self:Debug("Scanning bank...")
+	
+	self:SaveBagData(BANK_CONTAINER)
 	local bagID;
 	for bagID = 5, 10, 1 do
-		self:SaveBagData(bagID);
+		self:SaveBagData(bagID)
 	end
 end
 
 --saves all the data about the current player's bag
 function SimpleBankState:SaveBagData(bagID)
+	self:Debug("Scanning bag", bagID, "...")
+
 	--don't save bank data unless you're at the bank
-	if( self:IsBankBag(bagID) and not atBank ) then
+	if( self:IsBankBag(bagID) and not self.atBank ) then
 		return;
 	end
 	
@@ -184,12 +247,7 @@ function SimpleBankState:SaveBagData(bagID)
 end
 
 function SimpleBankState:SaveMailboxData()
-
-	if self.savingMailboxData then
-		return
-	end
-	
-	self.savingMailboxData = true
+	self:Debug("Scanning mailbox...")
 	
 	local size = GetInboxNumItems();
 	if size > 0 then
@@ -218,11 +276,12 @@ function SimpleBankState:SaveMailboxData()
 		
 	end
 	
-	self.savingMailboxData = false
-	
 end
 
 function SimpleBankState:SaveEquipmentData()
+
+	self:Debug("Scanning equipments...")
+	
 	if not self.equipmentSlots then
 		local inventorySlotNames = {
 			"HeadSlot",
@@ -443,7 +502,7 @@ local dewdrop = AceLibrary("Dewdrop-2.0")
 
 function SimpleBankState:InitGUI()
 
-	SBS_Frame_HeaderText:SetText(self.loc.TITLE .. " " .. self.version);
+	SBS_Frame_HeaderText:SetText(self.loc.TITLE);
 	SBS_SortName:SetText(self.loc.ITEM_NAME);
 	SBS_SortRarity:SetText(self.loc.RARITY);
 	SBS_SortQuantity:SetText(self.loc.QUANTITY);
@@ -491,7 +550,6 @@ function SimpleBankState:UpdateScrollFrame()
 	--start the scroll process
 	--15 items and height of 16 each
 	FauxScrollFrame_Update(SBS_ScrollFrame, self.itemListSize, 15, 16);
-
 
 		
 	--loop through the 15 frames
