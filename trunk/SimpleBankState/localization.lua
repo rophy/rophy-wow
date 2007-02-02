@@ -1,9 +1,8 @@
 
 SimpleBankState.loc = {
 
-	TITLE = "Simple Bank State",
+	TITLE = "SimpleBankState",
 
-	WELCOME = "SimpleBankState loaded, /sbs to show the search frame.",
 	KEYWORD = "Keyword: ",
 	REFRESH = "Refresh",
 

@@ -19,11 +19,10 @@ local function recycle(t)
 	return t
 end
 
-local UPDATE_DELAY = 3
-local update = false
+local UPDATE_DELAY = 2
 
 
-SimpleBankState = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0")
+SimpleBankState = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceConsole-2.0")
 
 -- SimpleBankState.debug = true;
 
@@ -36,10 +35,6 @@ local me = UnitName("player"); --the name of the current player that's logged on
 local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
 
-local MAJOR_VERSION = "1.2"
-local MINOR_VERSION = "$Revision: 28 $"
-
--- SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
 
 function SimpleBankState:OnInitialize()
 	
@@ -62,8 +57,6 @@ function SimpleBankState:OnInitialize()
 	if self.data.version ~= self.version then
 		self:UpdateVersion();
 	end
-	
-	DEFAULT_CHAT_FRAME:AddMessage(self.loc.WELCOME, 03, 0.3, 1);	
 
 	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	self:RegisterEvent("BAG_UPDATE")
@@ -74,12 +67,20 @@ function SimpleBankState:OnInitialize()
 	
 	self.filter = {} 
 	
-		-- Slash commands.
-	SLASH_SIMPLEBANKSTATE1 = "/simplebankstate"
-	SLASH_SIMPLEBANKSTATE2 = "/sbs"
 	
-	SlashCmdList["SIMPLEBANKSTATE"] = self.SlashCmdHandler;
-	
+	self:RegisterChatCommand({ "/sbs" }, {
+		type = 'group',
+		args = {
+			show = {
+				type = "execute",
+				name = "Show",
+				desc = "Toggle the search frame.",
+				func = "ToggleFrame"
+			}
+		}
+	})
+
+
 	-- Load GUI
 	if SBS_Frame then
 		self:InitGUI()
