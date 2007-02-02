@@ -37,7 +37,7 @@ local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
 
 local MAJOR_VERSION = "1.2"
-local MINOR_VERSION = "$Revision$"
+local MINOR_VERSION = "$Revision: 28 $"
 
 -- SimpleBankState.version = MAJOR_VERSION .. "." .. string.match(MINOR_VERSION, "%d+")
 
@@ -91,8 +91,7 @@ function SimpleBankState:OnInitialize()
 
 	self.pendingBags = {}
 	
-	self:SetDebugging(true)
-	
+
 end
 
 function SimpleBankState:UNIT_INVENTORY_CHANGED(unitid)
@@ -102,7 +101,6 @@ function SimpleBankState:UNIT_INVENTORY_CHANGED(unitid)
 end
 
 function SimpleBankState:BAG_UPDATE(bagID)
-	self:Debug("BAG_UPDATE", bagID)
 	self.scanBag = bagID
 	self.pendingBags[bagID] = true
 end
