@@ -96,30 +96,36 @@ function SimpleBankState:OnInitialize()
 end
 
 function SimpleBankState:UNIT_INVENTORY_CHANGED(unitid)
+	self:Debug("UNIT_INVENTORY_CHANGED")
 	if unitid == 'player' then
 		self.scanEquip = true
 	end
 end
 
 function SimpleBankState:BAG_UPDATE(bagID)
+	self:Debug("BAG_UPDATE")
 	self.scanBag = bagID
 	self.pendingBags[bagID] = true
 end
 
 function SimpleBankState:BANKFRAME_OPENED()
+	self:Debug("BANKFRAME_OPENED")
 	self.atBank = true
 	self.scanBank = true
 end
 
 function SimpleBankState:BANKFRAME_CLOSED()
+	self:Debug("BANKFRAME_CLOSED")
 	self.atBank = false
 end
 
 function SimpleBankState:PLAYERBANKSLOTS_CHANGED()
+	self:Debug("PLAYERBANKSLOTS_CHANGED")
 	self.scanBag = BANK_CONTAINER
 end
 
 function SimpleBankState:MAIL_INBOX_UPDATE()
+	self:Debug("MAIL_INBOX_UPDATE")
 	self.scanMail = true
 end
 
@@ -152,34 +158,6 @@ function SimpleBankState:OnUpdate()
 end
 
 
-function SimpleBankState:SlashCmdHandler(msg)
-	SimpleBankState:ToggleFrame()
-end
-	
-function SimpleBankState:LoadVariables()
-	
-	if not SBS_Data then 	
-		SBS_Data = {
-			version = self.version		
-		}		
-	end
-	
-	self.data = SBS_Data;
-	
-	if not self.data[realm]  then
-		self.data[realm] = {};
-	end
-	
-	if not self.data[realm][me]  then
-		self.data[realm][me] = {};
-	end
-	
-	if self.data.version ~= self.version then
-		self:UpdateVersion();
-	end
-	
-
-end
 
 function SimpleBankState:UpdateVersion()
 	self.data.version = self.version;
@@ -204,12 +182,13 @@ end
 
 --saves all the data about the current player's bag
 function SimpleBankState:SaveBagData(bagID)
-	self:Debug("Scanning bag", bagID, "...")
 
 	--don't save bank data unless you're at the bank
 	if( self:IsBankBag(bagID) and not self.atBank ) then
 		return;
 	end
+
+	self:Debug("Scanning bag", bagID, "...")
 	
 	local size;
 	if(bagID == KEYRING_CONTAINER) then
