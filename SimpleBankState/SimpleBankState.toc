@@ -3,7 +3,7 @@
 ## Notes: Search all your characters for item by item name.
 ## Author: Rophy
 
-## Version: 1.2.30
+## Version: 1.2.32
 ## X-ReleaseDate: $Date$
 ## X-Category: Inventory
 ## X-eMail: rophy123@gmail.com
