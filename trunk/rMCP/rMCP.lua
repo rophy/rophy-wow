@@ -24,7 +24,6 @@ local savedVar = nil
 
 local MCP_FRAME_NAME = "MCP_AddonList"
 local playerClass = nil
-local MCP_VERSION = "2007.2.5"
 local MCP_SET_SIZE = 10
 local MCP_MAXADDONS = 20
 local MCP_EditBox
@@ -72,8 +71,13 @@ function rMCP:OnLoad()
 	sortByAce2CheckBoxText:SetTextColor(1,1,1)
 	sortByAce2CheckBoxText:SetText("Sort by Ace2 Categories")
 
-	
-	MCP_AddonListHeaderTitle:SetText("rMasterControlPanel "..MCP_VERSION)
+
+	local title = "rMasterControlPanel "
+	local version = GetAddOnMetadata("rMCP", "Version")
+	if version then 
+		title = title.." "..version
+	end
+	MCP_AddonListHeaderTitle:SetText(title)
 	this:RegisterEvent("VARIABLES_LOADED")
 	
 	_, playerClass = UnitClass("player")
