@@ -52,6 +52,20 @@ local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Trainer",
 };
 
+local function ParseVersion(version)
+	if type(version) == "string" then
+		if version:find("%$Revision: (%d+) %$") then
+			version = version:gsub("%$Revision: (%d+) %$", "%1")
+		elseif version:find("%$Rev: (%d+) %$") then
+			version = version:gsub("%$Rev: (%d+) %$", "%1")
+		elseif version:find("%$LastChangedRevision: (%d+) %$") then
+			version = version:gsub("%$LastChangedRevision: (%d+) %$", "%1")
+		end
+		version = version:trim()
+	end
+	return version
+end
+
 
 function rMCP:OnLoad()
 
@@ -74,7 +88,8 @@ function rMCP:OnLoad()
 
 	local title = "rMasterControlPanel "
 	local version = GetAddOnMetadata("rMCP", "Version")
-	if version then 
+	if version then
+		version = ParseVersion(version)
 		title = title.." "..version
 	end
 	MCP_AddonListHeaderTitle:SetText(title)
@@ -226,6 +241,7 @@ function rMCP:FindAddon(list, name)
 	end
 	return nil
 end
+
 
 function rMCP:Print(msg, r, g, b)
 	DEFAULT_CHAT_FRAME:AddMessage("rMCP: ".. msg, r, g, b)
@@ -543,7 +559,7 @@ function rMCP:ShowTooltip(index)
 	if not index then return end
 	local name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(index)
 	local author = GetAddOnMetadata(name, "Author")
-	local version = GetAddOnMetadata(name, "Version")
+	local version = ParseVersion(GetAddOnMetadata(name, "Version"))
 	local deps = { GetAddOnDependencies(index) }
 	
 	GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
