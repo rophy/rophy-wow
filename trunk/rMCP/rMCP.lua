@@ -182,12 +182,68 @@ function rMCP:ReloadAddonList()
 	rMCP:AddonList_OnShow()
 end
 
-function rMCP:AddonList_Enable(index,enabled)
-	if (type(index) == "number") then
+
+function rMCP:EnableAddon(addon)
+	self:EnableDependencies(addon)
+	EnableAddOn(addon)
+end
+
+
+function rMCP:ReadDependencies(t, ...)
+	for k in pairs(t) do
+		t[k] = nil
+	end
+	for i=1, select('#', ...) do
+		local name = select(i, ...)
+		if name then
+			t[name] = true
+		end
+	end
+	return t
+end
+
+local deps = {}
+function rMCP:EnableDependencies(addon)
+	deps = self:ReadDependencies(deps, GetAddOnDependencies(addon))
+	
+	if next(deps) then
+		-- Prevent possible dependency loop, although this shouldn't happen.
+		addon = GetAddOnInfo(addon)
+		for k in pairs(deps) do
+			if addon ~= k then
+				self:EnableAddon(k)
+			end
+		end
+	end
+	
+end
+
+function rMCP:FindAddon(list, name)
+	for i, v in ipairs(list) do
+		if v == name then
+			return true
+		end
+	end
+	return nil
+end
+
+function rMCP:Print(msg, r, g, b)
+	DEFAULT_CHAT_FRAME:AddMessage("rMCP: ".. msg, r, g, b)
+end
+
+
+
+
+
+
+-- UI Controllers.
+
+function rMCP:AddonList_Enable(addonIndex,enabled)
+	if (type(addonIndex) == "number") then
 		if (enabled) then
-			EnableAddOn(index);
+			self:EnableAddon(addonIndex)
 		else
-			DisableAddOn(index);
+			DisableAddOn(addonIndex);
 		end
 	end
 	rMCP:AddonList_OnShow();
@@ -425,7 +481,7 @@ function rMCP:LoadSet_OnClick()
 	for i = 1, GetNumAddOns() do		
 		name = GetAddOnInfo(i)
 		if rMCP:FindAddon( list, name ) then
-			EnableAddOn(name)
+			self:EnableAddon(name)
 		end
 	end
 	
@@ -481,19 +537,6 @@ function rMCP:RenameSet_OnClick()
 	MCP_EditBox:SetText( setName )
 	MCP_EditBox:Show()
 
-end
-
-function rMCP:FindAddon(list, name)
-	for i, v in ipairs(list) do
-		if v == name then
-			return true
-		end
-	end
-	return nil
-end
-
-function rMCP:Print(msg, r, g, b)
-	DEFAULT_CHAT_FRAME:AddMessage("rMCP: ".. msg, r, g, b)
 end
 
 function rMCP:ShowTooltip(index)
