@@ -21,7 +21,7 @@ local sortedAddonList = {}
 rMCP.sortedAddonList = sortedAddonList
 
 local savedVar = nil
-
+local MCP_ADDON_NAME = "MCP"
 local MCP_FRAME_NAME = "MCP_AddonList"
 local playerClass = nil
 local MCP_SET_SIZE = 10
@@ -31,8 +31,11 @@ local MCP_BLIZZARD_ADDONS = {
 	"Blizzard_AuctionUI",
 	"Blizzard_BattlefieldMinimap",
 	"Blizzard_BindingUI",
+	"Blizzard_CombatText",
 	"Blizzard_CraftUI",
+	"Blizzard_GMSurveyUI",
 	"Blizzard_InspectUI",
+	"Blizzard_ItemSocketingUI",
 	"Blizzard_MacroUI",
 	"Blizzard_RaidUI",
 	"Blizzard_TalentUI",
@@ -43,8 +46,11 @@ local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Auction",
 	"Blizzard: Battlefield Minimap",
 	"Blizzard: Binding",
+	"Blizzard: Combat Text",
 	"Blizzard: Craft",
+	"Blizzard: GM Survey",
 	"Blizzard: Inspect",
+	"Blizzard: Item Socketing",
 	"Blizzard: Macro",
 	"Blizzard: Raid",
 	"Blizzard: Talent",
@@ -87,7 +93,7 @@ function rMCP:OnLoad()
 
 
 	local title = "rMasterControlPanel "
-	local version = GetAddOnMetadata("rMCP", "Version")
+	local version = GetAddOnMetadata(MCP_ADDON_NAME, "Version")
 	if version then
 		version = ParseVersion(version)
 		title = title.." "..version
@@ -125,6 +131,7 @@ function rMCP:OnEvent(event)
 	end
 	
 end
+
 
 function rMCP:BuildAddonList()
 	for k in pairs(sortedAddonList) do
@@ -250,8 +257,6 @@ end
 
 
 
-
-
 -- UI Controllers.
 
 function rMCP:AddonList_Enable(addonIndex,enabled)
@@ -347,7 +352,7 @@ function rMCP:AddonList_OnShow()
 				else
 					titleText:SetText(name);
 				end
-				if (name == "rMCP" or addonIdx > origNumAddons) then
+				if (name == MCP_ADDON_NAME or addonIdx > origNumAddons) then
 					checkbox:Hide();
 				else
 					checkbox:Show();
@@ -445,7 +450,7 @@ function rMCP:SaveSet_OnClick()
 		local name, enabled
 		for i = 1, GetNumAddOns() do
 			name, _, _, enabled = GetAddOnInfo(i)
-			if enabled and name ~= "rMCP" then
+			if enabled and name ~= MCP_ADDON_NAME then
 				table.insert(savedVar.AddonSet[value], name)
 			end
 		end
