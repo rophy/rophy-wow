@@ -175,9 +175,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						DisableAllAddOns()
-						EnableAddOn("rMCP")
-						rMCP:AddonList_OnShow()
+						rMCP:DisableAll_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>

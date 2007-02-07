@@ -258,6 +258,12 @@ end
 
 
 -- UI Controllers.
+function rMCP:DisableAll_OnClick()
+	DisableAllAddOns()
+	EnableAddOn(MCP_ADDON_NAME)
+	self:AddonList_OnShow()
+end
+
 
 function rMCP:AddonList_Enable(addonIndex,enabled)
 	if (type(addonIndex) == "number") then
