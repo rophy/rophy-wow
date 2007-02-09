@@ -155,23 +155,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			<AbsInset left="0" right="44" top="0" bottom="13"/>
 		</HitRectInsets>
 		<Frames>
-			<CheckButton name="$parentSortByXCategory" inherits="OptionsCheckButtonTemplate" text="aetawetawet">
-				<Size>
-					<AbsDimension x="24" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension  x="170" y="-25"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						rMCP:ToggleSortByXCategory(this:GetChecked())
-					</OnClick>
-				</Scripts>
-			</CheckButton>
 			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
 				<Anchors>
 					<Anchor point="TOPRIGHT">
@@ -181,6 +164,20 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</Anchor>
 				</Anchors>
 			</Button>
+			<Button name="$parentSortDropDown" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="280" y="-22"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						UIDropDownMenu_Initialize(this, function() rMCP:SortDropDown_OnLoad() end)
+					</OnLoad>
+				</Scripts>				
+			</Button>			
 			<Button name="$parentDisableAll" inherits="UIPanelButtonTemplate" text="Disable All">
 				<Size>
 					<AbsDimension x="80" y="24"/>

@@ -8,12 +8,13 @@ MCP_LINEHEIGHT = 16
 MCP_NO_NOTES = "No information available."
 ADDON_LOADED = "Loaded";
 
+
 --==============
--- Local Variables
+-- Special Tables
 --==============
 
 --[[	
-	The master list of sorted addons.
+	masterAddonList : master list of sorted addons.
 	It should be in the following structures:
 		masterAddonList = {
 			addon1Index,			
@@ -43,7 +44,7 @@ rMCP.masterAddonList = masterAddonList
 
 
 --[[
-	The list of addonIndexes, which is used by the FauxScrollFrame.
+	sortedAddonList : list of addonIndexes, which is used by the FauxScrollFrame.
 	It should be in the following structure:
 		sortedAddonList = {
 			addon1Index,
@@ -69,9 +70,35 @@ rMCP.masterAddonList = masterAddonList
 local sortedAddonList = {}
 rMCP.sortedAddonList = sortedAddonList
 
+--[[
+	addonListBuilders : a table of functions used to build masterAddonList
+	
+	To define your own sorting criteria, check the default builder functions as examples.
+	Note if you create the build function in an external scope, you cannot access to the rMCP local variables, 
+	  i.e. masterAddonList and MCP_BLIZZARD_ADDONS, but they can be accessed through rMCP. e.g.: 
+		
+		function MyExternalBuilder()
+			local masterAddonList = rMCP.masterAddonList
+			local bzAddons = rMCP.MCP_BLIZZARD_ADDONS
+			(Now build the masterAddonList)
+		end
+		
+	When you have defined your own builder function, simple add them to the table by:
+	
+		rMCP.addonListBuilders["MyExternalBuilder"] = MyExternalBuilder
+		
+	After everything is done, the custom defined function can be accessed from the rMCP sorter drop down menu.
+	
+]]
 local addonListBuilders = {}
 rMCP.addonListBuilders = addonListBuilders
 
+
+
+
+--==============
+-- Local Variables
+--==============
 
 local savedVar = nil
 local MCP_ADDON_NAME = "MCP"
@@ -96,7 +123,7 @@ local MCP_BLIZZARD_ADDONS = {
 	"Blizzard_TalentUI",
 	"Blizzard_TradeSkillUI",
 	"Blizzard_TrainerUI",
-};
+}
 local MCP_BLIZZARD_ADDONS_TITLES = { 
 	"Blizzard: Auction",
 	"Blizzard: Battlefield Minimap",
@@ -111,7 +138,8 @@ local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Talent",
 	"Blizzard: Trade Skill",
 	"Blizzard: Trainer",
-};
+}
+rMCP.MCP_BLIZZARD_ADDONS = MCP_BLIZZARD_ADDONS
 
 local function ParseVersion(version)
 	if type(version) == "string" then
@@ -130,7 +158,7 @@ end
 
 function rMCP:OnLoad()
 
-	UIPanelWindows["MCP_AddonList"] = { area = "center", pushable = 0, whileDead = 1 }
+	UIPanelWindows[MCP_FRAME_NAME] = { area = "center", pushable = 0, whileDead = 1 }
 	StaticPopupDialogs["MCP_RELOADUI"] = {
 		text = "Reload your User Interface?",
 		button1 = TEXT(ACCEPT),
@@ -141,10 +169,6 @@ function rMCP:OnLoad()
 		timeout = 0,
 		hideOnEscape = 1
 	}
-
-	local sortByAce2CheckBoxText = getglobal(MCP_FRAME_NAME.."SortByXCategoryText")
-	sortByAce2CheckBoxText:SetTextColor(1,1,1)
-	sortByAce2CheckBoxText:SetText("Sort by Ace2 Categories")
 
 
 	local title = "rMasterControlPanel "
@@ -167,9 +191,6 @@ function rMCP:OnEvent(event)
 		if not rMCP_Data then rMCP_Data = {} end
 		
 		savedVar = rMCP_Data
-		
-		local sortByAce2CheckBox = getglobal(MCP_FRAME_NAME.."SortByXCategory")
-		sortByAce2CheckBox:SetChecked( (savedVar.sorter == "Ace2") )
 		
 		rMCP:ReloadAddonList()
 			
@@ -338,6 +359,12 @@ function rMCP:ReloadAddonList()
 	
 	self:RebuildSortedAddonList()
 	rMCP:AddonList_OnShow()
+	
+
+	MCP_AddonListSortDropDownText:SetText(builder)
+	local button = getglobal(MCP_FRAME_NAME.."SortDropDown")
+	UIDropDownMenu_SetSelectedValue( button, builder)
+	
 end
 
 
@@ -577,7 +604,29 @@ function rMCP:RebuildSortedAddonList(toggleCategory)
 	
 end
 
+function rMCP:SetMasterAddonBuilder(sorter)
+	if not addonListBuilders[sorter] or not savedVar then return end	
+	savedVar.sorter = sorter
+	self:ReloadAddonList()
+end
+
 -- UI Controllers.
+
+function rMCP:SortDropDown_OnLoad()
+	local info
+	for name, func in pairs(addonListBuilders) do
+		info = UIDropDownMenu_CreateInfo()
+		info.text = name
+		info.func = function() self:SetMasterAddonBuilder(name) end
+		UIDropDownMenu_AddButton(info)
+	end
+end
+
+function rMCP:SortDropDown_OnClick(sorter)
+
+end
+
+
 function rMCP:DisableAll_OnClick()
 	DisableAllAddOns()
 	EnableAddOn(MCP_ADDON_NAME)
@@ -881,11 +930,3 @@ function rMCP:ShowTooltip(index)
   
 end
 
-function rMCP:ToggleSortByXCategory(checked)
-	if checked then
-		savedVar.sorter = "Ace2"
-	else
-		savedVar.sorter = nil
-	end
-	self:ReloadAddonList()
-end
