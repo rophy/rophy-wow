@@ -43,6 +43,25 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			</Layer>
 		</Layers>
 		<Frames>
+			<Button name="$parentCollapse" hidden="true">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture name="$parentIcon"/>	
+				<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>			
+				<Scripts>
+					<OnClick>
+						rMCP:Collapse_OnClick(this:GetParent())
+					</OnClick>
+				</Scripts>
+			</Button>
 			<Button name="$parentSecurity">
 				<Size>
 					<AbsDimension x="16" y="16"/>
@@ -167,9 +186,9 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					<AbsDimension x="80" y="24"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT">
+					<Anchor point="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="30" y="-20"/>
+							<AbsDimension x="90" y="20"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -184,9 +203,9 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					<AbsDimension x="80" y="24"/>
 				</Size>
 				<Anchors>
-					<Anchor point="TOPRIGHT">
+					<Anchor point="BOTTOMLEFT">
 						<Offset>
-							<AbsDimension x="-80" y="-20"/>
+							<AbsDimension x="175" y="20"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -197,6 +216,59 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</OnClick>
 				</Scripts>
 			</Button>
+			<Button name="$parentCollapseAll" >
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="20" y="-35"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture name="$parentIcon" file="Interface\Minimap\UI-Minimap-ZoomOutButton-Up"/>	
+				<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>			
+				<Scripts>
+					<OnClick>
+						rMCP:CollapseAll_OnClick()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parentSetButton" inherits="UIPanelButtonTemplate" text="Sets">
+				<Size>
+					<AbsDimension x="40" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="20" y="20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						ToggleDropDownMenu(1, nil, MCP_SetDropDown, this, 0, 0);
+					</OnClick>					
+				</Scripts>				
+			</Button>
+			<Button name="$parent_ReloadUI" inherits="UIPanelButtonTemplate" text="ReloadUI">
+				<Size>
+					<AbsDimension x="80" y="25"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-50" y="20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						StaticPopup_Show("MCP_RELOADUI");
+					</OnClick>
+				</Scripts>
+			</Button>			
 			<Button name="$parentEntry1" inherits="MCP_AddonListEntryTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOPLEFT">
@@ -435,23 +507,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</OnVerticalScroll>
 				</Scripts>
 			</ScrollFrame>
-			<Button name="MCPAddonSetDropDown" inherits="UIDropDownMenuTemplate" text="Set">
-				<Size>
-					<AbsDimension x="40" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x="0" y="13"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnShow>
-						UIDropDownMenu_Initialize(this, function() rMCP:SetDropDown_OnShow() end)
-					</OnShow>
-				</Scripts>				
-			</Button>
+			<!--
 			<Button name="$parentSaveSet" inherits="UIPanelButtonTemplate" text="Save">
 				<Size>
 					<AbsDimension x="40" y="24"/>
@@ -465,10 +521,10 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						rMCP:SaveSet_OnClick();
+						rMCP:CollapseAll_OnClick();
 					</OnClick>
 				</Scripts>
-			</Button>
+			</Button>			
 			<Button name="$parentLoadSet" inherits="UIPanelButtonTemplate" text="Load">
 				<Size>
 					<AbsDimension x="40" y="24"/>
@@ -520,23 +576,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_ReloadUI" inherits="UIPanelButtonTemplate" text="ReloadUI">
-				<Size>
-					<AbsDimension x="80" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOMRIGHT">
-						<Offset>
-							<AbsDimension x="-50" y="20"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						StaticPopup_Show("MCP_RELOADUI");
-					</OnClick>
-				</Scripts>
-			</Button>			
+			-->
 		</Frames>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -644,6 +684,13 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			</OnShow>
 		</Scripts>
 	</Frame>
+   <Frame name="MCP_SetDropDown" inherits="UIDropDownMenuTemplate" id="1">
+		<Scripts>
+			<OnLoad>
+				UIDropDownMenu_Initialize(this, function() rMCP:SetDropDown_OnLoad() end, "MENU");
+			</OnLoad>
+		</Scripts>
+   </Frame>	 
 	<!--
    <Frame name="rMCPDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
    </Frame>	
