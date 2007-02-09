@@ -31,11 +31,8 @@ ADDON_LOADED = "Loaded";
 				addon7Index,
 				['category'] = "Category2Name"
 			},
-			...,
-			["Category1Name"] = true
 		}
 		
-	The boolean at the end of list specifies that "Category1Name" is collapsed.
 	This list is used to build sortedAddonList, which is the list used in the FauxScrollFrame.
 	
 --]]
@@ -93,14 +90,16 @@ rMCP.sortedAddonList = sortedAddonList
 local addonListBuilders = {}
 rMCP.addonListBuilders = addonListBuilders
 
-
+--==============
+-- Reference to tables in saved variables
+--==============
+local savedVar 
+local collapsedAddons
 
 
 --==============
 -- Local Variables
 --==============
-
-local savedVar = nil
 local MCP_ADDON_NAME = "MCP"
 local MCP_FRAME_NAME = "MCP_AddonList"
 local playerClass = nil
@@ -155,6 +154,14 @@ local function ParseVersion(version)
 	return version
 end
 
+local function toggle(flag)
+	if flag then 
+		return nil 
+	else 
+		return true 
+	end
+end
+
 
 function rMCP:OnLoad()
 
@@ -191,6 +198,11 @@ function rMCP:OnEvent(event)
 		if not rMCP_Data then rMCP_Data = {} end
 		
 		savedVar = rMCP_Data
+		
+		if not savedVar.collapsed then
+			savedVar.collapsed = {}
+		end
+		collapsedAddons = savedVar.collapsed
 		
 		rMCP:ReloadAddonList()
 			
@@ -345,6 +357,7 @@ addonListBuilders["Author"] = function()
 end
 
 function rMCP:ReloadAddonList()
+
 	local builder = savedVar.sorter
 	if not builder then
 		builder = "Default"
@@ -419,14 +432,16 @@ end
 
 function rMCP:CollapseAll(collapse)
 	local categories = {}
+	
 	for i, addon in ipairs(masterAddonList) do
 		if type(addon) == 'table' and addon.category then
 			table.insert(categories, addon.category)
 		end
 	end
 	
+	
 	for i, category in ipairs(categories) do
-		masterAddonList[category] = collapse
+		collapsedAddons[category] = collapse
 	end
 		
 	self:RebuildSortedAddonList()
@@ -575,9 +590,7 @@ end
 
 
 -- Rebuild sortedAddonList from masterAddonList
--- toggleCategory : string
---	will toggle the colapse state of the category while building the sortedAddonList
-function rMCP:RebuildSortedAddonList(toggleCategory)
+function rMCP:RebuildSortedAddonList()
 	for k in pairs(sortedAddonList) do
 		sortedAddonList[k] = nil
 	end
@@ -588,12 +601,9 @@ function rMCP:RebuildSortedAddonList(toggleCategory)
 		else
 			local category = addon.category
 			if category then
-				if category == toggleCategory then
-					masterAddonList[category] = not masterAddonList[category]
-				end				
 				table.insert(sortedAddonList, category)
 			end
-			if not category or not masterAddonList[category] then
+			if not category or not collapsedAddons[category] then
 				for j, subAddon in ipairs(addon) do
 					table.insert(sortedAddonList, subAddon)
 				end		
@@ -606,6 +616,9 @@ end
 
 function rMCP:SetMasterAddonBuilder(sorter)
 	if not addonListBuilders[sorter] or not savedVar then return end	
+	for k in pairs(collapsedAddons) do
+		collapsedAddons[k] = nil
+	end
 	savedVar.sorter = sorter
 	self:ReloadAddonList()
 end
@@ -634,19 +647,21 @@ function rMCP:DisableAll_OnClick()
 end
 
 function rMCP:Collapse_OnClick(obj)
+
 	local category = obj.category
 	if not category then return end
 	
-	self:RebuildSortedAddonList(category)
-	self:AddonList_OnShow()
+	collapsedAddons[category] = toggle(collapsedAddons[category])
 	
+	self:RebuildSortedAddonList()
+	self:AddonList_OnShow()
 
 end
 
 function rMCP:CollapseAll_OnClick()
 	local obj = getglobal(MCP_FRAME_NAME.."CollapseAll")
 	local icon = getglobal(MCP_FRAME_NAME.."CollapseAllIcon")
-	obj.collapsed = not obj.collapsed
+	obj.collapsed = toggle(obj.collapsed)
 	if obj.collapsed then
 		icon:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomInButton-Up")
 	else
@@ -716,7 +731,7 @@ function rMCP:AddonList_OnShow()
 				checkbox:Hide()
 				securityButton:Hide()
 				loadnow:Hide()
-				if masterAddonList[addonIdx] then
+				if collapsedAddons[addonIdx] then
 					collapseIcon:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomInButton-Up")
 				else
 					collapseIcon:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomOutButton-Up")

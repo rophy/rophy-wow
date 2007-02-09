@@ -2,7 +2,7 @@
 ## Title: rMasterControlProgram
 ## Author: Rophy
 ## Notes: MCP modified by Rophy, originally by Saien.
-## Version: 2.1.0.$Revision$
+## Version: 2.1.1.$Revision$
 ## SavedVariables: rMCP_Data
 rMCP.lua
 rMCP.xml
