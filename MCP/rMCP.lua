@@ -100,6 +100,18 @@ local collapsedAddons
 --==============
 -- Local Variables
 --==============
+local cache = setmetatable({}, {__mode='k'})
+local function acquire()
+	local t = next(cache) or {}
+	cache[t] = nil
+	return t
+end
+local function reclaim(t)
+	for k in pairs(t) do
+		t[k] = nil
+	end
+	cache[t] = true
+end
 local MCP_ADDON_NAME = "MCP"
 local MCP_FRAME_NAME = "MCP_AddonList"
 local playerClass = nil
@@ -139,6 +151,8 @@ local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Trainer",
 }
 rMCP.MCP_BLIZZARD_ADDONS = MCP_BLIZZARD_ADDONS
+
+local enabledList -- Used to prevent recursive loop in EnableAddon.
 
 local function ParseVersion(version)
 	if type(version) == "string" then
@@ -382,8 +396,12 @@ end
 
 
 function rMCP:EnableAddon(addon)
-	self:EnableDependencies(addon)
-	EnableAddOn(addon)
+	local name = GetAddOnInfo(addon)
+	if not enabledList[name] then
+		EnableAddOn(addon)
+		enabledList[name] = true
+		self:EnableDependencies(name)
+	end	
 end
 
 
@@ -400,19 +418,16 @@ function rMCP:ReadDependencies(t, ...)
 	return t
 end
 
-local deps = {}
 function rMCP:EnableDependencies(addon)
-	deps = self:ReadDependencies(deps, GetAddOnDependencies(addon))
+	local deps = self:ReadDependencies(acquire(), GetAddOnDependencies(addon))
 	
 	if next(deps) then
-		-- Prevent possible dependency loop, although this shouldn't happen.
-		addon = GetAddOnInfo(addon)
 		for k in pairs(deps) do
-			if addon ~= k then
-				self:EnableAddon(k)
-			end
+			self:EnableAddon(k)
 		end
 	end
+	
+	reclaim(deps)
 	
 end
 
@@ -523,7 +538,8 @@ function rMCP:LoadSet(set)
 		if not savedVar or not savedVar.AddonSet or not savedVar.AddonSet[set] then return end
 		list = savedVar.AddonSet[set]
 	end
-			
+	
+	enabledList = acquire()
 	local name 
 	for i = 1, GetNumAddOns() do		
 		name = GetAddOnInfo(i)
@@ -531,6 +547,9 @@ function rMCP:LoadSet(set)
 			self:EnableAddon(name)
 		end
 	end
+	
+	reclaim(enabledList)
+	enabledList = nil
 	
 	self:Print("Addons " .. self:GetSetName(set) .. " Loaded." )
 	rMCP:AddonList_OnShow()
@@ -674,7 +693,10 @@ end
 function rMCP:AddonList_Enable(addonIndex,enabled)
 	if (type(addonIndex) == "number") then
 		if (enabled) then
+			enabledList = acquire()
 			self:EnableAddon(addonIndex)
+			reclaim(enabledList)
+			enabledList = nil
 		else
 			DisableAddOn(addonIndex);
 		end
