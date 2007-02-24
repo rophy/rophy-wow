@@ -18,7 +18,7 @@
 				rEnergyWatch_OnLoad()
 			</OnLoad>
  			<OnMouseDown>
- 				if( arg1 == "RightButton" ) then
+ 				if( arg1 == "RightButton" and IsAltKeyDown() ) then
  					this:StartMoving();
  				end
  			</OnMouseDown>
