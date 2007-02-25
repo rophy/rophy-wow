@@ -17,7 +17,7 @@ ADDON_LOADED = "Loaded";
 	masterAddonList : master list of sorted addons.
 	It should be in the following structures:
 		masterAddonList = {
-			addon1Index,			
+			addon1Index,
 			addon2Index,
 			{
 				addon3Index,
@@ -71,8 +71,8 @@ rMCP.sortedAddonList = sortedAddonList
 	addonListBuilders : a table of functions used to build masterAddonList
 	
 	To define your own sorting criteria, check the default builder functions as examples.
-	Note if you create the build function in an external scope, you cannot access to the rMCP local variables, 
-	  i.e. masterAddonList and MCP_BLIZZARD_ADDONS, but they can be accessed through rMCP. e.g.: 
+	Note if you create the build function in an external scope, you cannot access to the rMCP local variables,
+	  i.e. masterAddonList and MCP_BLIZZARD_ADDONS, but they can be accessed through rMCP. e.g.:
 		
 		function MyExternalBuilder()
 			local masterAddonList = rMCP.masterAddonList
@@ -93,7 +93,7 @@ rMCP.addonListBuilders = addonListBuilders
 --==============
 -- Reference to tables in saved variables
 --==============
-local savedVar 
+local savedVar
 local collapsedAddons
 
 
@@ -120,7 +120,7 @@ local MCP_MAXADDONS = 20
 local MCP_EditBox
 local MCP_DefaultSet = {}
 local MCP_DEFAULT_SET = 0
-local MCP_BLIZZARD_ADDONS = { 
+local MCP_BLIZZARD_ADDONS = {
 	"Blizzard_AuctionUI",
 	"Blizzard_BattlefieldMinimap",
 	"Blizzard_BindingUI",
@@ -135,7 +135,7 @@ local MCP_BLIZZARD_ADDONS = {
 	"Blizzard_TradeSkillUI",
 	"Blizzard_TrainerUI",
 }
-local MCP_BLIZZARD_ADDONS_TITLES = { 
+local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Auction",
 	"Blizzard: Battlefield Minimap",
 	"Blizzard: Binding",
@@ -169,10 +169,10 @@ local function ParseVersion(version)
 end
 
 local function toggle(flag)
-	if flag then 
-		return nil 
-	else 
-		return true 
+	if flag then
+		return nil
+	else
+		return true
 	end
 end
 
@@ -188,7 +188,8 @@ function rMCP:OnLoad()
 			ReloadUI();
 		end,
 		timeout = 0,
-		hideOnEscape = 1
+		hideOnEscape = 1,
+		whileDead = 1
 	}
 
 
@@ -275,7 +276,7 @@ addonListBuilders["Ace2"] = function()
 	local prevCategory = ""
 	for i, addonIndex in ipairs(t) do
 		local category = GetAddOnMetadata(addonIndex, "X-Category")
-		if not category then 
+		if not category then
 			category = "Undefined"
 		end
 		if category ~= prevCategory then
@@ -336,7 +337,7 @@ addonListBuilders["Author"] = function()
 	local prevCategory = ""
 	for i, addonIndex in ipairs(t) do
 		local category = GetAddOnMetadata(addonIndex, "Author")
-		if not category then 
+		if not category then
 			category = "Unknown"
 		end
 		if category ~= prevCategory then
@@ -540,7 +541,7 @@ function rMCP:LoadSet(set)
 	end
 	
 	enabledList = acquire()
-	local name 
+	local name
 	for i = 1, GetNumAddOns() do		
 		name = GetAddOnInfo(i)
 		if rMCP:FindAddon( list, name ) then
@@ -559,46 +560,20 @@ end
 function rMCP:RenameSet(set)
 
 	
-	local setName 
+	local setName
 	
-	if savedVar and savedVar.AddonSet and savedVar.AddonSet[set] and savedVar.AddonSet[set].name then 
+	if savedVar and savedVar.AddonSet and savedVar.AddonSet[set] and savedVar.AddonSet[set].name then
 		setName = savedVar.AddonSet[set].name
 	else
 		setName = "Set " .. set
 	end
 	
-	
 	if not MCP_EditBox then
-		MCP_EditBox = CreateFrame('Editbox',nil,UIParent)
-		MCP_EditBox:SetHeight(25)
-		MCP_EditBox:SetWidth(300)
-		MCP_EditBox:SetPoint('CENTER',0,0)
-		MCP_EditBox:SetFrameStrata("DIALOG")
-
-		MCP_EditBox:SetBackdrop({
-			bgFile='Interface\\Tooltips\\UI-Tooltip-Background',
-			edgeFile='Interface\\Tooltips\\UI-Tooltip-Border',
-			edgeSize=16, tileSize=16, tile=true,
-			insets={left=5, right=5, top=5, bottom=5}})
-
-		MCP_EditBox:SetBackdropColor(0,0,0,1)
-		MCP_EditBox:SetFont('Fonts\\FRIZQT__.TTF',13)
-		MCP_EditBox:SetTextInsets(5,5,0,0)
-		
-		MCP_EditBox:SetScript('OnEscapePressed',function()
-			this:Hide()
-		end)
-		
-		MCP_EditBox:SetScript('OnEnterPressed',function()
-			if not savedVar then savedVar = {} end
-			if not savedVar.AddonSet then savedVar.AddonSet = {} end
-			if not savedVar.AddonSet[set] then savedVar.AddonSet[set] = {} end
-			savedVar.AddonSet[set].name = this:GetText()
-			this:Hide()
-		end)	
+		self:CreateEditBox()
 	end
 	
 	
+	self.renamingSet = set
 	MCP_EditBox:SetText( setName )
 	MCP_EditBox:Show()
 	
@@ -606,7 +581,39 @@ function rMCP:RenameSet(set)
 
 end
 
+function rMCP:CreateEditBox()
+	MCP_EditBox = CreateFrame('Editbox',nil,UIParent)
+	MCP_EditBox:SetHeight(25)
+	MCP_EditBox:SetWidth(300)
+	MCP_EditBox:SetPoint('CENTER',0,0)
+	MCP_EditBox:SetFrameStrata("DIALOG")
 
+	MCP_EditBox:SetBackdrop({
+		bgFile='Interface\\Tooltips\\UI-Tooltip-Background',
+		edgeFile='Interface\\Tooltips\\UI-Tooltip-Border',
+		edgeSize=16, tileSize=16, tile=true,
+		insets={left=5, right=5, top=5, bottom=5}})
+
+	MCP_EditBox:SetBackdropColor(0,0,0,1)
+	MCP_EditBox:SetFont('Fonts\\FRIZQT__.TTF',13)
+	MCP_EditBox:SetTextInsets(5,5,0,0)
+	
+	MCP_EditBox:SetScript('OnEscapePressed',function()
+		this:Hide()
+	end)
+	
+	MCP_EditBox:SetScript('OnEnterPressed',function()
+		local set = self.renamingSet
+		if set then
+			if not savedVar then savedVar = {} end
+			if not savedVar.AddonSet then savedVar.AddonSet = {} end
+			if not savedVar.AddonSet[set] then savedVar.AddonSet[set] = {} end
+			savedVar.AddonSet[set].name = this:GetText()
+		end
+		this:Hide()
+	end)
+
+end
 
 -- Rebuild sortedAddonList from masterAddonList
 function rMCP:RebuildSortedAddonList()
@@ -838,7 +845,7 @@ function rMCP:SetDropDown_OnLoad()
 	if UIDROPDOWNMENU_MENU_LEVEL == 1 then
 
 		local info, count, name
-		for i = 1, 	MCP_SET_SIZE do	
+		for i = 1, 	MCP_SET_SIZE do
 			local name = nil
 			
 			info = UIDropDownMenu_CreateInfo()
@@ -853,7 +860,7 @@ function rMCP:SetDropDown_OnLoad()
 				name = "Set " .. i
 			end
 			
-			info = UIDropDownMenu_CreateInfo()	
+			info = UIDropDownMenu_CreateInfo()
 			info.text = string.format("%s (%d)", name, count)
 			info.value = i
 			info.hasArrow = 1
@@ -867,7 +874,7 @@ function rMCP:SetDropDown_OnLoad()
 		else
 			count = 0
 		end	
-		info = UIDropDownMenu_CreateInfo()	
+		info = UIDropDownMenu_CreateInfo()
 		info.text = string.format("%s (%d)", playerClass, count)
 		info.value = playerClass
 		info.hasArrow = 1
@@ -875,7 +882,7 @@ function rMCP:SetDropDown_OnLoad()
 		UIDropDownMenu_AddButton(info)
 		
 		-- Default set.
-		info = UIDropDownMenu_CreateInfo()	
+		info = UIDropDownMenu_CreateInfo()
 		info.text = string.format("Default (%d)", table.getn(MCP_DefaultSet))
 		info.value = MCP_DEFAULT_SET
 		info.hasArrow = 1
@@ -885,7 +892,7 @@ function rMCP:SetDropDown_OnLoad()
 	elseif UIDROPDOWNMENU_MENU_LEVEL == 2 then
 	
 		local setName = self:GetSetName(UIDROPDOWNMENU_MENU_VALUE)
-		info = UIDropDownMenu_CreateInfo()			
+		info = UIDropDownMenu_CreateInfo()
 		info.text = setName
 		info.isTitle = 1
 		info.notCheckable = 1
@@ -893,32 +900,32 @@ function rMCP:SetDropDown_OnLoad()
 		
 		
 		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET then
-			info = UIDropDownMenu_CreateInfo()			
+			info = UIDropDownMenu_CreateInfo()
 			info.text = "Save"
 			info.func = function() self:SaveSet(UIDROPDOWNMENU_MENU_VALUE) end
 			info.notCheckable = 1
 			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
 		end
 		
-		info = UIDropDownMenu_CreateInfo()			
+		info = UIDropDownMenu_CreateInfo()
 		info.text = "Load"
 		info.func = function() self:LoadSet(UIDROPDOWNMENU_MENU_VALUE) end
 		info.notCheckable = 1
 		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
 		
 		
-		info = UIDropDownMenu_CreateInfo()			
+		info = UIDropDownMenu_CreateInfo()
 		info.text = "Unload"
 		info.func = function() self:UnloadSet(UIDROPDOWNMENU_MENU_VALUE) end
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)		
+		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
 		
 		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET and UIDROPDOWNMENU_MENU_VALUE ~= playerClass then
-			info = UIDropDownMenu_CreateInfo()			
+			info = UIDropDownMenu_CreateInfo()
 			info.text = "Rename"
 			info.func = function() self:RenameSet(UIDROPDOWNMENU_MENU_VALUE) end
 			info.notCheckable = 1
-			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)		
+			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
 		end
 	
 	end
@@ -964,6 +971,6 @@ function rMCP:ShowTooltip(index)
 	end
 	
 	GameTooltip:Show()
-  
+
 end
 
