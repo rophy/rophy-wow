@@ -117,7 +117,6 @@ local MCP_FRAME_NAME = "MCP_AddonList"
 local playerClass = nil
 local MCP_SET_SIZE = 10
 local MCP_MAXADDONS = 20
-local MCP_EditBox
 local MCP_DefaultSet = {}
 local MCP_DEFAULT_SET = 0
 local MCP_BLIZZARD_ADDONS = {
@@ -151,7 +150,11 @@ local MCP_BLIZZARD_ADDONS_TITLES = {
 	"Blizzard: Trainer",
 }
 rMCP.MCP_BLIZZARD_ADDONS = MCP_BLIZZARD_ADDONS
-
+local L = setmetatable({}, { 
+	__index = function(t, k)
+		error("Locale key " .. tostring(k ) .. " is not provided.")
+	end
+} )
 local enabledList -- Used to prevent recursive loop in EnableAddon.
 
 local function ParseVersion(version)
@@ -179,9 +182,23 @@ end
 
 function rMCP:OnLoad()
 
+	
+	GameMenuButtonAddOns:SetText(L["AddOns"])
+	
+	for i=1, MCP_MAXADDONS do
+		local button = _G[MCP_FRAME_NAME.."Entry"..i.."LoadNow"]
+		button:SetText(L["Load"])
+	end
+	
+	_G[MCP_FRAME_NAME.."DisableAll"]:SetText(L["Disable All"])
+	_G[MCP_FRAME_NAME.."EnableAll"]:SetText(L["Enable All"])
+	_G[MCP_FRAME_NAME.."SetButton"]:SetText(L["Sets"])
+	_G[MCP_FRAME_NAME.."_ReloadUI"]:SetText(L["ReloadUI"])
+	
 	UIPanelWindows[MCP_FRAME_NAME] = { area = "center", pushable = 0, whileDead = 1 }
+	
 	StaticPopupDialogs["MCP_RELOADUI"] = {
-		text = "Reload your User Interface?",
+		text = L["Reload your User Interface?"],
 		button1 = TEXT(ACCEPT),
 		button2 = TEXT(CANCEL),
 		OnAccept = function()
@@ -189,7 +206,44 @@ function rMCP:OnLoad()
 		end,
 		timeout = 0,
 		hideOnEscape = 1,
+		exclusive = 1,
 		whileDead = 1
+	}
+	
+	StaticPopupDialogs["MCP_SAVESET"] = {
+		text = L["Save the current addon list to [%s]?"],
+		button1 = TEXT(YES),
+		button2 = TEXT(CANCEL),
+		OnAccept = function()
+			self:SaveSet(self.savingSet)
+			CloseDropDownMenus(1)
+		end,
+		timeout = 0,
+		hideOnEscape = 1,
+		whileDead = 1,
+		exclusive = 1,
+	}
+	
+	StaticPopupDialogs["MCP_RENAMESET"] = {
+		text = L["Enter the new name for [%s]:"],
+		button1 = TEXT(YES),
+		button2 = TEXT(CANCEL),
+		EditBoxOnEnterPressed = function()
+			local text = getglobal(this:GetParent():GetName().."EditBox"):GetText()
+			if text == "" then
+				text = nil
+			end
+			self:RenameSet(self.renamingSet, text)
+			this:GetParent():Hide()
+		end,
+		EditBoxOnEscapePressed = function()
+			this:GetParent():Hide()
+		end,
+		timeout = 0,
+		hideOnEscape = 1,
+		exclusive = 1,
+		whileDead = 1,
+		hasEditBox = 1,
 	}
 
 
@@ -489,9 +543,7 @@ function rMCP:SaveSet(set)
 		end
 	end
 	
-	self:Print("Addons " .. self:GetSetName(set) .. " Saved." )
-
-	CloseDropDownMenus(1)
+	self:Print(L["Addons [%s] Saved."]:format(self:GetSetName(set)) )
 	
 end
 
@@ -524,7 +576,7 @@ function rMCP:UnloadSet(set)
 		end
 	end
 
-	self:Print("Addons " .. self:GetSetName(set) .. " Unloaded." )
+	self:Print(L["Addons [%s] Unloaded."]:format(self:GetSetName(set)) )
 	rMCP:AddonList_OnShow()
 end
 
@@ -552,66 +604,20 @@ function rMCP:LoadSet(set)
 	reclaim(enabledList)
 	enabledList = nil
 	
-	self:Print("Addons " .. self:GetSetName(set) .. " Loaded." )
+	self:Print(L["Addons [%s] Loaded."]:format(self:GetSetName(set)) )
 	rMCP:AddonList_OnShow()
 	
 end
 
-function rMCP:RenameSet(set)
+function rMCP:RenameSet(set, name)
 
+	local oldName = self:GetSetName(set)
+	if not savedVar then savedVar = {} end
+	if not savedVar.AddonSet then savedVar.AddonSet = {} end
+	if not savedVar.AddonSet[set] then savedVar.AddonSet[set] = {} end
+	savedVar.AddonSet[set].name = name
 	
-	local setName
-	
-	if savedVar and savedVar.AddonSet and savedVar.AddonSet[set] and savedVar.AddonSet[set].name then
-		setName = savedVar.AddonSet[set].name
-	else
-		setName = "Set " .. set
-	end
-	
-	if not MCP_EditBox then
-		self:CreateEditBox()
-	end
-	
-	
-	self.renamingSet = set
-	MCP_EditBox:SetText( setName )
-	MCP_EditBox:Show()
-	
-	CloseDropDownMenus(1)
-
-end
-
-function rMCP:CreateEditBox()
-	MCP_EditBox = CreateFrame('Editbox',nil,UIParent)
-	MCP_EditBox:SetHeight(25)
-	MCP_EditBox:SetWidth(300)
-	MCP_EditBox:SetPoint('CENTER',0,0)
-	MCP_EditBox:SetFrameStrata("DIALOG")
-
-	MCP_EditBox:SetBackdrop({
-		bgFile='Interface\\Tooltips\\UI-Tooltip-Background',
-		edgeFile='Interface\\Tooltips\\UI-Tooltip-Border',
-		edgeSize=16, tileSize=16, tile=true,
-		insets={left=5, right=5, top=5, bottom=5}})
-
-	MCP_EditBox:SetBackdropColor(0,0,0,1)
-	MCP_EditBox:SetFont('Fonts\\FRIZQT__.TTF',13)
-	MCP_EditBox:SetTextInsets(5,5,0,0)
-	
-	MCP_EditBox:SetScript('OnEscapePressed',function()
-		this:Hide()
-	end)
-	
-	MCP_EditBox:SetScript('OnEnterPressed',function()
-		local set = self.renamingSet
-		if set then
-			if not savedVar then savedVar = {} end
-			if not savedVar.AddonSet then savedVar.AddonSet = {} end
-			if not savedVar.AddonSet[set] then savedVar.AddonSet[set] = {} end
-			savedVar.AddonSet[set].name = this:GetText()
-		end
-		this:Hide()
-	end)
+	self:Print(L["Addons [%s] renamed to [%s]."]:format(oldName,name) )
 
 end
 
@@ -632,10 +638,10 @@ function rMCP:RebuildSortedAddonList()
 			if not category or not collapsedAddons[category] then
 				for j, subAddon in ipairs(addon) do
 					table.insert(sortedAddonList, subAddon)
-				end		
-			end			
+				end
+			end
 		end
-	end	
+	end
 	
 	
 end
@@ -648,6 +654,17 @@ function rMCP:SetMasterAddonBuilder(sorter)
 	savedVar.sorter = sorter
 	self:ReloadAddonList()
 end
+
+function rMCP:UpdateLocale(loc)
+	for k, v in pairs(loc) do
+		if v == true then
+			L[k] = k
+		else
+			L[k] = v
+		end
+	end
+end
+
 
 -- UI Controllers.
 
@@ -823,7 +840,7 @@ function rMCP:AddonList_OnShow()
 				elseif (loaded) then
 					status:SetText(TEXT(ADDON_LOADED));
 				elseif (ondemand) then
-					status:SetText("Loaded on demand.");
+					status:SetText(L["Loaded on demand."]);
 				else
 					status:SetText("");
 				end
@@ -839,10 +856,10 @@ function rMCP:AddonList_OnShow()
 end
 
 
-function rMCP:SetDropDown_OnLoad()
+function rMCP:SetDropDown_OnLoad(level)
 	if not savedVar then return end
 	
-	if UIDROPDOWNMENU_MENU_LEVEL == 1 then
+	if level == 1 then
 
 		local info, count, name
 		for i = 1, 	MCP_SET_SIZE do
@@ -851,14 +868,11 @@ function rMCP:SetDropDown_OnLoad()
 			info = UIDropDownMenu_CreateInfo()
 			if savedVar.AddonSet and savedVar.AddonSet[i] then
 				count = table.getn(savedVar.AddonSet[i])
-				name = savedVar.AddonSet[i].name
 			else		
 				count = 0
 			end
 			
-			if not name then
-				name = "Set " .. i
-			end
+			name = self:GetSetName(i)
 			
 			info = UIDropDownMenu_CreateInfo()
 			info.text = string.format("%s (%d)", name, count)
@@ -889,47 +903,58 @@ function rMCP:SetDropDown_OnLoad()
 		info.notCheckable = 1
 		UIDropDownMenu_AddButton(info)
 	
-	elseif UIDROPDOWNMENU_MENU_LEVEL == 2 then
+	elseif level == 2 then
 	
 		local setName = self:GetSetName(UIDROPDOWNMENU_MENU_VALUE)
 		info = UIDropDownMenu_CreateInfo()
 		info.text = setName
 		info.isTitle = 1
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+		UIDropDownMenu_AddButton(info, level)
 		
 		
 		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET then
 			info = UIDropDownMenu_CreateInfo()
 			info.text = "Save"
-			info.func = function() self:SaveSet(UIDROPDOWNMENU_MENU_VALUE) end
+			info.func = function()
+				self.savingSet = UIDROPDOWNMENU_MENU_VALUE
+				StaticPopup_Show("MCP_SAVESET", setName)
+			end
 			info.notCheckable = 1
-			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+			UIDropDownMenu_AddButton(info, level)
 		end
-		
+
 		info = UIDropDownMenu_CreateInfo()
 		info.text = "Load"
 		info.func = function() self:LoadSet(UIDROPDOWNMENU_MENU_VALUE) end
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+		UIDropDownMenu_AddButton(info, level)
 		
 		
 		info = UIDropDownMenu_CreateInfo()
 		info.text = "Unload"
 		info.func = function() self:UnloadSet(UIDROPDOWNMENU_MENU_VALUE) end
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+		UIDropDownMenu_AddButton(info, level)
 		
 		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET and UIDROPDOWNMENU_MENU_VALUE ~= playerClass then
 			info = UIDropDownMenu_CreateInfo()
 			info.text = "Rename"
-			info.func = function() self:RenameSet(UIDROPDOWNMENU_MENU_VALUE) end
+			info.func = function()
+				self.renamingSet = UIDROPDOWNMENU_MENU_VALUE
+				StaticPopup_Show("MCP_RENAMESET", setName)
+				CloseDropDownMenus(1)
+			end
+--			self:RenameSet(UIDROPDOWNMENU_MENU_VALUE) end
 			info.notCheckable = 1
-			UIDropDownMenu_AddButton(info, UIDROPDOWNMENU_MENU_LEVEL)
+			UIDropDownMenu_AddButton(info, level)
 		end
+		
 	
 	end
 	
+
+		
 
 	
 end
