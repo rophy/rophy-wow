@@ -504,76 +504,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</OnVerticalScroll>
 				</Scripts>
 			</ScrollFrame>
-			<!--
-			<Button name="$parentSaveSet" inherits="UIPanelButtonTemplate" text="Save">
-				<Size>
-					<AbsDimension x="40" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOMLEFT">
-						<Offset>
-							<AbsDimension x="160" y="20"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						rMCP:CollapseAll_OnClick();
-					</OnClick>
-				</Scripts>
-			</Button>			
-			<Button name="$parentLoadSet" inherits="UIPanelButtonTemplate" text="Load">
-				<Size>
-					<AbsDimension x="40" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentSaveSet" relativePoint="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="5" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>			
-				<Scripts>
-					<OnClick>
-						rMCP:LoadSet_OnClick();
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="$parentDisableSet" inherits="UIPanelButtonTemplate" text="Unload">
-				<Size>
-					<AbsDimension x="70" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentLoadSet" relativePoint="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="5" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						rMCP:UnloadSet_OnClick()
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="$parentRenameSet" inherits="UIPanelButtonTemplate" text="Rename">
-				<Size>
-					<AbsDimension x="70" y="24"/>
-				</Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentDisableSet" relativePoint="TOPRIGHT">
-						<Offset>
-							<AbsDimension x="5" y="0"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						rMCP:RenameSet_OnClick()
-					</OnClick>
-				</Scripts>
-			</Button>
-			-->
 		</Frames>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -647,7 +577,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 						</Anchor>
 					</Anchors>
 				</Texture>
-				<FontString name="$parentHeaderTitle" inherits="GameFontNormal" text="ADDON_LIST">
+				<FontString name="$parentHeaderTitle" inherits="GameFontNormal">
 					<Anchors>
 						<Anchor point="TOP" relativeTo="$parentHeader">
 							<Offset>
@@ -656,17 +586,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<!--
-				<FontString name="$parentSortAce2Text" inherits="GameFontHighlightSmall" text="Sort by Ace2 Categories">
-				<Anchors>
-					<Anchor point="TOPLEFT">
-						<Offset>
-							<AbsDimension  x="196" y="-32"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				</FontString>
-				-->
 			</Layer>
 		</Layers>
 		<Scripts>
@@ -681,15 +600,11 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			</OnShow>
 		</Scripts>
 	</Frame>
-   <Frame name="MCP_SetDropDown" inherits="UIDropDownMenuTemplate" id="1">
+	<Frame name="MCP_SetDropDown" inherits="UIDropDownMenuTemplate" id="1">
 		<Scripts>
 			<OnLoad>
-				UIDropDownMenu_Initialize(this, function() rMCP:SetDropDown_OnLoad() end, "MENU");
+				UIDropDownMenu_Initialize(this, function(level) rMCP:SetDropDown_OnLoad(level) end, "MENU");
 			</OnLoad>
 		</Scripts>
-   </Frame>	 
-	<!--
-   <Frame name="rMCPDropDownMenu" inherits="UIDropDownMenuTemplate" id="1">
-   </Frame>	
--->
+	</Frame>
 </Ui>
