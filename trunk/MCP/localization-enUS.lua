@@ -15,5 +15,18 @@ rMCP:UpdateLocale( {
 	["Enable All"] = true,
 	["ReloadUI"] = true,
 	["Sets"] = true,
+	
+	["Blizzard_AuctionUI"] = "Blizzard: Auction",
+	["Blizzard_BattlefieldMinimap"] = "Blizzard: Battlefield Minimap",
+	["Blizzard_BindingUI"] = "Blizzard: Binding",
+	["Blizzard_CombatText"] = "Blizzard: Combat Text",
+	["Blizzard_CraftUI"] = "Blizzard: Craft",
+	["Blizzard_GMSurveyUI"] = "Blizzard: GM Survey",
+	["Blizzard_InspectUI"] = "Blizzard: Inspect",
+	["Blizzard_ItemSocketingUI"] = "Blizzard: Item Socketing",
+	["Blizzard_MacroUI"] = "Blizzard: Macro",
+	["Blizzard_RaidUI"] = "Blizzard: Raid",
+	["Blizzard_TalentUI"] = "Blizzard: Talent",
+	["Blizzard_TradeSkillUI"] = "Blizzard: Trade Skill",
+	["Blizzard_TrainerUI"] = "Blizzard: Trainer",
 } )
-

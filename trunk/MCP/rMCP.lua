@@ -6,7 +6,7 @@ rMCP = {}
 MCP_LINEHEIGHT = 16
 
 MCP_NO_NOTES = "No information available."
-ADDON_LOADED = "Loaded";
+ADDON_LOADED = "Loaded"
 
 
 --==============
@@ -35,6 +35,9 @@ ADDON_LOADED = "Loaded";
 		
 	This list is used to build sortedAddonList, which is the list used in the FauxScrollFrame.
 	
+	NEW: addonIndex can now be number or string, where string is the addon name, 
+			so you can directly insert the Blizzard addon names to the list.
+	
 --]]
 local masterAddonList = {}
 rMCP.masterAddonList = masterAddonList
@@ -57,9 +60,10 @@ rMCP.masterAddonList = masterAddonList
 			...,
 		}
 		
-	if type(addonIndex) == 'string', it will be shown in the panel as a category header. The collapse state will be retrieved from masterAddonList.
-	if addonIndex > GetNumAddOns(), it's a Blizzard addon, the index references to MCP_BLIZZARD_ADDONS[addonIndex - GetNumAddOns()].
-	otherwise, addonIndex is the index used in GetAddOnInfo().
+	- If type(addonIndex) == 'string', it will be shown in the panel as a category header. 
+	- The collapse state will be retrieved from the saved variables: collapsedAddons.
+	- If addonIndex > GetNumAddOns(), it's a Blizzard addon, the index references to MCP_BLIZZARD_ADDONS[addonIndex - GetNumAddOns()].
+	- otherwise, addonIndex is the index used in GetAddOnInfo().
 	
 	This list will be rebuilt whenever use expanded/collapsed a category, or when user changed the sorting criteria.
 	
@@ -134,21 +138,6 @@ local MCP_BLIZZARD_ADDONS = {
 	"Blizzard_TradeSkillUI",
 	"Blizzard_TrainerUI",
 }
-local MCP_BLIZZARD_ADDONS_TITLES = {
-	"Blizzard: Auction",
-	"Blizzard: Battlefield Minimap",
-	"Blizzard: Binding",
-	"Blizzard: Combat Text",
-	"Blizzard: Craft",
-	"Blizzard: GM Survey",
-	"Blizzard: Inspect",
-	"Blizzard: Item Socketing",
-	"Blizzard: Macro",
-	"Blizzard: Raid",
-	"Blizzard: Talent",
-	"Blizzard: Trade Skill",
-	"Blizzard: Trainer",
-}
 rMCP.MCP_BLIZZARD_ADDONS = MCP_BLIZZARD_ADDONS
 local L = setmetatable({}, { 
 	__index = function(t, k)
@@ -156,6 +145,8 @@ local L = setmetatable({}, {
 	end
 } )
 local enabledList -- Used to prevent recursive loop in EnableAddon.
+local GetAddOnMemoryUsage = _G["GetAddOnMemoryUsage"]
+local GetAddOnCPUUsage = _G["GetAddOnCPUUsage"]
 
 local function ParseVersion(version)
 	if type(version) == "string" then
@@ -202,7 +193,7 @@ function rMCP:OnLoad()
 		button1 = TEXT(ACCEPT),
 		button2 = TEXT(CANCEL),
 		OnAccept = function()
-			ReloadUI();
+			ReloadUI()
 		end,
 		timeout = 0,
 		hideOnEscape = 1,
@@ -246,7 +237,17 @@ function rMCP:OnLoad()
 		hasEditBox = 1,
 	}
 
-
+	MCP_BLIZZARD_ADDONS = setmetatable(MCP_BLIZZARD_ADDONS, {
+		__index = function(t,k)
+			for i=1, #t do
+				if t[i] == k then
+					t[k] = i
+					return i
+				end
+			end
+		end
+	} )
+	
 	local title = "rMasterControlPanel "
 	local version = GetAddOnMetadata(MCP_ADDON_NAME, "Version")
 	if version then
@@ -298,8 +299,8 @@ addonListBuilders["Default"] = function()
 	for i=1, numAddons do
 		table.insert(masterAddonList, i)		
 	end
-	for i=1, #MCP_BLIZZARD_ADDONS do
-		table.insert(masterAddonList, numAddons+i)
+	for i, addon in ipairs(MCP_BLIZZARD_ADDONS) do
+		table.insert(masterAddonList, addon)
 	end
 end
 
@@ -423,6 +424,43 @@ addonListBuilders["Author"] = function()
 		end
 	end
 	
+end
+
+
+if GetAddOnMemoryUse then
+	addonListBuilders["Memory"] = function()
+		for k in pairs(masterAddonList) do
+			masterAddonList[k] = nil
+		end
+		local numAddons = GetNumAddOns()
+		for i=1, numAddons do
+			table.insert(masterAddonList, i)
+		end
+		for i, name in ipairs(MCP_BLIZZARD_ADDONS) do
+			table.insert(masterAddonList, name)
+		end
+		table.sort(masterAddonList, function(a,b)
+			return GetAddOnMemoryUse(a) > GetAddOnMemoryUse(b)
+		end )
+	end
+end
+
+if GetAddOnCPUUsage then
+	addonListBuilders["CPU"] = function()
+		for k in pairs(masterAddonList) do
+			masterAddonList[k] = nil
+		end
+		local numAddons = GetNumAddOns()
+		for i=1, numAddons do
+			table.insert(masterAddonList, i)
+		end
+		for i, name in ipairs(MCP_BLIZZARD_ADDONS) do
+			table.insert(masterAddonList, name)
+		end
+		table.sort(masterAddonList, function(a,b)
+			return GetAddOnCPUUsage(a) > GetAddOnCPUUsage(b)
+		end )
+	end
 end
 
 function rMCP:ReloadAddonList()
@@ -628,9 +666,7 @@ function rMCP:RebuildSortedAddonList()
 	end
 
 	for i, addon in ipairs(masterAddonList) do
-		if type(addon) ~= 'table' then
-			table.insert(sortedAddonList, addon)
-		else
+		if type(addon) == 'table' then
 			local category = addon.category
 			if category then
 				table.insert(sortedAddonList, category)
@@ -640,6 +676,20 @@ function rMCP:RebuildSortedAddonList()
 					table.insert(sortedAddonList, subAddon)
 				end
 			end
+		else
+			if type(addon) == 'string' then
+				local addonIndex = MCP_BLIZZARD_ADDONS[addon]
+				if addonIndex then
+					addonIndex = addonIndex + GetNumAddOns()
+				else
+					addonIndex = GetAddonIndex(addon)
+				end
+				if not addonIndex then
+					error("Cannot find " .. addon)
+				end
+				addon = addonIndex
+			end
+			table.insert(sortedAddonList, addon)
 		end
 	end
 	
@@ -722,10 +772,10 @@ function rMCP:AddonList_Enable(addonIndex,enabled)
 			reclaim(enabledList)
 			enabledList = nil
 		else
-			DisableAddOn(addonIndex);
+			DisableAddOn(addonIndex)
 		end
 	end
-	self:AddonList_OnShow();
+	self:AddonList_OnShow()
 end
 
 function rMCP:AddonList_LoadNow(index)
@@ -735,22 +785,22 @@ end
 
 function rMCP:AddonList_OnShow()
 	local function setSecurity (obj, idx)
-		local width,height,iconWidth = 64,16,16;
-		local increment = iconWidth/width;
-		local left = (idx-1)*increment;
-		local right = idx*increment;
-		obj:SetTexCoord(left, right, 0, 1);
+		local width,height,iconWidth = 64,16,16
+		local increment = iconWidth/width
+		local left = (idx-1)*increment
+		local right = idx*increment
+		obj:SetTexCoord(left, right, 0, 1)
 	end
 
 
 	local origNumAddons = GetNumAddOns()
 	numAddons = #sortedAddonList
-	FauxScrollFrame_Update(MCP_AddonList_ScrollFrame, numAddons, MCP_MAXADDONS, MCP_LINEHEIGHT, nil, nil, nil);
-	local i;
-	local offset = FauxScrollFrame_GetOffset(MCP_AddonList_ScrollFrame);
+	FauxScrollFrame_Update(MCP_AddonList_ScrollFrame, numAddons, MCP_MAXADDONS, MCP_LINEHEIGHT, nil, nil, nil)
+	local i
+	local offset = FauxScrollFrame_GetOffset(MCP_AddonList_ScrollFrame)
 	for i = 1, MCP_MAXADDONS, 1 do
-		obj = getglobal("MCP_AddonListEntry"..i);
-		local addonIdx = sortedAddonList[offset+i];
+		obj = getglobal("MCP_AddonListEntry"..i)
+		local addonIdx = sortedAddonList[offset+i]
 
 		if offset+i > #sortedAddonList then
 			obj:Hide()
@@ -791,63 +841,63 @@ function rMCP:AddonList_OnShow()
 				securityButton:Show()
 				headerText:Hide()
 				collapse:Hide()
-				local name, title, notes, enabled, loadable, reason, security;
+				local name, title, notes, enabled, loadable, reason, security
 				if (addonIdx > origNumAddons) then
-					name = MCP_BLIZZARD_ADDONS[(addonIdx-origNumAddons)];
-					obj.addon = name;
-					title = MCP_BLIZZARD_ADDONS_TITLES[(addonIdx-origNumAddons)];
-					notes = "";
-					enabled = 1;
-					loadable = 1;
+					name = MCP_BLIZZARD_ADDONS[(addonIdx-origNumAddons)]
+					obj.addon = name
+					title = L[name]
+					notes = ""
+					enabled = 1
+					loadable = 1
 					if (IsAddOnLoaded(name)) then
-						reason = "LOADED";
-						loadable = 1;
+						reason = "LOADED"
+						loadable = 1
 					end
-					security = "SECURE";
+					security = "SECURE"
 				else
-					name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(addonIdx);
-					obj.addon = addonIdx;
+					name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(addonIdx)
+					obj.addon = addonIdx
 				end
-				local loaded = IsAddOnLoaded(name);
-				local ondemand = IsAddOnLoadOnDemand(name);
+				local loaded = IsAddOnLoaded(name)
+				local ondemand = IsAddOnLoadOnDemand(name)
 				if (loadable) then
-					titleText:SetTextColor(1,0.78,0);
+					titleText:SetTextColor(1,0.78,0)
 				elseif (enabled and reason ~= "DEP_DISABLED") then
-					titleText:SetTextColor(1,0.1,0.1);
+					titleText:SetTextColor(1,0.1,0.1)
 				else
-					titleText:SetTextColor(0.5,0.5,0.5);
+					titleText:SetTextColor(0.5,0.5,0.5)
 				end
 				if (title) then
-					titleText:SetText(title);
+					titleText:SetText(title)
 				else
-					titleText:SetText(name);
+					titleText:SetText(name)
 				end
 				if (name == MCP_ADDON_NAME or addonIdx > origNumAddons) then
-					checkbox:Hide();
+					checkbox:Hide()
 				else
-					checkbox:Show();
-					checkbox:SetChecked(enabled);
+					checkbox:Show()
+					checkbox:SetChecked(enabled)
 				end
 				if (security == "SECURE") then
-					setSecurity(securityIcon,1);
+					setSecurity(securityIcon,1)
 				elseif (security == "INSECURE") then
-					setSecurity(securityIcon,2);
+					setSecurity(securityIcon,2)
 				elseif (security == "BANNED") then -- wtf?
-					setSecurity(securityIcon,3);
+					setSecurity(securityIcon,3)
 				end
 				if (reason) then
-					status:SetText(TEXT(getglobal("ADDON_"..reason)));
+					status:SetText(TEXT(getglobal("ADDON_"..reason)))
 				elseif (loaded) then
-					status:SetText(TEXT(ADDON_LOADED));
+					status:SetText(TEXT(ADDON_LOADED))
 				elseif (ondemand) then
-					status:SetText(L["Loaded on demand."]);
+					status:SetText(L["Loaded on demand."])
 				else
-					status:SetText("");
+					status:SetText("")
 				end
 				if (not loaded and enabled and ondemand) then
-					loadnow:Show();
+					loadnow:Show()
 				else
-					loadnow:Hide();
+					loadnow:Hide()
 				end
 			end
 		end
@@ -993,6 +1043,16 @@ function rMCP:ShowTooltip(index)
 		 	end
 		 end
 		 GameTooltip:AddLine(depLine)
+	end
+	
+	if GetAddOnMemoryUse then
+		local mem = GetAddOnMemoryUse(index)
+		GameTooltip:AddLine("Memory: " .. tostring(mem), 1, 1, 0, 1)
+	end
+	
+	if GetAddOnCPUUsage then
+		local cpu = GetAddOnCPUUsage
+		GameTooltip:AddLine("CPU: " .. tostring(cpu), 1, 1, 0, 1)
 	end
 	
 	GameTooltip:Show()
