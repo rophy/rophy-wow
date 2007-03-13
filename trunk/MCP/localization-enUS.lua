@@ -15,6 +15,9 @@ rMCP:UpdateLocale( {
 	["Enable All"] = true,
 	["ReloadUI"] = true,
 	["Sets"] = true,
+	["No information available."] = true,
+	["Loaded"] = true,
+	
 	
 	["Blizzard_AuctionUI"] = "Blizzard: Auction",
 	["Blizzard_BattlefieldMinimap"] = "Blizzard: Battlefield Minimap",
