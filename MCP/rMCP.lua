@@ -5,8 +5,6 @@ rMCP = {}
 
 MCP_LINEHEIGHT = 16
 
-MCP_NO_NOTES = "No information available."
-ADDON_LOADED = "Loaded"
 
 
 --==============
@@ -170,6 +168,26 @@ local function toggle(flag)
 	end
 end
 
+local function GetAddonIndex(addon)
+	if type(addon) == 'number' then
+		return addon
+	elseif type(addon) == 'string' then
+		local addonIndex = MCP_BLIZZARD_ADDONS[addon]
+		if addonIndex then
+			return addonIndex + GetNumAddOns()
+		else
+			for i=1, GetNumAddOns() do
+				local name = GetAddOnInfo(i)
+				if name == addon then
+					return i
+				end
+			end
+			error("Cannot find addon " .. tostring(addon) )
+		end
+	else
+		error("GetAddonIndex(): addon must be of type number of string.")
+	end
+end
 
 function rMCP:OnLoad()
 
@@ -259,6 +277,10 @@ function rMCP:OnLoad()
 	
 	_, playerClass = UnitClass("player")
 	
+	
+	SlashCmdList["RMCP"] = self.SlashHandler
+
+	SLASH_RMCP1 = "/rmcp"
 end
 
 
@@ -290,6 +312,9 @@ function rMCP:OnEvent(event)
 	
 end
 
+function rMCP.SlashHandler(msg)
+	ShowUIPanel(MCP_AddonList)
+end
 
 addonListBuilders["Default"] = function()
 	for k in pairs(masterAddonList) do
@@ -297,7 +322,7 @@ addonListBuilders["Default"] = function()
 	end
 	local numAddons = GetNumAddOns()
 	for i=1, numAddons do
-		table.insert(masterAddonList, i)		
+		table.insert(masterAddonList, i)
 	end
 	for i, addon in ipairs(MCP_BLIZZARD_ADDONS) do
 		table.insert(masterAddonList, addon)
@@ -426,6 +451,61 @@ addonListBuilders["Author"] = function()
 	
 end
 
+--[[
+	Sort the addons by their load state:
+		0: Loaded.
+		1: Enabled and loadable, but not loaded.
+		2: Enabled but not loaded and not lodable.
+		3: Disabled.
+]]
+addonListBuilders["Load State"] = function()
+	for k in pairs(masterAddonList) do
+		masterAddonList[k] = nil
+	end
+	local numAddons = GetNumAddOns()
+	for i=1, numAddons do
+		table.insert(masterAddonList, i)		
+	end
+	for i, addon in ipairs(MCP_BLIZZARD_ADDONS) do
+		table.insert(masterAddonList, addon)
+	end
+	table.sort(masterAddonList, function(a,b)
+		local va, vb
+		if IsAddOnLoaded(a) then
+			va = 0
+		else
+			local _, _, _, enabled, loadable = GetAddOnInfo(a)
+			if enabled then
+				if loadable then
+					va = 1
+				else
+					va = 2
+				end
+			else
+				va = 3
+			end
+		end
+		if IsAddOnLoaded(b) then
+			vb = 0
+		else
+			local _, _, _, enabled, loadable = GetAddOnInfo(b)
+			if enabled then
+				if loadable then
+					vb = 1
+				else
+					vb = 2
+				end
+			else
+				vb = 3
+			end
+		end
+		if va == vb then
+			return GetAddonIndex(a) < GetAddonIndex(b)
+		else
+			return va < vb
+		end
+	end )
+end
 
 if GetAddOnMemoryUse then
 	addonListBuilders["Memory"] = function()
@@ -677,18 +757,7 @@ function rMCP:RebuildSortedAddonList()
 				end
 			end
 		else
-			if type(addon) == 'string' then
-				local addonIndex = MCP_BLIZZARD_ADDONS[addon]
-				if addonIndex then
-					addonIndex = addonIndex + GetNumAddOns()
-				else
-					addonIndex = GetAddonIndex(addon)
-				end
-				if not addonIndex then
-					error("Cannot find " .. addon)
-				end
-				addon = addonIndex
-			end
+			addon = GetAddonIndex(addon)
 			table.insert(sortedAddonList, addon)
 		end
 	end
@@ -888,7 +957,7 @@ function rMCP:AddonList_OnShow()
 				if (reason) then
 					status:SetText(TEXT(getglobal("ADDON_"..reason)))
 				elseif (loaded) then
-					status:SetText(TEXT(ADDON_LOADED))
+					status:SetText(L["Loaded"])
 				elseif (ondemand) then
 					status:SetText(L["Loaded on demand."])
 				else
@@ -1032,7 +1101,7 @@ function rMCP:ShowTooltip(index)
 	if notes then
 		GameTooltip:AddLine(notes, 1, 1, 1, 1)
 	else
-	  GameTooltip:AddLine(MCP_NO_NOTES, 1, 1, 1)
+	  GameTooltip:AddLine(L["No information available."], 1, 1, 1)
 	end
 	
 	if deps[1] then
