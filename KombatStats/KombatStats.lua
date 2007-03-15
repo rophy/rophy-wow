@@ -4,6 +4,7 @@ Revision: $Revision: $Rev$ $
 Original Author(s): rophy (rophy123@gmail.com)
 ]]
 
+
 --------------------
 -- Mini-Compost --
 --------------------
@@ -1328,7 +1329,14 @@ function KombatStats:ShowDPS()
 			
 		tablet:Register(f,
 			'children', function() self:UpdateTooltip() end,
-			'point', function(parent) return "TOPLEFT", "BOTTOMLEFT" end
+			'clickable', false,
+			'point', function() 
+				if self.settings.dpsButtonOffsetY < -450 then
+					return "BOTTOMLEFT", "TOPLEFT"
+				else
+					return "TOPLEFT", "BOTTOMLEFT"
+				end
+			end
 		)
 		
 
