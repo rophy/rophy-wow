@@ -173,11 +173,11 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					</Anchor>
 				</Anchors>
 				<Scripts>
-					<OnLoad>
-						UIDropDownMenu_Initialize(this, function() rMCP:SortDropDown_OnLoad() end)
-					</OnLoad>
-				</Scripts>				
-			</Button>			
+					<OnShow>
+						rMCP:SortDropDown_OnShow()
+					</OnShow>
+				</Scripts>
+			</Button>
 			<Button name="$parentDisableAll" inherits="UIPanelButtonTemplate" text="Disable All">
 				<Size>
 					<AbsDimension x="80" y="24"/>
@@ -245,9 +245,9 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						ToggleDropDownMenu(1, nil, MCP_SetDropDown, this, 0, 0);
-					</OnClick>					
-				</Scripts>				
+						rMCP:SetButton_OnClick();
+					</OnClick>
+				</Scripts>
 			</Button>
 			<Button name="$parent_ReloadUI" inherits="UIPanelButtonTemplate" text="ReloadUI">
 				<Size>
@@ -598,13 +598,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			<OnShow>
 				rMCP:AddonList_OnShow()
 			</OnShow>
-		</Scripts>
-	</Frame>
-	<Frame name="MCP_SetDropDown" inherits="UIDropDownMenuTemplate" id="1">
-		<Scripts>
-			<OnLoad>
-				UIDropDownMenu_Initialize(this, function(level) rMCP:SetDropDown_OnLoad(level) end, "MENU");
-			</OnLoad>
 		</Scripts>
 	</Frame>
 </Ui>

@@ -766,7 +766,7 @@ function rMCP:RebuildSortedAddonList()
 end
 
 function rMCP:SetMasterAddonBuilder(sorter)
-	if not addonListBuilders[sorter] or not savedVar then return end	
+	if not addonListBuilders[sorter] or not savedVar then return end
 	for k in pairs(collapsedAddons) do
 		collapsedAddons[k] = nil
 	end
@@ -786,8 +786,14 @@ end
 
 
 -- UI Controllers.
+function rMCP:SortDropDown_OnShow()
+	if not self.initSortDropDown then
+		UIDropDownMenu_Initialize(this, function() self:SortDropDown_Populate() end)
+		self.initSortDropDown = true
+	end
+end
 
-function rMCP:SortDropDown_OnLoad()
+function rMCP:SortDropDown_Populate()
 	local info
 	for name, func in pairs(addonListBuilders) do
 		info = UIDropDownMenu_CreateInfo()
@@ -800,7 +806,6 @@ end
 function rMCP:SortDropDown_OnClick(sorter)
 
 end
-
 
 function rMCP:DisableAll_OnClick()
 	DisableAllAddOns()
@@ -974,8 +979,17 @@ function rMCP:AddonList_OnShow()
 	end
 end
 
+function rMCP:SetButton_OnClick()
+	if not self.dropDownFrame then
+		local frame = CreateFrame("Frame", "rMCP_SetDropDown", nil, "UIDropDownMenuTemplate")
+		UIDropDownMenu_Initialize(frame, function(level) self:SetDropDown_Populate(level) end, "MENU")
+		self.dropDownFrame = frame
+	end
+	ToggleDropDownMenu(1, nil, self.dropDownFrame, this, 0, 0)
+end
 
-function rMCP:SetDropDown_OnLoad(level)
+
+function rMCP:SetDropDown_Populate(level)
 	if not savedVar then return end
 	
 	if level == 1 then
