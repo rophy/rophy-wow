@@ -600,10 +600,10 @@ CombatLogScribeDB = {
 				"%1$s has defeated %2$s in a duel", -- [1]
 				"Powderpuff has defeated Pwnzoors in a duel", -- [2]
 			},
-			["ERR_FRIEND_SELF"] = {
-				"You can't put yourself on your friend list.", -- [1]
-				"You can't put yourself on your friend list.", -- [2]
-				"2.0.10.6448", -- [3]
+			["ERR_DUNGEON_DIFFICULTY_CHANGED_S"] = {
+				"Dungeon difficulty set to %s (All saved instances have been reset)", -- [1]
+				"Dungeon difficulty set to Heroic (All saved instances have been reset)", -- [2]
+				"2.0.12.6546", -- [3]
 			},
 			["ERR_QUEST_ACCEPTED_S"] = {
 				"Quest accepted: %s", -- [1]
@@ -621,14 +621,14 @@ CombatLogScribeDB = {
 				"%s is now your home.", -- [1]
 				"Cenarion Hold is now your home.", -- [2]
 			},
+			["ERR_FRIEND_SELF"] = {
+				"You can't put yourself on your friend list.", -- [1]
+				"You can't put yourself on your friend list.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
 			["ERR_IGNORE_REMOVED_S"] = {
 				"%s is no longer being ignored.", -- [1]
 				"Afterthefall is no longer being ignored.", -- [2]
-			},
-			["ERR_AUCTION_BID_PLACED"] = {
-				"Bid accepted.", -- [1]
-				"Bid accepted.", -- [2]
-				"2.0.10.6448", -- [3]
 			},
 			["MATCHMAKING_MATCH_S"] = {
 				"You have been matched to a group for %s.", -- [1]
@@ -647,29 +647,30 @@ CombatLogScribeDB = {
 				"%s has initiated a ready check", -- [1]
 				"Zaroc has initiated a ready check", -- [2]
 			},
-			["ERR_LEARN_SPELL_S"] = {
-				"You have learned a new spell: %s.", -- [1]
-				"You have learned a new spell: Corruption (Rank 7).", -- [2]
+			["ERR_AUCTION_BID_PLACED"] = {
+				"Bid accepted.", -- [1]
+				"Bid accepted.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 			["ERR_IGNORE_ALREADY_S"] = {
 				"%s is already being ignored.", -- [1]
 				"Toppol is already being ignored.", -- [2]
 			},
-			["ERR_QUEST_PUSH_ONQUEST_S"] = {
-				"%s is already on that quest", -- [1]
-				"Ponnie is already on that quest", -- [2]
+			["ERR_LEARN_SPELL_S"] = {
+				"You have learned a new spell: %s.", -- [1]
+				"You have learned a new spell: Corruption (Rank 7).", -- [2]
 			},
 			["WHO_LIST_FORMAT"] = {
 				"|Hplayer:%s|h[%s]|h: Level %d %s %s - %s", -- [1]
 				"|Hplayer:Discoverer|h[Discoverer]|h: Level 1 Night Elf Warrior - Teldrassil", -- [2]
 			},
+			["ERR_QUEST_PUSH_ONQUEST_S"] = {
+				"%s is already on that quest", -- [1]
+				"Ponnie is already on that quest", -- [2]
+			},
 			["WHO_NUM_RESULTS_P1"] = {
 				"%d players total", -- [1]
 				"2 players total", -- [2]
-			},
-			["DRUNK_MESSAGE_SELF3"] = {
-				"You feel drunk.  Woah!", -- [1]
-				"You feel drunk.  Woah!", -- [2]
 			},
 			["ERR_LEARN_ABILITY_S"] = {
 				"You have learned a new ability: %s.", -- [1]
@@ -704,18 +705,17 @@ CombatLogScribeDB = {
 				"%s added to friends.", -- [1]
 				"Agywen added to friends.", -- [2]
 			},
-			["ERR_MATCHMAKING_OTHER_MEMBER_LEFT"] = {
-				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [1]
-				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [2]
-				"2.0.6", -- [3]
-			},
 			["ERR_JOINED_GROUP_S"] = {
 				"%s joins the party.[ERR_JOINED_GROUP_S]", -- [1]
 				"Kruztique joins the party.[ERR_JOINED_GROUP_S]", -- [2]
 			},
-			["ERR_RAID_MEMBER_REMOVED_S"] = {
-				"%s has left the raid group", -- [1]
-				"Sspicee has left the raid group", -- [2]
+			["ERR_QUEST_NEED_PREREQS"] = {
+				"You don't meet the requirements for that quest", -- [1]
+				"You don't meet the requirements for that quest", -- [2]
+			},
+			["ERR_NEW_LOOT_MASTER_S"] = {
+				"%s is now the loot master.", -- [1]
+				"Bollie is now the loot master.", -- [2]
 			},
 			["ERR_GROUP_DISBANDED"] = {
 				"Your group has been disbanded.", -- [1]
@@ -725,9 +725,9 @@ CombatLogScribeDB = {
 				"Looting changed to round robin.", -- [1]
 				"Looting changed to round robin.", -- [2]
 			},
-			["ERR_NEW_LOOT_MASTER_S"] = {
-				"%s is now the loot master.", -- [1]
-				"Bollie is now the loot master.", -- [2]
+			["DRUNK_MESSAGE_OTHER1"] = {
+				"%s seems to be sobering up.", -- [1]
+				"Akronius seems to be sobering up.", -- [2]
 			},
 			["ERR_NOT_IN_RAID"] = {
 				"You are not in a raid group", -- [1]
@@ -737,13 +737,13 @@ CombatLogScribeDB = {
 				"%s %s", -- [1]
 				"Welcome to the World of Warcraft!", -- [2]
 			},
-			["ERR_GUILD_PROMOTE_SSS"] = {
-				"%s has promoted %s to %s.", -- [1]
-				"Zay has promoted Feel to Noob.", -- [2]
+			["ERR_QUEST_PUSH_ACCEPTED_S"] = {
+				"%s has accepted your quest", -- [1]
+				"Ponnie has accepted your quest", -- [2]
 			},
-			["DRUNK_MESSAGE_OTHER1"] = {
-				"%s seems to be sobering up.", -- [1]
-				"Akronius seems to be sobering up.", -- [2]
+			["ERR_RAID_MEMBER_REMOVED_S"] = {
+				"%s has left the raid group", -- [1]
+				"Sspicee has left the raid group", -- [2]
 			},
 			["ERR_GROUP_FULL"] = {
 				"Your party is full.", -- [1]
@@ -753,9 +753,10 @@ CombatLogScribeDB = {
 				"Welcome to %s. This raid instance is scheduled to reset in %dd %dh %dm.", -- [1]
 				"Welcome to Onyxias Lair Instance. This raid instance is scheduled to reset in 4d 21h 56m.", -- [2]
 			},
-			["ERR_QUEST_PUSH_DECLINED_S"] = {
-				"%s has declined your quest", -- [1]
-				"Rannie has declined your quest", -- [2]
+			["ERR_MATCHMAKING_OTHER_MEMBER_LEFT"] = {
+				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [1]
+				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [2]
+				"2.0.6", -- [3]
 			},
 			["ERR_BG_PLAYER_JOINED_SS"] = {
 				"|Hplayer:%s|h[%s]|h has joined the battle", -- [1]
@@ -765,13 +766,14 @@ CombatLogScribeDB = {
 				"You have invited %s to join your group.", -- [1]
 				"You have invited Lunarjustice to join your group.", -- [2]
 			},
+			["ERR_FRIEND_ALREADY_S"] = {
+				"%s is already your friend.", -- [1]
+				"Ruru is already your friend.", -- [2]
+				"2.0.8.6403", -- [3]
+			},
 			["ERR_AUCTION_STARTED"] = {
 				"Auction created.", -- [1]
 				"Auction created.", -- [2]
-			},
-			["ERR_GUILD_DEMOTE_SSS"] = {
-				"%s has demoted %s to %s.", -- [1]
-				"Dragonx has demoted Minie to Noob.", -- [2]
 			},
 			["RAID_INSTANCE_INFO_HDR"] = {
 				"Raid Instance Time Remaining:", -- [1]
@@ -789,19 +791,17 @@ CombatLogScribeDB = {
 				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [1]
 				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [2]
 			},
-			["ERR_FRIEND_ALREADY_S"] = {
-				"%s is already your friend.", -- [1]
-				"Ruru is already your friend.", -- [2]
-				"2.0.8.6403", -- [3]
+			["ERR_QUEST_PUSH_DECLINED_S"] = {
+				"%s has declined your quest", -- [1]
+				"Rannie has declined your quest", -- [2]
+			},
+			["ERR_GUILD_DEMOTE_SSS"] = {
+				"%s has demoted %s to %s.", -- [1]
+				"Dragonx has demoted Minie to Noob.", -- [2]
 			},
 			["ERR_FRIEND_OFFLINE_S"] = {
 				"%s has gone offline.", -- [1]
 				"Ponnie has gone offline.", -- [2]
-			},
-			["ERR_QUEST_PUSH_BUSY_S"] = {
-				"%s is busy", -- [1]
-				"Rannie is busy", -- [2]
-				"2.0.10.6448", -- [3]
 			},
 			["ERR_SET_LOOT_NBG"] = {
 				"Looting set to need before greed.", -- [1]
@@ -811,9 +811,9 @@ CombatLogScribeDB = {
 				"You feel tipsy.  Whee!", -- [1]
 				"You feel tipsy.  Whee!", -- [2]
 			},
-			["ERR_QUEST_PUSH_ALREADY_DONE_S"] = {
-				"%s has completed that quest", -- [1]
-				"Lunarjustice has completed that quest", -- [2]
+			["DRUNK_MESSAGE_OTHER3"] = {
+				"%s looks drunk.", -- [1]
+				"Akronius looks drunk.", -- [2]
 			},
 			["ERR_GUILD_LEAVE_S"] = {
 				"%s has left the guild.", -- [1]
@@ -823,9 +823,9 @@ CombatLogScribeDB = {
 				"%s has died.", -- [1]
 				"Ponnie has died.", -- [2]
 			},
-			["ERR_FRIEND_REMOVED_S"] = {
-				"%s removed from friends list.", -- [1]
-				"Garohunter removed from friends list.", -- [2]
+			["ERR_QUEST_PUSH_ALREADY_DONE_S"] = {
+				"%s has completed that quest", -- [1]
+				"Lunarjustice has completed that quest", -- [2]
 			},
 			["ERR_AUCTION_EXPIRED_S"] = {
 				"Your auction of %s has expired.", -- [1]
@@ -835,9 +835,9 @@ CombatLogScribeDB = {
 				"Received item: %s.", -- [1]
 				"Received item: |cff1eff00|Hitem:19125:0:0:0|h[Seared Mail Girdle]|h|r.", -- [2]
 			},
-			["TRANSFER_ABORT_MAX_PLAYERS"] = {
-				"Transfer Aborted: instance is full", -- [1]
-				"Transfer Aborted: instance is full", -- [2]
+			["ERR_FRIEND_REMOVED_S"] = {
+				"%s removed from friends list.", -- [1]
+				"Garohunter removed from friends list.", -- [2]
 			},
 			["ERR_TRADE_BLOCKED_S"] = {
 				"%s has requested to trade.  You have refused.", -- [1]
@@ -848,18 +848,21 @@ CombatLogScribeDB = {
 				"Looting changed to group loot.", -- [1]
 				"Looting changed to group loot.", -- [2]
 			},
-			["ERR_LEFT_GROUP_YOU"] = {
-				"You leave the group.", -- [1]
-				"You leave the group.", -- [2]
+			["TRANSFER_ABORT_MAX_PLAYERS"] = {
+				"Transfer Aborted: instance is full", -- [1]
+				"Transfer Aborted: instance is full", -- [2]
 			},
 			["ERR_QUEST_PUSH_TOO_FAR_S"] = {
 				"%s is too far away to receive your quest", -- [1]
 				"Kruztique is too far away to receive your quest", -- [2]
 			},
-			["ERR_FRIEND_NOT_FOUND"] = {
-				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [1]
-				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [2]
-				"2.0.10.6448", -- [3]
+			["ERR_LEFT_GROUP_YOU"] = {
+				"You leave the group.", -- [1]
+				"You leave the group.", -- [2]
+			},
+			["ERR_NEW_LEADER_S"] = {
+				"%s is now the group leader.", -- [1]
+				"Dragonx is now the group leader.", -- [2]
 			},
 			["ERR_MEETING_STONE_LEFT_QUEUE_S"] = {
 				"You have left the queue to join a party for %s.", -- [1]
@@ -869,29 +872,29 @@ CombatLogScribeDB = {
 				"%s has left the battle", -- [1]
 				"Deiliana has left the battle", -- [2]
 			},
-			["ERR_FRIEND_ONLINE_SS"] = {
-				"|Hplayer:%s|h[%s]|h has come online.", -- [1]
-				"|Hplayer:Inverno|h[Inverno]|h has come online.", -- [2]
-			},
 			["MARKED_DND"] = {
 				"You are now DND: %s.", -- [1]
 				"You are now DND: Do not Disturb.", -- [2]
 			},
-			["ERR_ALREADY_IN_GROUP_S"] = {
-				"%s is already in a group.", -- [1]
-				"Sai is already in a group.", -- [2]
+			["ERR_FRIEND_ONLINE_SS"] = {
+				"|Hplayer:%s|h[%s]|h has come online.", -- [1]
+				"|Hplayer:Inverno|h[Inverno]|h has come online.", -- [2]
 			},
 			["ERR_IGNORE_NOT_FOUND"] = {
 				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [1]
 				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [2]
 			},
-			["ERR_UNINVITE_YOU"] = {
-				"You have been removed from the group.", -- [1]
-				"You have been removed from the group.", -- [2]
+			["ERR_CHAT_PLAYER_NOT_FOUND_S"] = {
+				"No player named '%s' is currently playing.", -- [1]
+				"No player named 'say' is currently playing.", -- [2]
 			},
 			["ERR_QUEST_REWARD_MONEY_S"] = {
 				"Received %s.", -- [1]
 				"Received 70 Silver.", -- [2]
+			},
+			["ERR_UNINVITE_YOU"] = {
+				"You have been removed from the group.", -- [1]
+				"You have been removed from the group.", -- [2]
 			},
 			["ERR_SET_LOOT_THRESHOLD_S"] = {
 				"Loot threshold set to %s", -- [1]
@@ -901,13 +904,13 @@ CombatLogScribeDB = {
 				"You feel sober again.", -- [1]
 				"You feel sober again.", -- [2]
 			},
-			["ERR_LEFT_GROUP_S"] = {
-				"%s leaves the party.[ERR_LEFT_GROUP_S]", -- [1]
-				"Kruztique leaves the party.[ERR_LEFT_GROUP_S]", -- [2]
-			},
 			["ERR_EXHAUSTION_RESTED"] = {
 				"You feel rested.", -- [1]
 				"You feel rested.", -- [2]
+			},
+			["ERR_LEFT_GROUP_S"] = {
+				"%s leaves the party.[ERR_LEFT_GROUP_S]", -- [1]
+				"Kruztique leaves the party.[ERR_LEFT_GROUP_S]", -- [2]
 			},
 			["ERR_DECLINE_GROUP_S"] = {
 				"%s declines your group invitation.", -- [1]
@@ -916,10 +919,6 @@ CombatLogScribeDB = {
 			["WHO_LIST_GUILD_FORMAT"] = {
 				"|Hplayer:%s|h[%s]|h: Level %d %s %s <%s> - %s", -- [1]
 				"|Hplayer:Mimicat|h[Mimicat]|h: Level 60 Human Warlock <D i v i n i t y> - Ironforge", -- [2]
-			},
-			["ERR_CHAT_PLAYER_NOT_FOUND_S"] = {
-				"No player named '%s' is currently playing.", -- [1]
-				"No player named 'say' is currently playing.", -- [2]
 			},
 			["ERR_IGNORE_ADDED_S"] = {
 				"%s is now being ignored.", -- [1]
@@ -933,25 +932,26 @@ CombatLogScribeDB = {
 				"%s has joined the guild.", -- [1]
 				"Feel has joined the guild.", -- [2]
 			},
+			["ERR_ALREADY_IN_GROUP_S"] = {
+				"%s is already in a group.", -- [1]
+				"Sai is already in a group.", -- [2]
+			},
 			["FACTION_STANDING_CHANGED"] = {
 				"You are now %s with %s.", -- [1]
 				"You are now Friendly with The League of Arathor.", -- [2]
-			},
-			["ERR_NEW_LEADER_S"] = {
-				"%s is now the group leader.", -- [1]
-				"Dragonx is now the group leader.", -- [2]
 			},
 			["ERR_MATCHMAKING_IN_PROGRESS"] = {
 				"You are still seeking more members through the LFG matchmaking system.", -- [1]
 				"You are still seeking more members through the LFG matchmaking system.", -- [2]
 			},
+			["ERR_FRIEND_NOT_FOUND"] = {
+				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [1]
+				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
 			["ERR_LEARN_RECIPE_S"] = {
 				"You have learned how to create a new item: %s.", -- [1]
 				"You have learned how to create a new item: Brightcloth Pants.", -- [2]
-			},
-			["DRUNK_MESSAGE_OTHER3"] = {
-				"%s looks drunk.", -- [1]
-				"Akronius looks drunk.", -- [2]
 			},
 			["ERR_SPELL_UNLEARNED_S"] = {
 				"You have unlearned %s.", -- [1]
@@ -966,9 +966,9 @@ CombatLogScribeDB = {
 				"%s looks tipsy.", -- [1]
 				"Brownee looks tipsy.", -- [2]
 			},
-			["ERR_AUCTION_WON_S"] = {
-				"You won an auction for %s", -- [1]
-				"You won an auction for Runed Blood Garnet", -- [2]
+			["ERR_QUEST_PUSH_BUSY_S"] = {
+				"%s is busy", -- [1]
+				"Rannie is busy", -- [2]
 				"2.0.10.6448", -- [3]
 			},
 			["ERR_RAID_YOU_LEFT"] = {
@@ -979,25 +979,30 @@ CombatLogScribeDB = {
 				"You have requested a duel.", -- [1]
 				"You have requested a duel.", -- [2]
 			},
-			["ERR_INVITED_TO_GROUP_S"] = {
-				"%s has invited you to join a group.", -- [1]
-				"Iceangelz hat Euch in eine Gruppe eingeladen.", -- [2]
+			["ERR_AUCTION_WON_S"] = {
+				"You won an auction for %s", -- [1]
+				"You won an auction for Runed Blood Garnet", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 			["ERR_NOT_IN_GROUP"] = {
 				"You aren't in a party.", -- [1]
 				"You aren't in a party.", -- [2]
 			},
-			["ERR_QUEST_PUSH_ACCEPTED_S"] = {
-				"%s has accepted your quest", -- [1]
-				"Ponnie has accepted your quest", -- [2]
+			["ERR_INVITED_TO_GROUP_S"] = {
+				"%s has invited you to join a group.", -- [1]
+				"Iceangelz hat Euch in eine Gruppe eingeladen.", -- [2]
 			},
-			["ERR_QUEST_NEED_PREREQS"] = {
-				"You don't meet the requirements for that quest", -- [1]
-				"You don't meet the requirements for that quest", -- [2]
+			["ERR_GUILD_PROMOTE_SSS"] = {
+				"%s has promoted %s to %s.", -- [1]
+				"Zay has promoted Feel to Noob.", -- [2]
 			},
 			["ERR_QUEST_FAILED_MISSING_ITEMS"] = {
 				"You don't have the required items with you.  Check storage.", -- [1]
 				"You don't have the required items with you.  Check storage.", -- [2]
+			},
+			["DRUNK_MESSAGE_SELF3"] = {
+				"You feel drunk.  Woah!", -- [1]
+				"You feel drunk.  Woah!", -- [2]
 			},
 			["DRUNK_MESSAGE_OTHER4"] = {
 				"%s looks completely smashed.", -- [1]
@@ -1020,75 +1025,156 @@ CombatLogScribeDB = {
 				"Sayune is not eligible for that quest", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_PARTY_HITS"] = {
-			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
-				"%s suffers %d points of fire damage.", -- [1]
-				"Nimbus suffers 15 points of fire damage.", -- [2]
+		["CHAT_MSG_SPELL_SELF_DAMAGE"] = {
+			["SPELLRESISTSELFSELF"] = {
+				"You resisted your %s.", -- [1]
+				"You resisted your Drain Soul.", -- [2]
 			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Shadowfiend crits Ethereal Scavenger for 232 Shadow damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Chula's Auto Shot crits Treant for 360.", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Sherbs crits Ludachriz for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Kruztique's Shoot crits Earthbind Totem for 135 Arcane damage.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Riane's Shoot hits Mana Spring Totem IV for 111 Shadow damage.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Chula's Auto Shot hits Commander Louis Philips for 219.", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Unknown hits Bonelasher for 111 Shadow damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-				"2.0.6", -- [3]
-			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Frucheman hits Nauxinc for 441.[COMBATHITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITCRITOTHERSELF"] = {
-				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
-				"Treant crits you for 321.[COMBATHITCRITOTHERSELF]", -- [2]
+			["SPELLIMMUNESELFSELF"] = {
+				"Your %s failed.  You are immune.", -- [1]
+				"Your Soulshatter failed.  You are immune.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["COMBATHITOTHERSELF"] = {
-				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
-				"Bonechewer Hungerer hits you for 211.[COMBATHITOTHERSELF] (53 absorbed)", -- [2]
+			["SIMPLECASTSELFOTHER"] = {
+				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
+				"You cast Polymorph on Young Stranglethorn Tiger.[SIMPLECASTSELFOTHER]", -- [2]
 			},
-			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
-				"%s loses %d health for swimming in lava.", -- [1]
-				"Kal'los loses 1446 health for swimming in lava.", -- [2]
+			["SPELLLOGSELFOTHER"] = {
+				"Your %s hits %s for %d.", -- [1]
+				"Your Hemorrhage hits Alterac Ram for 132.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELF"] = {
+				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
+				"Arcane Explosion hits you for 1432 Arcane damage.[SPELLLOGSCHOOLSELF]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLTERSE_SELF"] = {
+				"You cast %s.[SPELLTERSE_SELF]", -- [1]
+				"You cast Soulshatter.[SPELLTERSE_SELF]", -- [2]
+				"2.0.8.6403", -- [3]
+			},
+			["SPELLMISSSELFOTHER"] = {
+				"Your %s missed %s.", -- [1]
+				"Your Hemorrhage missed Seasoned Guardian.", -- [2]
+			},
+			["SIMPLEPERFORMSELFOTHER"] = {
+				"You perform %s on %s.[SIMPLEPERFORMSELFOTHER]", -- [1]
+				"You perform Distract on Kasinoll.[SIMPLEPERFORMSELFOTHER]", -- [2]
+			},
+			["SPELLLOGABSORBSELFOTHER"] = {
+				"Your %s is absorbed by %s.", -- [1]
+				"Your Hemorrhage is absorbed by Vyxxenn.", -- [2]
+			},
+			["IMMUNESPELLSELFOTHER"] = {
+				"%s is immune to your %s.", -- [1]
+				"Lava Annihilator is immune to your Corruption.", -- [2]
+			},
+			["SPELLPARRIEDSELFOTHER"] = {
+				"Your %s is parried by %s.", -- [1]
+				"Your Hemorrhage is parried by Hillel.", -- [2]
+			},
+			["SPELLEVADEDSELFOTHER"] = {
+				"Your %s was evaded by %s.", -- [1]
+				"Your Cleave was evaded by Hatecrest Serpent Guard.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELFOTHER"] = {
+				"Your %s hits %s for %d %s damage.", -- [1]
+				"Your Instant Poison VI hits Singh for 125 Nature damage.", -- [2]
+			},
+			["SPELLIMMUNESELFOTHER"] = {
+				"Your %s failed. %s is immune.", -- [1]
+				"Your Polymorph failed. Orbatron is immune.", -- [2]
+			},
+			["SPELLREFLECTSELFOTHER"] = {
+				"Your %s is reflected back by %s.", -- [1]
+				"Your Corruption is reflected back by Greater Obsidian Elemental.", -- [2]
+			},
+			["SPELLDODGEDSELFOTHER"] = {
+				"Your %s was dodged by %s.", -- [1]
+				"Your Hemorrhage was dodged by Humlae.", -- [2]
+			},
+			["SPELLBLOCKEDSELFOTHER"] = {
+				"Your %s was blocked by %s.", -- [1]
+				"Your Hamstring was blocked by Zapped Wave Strider.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Arcane Explosion hits Bryantia for 1427 Arcane damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGCRITSELFOTHER"] = {
+				"Your %s crits %s for %d.", -- [1]
+				"Your Hemorrhage crits Alterac Ram for 308.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELFSELF"] = {
+				"Your %s hits you for %d %s damage.", -- [1]
+				"Your Shadow Bolt hits you for 763 Shadow damage.", -- [2]
+			},
+			["SPELLLOGABSORBSELFSELF"] = {
+				"You absorb your %s.", -- [1]
+				"You absorb your Plague Effect.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
+				"Your %s crits %s for %d %s damage.", -- [1]
+				"Your Smite crits Mindless Zombie for 26 Holy damage.", -- [2]
+			},
+			["SPELLRESISTSELFOTHER"] = {
+				"Your %s was resisted by %s.", -- [1]
+				"Your Cheap Shot was resisted by Yurneroo.", -- [2]
+			},
+			["SPELLINTERRUPTSELFOTHER"] = {
+				"You interrupt %s's %s.", -- [1]
+				"You interrupt Eliza's Frostbolt.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLSELFSELF"] = {
+				"Your %s crits you for %d %s damage.", -- [1]
+				"Your Shadow Bolt crits you for 1158 Shadow damage.", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_HOSTILE_DEATH"] = {
-			["UNITDESTROYEDOTHER"] = {
-				"%s is destroyed.", -- [1]
-				"Magma Totem IV is destroyed.", -- [2]
+		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES"] = {
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"Wildspawn Betrayer attacks. Wildspawn Shadowstalker blocks.", -- [2]
 			},
-			["PARTYKILLOTHER"] = {
-				"%s is slain by %s!", -- [1]
-				"Chevr is slain by Mos!", -- [2]
+			["MISSEDOTHERSELF"] = {
+				"%s misses you.", -- [1]
+				"Alterac Ram misses you.", -- [2]
 			},
-			["SELFKILLOTHER"] = {
-				"You have slain %s!", -- [1]
-				"You have slain Forest Spider!", -- [2]
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Wildspawn Trickster attacks. Wildspawn Rogue dodges.", -- [2]
 			},
-			["UNITDIESOTHER"] = {
-				"%s dies.", -- [1]
-				"Alterac Ram dies.", -- [2]
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Wildspawn Trickster attacks. Wildspawn Rogue parries.", -- [2]
+			},
+			["VSIMMUNEOTHERSELF"] = {
+				"%s attacks but you are immune.", -- [1]
+				"Nightbane Tainted One attacks but you are immune.", -- [2]
+			},
+			["VSPARRYOTHERSELF"] = {
+				"%s attacks. You parry.", -- [1]
+				"Young Panther attacks. You parry.", -- [2]
+			},
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Wildspawn Imp attacks. Wildspawn Hellcaller absorbs all the damage.", -- [2]
+			},
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Wildspawn Rogue misses Wildspawn Rogue.", -- [2]
+			},
+			["VSABSORBOTHERSELF"] = {
+				"%s attacks. You absorb all the damage.", -- [1]
+				"Eliza's Guard attacks. You absorb all the damage.", -- [2]
+			},
+			["VSDODGEOTHERSELF"] = {
+				"%s attacks. You dodge.", -- [1]
+				"Alterac Ram attacks. You dodge.", -- [2]
+			},
+			["SPELLMISSOTHERSELF"] = {
+				"%s's %s misses you.", -- [1]
+				"Hukku's Voidwalker misses you.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF"] = {
@@ -1096,39 +1182,39 @@ CombatLogScribeDB = {
 				"%s's %s fails. %s is immune.", -- [1]
 				"Wildspawn Satyr's Battle Shout fails. Wildspawn Betrayer is immune.", -- [2]
 			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Captain Balinda Stonehearth casts Dispel Magic on Greethun.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Garr fails to dispel Typhoonsfury's Greater Blessing of Wisdom.", -- [2]
+			},
 			["SPELLTERSEPERFORM_OTHER"] = {
 				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
 				"Honor Hold Archer performs Shoot Bow.[SPELLTERSEPERFORM_OTHER]", -- [2]
 			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Scholomance Dark Summoner begins to perform Summon Risen Lackey.", -- [2]
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Zevrim Thornhoof's Sacrifice heals Zevrim Thornhoof for 300.", -- [2]
 			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Captain Balinda Stonehearth casts Dispel Magic on Greethun.[SIMPLECASTOTHEROTHER]", -- [2]
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Jerick gains 16 Mana from Aleoso's Vampiric Touch.", -- [2]
 			},
 			["SPELLRESISTOTHEROTHER"] = {
 				"%s's %s was resisted by %s.", -- [1]
 				"Fel Cannon MKI's Fel Cannon Blast was resisted by Juckus.", -- [2]
 				"2.0.6", -- [3]
 			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Jerick gains 16 Mana from Aleoso's Vampiric Touch.", -- [2]
+			["SPELLEXTRAATTACKSOTHER"] = {
+				"%s gains %d extra attacks through %s.", -- [1]
+				"Stormpike Owl gains 2 extra attacks through Thrash.", -- [2]
 			},
 			["HEALEDOTHER"] = {
 				"%s heals %s for %d.", -- [1]
 				"Negaton Field heals Negaton Warp-Master for 1000.", -- [2]
 				"2.0.10.6448", -- [3]
-			},
-			["SPELLEXTRAATTACKSOTHER"] = {
-				"%s gains %d extra attacks through %s.", -- [1]
-				"Stormpike Owl gains 2 extra attacks through Thrash.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Zevrim Thornhoof's Sacrifice heals Zevrim Thornhoof for 300.", -- [2]
 			},
 			["SPELLTERSE_OTHER"] = {
 				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
@@ -1146,12 +1232,16 @@ CombatLogScribeDB = {
 				"%s's %s critically heals %s for %d.", -- [1]
 				"Aleoso's Vampiric Embrace critically heals Jerick for 470.", -- [2]
 			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Garr fails to dispel Typhoonsfury's Greater Blessing of Wisdom.", -- [2]
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Scholomance Dark Summoner begins to perform Summon Risen Lackey.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] = {
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Sludge's Thorns was resisted by Bloodrage.", -- [2]
+			},
 			["DAMAGESHIELDOTHEROTHER"] = {
 				"%s reflects %d %s damage to %s.", -- [1]
 				"Grizzly reflects 18 Nature damage to Jagnus.", -- [2]
@@ -1159,10 +1249,6 @@ CombatLogScribeDB = {
 			["SPELLRESISTOTHERSELF"] = {
 				"%s's %s was resisted.", -- [1]
 				"Diokles's Thorns was resisted.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Sludge's Thorns was resisted by Bloodrage.", -- [2]
 			},
 			["DAMAGESHIELDOTHERSELF"] = {
 				"%s reflects %d %s damage to you.", -- [1]
@@ -1174,13 +1260,14 @@ CombatLogScribeDB = {
 				"%s's %s fails. %s is immune.", -- [1]
 				"Ilyena's Weakened Soul fails. Akronius is immune.", -- [2]
 			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Ponnie's Transmogrify! was resisted by Deep Strider.", -- [2]
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Minimonty's Holy Light heals Huntzor for 2030.", -- [2]
 			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Lionkingz's Zulian Slice was dodged by Molten Giant.", -- [2]
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Kruztique's Dispel Magic is reflected back by Mageslayer.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 			["DISPELFAILEDOTHEROTHER"] = {
 				"%s fails to dispel %s's %s.", -- [1]
@@ -1198,22 +1285,22 @@ CombatLogScribeDB = {
 				"%s gains %d %s from %s's %s.", -- [1]
 				"Icehammer gains 60 Mana from Morisen's Rejuvenation.", -- [2]
 			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Lionkingz's Zulian Slice was parried by Molten Giant.", -- [2]
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Steam Tonk casts Mortar.[SPELLTERSE_OTHER]", -- [2]
+				"2.0.6", -- [3]
 			},
 			["SPELLMISSOTHEROTHER"] = {
 				"%s's %s missed %s.", -- [1]
 				"Lionkingz's Zulian Slice missed Lava Reaver.", -- [2]
 			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Minimonty's Holy Light heals Huntzor for 2030.", -- [2]
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Ponnie's Transmogrify! was resisted by Deep Strider.", -- [2]
 			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Steam Tonk casts Mortar.[SPELLTERSE_OTHER]", -- [2]
-				"2.0.6", -- [3]
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Lionkingz's Zulian Slice was parried by Molten Giant.", -- [2]
 			},
 			["PROCRESISTOTHEROTHER"] = {
 				"%s resists %s's %s.", -- [1]
@@ -1227,10 +1314,9 @@ CombatLogScribeDB = {
 				"%s's %s critically heals %s for %d.", -- [1]
 				"Minimonty's Flash of Light critically heals Kiraa for 806.", -- [2]
 			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Kruztique's Dispel Magic is reflected back by Mageslayer.", -- [2]
-				"2.0.10.6448", -- [3]
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Lionkingz's Zulian Slice was dodged by Molten Giant.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS"] = {
@@ -1435,13 +1521,13 @@ CombatLogScribeDB = {
 				"%s's %s hits %s for %d %s damage.", -- [1]
 				"Wildspawn Imp's Fire Blast hits Wildspawn Hellcaller for 210 Fire damage. (210 resisted)", -- [2]
 			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 232.", -- [2]
-			},
 			["SPELLLOGSCHOOLOTHER"] = {
 				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
 				"Flame Wave hits Bryantia for 259 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 232.", -- [2]
 			},
 			["SPELLLOGCRITSCHOOLOTHERSELF"] = {
 				"%s's %s crits you for %d %s damage.", -- [1]
@@ -1661,99 +1747,6 @@ CombatLogScribeDB = {
 				"2.0.10.6448", -- [3]
 			},
 		},
-		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] = {
-			["SPELLRESISTSELFOTHER"] = {
-				"Your %s was resisted by %s.", -- [1]
-				"Your Thorns was resisted by Southsea Swashbuckler.", -- [2]
-			},
-			["DAMAGESHIELDSELFOTHER"] = {
-				"You reflect %d %s damage to %s.", -- [1]
-				"You reflect 15 Nature damage to Southsea Freebooter.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Deranged Helboar's Burning Spikes was resisted by Deranged Helboar.", -- [2]
-			},
-			["DAMAGESHIELDOTHEROTHER"] = {
-				"%s reflects %d %s damage to %s.", -- [1]
-				"Deranged Helboar reflects 25 Fire damage to Deranged Helboar.", -- [2]
-			},
-		},
-		["CHAT_MSG_SKILL"] = {
-			["ERR_SKILL_UP_SI"] = {
-				"Your skill in %s has increased to %d.[ERR_SKILL_UP_SI]", -- [1]
-				"Your skill in Riding has increased to 150.[ERR_SKILL_UP_SI]", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_PET_MISSES"] = {
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Khuunam attacks. Althion absorbs all the damage.", -- [2]
-			},
-			["VSIMMUNEOTHEROTHER"] = {
-				"%s attacks but %s is immune.", -- [1]
-				"Wildspawn Rogue attacks but Wildspawn Rogue is immune.", -- [2]
-			},
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"Phantaz attacks. Risen Guard blocks.", -- [2]
-			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Wildspawn Rogue misses Wildspawn Trickster.", -- [2]
-			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Wildspawn Rogue attacks. Wildspawn Trickster dodges.", -- [2]
-			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Wildspawn Rogue attacks. Wildspawn Trickster parries.", -- [2]
-			},
-			["VSDODGEOTHERSELF"] = {
-				"%s attacks. You dodge.", -- [1]
-				"Wrathbringer attacks. You dodge.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS"] = {
-			["PERIODICAURAHEALSELFOTHER"] = {
-				"%s gains %d health from your %s.", -- [1]
-				"Wildspawn Rogue gains 153 health from your Health Funnel.", -- [2]
-			},
-			["POWERGAINSELFSELF"] = {
-				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
-				"You gain 144 Mana from Fel Energy.[POWERGAINSELFSELF]", -- [2]
-			},
-			["AURAADDEDSELFHELPFUL"] = {
-				"You gain %s.", -- [1]
-				"You gain Sprint.", -- [2]
-			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Wildspawn Hellcaller gains 223 health from Kruztique's Renew.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDSELFHELPFUL"] = {
-				"You gain %s (%d).", -- [1]
-				"You gain Lifebloom (2).", -- [2]
-			},
-			["AURAADDEDOTHERHELPFUL"] = {
-				"%s gains %s.", -- [1]
-				"Khuunam gains Master Demonologist.", -- [2]
-			},
-			["PERIODICAURAHEALSELFSELF"] = {
-				"You gain %d health from %s.[PERIODICAURAHEALSELFSELF]", -- [1]
-				"You gain 250 health from First Aid.[PERIODICAURAHEALSELFSELF]", -- [2]
-			},
-			["PERIODICAURAHEALOTHERSELF"] = {
-				"You gain %d health from %s's %s.", -- [1]
-				"You gain 223 health from Kruztique's Renew.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
-				"%s gains %s (%d).", -- [1]
-				"Haaroon gains Demonic Frenzy (2).", -- [2]
-			},
-		},
 		["CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF"] = {
 			["PROCRESISTOTHERSELF"] = {
 				"You resist %s's %s.", -- [1]
@@ -1798,15 +1791,282 @@ CombatLogScribeDB = {
 				"2.0.10.6448", -- [3]
 			},
 		},
-		["CHAT_MSG_MONEY"] = {
-			["LOOT_MONEY_SPLIT"] = {
-				"Your share of the loot is %s.", -- [1]
-				"Your share of the loot is 22 Copper.", -- [2]
+		["CHAT_MSG_SKILL"] = {
+			["ERR_SKILL_UP_SI"] = {
+				"Your skill in %s has increased to %d.[ERR_SKILL_UP_SI]", -- [1]
+				"Your skill in Riding has increased to 150.[ERR_SKILL_UP_SI]", -- [2]
 			},
-			["YOU_LOOT_MONEY"] = {
-				"You loot %s[YOU_LOOT_MONEY]", -- [1]
-				"You loot 2 Silver, 31 Copper[YOU_LOOT_MONEY]", -- [2]
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"Blackhand Veteran's Shield Bash was blocked by Hang.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Molten Destroyer interrupts Narwen's Frostbolt.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Damnh is immune to Buru the Gorger's Creeping Plague.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Unknown Entity's Ambush crits Darkvillian for 1322.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Epoch Hunter casts Disrupt Magic on Thrall.[SIMPLECASTOTHEROTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Unknown's Lash of Pain crits Treka for 110 Shadow damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Slim's Friend's Poison was resisted by Gilman.", -- [2]
+			},
+			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
+				"%s casts %s on %s: %s damaged.", -- [1]
+				"Ragnaros casts Melt Weapon on Dragonx: Bloodlord's Defender damaged.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Prairie Wolf begins to cast Threatening Growl.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Southsea Pirate's Strike was parried by Thimtamuya.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Flamewaker's Fist of Ragnaros fails. Librabear is immune.", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Obsidian Eradicator's Drain Mana drains 250 Mana from Dizdk. Obsidian Eradicator gains 500 Mana.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Irondeep Trogg performs Dazed on Irondeep Miner.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Alliance Sentinel's Cleave was dodged by Tric.", -- [2]
+			},
+			["SPELLSPLITDAMAGEOTHEROTHER"] = {
+				"%s's %s causes %s %d damage.", -- [1]
+				"Dreghood Drudge's Shared Bonds causes Dreghood Drudge 71 damage.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Liquid Fire's Blaze was evaded by Champion Defender.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Stormpike Mountaineer's Explosive Shot hits Zunk for 215 Fire damage.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Stormpike Mountaineer's Shoot is absorbed by Maulive.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Seasoned Guardian's Revenge hits Cleatus for 71.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Stormpike Mountaineer's Shoot missed Zunk.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Dreamcatcher for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Arazzius the Cruel casts Inferno.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["INSTAKILLOTHER"] = {
+				"%s is killed by %s.", -- [1]
+				"Gan'arg Sapper is killed by Power Burn.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Firewing Warlock's Mana Tap drains 1270 Mana from Tyranno.", -- [2]
 				"2.0.6", -- [3]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Stormpike Mountaineer begins to perform Shoot.", -- [2]
+			},
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Entropic Eye performs Chaos Breath.[SPELLTERSEPERFORM_OTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS"] = {
+			["PERIODICAURAHEALSELFOTHER"] = {
+				"%s gains %d health from your %s.", -- [1]
+				"Wildspawn Rogue gains 153 health from your Health Funnel.", -- [2]
+			},
+			["POWERGAINSELFSELF"] = {
+				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
+				"You gain 144 Mana from Fel Energy.[POWERGAINSELFSELF]", -- [2]
+			},
+			["AURAADDEDSELFHELPFUL"] = {
+				"You gain %s.", -- [1]
+				"You gain Sprint.", -- [2]
+			},
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Wildspawn Hellcaller gains 223 health from Kruztique's Renew.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDSELFHELPFUL"] = {
+				"You gain %s (%d).", -- [1]
+				"You gain Lifebloom (2).", -- [2]
+			},
+			["AURAADDEDOTHERHELPFUL"] = {
+				"%s gains %s.", -- [1]
+				"Khuunam gains Master Demonologist.", -- [2]
+			},
+			["PERIODICAURAHEALSELFSELF"] = {
+				"You gain %d health from %s.[PERIODICAURAHEALSELFSELF]", -- [1]
+				"You gain 250 health from First Aid.[PERIODICAURAHEALSELFSELF]", -- [2]
+			},
+			["PERIODICAURAHEALOTHERSELF"] = {
+				"You gain %d health from %s's %s.", -- [1]
+				"You gain 223 health from Kruztique's Renew.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
+				"%s gains %s (%d).", -- [1]
+				"Haaroon gains Demonic Frenzy (2).", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] = {
+			["DAMAGESHIELDSELFOTHER"] = {
+				"You reflect %d %s damage to %s.", -- [1]
+				"You reflect 15 Nature damage to Southsea Freebooter.", -- [2]
+			},
+			["SPELLRESISTSELFOTHER"] = {
+				"Your %s was resisted by %s.", -- [1]
+				"Your Thorns was resisted by Southsea Swashbuckler.", -- [2]
+			},
+			["DAMAGESHIELDOTHEROTHER"] = {
+				"%s reflects %d %s damage to %s.", -- [1]
+				"Deranged Helboar reflects 25 Fire damage to Deranged Helboar.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Deranged Helboar's Burning Spikes was resisted by Deranged Helboar.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF"] = {
+			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
+				"%s gains %d extra attack through %s.", -- [1]
+				"Sludge gains 1 extra attack through Hand of Justice.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Shammycow begins to perform Skinning.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Lokris performs Vanish on Lokris.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLIMMUNEOTHERSELF"] = {
+				"%s's %s failed. You are immune.", -- [1]
+				"Ponnie's First Aid failed. You are immune.", -- [2]
+			},
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Colding performs Cannibalize.[SPELLTERSEPERFORM_OTHER]", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHEROTHER"] = {
+				"%s casts %s on %s's %s.", -- [1]
+				"Zay casts +15 Fire Resistance on Cleatus's Onyxia Scale Cloak.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Fzuufenn's Devour Magic was resisted by Ponnie.", -- [2]
+			},
+			["SPELLEXTRAATTACKSOTHER"] = {
+				"%s gains %d extra attacks through %s.", -- [1]
+				"Petergibbons gains 2 extra attacks through Windfury Attack.", -- [2]
+			},
+			["HEALEDOTHERSELF"] = {
+				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
+				"Kruztique's Flash Heal heals you for 1176.[HEALEDOTHERSELF]", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Amantar begins to cast Greater Heal.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Kruztique's Weakened Soul fails. Narwen is immune.", -- [2]
+			},
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 60 Mana from Morisen's Rejuvenation.", -- [2]
+			},
+			["HEALEDCRITOTHEROTHER"] = {
+				"%s's %s critically heals %s for %d.", -- [1]
+				"Evelgest's Flash Heal critically heals Neckrataal for 1597.", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Magosko's Dark Pact drains 250 Mana from Unknown Entity. Magosko gains 250 Mana.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Khuudom fails to dispel Boonie's Demon Armor.", -- [2]
+			},
+			["OPEN_LOCK_OTHER"] = {
+				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
+				"Kruztique performs Herb Gathering on Dreamfoil.[OPEN_LOCK_OTHER]", -- [2]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Yurneroo gains 15 Rage from Yurneroo's Charge.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Bakmoi casts Dispel Magic on Frucheman.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["DISPELFAILEDOTHERSELF"] = {
+				"%s fails to dispel your %s.", -- [1]
+				"Poyayan fails to dispel your Power Word: Fortitude.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Lionkingz's Zulian Slice missed Cleatus.", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Vyxxenn's Devouring Plague heals Vyxxenn for 106.", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Zryan casts Mana Spring Totem.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["SPELLRESISTOTHERSELF"] = {
+				"%s's %s was resisted.", -- [1]
+				"Khuudom's Devour Magic was resisted.", -- [2]
+			},
+			["HEALEDCRITOTHERSELF"] = {
+				"%s's %s critically heals you for %d.", -- [1]
+				"Kruztique's Greater Heal critically heals you for 3183.", -- [2]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Ponnie casts Cleanse on you.SIMPLECASTOTHERSELF", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHERSELF"] = {
+				"%s casts %s on your %s.", -- [1]
+				"Erato casts +26 Attack Power on your Marshal's Leather Handgrips.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 		},
 		["CHAT_MSG_COMBAT_HOSTILEPLAYER_MISSES"] = {
@@ -1869,109 +2129,6 @@ CombatLogScribeDB = {
 				"Zay's Kay is dismissed.", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"Blackhand Iron Guard's Shield Slam was blocked by Cleatus.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Molten Destroyer interrupts Souldreamer's Holy Light.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Athenna is immune to Buru the Gorger's Creeping Plague.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Unknown Entity's Ambush crits Ponnie for 1090.", -- [2]
-			},
-			["SPELLRESISTOTHER"] = {
-				"%s was resisted by %s.", -- [1]
-				"Frostbite was resisted by Kruztique.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Unknown's Firebolt crits Bleinmeis for 170 Fire damage.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Wildspawn Trickster's Curse of Weakness was resisted by Kruztique.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Obsidian Eradicator's Drain Mana drains 250 Mana from Bapakloe. Obsidian Eradicator gains 500 Mana.", -- [2]
-			},
-			["SPELLLOGABSORBOTHER"] = {
-				"%s is absorbed by %s.", -- [1]
-				"Flame Wave is absorbed by Kruztique.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Gehennas's Shadow Bolt fails. Souldreamer is immune.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Epoch Hunter casts Disrupt Magic on Shair.[SIMPLECASTOTHEROTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Hatecrest Warrior's Disarm was dodged by Ponnie.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Epoch Hunter fails to dispel Dartanion's Fire Shield.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Wildspawn Rogue's Sinister Strike hits Kruztique for 331.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Eliza's Frostbolt hits Aubrie for 120 Frost damage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike is absorbed by Kruztique.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Kruztique for 275 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Hatecrest Warrior's Disarm missed Ponnie.", -- [2]
-			},
-			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
-				"%s casts %s on %s: %s damaged.", -- [1]
-				"Ragnaros casts Melt Weapon on Guntlien: Silent Fang damaged.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Southsea Pirate's Strike was parried by Ponnie.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Shadowmoon Warlock's Shadow Bolt is reflected back by Iamvj.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Firewing Bloodwarder's Mana Tap drains 1290 Mana from Kruztique.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Commander Louis Philips performs Dazed on Kruztique.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLSPLITDAMAGEOTHEROTHER"] = {
-				"%s's %s causes %s %d damage.", -- [1]
-				"Kirin'Var Ghost's Soulbind causes Alanfoster 159 damage.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
 		["CHAT_MSG_COMBAT_PARTY_MISSES"] = {
 			["VSABSORBOTHEROTHER"] = {
 				"%s attacks. %s absorbs all the damage.", -- [1]
@@ -2010,6 +2167,17 @@ CombatLogScribeDB = {
 			["VSBLOCKOTHEROTHER"] = {
 				"%s attacks. %s blocks.", -- [1]
 				"Kruztique attacks. Hydrospawn blocks.", -- [2]
+			},
+		},
+		["CHAT_MSG_MONEY"] = {
+			["LOOT_MONEY_SPLIT"] = {
+				"Your share of the loot is %s.", -- [1]
+				"Your share of the loot is 22 Copper.", -- [2]
+			},
+			["YOU_LOOT_MONEY"] = {
+				"You loot %s[YOU_LOOT_MONEY]", -- [1]
+				"You loot 2 Silver, 31 Copper[YOU_LOOT_MONEY]", -- [2]
+				"2.0.6", -- [3]
 			},
 		},
 		["CHAT_MSG_COMBAT_SELF_MISSES"] = {
@@ -2103,50 +2271,50 @@ CombatLogScribeDB = {
 				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
 				"Haaroon casts Anguish on Unyielding Footman.[SIMPLECASTOTHEROTHER]", -- [2]
 			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Wildspawn Hellcaller's Fire Shield hits Wildspawn Imp for 51 Fire damage. (17 resisted)", -- [2]
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Khuunam's Tainted Blood Effect was evaded by Wing Commander Guse.", -- [2]
 			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Phantaz's Torment is reflected back by Greater Obsidian Elemental.", -- [2]
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike was dodged by Wildspawn Trickster.", -- [2]
 			},
 			["DISPELFAILEDOTHEROTHER"] = {
 				"%s fails to dispel %s's %s.", -- [1]
 				"Khuunam fails to dispel Gibbles's Corruption.", -- [2]
 			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike missed Wildspawn Trickster.", -- [2]
+			["DISPELFAILEDOTHERSELF"] = {
+				"%s fails to dispel your %s.", -- [1]
+				"Khuunam fails to dispel your Corruption.", -- [2]
 			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Khuunam's Tainted Blood Effect was evaded by Wing Commander Guse.", -- [2]
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Wildspawn Hellcaller's Fire Shield hits Wildspawn Imp for 51 Fire damage. (17 resisted)", -- [2]
 			},
 			["SPELLLOGABSORBOTHEROTHER"] = {
 				"%s's %s is absorbed by %s.", -- [1]
 				"Wildspawn Shadowstalker's Backstab is absorbed by Wildspawn Felsworn.", -- [2]
 			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Wrathguard for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 238.", -- [2]
 			},
-			["DISPELFAILEDOTHERSELF"] = {
-				"%s fails to dispel your %s.", -- [1]
-				"Khuunam fails to dispel your Corruption.", -- [2]
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike missed Wildspawn Trickster.", -- [2]
 			},
 			["SPELLLOGOTHERSELF"] = {
 				"%s's %s hits you for %d.", -- [1]
 				"Doomsaw's Doomsaw hits you for 344.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 238.", -- [2]
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Wrathguard for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
 			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike was dodged by Wildspawn Trickster.", -- [2]
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Phantaz's Torment is reflected back by Greater Obsidian Elemental.", -- [2]
 			},
 			["SPELLLOGABSORBOTHERSELF"] = {
 				"You absorb %s's %s.", -- [1]
@@ -2164,51 +2332,87 @@ CombatLogScribeDB = {
 				"2.0.10.6448", -- [3]
 			},
 		},
-		["CHAT_MSG_SPELL_PET_BUFF"] = {
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Khuunam's Devour Magic fails. Grounding Totem is immune.", -- [2]
+		["CHAT_MSG_SPELL_PARTY_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"feedsontroll's Bite was blocked by Dark Iron Sentry.", -- [2]
 			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Khuunam's Devour Magic is reflected back by Iamvj.", -- [2]
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Bigpotato interrupts Scholomance Neophyte's Shadow Bolt.", -- [2]
 			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Khuunam fails to dispel Horrobull's Lightning Shield.", -- [2]
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Phase Lasher is immune to Kruztique's Shadow Word: Pain.", -- [2]
 			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Phantaz gains 46 Mana from Phantaz's Judgement of Wisdom.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Khuunam's Devour Magic was resisted by Althion.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Khuunam's Judgement of Light heals Khuunam for 61.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Wrathguard casts Flame Wave.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Khuunam casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Hound of Culuthas begins to cast Double Breath.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["HEALEDCRITOTHEROTHER"] = {
-				"%s's %s critically heals %s for %d.", -- [1]
-				"Bryantia's Improved Leader of the Pack critically heals Bryantia for 174.", -- [2]
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Mos's Auto Shot crits Sorcer for 172. (570 absorbed)", -- [2]
 			},
 			["SIMPLECASTOTHEROTHER"] = {
 				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Khuunam casts Devour Magic on Vooy.[SIMPLECASTOTHEROTHER]", -- [2]
+				"Nino casts Righteous Defense on Frostwolf Guardian.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Mos's Arcane Shot crits Chevr for 439 Arcane damage.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHERSELF"] = {
+				"%s's %s hits you for %d %s damage.", -- [1]
+				"Arcanite Dragonling's Flame Breath hits you for 180 Fire damage. (75 resisted) (45 absorbed)", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Minimonty's Hammer of Justice was resisted by Xeranuus.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Ponnie's Seal of Command was parried by Hatecrest Screamer.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Arcanite Dragonling begins to cast Flame Buffet.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Mos's Auto Shot fails. Moiranna is immune.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Narwen's Frostbolt is reflected back by Flamewaker Elite.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Kruztique fails to dispel Trixaria's Soul Burn.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Ponnie's Judgement was evaded by Zukk'ash Stinger.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Dragonx's Intercept Stun is absorbed by Narwen.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Mos's Auto Shot hits Chevr for 242.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Mos's Scatter Shot missed Petergibbons.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Mos's Arcane Shot hits Neckrataal for 187 Arcane damage.", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Ponnie's Seal of Command was dodged by Hatecrest Warrior.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Librabear performs Taunt on West Frostwolf Warmaster.[SIMPLEPERFORMOTHEROTHER]", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE"] = {
@@ -2402,202 +2606,51 @@ CombatLogScribeDB = {
 				"Khuunam loses 1087 health for swimming in lava. (362 resisted)", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_PARTY_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"feedsontroll's Bite was blocked by Dark Iron Sentry.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Bigpotato interrupts Scholomance Neophyte's Shadow Bolt.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Phase Lasher is immune to Kruztique's Shadow Word: Pain.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Mos's Auto Shot crits Sorcer for 172. (570 absorbed)", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Nino casts Righteous Defense on Frostwolf Guardian.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Mos's Arcane Shot crits Chevr for 439 Arcane damage.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHERSELF"] = {
-				"%s's %s hits you for %d %s damage.", -- [1]
-				"Arcanite Dragonling's Flame Breath hits you for 180 Fire damage. (75 resisted) (45 absorbed)", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Minimonty's Hammer of Justice was resisted by Xeranuus.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Ponnie's Seal of Command was parried by Hatecrest Screamer.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Arcanite Dragonling begins to cast Flame Buffet.", -- [2]
-			},
+		["CHAT_MSG_SPELL_PET_BUFF"] = {
 			["SPELLIMMUNEOTHEROTHER"] = {
 				"%s's %s fails. %s is immune.", -- [1]
-				"Mos's Auto Shot fails. Moiranna is immune.", -- [2]
+				"Khuunam's Devour Magic fails. Grounding Totem is immune.", -- [2]
 			},
 			["SPELLREFLECTOTHEROTHER"] = {
 				"%s's %s is reflected back by %s.", -- [1]
-				"Narwen's Frostbolt is reflected back by Flamewaker Elite.", -- [2]
+				"Khuunam's Devour Magic is reflected back by Iamvj.", -- [2]
 			},
 			["DISPELFAILEDOTHEROTHER"] = {
 				"%s fails to dispel %s's %s.", -- [1]
-				"Kruztique fails to dispel Trixaria's Soul Burn.", -- [2]
+				"Khuunam fails to dispel Horrobull's Lightning Shield.", -- [2]
 			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Ponnie's Judgement was evaded by Zukk'ash Stinger.", -- [2]
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Phantaz gains 46 Mana from Phantaz's Judgement of Wisdom.", -- [2]
 			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Dragonx's Intercept Stun is absorbed by Narwen.", -- [2]
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Khuunam's Judgement of Light heals Khuunam for 61.", -- [2]
 			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Mos's Auto Shot hits Chevr for 242.", -- [2]
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Khuunam's Devour Magic was resisted by Althion.", -- [2]
 			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Mos's Scatter Shot missed Petergibbons.", -- [2]
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Wrathguard casts Flame Wave.[SPELLTERSE_OTHER]", -- [2]
 			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Mos's Arcane Shot hits Neckrataal for 187 Arcane damage.", -- [2]
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Khuunam casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
 			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Ponnie's Seal of Command was dodged by Hatecrest Warrior.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Librabear performs Taunt on West Frostwolf Warmaster.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS"] = {
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Hukku's Voidwalker hits Cornholyo for 25.", -- [2]
-			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Alterac Ram hits Kruztique for 88.[COMBATHITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Oozeling crits Kruztique for 40 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Rot hits Kruztique for 156 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Atal'ai Deathwalker's Spirit crits Ponnie for 467.", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Frostwolf crits Kruztique for 184.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Frayer Protector's Shoot Thorns hits Kruztique for 962 Nature damage.", -- [2]
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Hound of Culuthas begins to cast Double Breath.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE"] = {
-			["SPELLLOGABSORBSELF"] = {
-				"You absorb %s.", -- [1]
-				"You absorb Flame Wave.", -- [2]
+			["HEALEDCRITOTHEROTHER"] = {
+				"%s's %s critically heals %s for %d.", -- [1]
+				"Bryantia's Improved Leader of the Pack critically heals Bryantia for 174.", -- [2]
 			},
-			["PERIODICAURADAMAGEOTHER"] = {
-				"%s suffers %d %s damage from %s.", -- [1]
-				"Wrathguard suffers 259 Fire damage from Flame Wave.", -- [2]
-			},
-			["SPELLLOGABSORBOTHER"] = {
-				"%s is absorbed by %s.", -- [1]
-				"Flame Wave is absorbed by Bryantia.", -- [2]
-			},
-			["PERIODICAURADAMAGESELFSELF"] = {
-				"You suffer %d %s damage from your %s.", -- [1]
-				"You suffer 215 Fire damage from your Hellfire.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHEROTHER"] = {
-				"%s suffers %d %s damage from %s's %s.", -- [1]
-				"Wildspawn Rogue suffers 100 Physical damage from Wildspawn Rogue's Rupture.", -- [2]
-			},
-			["SPELLLOGABSORBSELFSELF"] = {
-				"You absorb your %s.", -- [1]
-				"You absorb your Hellfire.", -- [2]
-			},
-			["PERIODICAURADAMAGESELFOTHER"] = {
-				"%s suffers %d %s damage from your %s.", -- [1]
-				"Doomguard suffers 283 Shadow damage from your Corruption.", -- [2]
-			},
-			["SPELLPOWERDRAINSELFOTHER"] = {
-				"Your %s drains %d %s from %s.", -- [1]
-				"Your Viper Sting drains 154 Mana from Skeletal Mage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Wildspawn Felsworn's Shadow Word: Pain is absorbed by Wildspawn Shadowstalker.", -- [2]
-			},
-			["SPELLPOWERLEECHSELFOTHER"] = {
-				"Your %s drains %d %s from %s. You gain %d %s.", -- [1]
-				"Your Drain Mana drains 140 Mana from Althion. You gain 140 Mana.", -- [2]
-			},
-			["AURAADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s.", -- [1]
-				"Wildspawn Rogue is afflicted by Enslave Demon.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHERSELF"] = {
-				"You suffer %d %s damage from %s's %s.", -- [1]
-				"You suffer 26 Physical damage from Alterac Ram's Rend.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s (%d).", -- [1]
-				"Wildspawn Hellcaller is afflicted by Submersion (2).", -- [2]
-			},
-			["AURAAPPLICATIONADDEDSELFHARMFUL"] = {
-				"You are afflicted by %s (%d).", -- [1]
-				"You are afflicted by Shadow Vulnerability (2).", -- [2]
-			},
-			["SPELLLOGABSORBOTHERSELF"] = {
-				"You absorb %s's %s.", -- [1]
-				"You absorb Wildspawn Hellcaller's Rain of Fire.", -- [2]
-			},
-			["PERIODICAURADAMAGESELF"] = {
-				"You suffer %d %s damage from %s.", -- [1]
-				"You suffer 275 Fire damage from Flame Wave.", -- [2]
-			},
-			["AURAADDEDSELFHARMFUL"] = {
-				"You are afflicted by %s.", -- [1]
-				"You are afflicted by Rend.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_FAILED_LOCALPLAYER"] = {
-			["ERR_TARGET_NOT_IN_GROUP_S"] = {
-				"%s is not in your party.", -- [1]
-				"You fail to cast Ritual of Summoning: Target is not in your party.", -- [2]
-			},
-			["SPELLFAILCASTSELF"] = {
-				"You fail to cast %s: %s.", -- [1]
-				"You fail to cast Immune Charm/Fear/Polymorph: Item is not ready yet.", -- [2]
-			},
-			["SPELLFAILPERFORMSELF"] = {
-				"You fail to perform %s: %s.", -- [1]
-				"You fail to perform Hemorrhage: Not yet recovered.", -- [2]
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Khuunam casts Devour Magic on Vooy.[SIMPLECASTOTHEROTHER]", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF"] = {
@@ -2716,6 +2769,224 @@ CombatLogScribeDB = {
 				"Sapo dies.", -- [2]
 			},
 		},
+		["CHAT_MSG_SPELL_FAILED_LOCALPLAYER"] = {
+			["ERR_TARGET_NOT_IN_GROUP_S"] = {
+				"%s is not in your party.", -- [1]
+				"You fail to cast Ritual of Summoning: Target is not in your party.", -- [2]
+			},
+			["SPELLFAILCASTSELF"] = {
+				"You fail to cast %s: %s.", -- [1]
+				"You fail to cast Immune Charm/Fear/Polymorph: Item is not ready yet.", -- [2]
+			},
+			["SPELLFAILPERFORMSELF"] = {
+				"You fail to perform %s: %s.", -- [1]
+				"You fail to perform Hemorrhage: Not yet recovered.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS"] = {
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Hukku's Voidwalker hits Cornholyo for 25.", -- [2]
+			},
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Alterac Ram hits Kruztique for 88.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Oozeling crits Kruztique for 40 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Rot hits Kruztique for 156 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Atal'ai Deathwalker's Spirit crits Ponnie for 467.", -- [2]
+			},
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Frostwolf crits Kruztique for 184.[COMBATHITCRITOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Frayer Protector's Shoot Thorns hits Kruztique for 962 Nature damage.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE"] = {
+			["SPELLLOGABSORBSELF"] = {
+				"You absorb %s.", -- [1]
+				"You absorb Flame Wave.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHER"] = {
+				"%s suffers %d %s damage from %s.", -- [1]
+				"Wrathguard suffers 259 Fire damage from Flame Wave.", -- [2]
+			},
+			["SPELLLOGABSORBOTHER"] = {
+				"%s is absorbed by %s.", -- [1]
+				"Flame Wave is absorbed by Bryantia.", -- [2]
+			},
+			["PERIODICAURADAMAGESELFSELF"] = {
+				"You suffer %d %s damage from your %s.", -- [1]
+				"You suffer 215 Fire damage from your Hellfire.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHEROTHER"] = {
+				"%s suffers %d %s damage from %s's %s.", -- [1]
+				"Wildspawn Rogue suffers 100 Physical damage from Wildspawn Rogue's Rupture.", -- [2]
+			},
+			["SPELLLOGABSORBSELFSELF"] = {
+				"You absorb your %s.", -- [1]
+				"You absorb your Hellfire.", -- [2]
+			},
+			["PERIODICAURADAMAGESELFOTHER"] = {
+				"%s suffers %d %s damage from your %s.", -- [1]
+				"Doomguard suffers 283 Shadow damage from your Corruption.", -- [2]
+			},
+			["SPELLPOWERDRAINSELFOTHER"] = {
+				"Your %s drains %d %s from %s.", -- [1]
+				"Your Viper Sting drains 154 Mana from Skeletal Mage.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Wildspawn Felsworn's Shadow Word: Pain is absorbed by Wildspawn Shadowstalker.", -- [2]
+			},
+			["SPELLPOWERLEECHSELFOTHER"] = {
+				"Your %s drains %d %s from %s. You gain %d %s.", -- [1]
+				"Your Drain Mana drains 140 Mana from Althion. You gain 140 Mana.", -- [2]
+			},
+			["AURAADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s.", -- [1]
+				"Wildspawn Rogue is afflicted by Enslave Demon.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHERSELF"] = {
+				"You suffer %d %s damage from %s's %s.", -- [1]
+				"You suffer 26 Physical damage from Alterac Ram's Rend.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s (%d).", -- [1]
+				"Wildspawn Hellcaller is afflicted by Submersion (2).", -- [2]
+			},
+			["AURAAPPLICATIONADDEDSELFHARMFUL"] = {
+				"You are afflicted by %s (%d).", -- [1]
+				"You are afflicted by Shadow Vulnerability (2).", -- [2]
+			},
+			["SPELLLOGABSORBOTHERSELF"] = {
+				"You absorb %s's %s.", -- [1]
+				"You absorb Wildspawn Hellcaller's Rain of Fire.", -- [2]
+			},
+			["PERIODICAURADAMAGESELF"] = {
+				"You suffer %d %s damage from %s.", -- [1]
+				"You suffer 275 Fire damage from Flame Wave.", -- [2]
+			},
+			["AURAADDEDSELFHARMFUL"] = {
+				"You are afflicted by %s.", -- [1]
+				"You are afflicted by Rend.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"Blackhand Iron Guard's Shield Slam was blocked by Cleatus.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Molten Destroyer interrupts Souldreamer's Holy Light.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Athenna is immune to Buru the Gorger's Creeping Plague.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Unknown Entity's Ambush crits Ponnie for 1090.", -- [2]
+			},
+			["SPELLRESISTOTHER"] = {
+				"%s was resisted by %s.", -- [1]
+				"Frostbite was resisted by Kruztique.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Unknown's Firebolt crits Bleinmeis for 170 Fire damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Wildspawn Trickster's Curse of Weakness was resisted by Kruztique.", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Obsidian Eradicator's Drain Mana drains 250 Mana from Bapakloe. Obsidian Eradicator gains 500 Mana.", -- [2]
+			},
+			["SPELLLOGABSORBOTHER"] = {
+				"%s is absorbed by %s.", -- [1]
+				"Flame Wave is absorbed by Kruztique.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Gehennas's Shadow Bolt fails. Souldreamer is immune.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Epoch Hunter casts Disrupt Magic on Shair.[SIMPLECASTOTHEROTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLSPLITDAMAGEOTHEROTHER"] = {
+				"%s's %s causes %s %d damage.", -- [1]
+				"Kirin'Var Ghost's Soulbind causes Alanfoster 159 damage.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Epoch Hunter fails to dispel Dartanion's Fire Shield.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Kruztique for 275 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Eliza's Frostbolt hits Aubrie for 120 Frost damage.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike is absorbed by Kruztique.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Wildspawn Rogue's Sinister Strike hits Kruztique for 331.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Hatecrest Warrior's Disarm missed Ponnie.", -- [2]
+			},
+			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
+				"%s casts %s on %s: %s damaged.", -- [1]
+				"Ragnaros casts Melt Weapon on Guntlien: Silent Fang damaged.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Southsea Pirate's Strike was parried by Ponnie.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Shadowmoon Warlock's Shadow Bolt is reflected back by Iamvj.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Firewing Bloodwarder's Mana Tap drains 1290 Mana from Kruztique.", -- [2]
+				"2.0.6", -- [3]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Commander Louis Philips performs Dazed on Kruztique.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Hatecrest Warrior's Disarm was dodged by Ponnie.", -- [2]
+			},
+		},
 		["CHAT_MSG_COMBAT_HONOR_GAIN"] = {
 			["COMBATLOG_HONORAWARD"] = {
 				"You have been awarded %d honor points.", -- [1]
@@ -2724,113 +2995,6 @@ CombatLogScribeDB = {
 			["COMBATLOG_HONORGAIN"] = {
 				"%s dies, honorable kill Rank: %s (Estimated Honor Points: %d)", -- [1]
 				"Vyxxenn dies, honorable kill Rank: Stone Guard (Estimated Honor Points: 80)", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF"] = {
-			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
-				"%s gains %d extra attack through %s.", -- [1]
-				"Sludge gains 1 extra attack through Hand of Justice.", -- [2]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Shammycow begins to perform Skinning.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Lokris performs Vanish on Lokris.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLIMMUNEOTHERSELF"] = {
-				"%s's %s failed. You are immune.", -- [1]
-				"Ponnie's First Aid failed. You are immune.", -- [2]
-			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Colding performs Cannibalize.[SPELLTERSEPERFORM_OTHER]", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHEROTHER"] = {
-				"%s casts %s on %s's %s.", -- [1]
-				"Zay casts +15 Fire Resistance on Cleatus's Onyxia Scale Cloak.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Fzuufenn's Devour Magic was resisted by Ponnie.", -- [2]
-			},
-			["SPELLEXTRAATTACKSOTHER"] = {
-				"%s gains %d extra attacks through %s.", -- [1]
-				"Petergibbons gains 2 extra attacks through Windfury Attack.", -- [2]
-			},
-			["HEALEDOTHERSELF"] = {
-				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
-				"Kruztique's Flash Heal heals you for 1176.[HEALEDOTHERSELF]", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Amantar begins to cast Greater Heal.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Kruztique's Weakened Soul fails. Narwen is immune.", -- [2]
-			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 60 Mana from Morisen's Rejuvenation.", -- [2]
-			},
-			["HEALEDCRITOTHEROTHER"] = {
-				"%s's %s critically heals %s for %d.", -- [1]
-				"Evelgest's Flash Heal critically heals Neckrataal for 1597.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Magosko's Dark Pact drains 250 Mana from Unknown Entity. Magosko gains 250 Mana.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Khuudom fails to dispel Boonie's Demon Armor.", -- [2]
-			},
-			["OPEN_LOCK_OTHER"] = {
-				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
-				"Kruztique performs Herb Gathering on Dreamfoil.[OPEN_LOCK_OTHER]", -- [2]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Yurneroo gains 15 Rage from Yurneroo's Charge.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Bakmoi casts Dispel Magic on Frucheman.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["DISPELFAILEDOTHERSELF"] = {
-				"%s fails to dispel your %s.", -- [1]
-				"Poyayan fails to dispel your Power Word: Fortitude.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Lionkingz's Zulian Slice missed Cleatus.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Vyxxenn's Devouring Plague heals Vyxxenn for 106.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Zryan casts Mana Spring Totem.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["SPELLRESISTOTHERSELF"] = {
-				"%s's %s was resisted.", -- [1]
-				"Khuudom's Devour Magic was resisted.", -- [2]
-			},
-			["HEALEDCRITOTHERSELF"] = {
-				"%s's %s critically heals you for %d.", -- [1]
-				"Kruztique's Greater Heal critically heals you for 3183.", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Ponnie casts Cleanse on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHERSELF"] = {
-				"%s casts %s on your %s.", -- [1]
-				"Erato casts +26 Attack Power on your Marshal's Leather Handgrips.", -- [2]
-				"2.0.10.6448", -- [3]
 			},
 		},
 		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS"] = {
@@ -2877,120 +3041,38 @@ CombatLogScribeDB = {
 				"2.0.6", -- [3]
 			},
 		},
-		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"Blackhand Veteran's Shield Bash was blocked by Hang.", -- [2]
+		["CHAT_MSG_COMBAT_PET_MISSES"] = {
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"Phantaz attacks. Risen Guard blocks.", -- [2]
 			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Molten Destroyer interrupts Narwen's Frostbolt.", -- [2]
+			["VSIMMUNEOTHEROTHER"] = {
+				"%s attacks but %s is immune.", -- [1]
+				"Wildspawn Rogue attacks but Wildspawn Rogue is immune.", -- [2]
 			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Damnh is immune to Buru the Gorger's Creeping Plague.", -- [2]
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Khuunam attacks. Althion absorbs all the damage.", -- [2]
 			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Unknown Entity's Ambush crits Darkvillian for 1322.", -- [2]
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Wildspawn Rogue misses Wildspawn Trickster.", -- [2]
 			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Epoch Hunter casts Disrupt Magic on Thrall.[SIMPLECASTOTHEROTHER]", -- [2]
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Wildspawn Rogue attacks. Wildspawn Trickster dodges.", -- [2]
+			},
+			["VSDODGEOTHERSELF"] = {
+				"%s attacks. You dodge.", -- [1]
+				"Wrathbringer attacks. You dodge.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Unknown's Lash of Pain crits Treka for 110 Shadow damage.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Slim's Friend's Poison was resisted by Gilman.", -- [2]
-			},
-			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
-				"%s casts %s on %s: %s damaged.", -- [1]
-				"Ragnaros casts Melt Weapon on Dragonx: Bloodlord's Defender damaged.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Prairie Wolf begins to cast Threatening Growl.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Southsea Pirate's Strike was parried by Thimtamuya.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Flamewaker's Fist of Ragnaros fails. Librabear is immune.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Obsidian Eradicator's Drain Mana drains 250 Mana from Dizdk. Obsidian Eradicator gains 500 Mana.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Irondeep Trogg performs Dazed on Irondeep Miner.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Alliance Sentinel's Cleave was dodged by Tric.", -- [2]
-			},
-			["SPELLSPLITDAMAGEOTHEROTHER"] = {
-				"%s's %s causes %s %d damage.", -- [1]
-				"Dreghood Drudge's Shared Bonds causes Dreghood Drudge 71 damage.", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Liquid Fire's Blaze was evaded by Champion Defender.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Stormpike Mountaineer's Explosive Shot hits Zunk for 215 Fire damage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Stormpike Mountaineer's Shoot is absorbed by Maulive.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Seasoned Guardian's Revenge hits Cleatus for 71.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Stormpike Mountaineer's Shoot missed Zunk.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Dreamcatcher for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Arazzius the Cruel casts Inferno.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["INSTAKILLOTHER"] = {
-				"%s is killed by %s.", -- [1]
-				"Gan'arg Sapper is killed by Power Burn.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Firewing Warlock's Mana Tap drains 1270 Mana from Tyranno.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Stormpike Mountaineer begins to perform Shoot.", -- [2]
-			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Entropic Eye performs Chaos Breath.[SPELLTERSEPERFORM_OTHER]", -- [2]
-				"2.0.10.6448", -- [3]
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Wildspawn Rogue attacks. Wildspawn Trickster parries.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF"] = {
-			["PROCRESISTOTHEROTHER"] = {
-				"%s resists %s's %s.", -- [1]
-				"Librabear resists Winterfall Shaman's Lightning Shield.", -- [2]
-			},
 			["SPELLIMMUNEOTHEROTHER"] = {
 				"%s's %s fails. %s is immune.", -- [1]
 				"Arcatraz Sentinel's Energy Discharge fails. Nino is immune.", -- [2]
@@ -3001,10 +3083,30 @@ CombatLogScribeDB = {
 				"Arcatraz Sentinel's Energy Discharge was resisted by Nedru.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Sethekk Ravenguard's Bloodthirst was dodged by Shair.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["PROCRESISTOTHEROTHER"] = {
+				"%s resists %s's %s.", -- [1]
+				"Librabear resists Winterfall Shaman's Lightning Shield.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Shattered Hand Heathen's Bloodthirst was parried by Roond.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
 			["POWERGAINOTHEROTHER"] = {
 				"%s gains %d %s from %s's %s.", -- [1]
 				"Kruztique gains 280 Mana from Shadowfiend's Mana Leech.", -- [2]
 				"2.0.6", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_AURA_GONE_PARTY"] = {
+			["AURAREMOVEDOTHER"] = {
+				"%s fades from %s.", -- [1]
+				"Detect Greater Invisibility fades from Kruztique.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE"] = {
@@ -3051,56 +3153,75 @@ CombatLogScribeDB = {
 				"Cheap Shot fades from Alterac Ram.", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_AURA_GONE_PARTY"] = {
-			["AURAREMOVEDOTHER"] = {
-				"%s fades from %s.", -- [1]
-				"Detect Greater Invisibility fades from Kruztique.", -- [2]
+		["CHAT_MSG_COMBAT_HOSTILE_DEATH"] = {
+			["SELFKILLOTHER"] = {
+				"You have slain %s!", -- [1]
+				"You have slain Forest Spider!", -- [2]
+			},
+			["UNITDIESOTHER"] = {
+				"%s dies.", -- [1]
+				"Alterac Ram dies.", -- [2]
+			},
+			["UNITDESTROYEDOTHER"] = {
+				"%s is destroyed.", -- [1]
+				"Magma Totem IV is destroyed.", -- [2]
+			},
+			["PARTYKILLOTHER"] = {
+				"%s is slain by %s!", -- [1]
+				"Chevr is slain by Mos!", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES"] = {
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"Wildspawn Betrayer attacks. Wildspawn Shadowstalker blocks.", -- [2]
+		["CHAT_MSG_COMBAT_PARTY_HITS"] = {
+			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
+				"%s suffers %d points of fire damage.", -- [1]
+				"Nimbus suffers 15 points of fire damage.", -- [2]
 			},
-			["MISSEDOTHERSELF"] = {
-				"%s misses you.", -- [1]
-				"Alterac Ram misses you.", -- [2]
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Shadowfiend crits Ethereal Scavenger for 232 Shadow damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
+				"2.0.6", -- [3]
 			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Wildspawn Trickster attacks. Wildspawn Rogue dodges.", -- [2]
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Chula's Auto Shot crits Treant for 360.", -- [2]
 			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Wildspawn Trickster attacks. Wildspawn Rogue parries.", -- [2]
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Sherbs crits Ludachriz for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
 			},
-			["VSIMMUNEOTHERSELF"] = {
-				"%s attacks but you are immune.", -- [1]
-				"Nightbane Tainted One attacks but you are immune.", -- [2]
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Kruztique's Shoot crits Earthbind Totem for 135 Arcane damage.", -- [2]
 			},
-			["VSPARRYOTHERSELF"] = {
-				"%s attacks. You parry.", -- [1]
-				"Young Panther attacks. You parry.", -- [2]
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Riane's Shoot hits Mana Spring Totem IV for 111 Shadow damage.", -- [2]
 			},
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Wildspawn Imp attacks. Wildspawn Hellcaller absorbs all the damage.", -- [2]
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Chula's Auto Shot hits Commander Louis Philips for 219.", -- [2]
 			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Wildspawn Rogue misses Wildspawn Rogue.", -- [2]
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Unknown hits Bonelasher for 111 Shadow damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+				"2.0.6", -- [3]
 			},
-			["VSABSORBOTHERSELF"] = {
-				"%s attacks. You absorb all the damage.", -- [1]
-				"Eliza's Guard attacks. You absorb all the damage.", -- [2]
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Frucheman hits Nauxinc for 441.[COMBATHITOTHEROTHER]", -- [2]
 			},
-			["VSDODGEOTHERSELF"] = {
-				"%s attacks. You dodge.", -- [1]
-				"Alterac Ram attacks. You dodge.", -- [2]
+			["COMBATHITCRITOTHERSELF"] = {
+				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
+				"Treant crits you for 321.[COMBATHITCRITOTHERSELF]", -- [2]
+				"2.0.10.6448", -- [3]
 			},
-			["SPELLMISSOTHERSELF"] = {
-				"%s's %s misses you.", -- [1]
-				"Hukku's Voidwalker misses you.", -- [2]
+			["COMBATHITOTHERSELF"] = {
+				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
+				"Bonechewer Hungerer hits you for 211.[COMBATHITOTHERSELF] (53 absorbed)", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
+				"%s loses %d health for swimming in lava.", -- [1]
+				"Kal'los loses 1446 health for swimming in lava.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS"] = {
@@ -3131,112 +3252,6 @@ CombatLogScribeDB = {
 			["POWERGAINOTHEROTHER"] = {
 				"%s gains %d %s from %s's %s.", -- [1]
 				"Chickenlady gains 1 Rage from Chickenlady's Bloodrage.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_SELF_DAMAGE"] = {
-			["SPELLRESISTSELFSELF"] = {
-				"You resisted your %s.", -- [1]
-				"You resisted your Drain Soul.", -- [2]
-			},
-			["SPELLIMMUNESELFSELF"] = {
-				"Your %s failed.  You are immune.", -- [1]
-				"Your Soulshatter failed.  You are immune.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SIMPLECASTSELFOTHER"] = {
-				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
-				"You cast Polymorph on Young Stranglethorn Tiger.[SIMPLECASTSELFOTHER]", -- [2]
-			},
-			["SPELLLOGSELFOTHER"] = {
-				"Your %s hits %s for %d.", -- [1]
-				"Your Hemorrhage hits Alterac Ram for 132.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELF"] = {
-				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
-				"Arcane Explosion hits you for 1432 Arcane damage.[SPELLLOGSCHOOLSELF]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLTERSE_SELF"] = {
-				"You cast %s.[SPELLTERSE_SELF]", -- [1]
-				"You cast Soulshatter.[SPELLTERSE_SELF]", -- [2]
-				"2.0.8.6403", -- [3]
-			},
-			["SPELLMISSSELFOTHER"] = {
-				"Your %s missed %s.", -- [1]
-				"Your Hemorrhage missed Seasoned Guardian.", -- [2]
-			},
-			["SIMPLEPERFORMSELFOTHER"] = {
-				"You perform %s on %s.[SIMPLEPERFORMSELFOTHER]", -- [1]
-				"You perform Distract on Kasinoll.[SIMPLEPERFORMSELFOTHER]", -- [2]
-			},
-			["SPELLLOGABSORBSELFOTHER"] = {
-				"Your %s is absorbed by %s.", -- [1]
-				"Your Hemorrhage is absorbed by Vyxxenn.", -- [2]
-			},
-			["IMMUNESPELLSELFOTHER"] = {
-				"%s is immune to your %s.", -- [1]
-				"Lava Annihilator is immune to your Corruption.", -- [2]
-			},
-			["SPELLPARRIEDSELFOTHER"] = {
-				"Your %s is parried by %s.", -- [1]
-				"Your Hemorrhage is parried by Hillel.", -- [2]
-			},
-			["SPELLEVADEDSELFOTHER"] = {
-				"Your %s was evaded by %s.", -- [1]
-				"Your Cleave was evaded by Hatecrest Serpent Guard.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELFOTHER"] = {
-				"Your %s hits %s for %d %s damage.", -- [1]
-				"Your Instant Poison VI hits Singh for 125 Nature damage.", -- [2]
-			},
-			["SPELLIMMUNESELFOTHER"] = {
-				"Your %s failed. %s is immune.", -- [1]
-				"Your Polymorph failed. Orbatron is immune.", -- [2]
-			},
-			["SPELLREFLECTSELFOTHER"] = {
-				"Your %s is reflected back by %s.", -- [1]
-				"Your Corruption is reflected back by Greater Obsidian Elemental.", -- [2]
-			},
-			["SPELLDODGEDSELFOTHER"] = {
-				"Your %s was dodged by %s.", -- [1]
-				"Your Hemorrhage was dodged by Humlae.", -- [2]
-			},
-			["SPELLBLOCKEDSELFOTHER"] = {
-				"Your %s was blocked by %s.", -- [1]
-				"Your Hamstring was blocked by Zapped Wave Strider.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Arcane Explosion hits Bryantia for 1427 Arcane damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGCRITSELFOTHER"] = {
-				"Your %s crits %s for %d.", -- [1]
-				"Your Hemorrhage crits Alterac Ram for 308.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELFSELF"] = {
-				"Your %s hits you for %d %s damage.", -- [1]
-				"Your Shadow Bolt hits you for 763 Shadow damage.", -- [2]
-			},
-			["SPELLLOGABSORBSELFSELF"] = {
-				"You absorb your %s.", -- [1]
-				"You absorb your Plague Effect.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
-				"Your %s crits %s for %d %s damage.", -- [1]
-				"Your Smite crits Mindless Zombie for 26 Holy damage.", -- [2]
-			},
-			["SPELLRESISTSELFOTHER"] = {
-				"Your %s was resisted by %s.", -- [1]
-				"Your Cheap Shot was resisted by Yurneroo.", -- [2]
-			},
-			["SPELLINTERRUPTSELFOTHER"] = {
-				"You interrupt %s's %s.", -- [1]
-				"You interrupt Eliza's Frostbolt.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLSELFSELF"] = {
-				"Your %s crits you for %d %s damage.", -- [1]
-				"Your Shadow Bolt crits you for 1158 Shadow damage.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS"] = {
@@ -3300,7 +3315,429 @@ CombatLogScribeDB = {
 			},
 		},
 	},
-	["logTrailer"] = true,
+	["tooShort"] = {
+		["FOLLOW"] = "Follow",
+		["CLOSE"] = "Close",
+		["HOURS_ABBR_P1"] = "Hrs",
+		["ALL"] = "All",
+		["SPELL_TARGET_TYPE8_DESC"] = "pet",
+		["LOGOUT"] = "Logout",
+		["RAID_LEADER_TOKEN"] = "(L)",
+		["LFG_TYPE_ZONE"] = "Zone",
+		["SUBMIT"] = "Submit",
+		["PETS"] = "Pets",
+		["BOSS"] = "Boss",
+		["CHAT_MSG_YELL"] = "Yell",
+		["LAUGH_WORD7"] = "haha",
+		["XPBAR_LABEL"] = "XP Bar",
+		["LOOT"] = "Loot",
+		["CHAT_COMBAT_CREATURE_VS_CREATURE_MISSES_GET"] = "",
+		["CHAT_SPELL_DAMAGESHIELDS_ON_OTHERS_GET"] = "",
+		["NONE_CAPS"] = "NONE",
+		["LAUGH_WORD6"] = "haha",
+		["SPELL_SCHOOLALL"] = "all",
+		["YELL_MESSAGE"] = "Yell",
+		["MP"] = "MP",
+		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE_GET"] = "",
+		["SPELL_TARGET_CREATURE_TYPE1_DESC"] = "%s",
+		["LAUGH_WORD8"] = "haha",
+		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS_GET"] = "",
+		["XP"] = "XP",
+		["ENERGY"] = "Energy",
+		["ERR_NOAMMO_S"] = "%s",
+		["CHAT_SPELL_FRIENDLYPLAYER_DAMAGE_GET"] = "",
+		["PET_FOLLOW"] = "Follow",
+		["DAYS_ABBR"] = "Day",
+		["DAMAGE_SCHOOL5"] = "Frost",
+		["ATTACK_POWER_COLON"] = "Power:",
+		["WHO_TAG_CLASS"] = "c-",
+		["HP"] = "HP",
+		["FOCUS_POINTS"] = "Focus",
+		["SOCIAL_BUTTON"] = "Social",
+		["YELLOW_GEM"] = "Yellow",
+		["LOCKED"] = "Locked",
+		["SPELL_SCHOOL4_CAP"] = "Frost",
+		["INT_SPELL_DURATION_SEC"] = "%d sec",
+		["HONOR_TODAY"] = "Today",
+		["NOT_APPLICABLE"] = "N/A",
+		["SPELL_TARGET_TYPE0_DESC"] = "caster",
+		["SEND_LABEL"] = "Send",
+		["AUCTION_TIME_LEFT1"] = "Short",
+		["WHO_TAG_NAME"] = "n-",
+		["PET_HAPPINESS3"] = "Happy",
+		["NEXT"] = "Next",
+		["HOURS_P1"] = "Hours",
+		["CAMERA_LOCKED"] = "Locked",
+		["TASKS_COLON"] = "Tasks:",
+		["META_GEM"] = "Meta",
+		["COD"] = "C.O.D.",
+		["NEVER"] = "Never",
+		["PROC_EVENT1_DESC"] = "on hit",
+		["DEMOTE"] = "Demote",
+		["DUEL"] = "Duel",
+		["CHAT_SPELL_ITEM_ENCHANTMENTS_GET"] = "",
+		["GOLD"] = "Gold",
+		["WAISTSLOT"] = "Waist",
+		["ZONE"] = "Zone",
+		["CORPSE"] = "Corpse",
+		["HEALTH"] = "Health",
+		["HONOR_THIS_SESSION"] = "Today",
+		["SECOND_ONELETTER_ABBR"] = "%d s",
+		["LAUGH_WORD9"] = "rofl",
+		["TEAM"] = "Team",
+		["HERTZ"] = "Hz",
+		["CHAT_SPELL_AURA_GONE_PARTY_GET"] = "",
+		["DAMAGE"] = "Damage",
+		["CHAT_COMBAT_FRIENDLYPLAYER_HITS_GET"] = "",
+		["FOREIGN_SERVER_LABEL"] = " (*)",
+		["WHO_TAG_ZONE"] = "z-",
+		["PARTY"] = "Party",
+		["STARTUP_TEXT_LINE4"] = "",
+		["PASS"] = "Pass",
+		["SPELL_SCHOOL1_CAP"] = "Holy",
+		["ELITE"] = "Elite",
+		["BACKSLOT"] = "Back",
+		["English"] = "",
+		["CHAT_MSG_SYSTEM"] = "System",
+		["WHO_TAG_GUILD"] = "g-",
+		["CHAT_SPELL_PARTY_DAMAGE_GET"] = "",
+		["LOW"] = "Low",
+		["DEATHS"] = "Deaths",
+		["FEMALE"] = "Female",
+		["AUCTION_CREATOR"] = "Seller",
+		["PLAYED"] = "Played",
+		["CHAT_SPELL_PET_BUFF_GET"] = "",
+		["SPELL_SCHOOL3_CAP"] = "Nature",
+		["SECONDS_ABBR_P1"] = "Secs",
+		["BUYOUT"] = "Buyout",
+		["ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S"] = "%s",
+		["MOTD_COLON"] = "MOTD:",
+		["PARENS_TEMPLATE"] = "(%s)",
+		["HOURS"] = "Hour",
+		["PLAYERSTAT_RANGED_COMBAT"] = "Ranged",
+		["PET_ACTION_ATTACK"] = "Attack",
+		["CASH_ON_DELIVERY"] = "C.O.D.",
+		["DAMAGE_SCHOOL3"] = "Fire",
+		["CHAT_COMBAT_FRIENDLYPLAYER_MISSES_GET"] = "",
+		["LASTONLINE_DAYS"] = "%d day",
+		["CHAT_SPELL_HOSTILEPLAYER_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_CREATURE_VS_SELF_HITS_GET"] = "",
+		["GAMES"] = "Games",
+		["DELETE_ITEM_CONFIRM_STRING"] = "DELETE",
+		["RESIST"] = "Resist",
+		["CHAT_SPELL_PERIODIC_PARTY_BUFFS_GET"] = "",
+		["DUNGEON_DIFFICULTY3"] = "Epic",
+		["TRAIN"] = "Train",
+		["ARENA_RATED"] = "Battle",
+		["WIDESCREEN_TAG"] = "(Wide)",
+		["RANK_COLON"] = "Rank:",
+		["RAID_TARGET_1"] = "Star",
+		["HIDE"] = "Hide",
+		["MONEY"] = "Money",
+		["SOLO"] = "Solo",
+		["NOTE_COLON"] = "Note:",
+		["WHO"] = "Who",
+		["SPELL_TARGET_TYPE1_DESC"] = "any",
+		["GAMMA"] = "Gamma",
+		["CHAT_MSG_AFK"] = "AFK",
+		["CHAT_COMBAT_CREATURE_VS_PARTY_HITS_GET"] = "",
+		["MILLISECONDS_ABBR"] = "ms",
+		["RACE"] = "Race",
+		["ARMOR"] = "Armor",
+		["FINGER0SLOT"] = "Finger",
+		["LAUGH_WORD2"] = "rofl",
+		["HOURS_ABBR"] = "Hr",
+		["BACK"] = "Back",
+		["UNIT_PVP_NAME"] = "%s %s",
+		["DODGE"] = "Dodge",
+		["LAUGH_WORD5"] = "haha",
+		["TABARDVENDORCOST"] = "Cost:",
+		["CAMERA_ALWAYS"] = "Always",
+		["RANK"] = "Rank",
+		["BROWSE"] = "Browse",
+		["FILTER"] = "Filter",
+		["NONE"] = "None",
+		["YES"] = "Yes",
+		["CHAT_SPELL_HOSTILEPLAYER_BUFF_GET"] = "",
+		["BUFFER_DOUBLE"] = "Double",
+		["CHAT_SPELL_TRADESKILLS_GET"] = "",
+		["BIDS"] = "Bids",
+		["COLOR"] = "Color",
+		["LAUGH_WORD1"] = "lol",
+		["INPUT_JAPANESE"] = "JP",
+		["MAIL_RETURN"] = "Return",
+		["YOU"] = "You",
+		["EMBLEM_SYMBOL"] = "Icon",
+		["CHAT_MSG_COMBAT_LOG_MISC_INFO"] = "Misc",
+		["CHAT_SPELL_DAMAGESHIELDS_ON_SELF_GET"] = "",
+		["ENABLE"] = "Enable",
+		["MANA"] = "Mana",
+		["SPELL_TARGET_TYPE15_DESC"] = "master",
+		["MAIL_TO_LABEL"] = "To:",
+		["MANA_POINTS"] = "Mana",
+		["INPUT_CHINESE"] = "CH",
+		["MANA_COLON"] = "Mana:",
+		["LEVEL_ABBR"] = "Lvl",
+		["DAYS"] = "Day",
+		["SPELL_SCHOOL2_CAP"] = "Fire",
+		["NEW"] = "New",
+		["CHAT_SPELL_CREATURE_VS_CREATURE_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_HOSTILE_DEATH_GET"] = "",
+		["FOCUS"] = "Focus",
+		["HK"] = "HK",
+		["BASIC_LABEL"] = "Basic",
+		["DAY_ONELETTER_ABBR"] = "%d d",
+		["SPELL_TARGET_TYPE3_DESC"] = "enemy",
+		["FACTION_STANDING_LABEL1"] = "Hated",
+		["CHAT_SPELL_PERIODIC_CREATURE_BUFFS_GET"] = "",
+		["MINUTES_ABBR"] = "Min",
+		["CHAT_COMBAT_PET_MISSES_GET"] = "",
+		["CHAT_SPELL_AURA_GONE_OTHER_GET"] = "",
+		["PET"] = "Pet",
+		["FRFR"] = "French",
+		["FEETSLOT"] = "Feet",
+		["DK"] = "DK",
+		["PET_ACTION_FOLLOW"] = "Follow",
+		["PARRY"] = "Parry",
+		["COPPER"] = "Copper",
+		["SAVE"] = "Save",
+		["CHAT_YELL_SEND"] = "Yell: ",
+		["TRADE"] = "Trade",
+		["RAID_ASSISTANT_TOKEN"] = "(A)",
+		["STARTUP_TEXT_LINE3"] = "",
+		["SPELL_SCHOOL2_NAME"] = "fire",
+		["STARTUP_TEXT_LINE2"] = "",
+		["FROM"] = "From:",
+		["HONOR_CONTRIBUTION_POINTS"] = "Honor",
+		["IMMUNE"] = "Immune",
+		["CHAT_COMBAT_MISC_INFO_GET"] = "",
+		["CANCEL"] = "Cancel",
+		["NECKSLOT"] = "Neck",
+		["DELETE"] = "Delete",
+		["PET_RENAME"] = "Rename",
+		["CHAT_SPELL_PET_DAMAGE_GET"] = "",
+		["CHAT_MSG_GUILD"] = "Guild",
+		["DAMAGE_SCHOOL6"] = "Shadow",
+		["SPELL_STAT5_NAME"] = "Spirit",
+		["INPUT_KOREAN"] = "KO",
+		["CHAT_LABEL"] = "Chat",
+		["MAIL_REPLY_PREFIX"] = "RE:",
+		["WEAPON_SPEED"] = "Speed",
+		["SPELL_TARGET_CREATURE_TYPE8_DESC"] = "%s pet",
+		["EXIT"] = "Exit",
+		["SPEAKERMODE_STEREO"] = "Stereo",
+		["CHAT_SPELL_PERIODIC_CREATURE_DAMAGE_GET"] = "",
+		["OUTBID"] = "Outbid",
+		["PERCENT_SYMBOL"] = "%%",
+		["DUNGEON_DIFFICULTY2"] = "Heroic",
+		["CAMERA_NEVER"] = "Never",
+		["ENERGY_POINTS"] = "Energy",
+		["CHAT_COMBAT_CREATURE_VS_PARTY_MISSES_GET"] = "",
+		["CHAT_SAY_SEND"] = "Say: ",
+		["CHAT_MSG_SKILL"] = "Skill",
+		["HONOR"] = "Honor",
+		["NEED"] = "Need",
+		["PREV"] = "Prev",
+		["BAGSLOT"] = "Bag",
+		["OKAY"] = "Okay",
+		["RAID_TARGET_2"] = "Circle",
+		["RAID_TARGET_7"] = "Cross",
+		["ZONE_COLON"] = "Zone:",
+		["ERROR_CAPS"] = "ERROR",
+		["CHAT_SPELL_FRIENDLYPLAYER_BUFF_GET"] = "",
+		["RAID_TARGET_5"] = "Moon",
+		["SPELLS"] = "Spells",
+		["CHAT_COMBAT_CREATURE_VS_CREATURE_HITS_GET"] = "",
+		["RAID_MESSAGE"] = "Raid",
+		["COSTS_LABEL"] = "Cost:",
+		["MINUTES"] = "Minute",
+		["SPELL_SCHOOL5_NAME"] = "shadow",
+		["LOCK"] = "Lock",
+		["CHAT_COMBAT_ERROR_GET"] = "",
+		["REPLY_MESSAGE"] = "Reply",
+		["AUCTION_TIME_LEFT2"] = "Medium",
+		["WHO_TAG_RACE"] = "r-",
+		["CHAT_SPELL_PERIODIC_PARTY_DAMAGE_GET"] = "",
+		["DEDE"] = "German",
+		["INT_SPELL_DURATION_MIN"] = "%d min",
+		["CHAT_SPELL_SELF_DAMAGE_GET"] = "",
+		["PLAYERSTAT_SPELL_COMBAT"] = "Spell",
+		["CHAT_SPELL_PARTY_BUFF_GET"] = "",
+		["EMPTY"] = "Empty",
+		["PET_ATTACK"] = "Attack",
+		["RELICSLOT"] = "Relic",
+		["SECONDS_ABBR"] = "Sec",
+		["SERVER_MESSAGE_COLON"] = "Alert:",
+		["SPELL_TARGET_TYPE7_DESC"] = "object",
+		["DAMAGE_SCHOOL4"] = "Nature",
+		["CHAT_SPELL_CREATURE_VS_CREATURE_BUFF_GET"] = "",
+		["CHAT_MSG_COMBAT_LOG_ERROR"] = "Error",
+		["MISS"] = "Miss",
+		["SPELL_SCHOOL6_NAME"] = "arcane",
+		["ARMOR_COLON"] = "Armor:",
+		["HOUR_ONELETTER_ABBR"] = "%d h",
+		["CHESTSLOT"] = "Chest",
+		["SECONDS"] = "Second",
+		["USE"] = "Use",
+		["CLASS"] = "Class",
+		["SKILL"] = "Skill",
+		["CAMERA_LABEL"] = "Camera",
+		["SKILLS"] = "Skills",
+		["CHAT_SPELL_CREATURE_VS_SELF_BUFF_GET"] = "",
+		["UNITNAME_TITLE"] = "%s",
+		["DAMAGE_SCHOOL2"] = "Holy",
+		["LEVEL"] = "Level",
+		["INPUT_ROMAN"] = "A",
+		["DUNGEON_DIFFICULTY1"] = "Normal",
+		["RATING"] = "Rating",
+		["HIGH"] = "High",
+		["SEARCH"] = "Search",
+		["CHAT_SPELL_SELF_BUFF_GET"] = "",
+		["ACCEPT"] = "Accept",
+		["SPELL_SCHOOL4_NAME"] = "frost",
+		["CHAT_COMBAT_LOG_ERROR_GET"] = "",
+		["MERCHANT_STOCK"] = "(%d)",
+		["EVADE"] = "Evade",
+		["PLAYERSTAT_MELEE_COMBAT"] = "Melee",
+		["ADDON_BANNED"] = "Banned",
+		["AUCTION_TIME_LEFT3"] = "Long",
+		["CHAT_SPELL_AURA_GONE_SELF_GET"] = "",
+		["ALLIED"] = "Allied",
+		["RAID"] = "Raid",
+		["KILLS"] = "Kills",
+		["GROUP"] = "Group",
+		["LFG_TYPE_NONE"] = "None",
+		["QUIT"] = "Quit",
+		["CHAT_SPELL_CREATURE_VS_PARTY_BUFF_GET"] = "",
+		["CHAT_COMBAT_SELF_MISSES_GET"] = "",
+		["SILVER"] = "Silver",
+		["NAME"] = "Name",
+		["INT_SPELL_DURATION_HOURS_P1"] = "%d hrs",
+		["BUYOUT_COST"] = "Buyout",
+		["SPEED"] = "Speed",
+		["FLAG_COUNT_TEMPLATE"] = "x %d",
+		["AT_WAR"] = "At War",
+		["FACTION_STANDING_LABEL1_FEMALE"] = "Hated",
+		["CHAT_MSG_SAY"] = "Say",
+		["RAGE_POINTS"] = "Rage",
+		["TRADE_SKILL_TITLE"] = "%s",
+		["SPELL_TARGET_TYPE12_DESC"] = "all",
+		["RARITY"] = "Rarity",
+		["QUEST_HARD"] = "(Hard)",
+		["CHAT_SPELL_CREATURE_VS_PARTY_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_PARTY_HITS_GET"] = "",
+		["CHAT_COMBAT_HOSTILEPLAYER_HITS_GET"] = "",
+		["DONE"] = "Done",
+		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS_GET"] = "",
+		["VICTORY_TEXT_ARENA_DRAW"] = "Draw",
+		["LAUGH_WORD3"] = "hehe",
+		["WRISTSLOT"] = "Wrist",
+		["CHAT_COMBAT_LOG_MISC_INFO_GET"] = "",
+		["FONT_SIZE_TEMPLATE"] = "%d pt",
+		["PET_ACTION_WAIT"] = "Stay",
+		["BLOCK"] = "Block",
+		["RAGE"] = "Rage",
+		["SPELL_SCHOOL3_NAME"] = "nature",
+		["SPELL_SCHOOL6_CAP"] = "Arcane",
+		["MINUTE_ONELETTER_ABBR"] = "%d m",
+		["ERR_SPELL_FAILED_S"] = "%s",
+		["MINUTES_ABBR_P1"] = "Mins",
+		["CHAT_MSG_DND"] = "DND",
+		["SPELL_TARGET_TYPE11_DESC"] = "party",
+		["SHIRTSLOT"] = "Shirt",
+		["TICKET_TYPE4"] = "Bug",
+		["CHAT_MSG_PARTY"] = "Party",
+		["IGNORE"] = "Ignore",
+		["STUN"] = "Stun",
+		["PET_WAIT"] = "Stay",
+		["DAYS_P1"] = "Days",
+		["BID"] = "Bid",
+		["FRAMERATE_LABEL"] = "FPS:",
+		["ID"] = "ID",
+		["SAY"] = "Say",
+		["KOKR"] = "Korean",
+		["TARGET"] = "Target",
+		["CHAT_SPELL_PERIODIC_SELF_BUFFS_GET"] = "",
+		["PET_TYPE_DEMON"] = "Demon",
+		["MACROS"] = "Macros",
+		["FAILED"] = "Failed",
+		["TICKET_TYPE3"] = "Stuck",
+		["LFG_TYPE_RAID"] = "Raid",
+		["MAIL_LABEL"] = "Mail",
+		["SPELL_TARGET_CREATURE_TYPE12_DESC"] = "all %s",
+		["DAYS_ABBR_P1"] = "Days",
+		["GROUPS"] = "Groups",
+		["BREATH_LABEL"] = "Breath",
+		["ABSORB"] = "Absorb",
+		["ERR_SPELL_FAILED_TOTEMS"] = "%s",
+		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE_GET"] = "",
+		["RAID_TARGET_8"] = "Skull",
+		["NONE_KEY"] = "None",
+		["DAMAGE_SCHOOL7"] = "Arcane",
+		["TYPE"] = "Type",
+		["MACRO"] = "Macro",
+		["FINGER1SLOT"] = "Finger",
+		["EMBLEM_BORDER"] = "Border",
+		["HOME"] = "Home",
+		["SPELL_SCHOOL1_NAME"] = "holy",
+		["ERR_SPELL_FAILED_SHAPESHIFT_FORM_S"] = "%s",
+		["RAID_TARGET_6"] = "Square",
+		["CHAT_COMBAT_SELF_HITS_GET"] = "",
+		["CREATE"] = "Create",
+		["TRAINER_LIST_SP"] = "%d SP",
+		["ITEMS"] = "Items",
+		["PARTY_INVITE"] = "Invite",
+		["SAY_MESSAGE"] = "Say",
+		["STUN_CAPS"] = "STUN",
+		["CHAT_SPELL_BREAK_AURA_GET"] = "",
+		["SPELL_TARGET_TYPE_DEAD1_DESC"] = "dead",
+		["RED_GEM"] = "Red",
+		["CHAT_SPELL_PERIODIC_SELF_DAMAGE_GET"] = "",
+		["SHIELDSLOT"] = "Shield",
+		["REMOVE"] = "Remove",
+		["ENCHANT_CONDITION_AND"] = " and ",
+		["CHAT_MSG_EMOTE"] = "Emote",
+		["INT_GENERAL_DURATION_DAYS"] = "%d day",
+		["ENCHSLOT_WEAPON"] = "Weapon",
+		["BLUE_GEM"] = "Blue",
+		["CHAT_COMBAT_PARTY_MISSES_GET"] = "",
+		["CHAT_COMBAT_PET_HITS_GET"] = "",
+		["ERR_TAME_FAILED"] = "%s.",
+		["SPELL_TARGET_TYPE5_DESC"] = "item",
+		["GREED"] = "Greed",
+		["RANGEDSLOT"] = "Ranged",
+		["CHAT_GUILD_DEMOTE_SEND"] = "Demote",
+		["PLAYER"] = "Player",
+		["TRAINER_LIST_TP"] = "%d TP",
+		["CHAT_COMBAT_HOSTILEPLAYER_MISSES_GET"] = "",
+		["STATS_LABEL"] = "Stats:",
+		["LABEL_NOTE"] = "Note",
+		["SPELL_SCHOOL5_CAP"] = "Shadow",
+		["CHAT_COMBAT_FRIENDLY_DEATH_GET"] = "",
+		["RESET"] = "Reset",
+		["CHAT_RAID_BOSS_EMOTE_GET"] = "",
+		["LEGSSLOT"] = "Legs",
+		["INBOX"] = "Inbox",
+		["DEAD"] = "Dead",
+		["SPELL_TARGET_CENTER_CASTER"] = "caster",
+		["HANDSSLOT"] = "Hands",
+		["CHAT_COMBAT_CREATURE_VS_SELF_MISSES_GET"] = "",
+		["ALWAYS"] = "Always",
+		["ERR_SPELL_FAILED_REAGENTS"] = "%s",
+		["CHAT_MSG_RAID"] = "Raid",
+		["CAMERA_SMART"] = "Smart",
+		["LAUGH_WORD4"] = "haha",
+		["JOIN"] = "Join",
+		["NO"] = "No",
+		["TABARDSLOT"] = "Tabard",
+		["AMMOSLOT"] = "Ammo",
+		["MALE"] = "Male",
+		["CHAT_SPELL_CREATURE_VS_SELF_DAMAGE_GET"] = "",
+		["PET_TYPE_PET"] = "Pet",
+		["CHAT_RAID_SEND"] = "Raid: ",
+		["HEADSLOT"] = "Head",
+		["ATTACK"] = "Attack",
+	},
 	["trailers"] = {
 		["COMBATHITCRITSCHOOLOTHEROTHER"] = {
 			["RESIST_TRAILER"] = {
@@ -3804,428 +4241,63 @@ CombatLogScribeDB = {
 			},
 		},
 	},
-	["tooShort"] = {
-		["FOLLOW"] = "Follow",
-		["CLOSE"] = "Close",
-		["HOURS_ABBR_P1"] = "Hrs",
-		["ALL"] = "All",
-		["SPELL_TARGET_TYPE8_DESC"] = "pet",
-		["LOGOUT"] = "Logout",
-		["RAID_LEADER_TOKEN"] = "(L)",
-		["LFG_TYPE_ZONE"] = "Zone",
-		["SUBMIT"] = "Submit",
-		["PETS"] = "Pets",
-		["BOSS"] = "Boss",
-		["CHAT_MSG_YELL"] = "Yell",
-		["LAUGH_WORD7"] = "haha",
-		["XPBAR_LABEL"] = "XP Bar",
-		["LOOT"] = "Loot",
-		["CHAT_COMBAT_CREATURE_VS_CREATURE_MISSES_GET"] = "",
-		["CHAT_SPELL_DAMAGESHIELDS_ON_OTHERS_GET"] = "",
-		["NONE_CAPS"] = "NONE",
-		["LAUGH_WORD6"] = "haha",
-		["SPELL_SCHOOLALL"] = "all",
-		["YELL_MESSAGE"] = "Yell",
-		["MP"] = "MP",
-		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE_GET"] = "",
-		["SPELL_TARGET_CREATURE_TYPE1_DESC"] = "%s",
-		["LAUGH_WORD8"] = "haha",
-		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS_GET"] = "",
-		["XP"] = "XP",
-		["ENERGY"] = "Energy",
-		["ERR_NOAMMO_S"] = "%s",
-		["CHAT_SPELL_FRIENDLYPLAYER_DAMAGE_GET"] = "",
-		["PET_FOLLOW"] = "Follow",
-		["DAYS_ABBR"] = "Day",
-		["DAMAGE_SCHOOL5"] = "Frost",
-		["ATTACK_POWER_COLON"] = "Power:",
-		["WHO_TAG_CLASS"] = "c-",
-		["HP"] = "HP",
-		["FOCUS_POINTS"] = "Focus",
-		["SOCIAL_BUTTON"] = "Social",
-		["YELLOW_GEM"] = "Yellow",
-		["LOCKED"] = "Locked",
-		["SPELL_SCHOOL4_CAP"] = "Frost",
-		["INT_SPELL_DURATION_SEC"] = "%d sec",
-		["HONOR_TODAY"] = "Today",
-		["NOT_APPLICABLE"] = "N/A",
-		["SPELL_TARGET_TYPE0_DESC"] = "caster",
-		["SEND_LABEL"] = "Send",
-		["AUCTION_TIME_LEFT1"] = "Short",
-		["WHO_TAG_NAME"] = "n-",
-		["PET_HAPPINESS3"] = "Happy",
-		["NEXT"] = "Next",
-		["HOURS_P1"] = "Hours",
-		["CAMERA_LOCKED"] = "Locked",
-		["TASKS_COLON"] = "Tasks:",
-		["META_GEM"] = "Meta",
-		["COD"] = "C.O.D.",
-		["NEVER"] = "Never",
-		["PROC_EVENT1_DESC"] = "on hit",
-		["DEMOTE"] = "Demote",
-		["DUEL"] = "Duel",
-		["CHAT_SPELL_ITEM_ENCHANTMENTS_GET"] = "",
-		["GOLD"] = "Gold",
-		["WAISTSLOT"] = "Waist",
-		["ZONE"] = "Zone",
-		["CORPSE"] = "Corpse",
-		["HEALTH"] = "Health",
-		["HONOR_THIS_SESSION"] = "Today",
-		["SECOND_ONELETTER_ABBR"] = "%d s",
-		["LAUGH_WORD9"] = "rofl",
-		["TEAM"] = "Team",
-		["HERTZ"] = "Hz",
-		["CHAT_SPELL_AURA_GONE_PARTY_GET"] = "",
-		["DAMAGE"] = "Damage",
-		["CHAT_COMBAT_FRIENDLYPLAYER_HITS_GET"] = "",
-		["FOREIGN_SERVER_LABEL"] = " (*)",
-		["WHO_TAG_ZONE"] = "z-",
-		["PARTY"] = "Party",
-		["STARTUP_TEXT_LINE4"] = "",
-		["PASS"] = "Pass",
-		["SPELL_SCHOOL1_CAP"] = "Holy",
-		["ELITE"] = "Elite",
-		["BACKSLOT"] = "Back",
-		["English"] = "",
-		["CHAT_MSG_SYSTEM"] = "System",
-		["WHO_TAG_GUILD"] = "g-",
-		["CHAT_SPELL_PARTY_DAMAGE_GET"] = "",
-		["LOW"] = "Low",
-		["DEATHS"] = "Deaths",
-		["FEMALE"] = "Female",
-		["AUCTION_CREATOR"] = "Seller",
-		["PLAYED"] = "Played",
-		["CHAT_SPELL_PET_BUFF_GET"] = "",
-		["SPELL_SCHOOL3_CAP"] = "Nature",
-		["SECONDS_ABBR_P1"] = "Secs",
-		["BUYOUT"] = "Buyout",
-		["ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S"] = "%s",
-		["MOTD_COLON"] = "MOTD:",
-		["PARENS_TEMPLATE"] = "(%s)",
-		["HOURS"] = "Hour",
-		["PLAYERSTAT_RANGED_COMBAT"] = "Ranged",
-		["PET_ACTION_ATTACK"] = "Attack",
-		["CASH_ON_DELIVERY"] = "C.O.D.",
-		["DAMAGE_SCHOOL3"] = "Fire",
-		["CHAT_COMBAT_FRIENDLYPLAYER_MISSES_GET"] = "",
-		["LASTONLINE_DAYS"] = "%d day",
-		["CHAT_SPELL_HOSTILEPLAYER_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_CREATURE_VS_SELF_HITS_GET"] = "",
-		["GAMES"] = "Games",
-		["DELETE_ITEM_CONFIRM_STRING"] = "DELETE",
-		["RESIST"] = "Resist",
-		["CHAT_SPELL_PERIODIC_PARTY_BUFFS_GET"] = "",
-		["DUNGEON_DIFFICULTY3"] = "Epic",
-		["TRAIN"] = "Train",
-		["ARENA_RATED"] = "Battle",
-		["WIDESCREEN_TAG"] = "(Wide)",
-		["RANK_COLON"] = "Rank:",
-		["RAID_TARGET_1"] = "Star",
-		["HIDE"] = "Hide",
-		["MONEY"] = "Money",
-		["SOLO"] = "Solo",
-		["NOTE_COLON"] = "Note:",
-		["WHO"] = "Who",
-		["SPELL_TARGET_TYPE1_DESC"] = "any",
-		["GAMMA"] = "Gamma",
-		["CHAT_MSG_AFK"] = "AFK",
-		["CHAT_COMBAT_CREATURE_VS_PARTY_HITS_GET"] = "",
-		["MILLISECONDS_ABBR"] = "ms",
-		["RACE"] = "Race",
-		["ARMOR"] = "Armor",
-		["FINGER0SLOT"] = "Finger",
-		["LAUGH_WORD2"] = "rofl",
-		["HOURS_ABBR"] = "Hr",
-		["BACK"] = "Back",
-		["UNIT_PVP_NAME"] = "%s %s",
-		["DODGE"] = "Dodge",
-		["LAUGH_WORD5"] = "haha",
-		["TABARDVENDORCOST"] = "Cost:",
-		["CAMERA_ALWAYS"] = "Always",
-		["RANK"] = "Rank",
-		["BROWSE"] = "Browse",
-		["FILTER"] = "Filter",
-		["NONE"] = "None",
-		["YES"] = "Yes",
-		["CHAT_SPELL_HOSTILEPLAYER_BUFF_GET"] = "",
-		["BUFFER_DOUBLE"] = "Double",
-		["CHAT_SPELL_TRADESKILLS_GET"] = "",
-		["BIDS"] = "Bids",
-		["COLOR"] = "Color",
-		["LAUGH_WORD1"] = "lol",
-		["INPUT_JAPANESE"] = "JP",
-		["MAIL_RETURN"] = "Return",
-		["YOU"] = "You",
-		["EMBLEM_SYMBOL"] = "Icon",
-		["CHAT_MSG_COMBAT_LOG_MISC_INFO"] = "Misc",
-		["CHAT_SPELL_DAMAGESHIELDS_ON_SELF_GET"] = "",
-		["ENABLE"] = "Enable",
-		["MANA"] = "Mana",
-		["SPELL_TARGET_TYPE15_DESC"] = "master",
-		["MAIL_TO_LABEL"] = "To:",
-		["MANA_POINTS"] = "Mana",
-		["INPUT_CHINESE"] = "CH",
-		["MANA_COLON"] = "Mana:",
-		["LEVEL_ABBR"] = "Lvl",
-		["DAYS"] = "Day",
-		["SPELL_SCHOOL2_CAP"] = "Fire",
-		["NEW"] = "New",
-		["CHAT_SPELL_CREATURE_VS_CREATURE_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_HOSTILE_DEATH_GET"] = "",
-		["FOCUS"] = "Focus",
-		["HK"] = "HK",
-		["BASIC_LABEL"] = "Basic",
-		["DAY_ONELETTER_ABBR"] = "%d d",
-		["SPELL_TARGET_TYPE3_DESC"] = "enemy",
-		["FACTION_STANDING_LABEL1"] = "Hated",
-		["CHAT_SPELL_PERIODIC_CREATURE_BUFFS_GET"] = "",
-		["MINUTES_ABBR"] = "Min",
-		["CHAT_COMBAT_PET_MISSES_GET"] = "",
-		["CHAT_SPELL_AURA_GONE_OTHER_GET"] = "",
-		["PET"] = "Pet",
-		["FRFR"] = "French",
-		["FEETSLOT"] = "Feet",
-		["DK"] = "DK",
-		["PET_ACTION_FOLLOW"] = "Follow",
-		["PARRY"] = "Parry",
-		["COPPER"] = "Copper",
-		["SAVE"] = "Save",
-		["CHAT_YELL_SEND"] = "Yell: ",
-		["TRADE"] = "Trade",
-		["RAID_ASSISTANT_TOKEN"] = "(A)",
-		["STARTUP_TEXT_LINE3"] = "",
-		["SPELL_SCHOOL2_NAME"] = "fire",
-		["STARTUP_TEXT_LINE2"] = "",
-		["FROM"] = "From:",
-		["HONOR_CONTRIBUTION_POINTS"] = "Honor",
-		["IMMUNE"] = "Immune",
-		["CHAT_COMBAT_MISC_INFO_GET"] = "",
-		["CANCEL"] = "Cancel",
-		["NECKSLOT"] = "Neck",
-		["DELETE"] = "Delete",
-		["PET_RENAME"] = "Rename",
-		["CHAT_SPELL_PET_DAMAGE_GET"] = "",
-		["CHAT_MSG_GUILD"] = "Guild",
-		["DAMAGE_SCHOOL6"] = "Shadow",
-		["SPELL_STAT5_NAME"] = "Spirit",
-		["INPUT_KOREAN"] = "KO",
-		["CHAT_LABEL"] = "Chat",
-		["MAIL_REPLY_PREFIX"] = "RE:",
-		["WEAPON_SPEED"] = "Speed",
-		["SPELL_TARGET_CREATURE_TYPE8_DESC"] = "%s pet",
-		["EXIT"] = "Exit",
-		["SPEAKERMODE_STEREO"] = "Stereo",
-		["CHAT_SPELL_PERIODIC_CREATURE_DAMAGE_GET"] = "",
-		["OUTBID"] = "Outbid",
-		["PERCENT_SYMBOL"] = "%%",
-		["DUNGEON_DIFFICULTY2"] = "Heroic",
-		["CAMERA_NEVER"] = "Never",
-		["ENERGY_POINTS"] = "Energy",
-		["CHAT_COMBAT_CREATURE_VS_PARTY_MISSES_GET"] = "",
-		["CHAT_SAY_SEND"] = "Say: ",
-		["CHAT_MSG_SKILL"] = "Skill",
-		["HONOR"] = "Honor",
-		["NEED"] = "Need",
-		["PREV"] = "Prev",
-		["BAGSLOT"] = "Bag",
-		["OKAY"] = "Okay",
-		["RAID_TARGET_2"] = "Circle",
-		["RAID_TARGET_7"] = "Cross",
-		["ZONE_COLON"] = "Zone:",
-		["ERROR_CAPS"] = "ERROR",
-		["CHAT_SPELL_FRIENDLYPLAYER_BUFF_GET"] = "",
-		["RAID_TARGET_5"] = "Moon",
-		["SPELLS"] = "Spells",
-		["CHAT_COMBAT_CREATURE_VS_CREATURE_HITS_GET"] = "",
-		["RAID_MESSAGE"] = "Raid",
-		["COSTS_LABEL"] = "Cost:",
-		["MINUTES"] = "Minute",
-		["SPELL_SCHOOL5_NAME"] = "shadow",
-		["LOCK"] = "Lock",
-		["CHAT_COMBAT_ERROR_GET"] = "",
-		["REPLY_MESSAGE"] = "Reply",
-		["AUCTION_TIME_LEFT2"] = "Medium",
-		["WHO_TAG_RACE"] = "r-",
-		["CHAT_SPELL_PERIODIC_PARTY_DAMAGE_GET"] = "",
-		["DEDE"] = "German",
-		["INT_SPELL_DURATION_MIN"] = "%d min",
-		["CHAT_SPELL_SELF_DAMAGE_GET"] = "",
-		["PLAYERSTAT_SPELL_COMBAT"] = "Spell",
-		["CHAT_SPELL_PARTY_BUFF_GET"] = "",
-		["EMPTY"] = "Empty",
-		["PET_ATTACK"] = "Attack",
-		["RELICSLOT"] = "Relic",
-		["SECONDS_ABBR"] = "Sec",
-		["SERVER_MESSAGE_COLON"] = "Alert:",
-		["SPELL_TARGET_TYPE7_DESC"] = "object",
-		["DAMAGE_SCHOOL4"] = "Nature",
-		["CHAT_SPELL_CREATURE_VS_CREATURE_BUFF_GET"] = "",
-		["CHAT_MSG_COMBAT_LOG_ERROR"] = "Error",
-		["MISS"] = "Miss",
-		["SPELL_SCHOOL6_NAME"] = "arcane",
-		["ARMOR_COLON"] = "Armor:",
-		["HOUR_ONELETTER_ABBR"] = "%d h",
-		["CHESTSLOT"] = "Chest",
-		["SECONDS"] = "Second",
-		["USE"] = "Use",
-		["CLASS"] = "Class",
-		["SKILL"] = "Skill",
-		["CAMERA_LABEL"] = "Camera",
-		["SKILLS"] = "Skills",
-		["CHAT_SPELL_CREATURE_VS_SELF_BUFF_GET"] = "",
-		["UNITNAME_TITLE"] = "%s",
-		["DAMAGE_SCHOOL2"] = "Holy",
-		["LEVEL"] = "Level",
-		["INPUT_ROMAN"] = "A",
-		["DUNGEON_DIFFICULTY1"] = "Normal",
-		["RATING"] = "Rating",
-		["HIGH"] = "High",
-		["SEARCH"] = "Search",
-		["CHAT_SPELL_SELF_BUFF_GET"] = "",
-		["ACCEPT"] = "Accept",
-		["SPELL_SCHOOL4_NAME"] = "frost",
-		["CHAT_COMBAT_LOG_ERROR_GET"] = "",
-		["MERCHANT_STOCK"] = "(%d)",
-		["EVADE"] = "Evade",
-		["PLAYERSTAT_MELEE_COMBAT"] = "Melee",
-		["ADDON_BANNED"] = "Banned",
-		["AUCTION_TIME_LEFT3"] = "Long",
-		["CHAT_SPELL_AURA_GONE_SELF_GET"] = "",
-		["ALLIED"] = "Allied",
-		["RAID"] = "Raid",
-		["KILLS"] = "Kills",
-		["GROUP"] = "Group",
-		["LFG_TYPE_NONE"] = "None",
-		["QUIT"] = "Quit",
-		["CHAT_SPELL_CREATURE_VS_PARTY_BUFF_GET"] = "",
-		["CHAT_COMBAT_SELF_MISSES_GET"] = "",
-		["SILVER"] = "Silver",
-		["NAME"] = "Name",
-		["INT_SPELL_DURATION_HOURS_P1"] = "%d hrs",
-		["BUYOUT_COST"] = "Buyout",
-		["SPEED"] = "Speed",
-		["FLAG_COUNT_TEMPLATE"] = "x %d",
-		["AT_WAR"] = "At War",
-		["FACTION_STANDING_LABEL1_FEMALE"] = "Hated",
-		["CHAT_MSG_SAY"] = "Say",
-		["RAGE_POINTS"] = "Rage",
-		["TRADE_SKILL_TITLE"] = "%s",
-		["SPELL_TARGET_TYPE12_DESC"] = "all",
-		["RARITY"] = "Rarity",
-		["QUEST_HARD"] = "(Hard)",
-		["CHAT_SPELL_CREATURE_VS_PARTY_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_PARTY_HITS_GET"] = "",
-		["CHAT_COMBAT_HOSTILEPLAYER_HITS_GET"] = "",
-		["DONE"] = "Done",
-		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS_GET"] = "",
-		["VICTORY_TEXT_ARENA_DRAW"] = "Draw",
-		["LAUGH_WORD3"] = "hehe",
-		["WRISTSLOT"] = "Wrist",
-		["CHAT_COMBAT_LOG_MISC_INFO_GET"] = "",
-		["FONT_SIZE_TEMPLATE"] = "%d pt",
-		["PET_ACTION_WAIT"] = "Stay",
-		["BLOCK"] = "Block",
-		["RAGE"] = "Rage",
-		["SPELL_SCHOOL3_NAME"] = "nature",
-		["SPELL_SCHOOL6_CAP"] = "Arcane",
-		["MINUTE_ONELETTER_ABBR"] = "%d m",
-		["ERR_SPELL_FAILED_S"] = "%s",
-		["MINUTES_ABBR_P1"] = "Mins",
-		["CHAT_MSG_DND"] = "DND",
-		["SPELL_TARGET_TYPE11_DESC"] = "party",
-		["SHIRTSLOT"] = "Shirt",
-		["TICKET_TYPE4"] = "Bug",
-		["CHAT_MSG_PARTY"] = "Party",
-		["IGNORE"] = "Ignore",
-		["STUN"] = "Stun",
-		["PET_WAIT"] = "Stay",
-		["DAYS_P1"] = "Days",
-		["BID"] = "Bid",
-		["FRAMERATE_LABEL"] = "FPS:",
-		["ID"] = "ID",
-		["SAY"] = "Say",
-		["KOKR"] = "Korean",
-		["TARGET"] = "Target",
-		["CHAT_SPELL_PERIODIC_SELF_BUFFS_GET"] = "",
-		["PET_TYPE_DEMON"] = "Demon",
-		["MACROS"] = "Macros",
-		["FAILED"] = "Failed",
-		["TICKET_TYPE3"] = "Stuck",
-		["LFG_TYPE_RAID"] = "Raid",
-		["MAIL_LABEL"] = "Mail",
-		["SPELL_TARGET_CREATURE_TYPE12_DESC"] = "all %s",
-		["DAYS_ABBR_P1"] = "Days",
-		["GROUPS"] = "Groups",
-		["BREATH_LABEL"] = "Breath",
-		["ABSORB"] = "Absorb",
-		["ERR_SPELL_FAILED_TOTEMS"] = "%s",
-		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE_GET"] = "",
-		["RAID_TARGET_8"] = "Skull",
-		["NONE_KEY"] = "None",
-		["DAMAGE_SCHOOL7"] = "Arcane",
-		["TYPE"] = "Type",
-		["MACRO"] = "Macro",
-		["FINGER1SLOT"] = "Finger",
-		["EMBLEM_BORDER"] = "Border",
-		["HOME"] = "Home",
-		["SPELL_SCHOOL1_NAME"] = "holy",
-		["ERR_SPELL_FAILED_SHAPESHIFT_FORM_S"] = "%s",
-		["RAID_TARGET_6"] = "Square",
-		["CHAT_COMBAT_SELF_HITS_GET"] = "",
-		["CREATE"] = "Create",
-		["TRAINER_LIST_SP"] = "%d SP",
-		["ITEMS"] = "Items",
-		["PARTY_INVITE"] = "Invite",
-		["SAY_MESSAGE"] = "Say",
-		["STUN_CAPS"] = "STUN",
-		["CHAT_SPELL_BREAK_AURA_GET"] = "",
-		["SPELL_TARGET_TYPE_DEAD1_DESC"] = "dead",
-		["RED_GEM"] = "Red",
-		["CHAT_SPELL_PERIODIC_SELF_DAMAGE_GET"] = "",
-		["SHIELDSLOT"] = "Shield",
-		["REMOVE"] = "Remove",
-		["ENCHANT_CONDITION_AND"] = " and ",
-		["CHAT_MSG_EMOTE"] = "Emote",
-		["INT_GENERAL_DURATION_DAYS"] = "%d day",
-		["ENCHSLOT_WEAPON"] = "Weapon",
-		["BLUE_GEM"] = "Blue",
-		["CHAT_COMBAT_PARTY_MISSES_GET"] = "",
-		["CHAT_COMBAT_PET_HITS_GET"] = "",
-		["ERR_TAME_FAILED"] = "%s.",
-		["SPELL_TARGET_TYPE5_DESC"] = "item",
-		["GREED"] = "Greed",
-		["RANGEDSLOT"] = "Ranged",
-		["CHAT_GUILD_DEMOTE_SEND"] = "Demote",
-		["PLAYER"] = "Player",
-		["TRAINER_LIST_TP"] = "%d TP",
-		["CHAT_COMBAT_HOSTILEPLAYER_MISSES_GET"] = "",
-		["STATS_LABEL"] = "Stats:",
-		["LABEL_NOTE"] = "Note",
-		["SPELL_SCHOOL5_CAP"] = "Shadow",
-		["CHAT_COMBAT_FRIENDLY_DEATH_GET"] = "",
-		["RESET"] = "Reset",
-		["CHAT_RAID_BOSS_EMOTE_GET"] = "",
-		["LEGSSLOT"] = "Legs",
-		["INBOX"] = "Inbox",
-		["DEAD"] = "Dead",
-		["SPELL_TARGET_CENTER_CASTER"] = "caster",
-		["HANDSSLOT"] = "Hands",
-		["CHAT_COMBAT_CREATURE_VS_SELF_MISSES_GET"] = "",
-		["ALWAYS"] = "Always",
-		["ERR_SPELL_FAILED_REAGENTS"] = "%s",
-		["CHAT_MSG_RAID"] = "Raid",
-		["CAMERA_SMART"] = "Smart",
-		["LAUGH_WORD4"] = "haha",
-		["JOIN"] = "Join",
-		["NO"] = "No",
-		["TABARDSLOT"] = "Tabard",
-		["AMMOSLOT"] = "Ammo",
-		["MALE"] = "Male",
-		["CHAT_SPELL_CREATURE_VS_SELF_DAMAGE_GET"] = "",
-		["PET_TYPE_PET"] = "Pet",
-		["CHAT_RAID_SEND"] = "Raid: ",
-		["HEADSLOT"] = "Head",
-		["ATTACK"] = "Attack",
+	["logTrailer"] = true,
+	["ambiguous"] = {
+		"SPELLLOGSELF", -- [1]
+		"COMBATHITOTHERSELF", -- [2]
+		"COMBATHITOTHEROTHER", -- [3]
+		"SPELLPERFORMGOOTHERTARGETTED", -- [4]
+		"OPEN_LOCK_OTHER", -- [5]
+		"SPELLLOGCRITOTHER", -- [6]
+		"COMBATHITCRITOTHEROTHER", -- [7]
+		"SPELLCASTGOOTHER", -- [8]
+		"SIMPLEPERFORMOTHEROTHER", -- [9]
+		"SPELLTERSE_OTHER", -- [10]
+		"SPELLTERSE_SELF", -- [11]
+		"POWERGAINSELF", -- [12]
+		"POWERGAINSELFOTHER", -- [13]
+		"POWERGAINSELFSELF", -- [14]
+		"SIMPLECASTOTHEROTHER", -- [15]
+		"HEALEDOTHERSELF", -- [16]
+		"SPELLPERFORMGOOTHER", -- [17]
+		"SPELLLOGCRITSELF", -- [18]
+		"SPELLTERSEPERFORM_OTHER", -- [19]
+		"COMBATHITCRITOTHERSELF", -- [20]
+		"PERIODICAURAHEALSELF", -- [21]
+		"PERIODICAURAHEALSELFSELF", -- [22]
+		"JOINED_PARTY", -- [23]
+		"ERR_JOINED_GROUP_S", -- [24]
+		"ERR_LEFT_GROUP_S", -- [25]
+		"SPELLCASTGOSELFTARGETTED", -- [26]
+		"ERR_IGNORE_NOT_FOUND", -- [27]
+		"SIMPLECASTSELFOTHER", -- [28]
+		"SKILL_RANK_UP", -- [29]
+		"OPEN_LOCK_SELF", -- [30]
+		"SPELLPERFORMGOSELFTARGETTED", -- [31]
+		"ERR_SKILL_UP_SI", -- [32]
+		"SPELLPERFORMGOSELF", -- [33]
+		"SIMPLEPERFORMSELFOTHER", -- [34]
+		"SPELLTERSEPERFORM_SELF", -- [35]
+		"SIMPLEPERFORMSELFSELF", -- [36]
+		"SPELLCASTGOOTHERTARGETTED", -- [37]
+		"SPELLLOGOTHER", -- [38]
+		"HEALEDSELF", -- [39]
+		"LEFT_PARTY", -- [40]
+		"SPELLCASTGOSELF", -- [41]
+		"SIMPLECASTSELFSELF", -- [42]
+		"POWERGAINOTHER", -- [43]
+		"COMBATLOG_XPGAIN_EXHAUSTION1", -- [44]
+		"COMBATHITSCHOOLOTHEROTHER", -- [45]
+		"SPELLLOGSCHOOLOTHER", -- [46]
+		"COMBATHITSCHOOLOTHERSELF", -- [47]
+		"SPELLLOGSCHOOLSELF", -- [48]
+		"COMBATLOG_XPGAIN_EXHAUSTION1_GROUP", -- [49]
+		"SPELLLOGCRITSCHOOLOTHER", -- [50]
+		"COMBATHITCRITSCHOOLOTHEROTHER", -- [51]
+		"SPELLLOGCRITSCHOOLSELF", -- [52]
+		"COMBATHITCRITSCHOOLOTHERSELF", -- [53]
+		"ERR_FRIEND_NOT_FOUND", -- [54]
+		"YOU_LOOT_MONEY", -- [55]
 	},
 	["ignored"] = {
 		["VOICEMACRO_20_Sc_6_FEMALE"] = "Ah, doornails.",
@@ -4272,7 +4344,7 @@ CombatLogScribeDB = {
 		["TUTORIAL41"] = "You have accepted an elite quest. Such quests are best undertaken in a group, for they will take you into areas inhabited by elite creatures. These creatures are significantly tougher than normal monsters; however, they are worth more experience. You can tell an elite creature by the golden dragon border around its portrait.",
 		["BUG_SUBMIT_FAILED"] = "Bug submission failed",
 		["VOICEMACRO_20_Hu_2_FEMALE"] = "Sometimes, I have trouble CONTROLLING THE VOLUME OF MY VOICE!",
-		["HELPFRAME_QUEST_BULLET_TITLE1"] = "The following are examples of Quest/Quest NPC issues:",
+		["VOICEMACRO_4_Sc_1_FEMALE"] = "Help me attack!",
 		["EMOTE44_CMD3"] = "/gasp",
 		["BINDING_NAME_TOGGLEABILITYBOOK"] = "Toggle Abilities",
 		["VOICEMACRO_10_Dw_0"] = "Open fire!",
@@ -4354,7 +4426,7 @@ CombatLogScribeDB = {
 		["GUILD_OFFICER_NOTE"] = "Guild Officer Note",
 		["PVP_RANK_5_1_FEMALE"] = "Private",
 		["OPTION_TOOLTIP_TARGETOFTARGET2"] = "Sets Target of Target to display when you are in a party.",
-		["VOICEMACRO_17_Ta_2_FEMALE"] = "You are welcome.",
+		["BINDING_NAME_FOLLOWTARGET"] = "Follow Target",
 		["VOICEMACRO_12_Ni_0_FEMALE"] = "Hello.",
 		["HELPFRAME_NONQUEST_BULLET1"] = "Creeps permanently evading",
 		["VOICEMACRO_19_Gn_4_FEMALE"] = "I don't feel that the 1 to 10 scale is fine enough to capture subtle details of compatibility.  I'd prefer a 12 dimensional compatibility scale with additional parameters for mechanical aptitude and torque.",
@@ -4418,7 +4490,7 @@ CombatLogScribeDB = {
 		["EMOTE140_CMD2"] = "/veto",
 		["VOICEMACRO_18_Ni_1_FEMALE"] = "Well done.",
 		["VOICEMACRO_15_Ta_2"] = "Never.",
-		["VOICEMACRO_8_Gn_1"] = "Would you please heal me?",
+		["VOICEMACRO_19_Sc_3"] = "Once you go dead, you never go back.",
 		["SLASH_TEAM_CAPTAIN1"] = "/teamcaptain",
 		["NEWBIE_TOOLTIP_UNIT_PET_DISMISS"] = "Dismisses your controlled minion.",
 		["VOICEMACRO_19_Or_0_FEMALE"] = "You had me at zug zug.",
@@ -4517,7 +4589,7 @@ CombatLogScribeDB = {
 		["BINDING_NAME_SHAPESHIFTBUTTON4"] = "Special Action Button 4",
 		["SLASH_LIST_CHANNEL4"] = "/chatlist",
 		["COMBAT_TEXT_SHOW_DODGE_PARRY_MISS_TEXT"] = "Show Dodge/Parries/Misses",
-		["EMOTE9_CMD2"] = "/bite",
+		["EMOTE26_CMD3"] = "/cong",
 		["VOICEMACRO_18_Ta_0_FEMALE"] = "Good job.",
 		["VOICEMACRO_16_Ta_3"] = "May your ancestors forever guard your path.",
 		["VOICEMACRO_4_Ni_2_FEMALE"] = "Assault my attacker!",
@@ -4590,7 +4662,7 @@ CombatLogScribeDB = {
 		["HELPFRAME_OPENTICKET_EDITTEXT"] = "Your Current Question:",
 		["VOICEMACRO_1_Ni_1"] = "Be alert!",
 		["VOICEMACRO_15_Gn_1"] = "No way.",
-		["VOICEMACRO_20_Hu_3"] = "How does a Tauren hide in a cherry tree?  He paints his hooves red.",
+		["SLASH_CLEAR1"] = "/clear",
 		["VOICEMACRO_5_Ta_0"] = "I need more mana!",
 		["ITEM_SOULBOUND"] = "Soulbound",
 		["VOICEMACRO_0_Or_1"] = "Aid me!",
@@ -4758,8 +4830,8 @@ CombatLogScribeDB = {
 		["TUTORIAL_TITLE22"] = "Friends",
 		["EMOTE28_CMD1"] = "/cough",
 		["PVP_RANK_11_1_FEMALE"] = "Knight-Lieutenant",
-		["BINDING_NAME_MULTIACTIONBAR1BUTTON8"] = "BottomLeft Action Button 8",
-		["OPTION_TOOLTIP_SHOW_DAMAGE"] = "Display damage numbers over hostile creatures when damaged.",
+		["VOICEMACRO_3_Hu_0_FEMALE"] = "Run!",
+		["EMOTE128_CMD2"] = "/shimmy",
 		["BINDING_HEADER_INTERFACE"] = "Interface Panel Functions",
 		["VOICEMACRO_20_Gn_0_FEMALE"] = "I apologize profusely for any inconvenience my murderous rampage may have caused.",
 		["CONFIRM_BATTLEFIELD_ENTRY"] = "You are now eligible to enter %s, choose an action:",
@@ -4822,7 +4894,7 @@ CombatLogScribeDB = {
 		["SLASH_CHAT_UNMUTE2"] = "/unsquelch",
 		["OPTION_TOOLTIP_MASTER_VOLUME"] = "Adjusts the master sound volume.",
 		["COMBAT_TEXT_LABEL"] = "Floating Combat Text",
-		["BINDING_NAME_REPLY"] = "Chat Reply",
+		["VOICEMACRO_19_Ta_4"] = "You know, older bulls really only have one function.",
 		["VOICEMACRO_5_Tr_1"] = "I be needing more mana!",
 		["SLASH_OFFICER3"] = "/o",
 		["VOICEMACRO_3_Gn_2_FEMALE"] = "Retreat!",
@@ -4901,9 +4973,9 @@ CombatLogScribeDB = {
 		["SLASH_LIST_CHANNEL1"] = "/chatlist",
 		["EMOTE56_CMD3"] = "/hello",
 		["GUILD_HELP_TEXT_LINE1"] = "For now, to create a guild type 'guildcreate <guild name>' in the console.",
-		["NEWBIE_TOOLTIP_UNIT_PET_PAPERDOLL"] = "Information about your pet, including its statistics, spell resistances, and diet.",
+		["VOICEMACRO_13_Ni_1"] = "Goodbye.",
 		["PVP_RANK_18_1"] = "Grand Marshal",
-		["VOICEMACRO_16_Sc_2_FEMALE"] = "How generous.",
+		["VOICEMACRO_16_Tr_0"] = "Thanks.",
 		["KEY_PERIOD"] = ".",
 		["VOICEMACRO_20_Tr_2_FEMALE"] = "I got all this and personality, too.",
 		["ITEM_MOD_HIT_SPELL_RATING"] = "Improves spell hit rating by %d.",
@@ -4920,6 +4992,7 @@ CombatLogScribeDB = {
 		["KEY_LEFTBRACKET"] = "[",
 		["GM_TICKET_WAIT_TIME"] = "Approximate time remaining:\n%s",
 		["VOICEMACRO_18_Ni_2"] = "Excellent.",
+		["RESILIENCE"] = "Resilience",
 		["SLASH_CLICK2"] = "/click",
 		["COMBAT_RATING_NAME9"] = "Crit Rating",
 		["HELPFRAME_CHARACTER_BULLET5"] = "Talents malfunctioning or missing",
@@ -5274,120 +5347,122 @@ CombatLogScribeDB = {
 		["ITEM_MOD_STAMINA"] = "%c%d Stamina",
 		["EMOTE60_CMD1"] = "/kneel",
 		["VOICEMACRO_6_Ta_0_FEMALE"] = "Come with me.",
+		["BINDING_NAME_MULTIACTIONBAR2BUTTON4"] = "BottomRight Action Button 4",
+		["BINDING_NAME_MULTIACTIONBAR4BUTTON4"] = "Right ActionBar 2 Button 4",
 		["SLASH_GUILD_DISBAND3"] = "/gdisband",
 		["VOICEMACRO_18_Ni_0"] = "Congratulations.",
-		["BINDING_NAME_MULTIACTIONBAR2BUTTON4"] = "BottomRight Action Button 4",
+		["COMBAT_TEXT_SCROLL_ARC"] = "Arc",
 		["VOICEMACRO_16_Hu_0"] = "Thank you.",
-		["BINDING_NAME_MULTIACTIONBAR4BUTTON4"] = "Right ActionBar 2 Button 4",
+		["EMOTE33_CMD2"] = "/curious",
 		["VOICEMACRO_8_Gn_0_FEMALE"] = "Please, heal me!",
 		["BINDING_NAME_PREVIOUSACTIONPAGE"] = "Previous Action Bar",
 		["BINDING_NAME_MULTIACTIONBAR2BUTTON12"] = "BottomRight Action Button 12",
 		["VOICEMACRO_6_Ni_1_FEMALE"] = "Follow me.",
-		["COMBAT_TEXT_SCROLL_ARC"] = "Arc",
+		["BINDING_NAME_MULTIACTIONBAR4BUTTON5"] = "Right ActionBar 2 Button 5",
 		["GENERIC_MIN_P1"] = "%d minutes",
 		["VOICEMACRO_8_Ta_1_FEMALE"] = "I need healing!",
 		["VOICEMACRO_8_Tr_2_FEMALE"] = "Heal me!",
-		["EMOTE33_CMD2"] = "/curious",
+		["VOICEMACRO_LABEL_CHARGE1"] = "charge",
 		["EMOTE120_CMD1"] = "/mock",
 		["EMOTE40_CMD1"] = "/fart",
-		["BINDING_NAME_MULTIACTIONBAR4BUTTON5"] = "Right ActionBar 2 Button 5",
+		["EMOTE9_CMD2"] = "/bite",
 		["EMOTE118_CMD1"] = "/listen",
 		["SLASH_TEAM_DEMOTE3"] = "/teamdemote",
 		["SLASH_CHAT_OWNER1"] = "/owner",
-		["EMOTE32_CMD4"] = "/cry",
+		["EMOTE109_CMD1"] = "/calm",
 		["BINDING_NAME_BONUSACTIONBUTTON6"] = "Secondary Action Button 6",
 		["GUILD_NAME"] = "Guild Name",
-		["VOICEMACRO_LABEL_CONGRATULATIONS1"] = "grats",
+		["SLASH_TRADE2"] = "/trade",
 		["VOICEMACRO_3_Gn_2"] = "Retreat!",
-		["EMOTE109_CMD1"] = "/calm",
+		["GUILD_NAME_TEMPLATE"] = "Guild: %s",
 		["SPELL_FAILED_NOT_TRADING"] = "Tried to enchant a trade item, but not trading",
 		["EMOTE40_CMD2"] = "/fart",
 		["BINDING_NAME_TOGGLEGUILDTAB"] = "Toggle Guild Pane",
 		["VOICEMACRO_19_Hu_0_FEMALE"] = "You've got me all a flutter.",
-		["SLASH_TRADE2"] = "/trade",
-		["VOICEMACRO_8_Ni_0_FEMALE"] = "Heal me!",
-		["VOICEMACRO_13_Tr_0"] = "Catch you later.",
 		["BINDING_NAME_BONUSACTIONBUTTON1"] = "Secondary Action Button 1",
-		["VOICEMACRO_13_Ni_1"] = "Goodbye.",
-		["VOICEMACRO_4_Or_0_FEMALE"] = "Attack over here!",
+		["EMOTE138_CMD2"] = "/tease",
+		["VOICEMACRO_13_Tr_0"] = "Catch you later.",
+		["VOICEMACRO_15_Dw_1_FEMALE"] = "Get bent.",
+		["ITEM_SET_NAME"] = "%s (%d/%d)",
+		["VOICEMACRO_12_Dw_0_FEMALE"] = "Greetings.",
 		["HELPFRAME_SUGGESTION_BUTTON_TEXT"] = "Send a Suggestion:",
 		["SLASH_CHAT_KICK1"] = "/ckick",
 		["VOICEMACRO_0_Gn_2_FEMALE"] = "I need help!",
-		["BINDING_NAME_TARGETPARTYPET1"] = "Target Party Pet 1",
-		["EMOTE69_CMD4"] = "/pick",
+		["VOICEMACRO_4_Hu_1"] = "Attack over here!",
+		["VOICEMACRO_3_Ni_0"] = "Retreat!",
 		["VOICEMACRO_17_Gn_0"] = "No problem.",
 		["HELP_TICKET_ABANDON_CONFIRM"] = "Really abandon current GM ticket?",
 		["VOICEMACRO_18_Gn_0_FEMALE"] = "Congratulations.",
 		["KEY_NUMPAD7"] = "Num Pad 7",
-		["ITEM_SET_NAME"] = "%s (%d/%d)",
+		["VOICEMACRO_7_Hu_2"] = "Wait here.",
 		["PVP_RANK_7_1_FEMALE"] = "Sergeant",
 		["SLASH_YELL1"] = "/y",
 		["VOICEMACRO_4_Gn_0"] = "Please, join my fight!",
-		["VOICEMACRO_12_Dw_0_FEMALE"] = "Greetings.",
+		["KEY_INSERT_MAC"] = "Help",
 		["VOICEMACRO_14_Dw_3"] = "Damn straight.",
 		["EMOTE123_CMD2"] = "/lavish",
 		["SLASH_WHISPER8"] = "/t",
-		["VOICEMACRO_7_Hu_2"] = "Wait here.",
-		["PVP_RANK_16_0_FEMALE"] = "General",
-		["HELPFRAME_ACCOUNT_TITLE"] = "Billing & Account Services",
 		["VOICEMACRO_12_Gn_1"] = "Greetings.",
-		["TUTORIAL_TITLE38"] = "Professions",
+		["PVP_RANK_16_0_FEMALE"] = "General",
 		["BINDING_NAME_RAIDTARGET2"] = "Assign Circle to Target",
+		["VOICEMACRO_20_Ta_1"] = "Here's the beef.",
+		["TUTORIAL_TITLE38"] = "Professions",
+		["TUTORIAL47"] = "You are now waiting to join a group through a meeting stone. The meeting stone indicator is a bubble attached to the mini-map. You can click on that indicator to remove yourself from the meeting stone queue.",
 		["GUILD_CREST_DESIGN"] = "Design a Guild Crest",
-		["EMOTE133_CMD2"] = "/sniff",
+		["VOICEMACRO_19_Ni_1_FEMALE"] = "Sure I've got exotic piercings.",
 		["KEY_PRINTSCREEN_MAC"] = "F13",
 		["GUILD_CHARTER_REGISTER"] = "Register a Guild Charter",
 		["EMOTE_STATE_KNEEL"] = "/kneel",
 		["OPTION_TOOLTIP_REMOVE_CHAT_DELAY"] = "Check to show chat windows immediately upon mouseover.",
 		["BINDING_NAME_SHAPESHIFTBUTTON2"] = "Special Action Button 2",
-		["VOICEMACRO_20_Ta_2_FEMALE"] = "Happy Taurens come from Mulgore.",
-		["VOICEMACRO_19_Ni_2_FEMALE"] = "I'm the type of girl my mother warned me about.",
-		["VOICEMACRO_19_Hu_5"] = "Your tag's showing.  It says, \"Made in heaven.\"",
 		["BINDING_NAME_TOGGLEWORLDMAP"] = "Toggle World Map Pane",
+		["ITEM_SPELL_CHARGES"] = "%d Charge",
+		["VOICEMACRO_19_Hu_5"] = "Your tag's showing.  It says, \"Made in heaven.\"",
+		["BUG_CATEGORY3"] = "Dungeons",
 		["EMOTE104_CMD2"] = "/whine",
 		["SPELL_FAILED_NOT_IN_ARENA"] = "You can't do that in an arena.",
-		["VOICEMACRO_20_Sc_2_FEMALE"] = "I'm in a rotten mood.",
-		["EMOTE32_CMD5"] = "/sob",
-		["BUG_CATEGORY3"] = "Dungeons",
-		["PVP_RANK_5_1"] = "Private",
 		["BINDING_NAME_MULTIACTIONBAR1BUTTON1"] = "BottomLeft Action Button 1",
+		["EMOTE32_CMD5"] = "/sob",
 		["BINDING_NAME_MULTIACTIONBAR4BUTTON6"] = "Right ActionBar 2 Button 6",
+		["PVP_RANK_5_1"] = "Private",
 		["COMBAT_RATING_NAME8"] = "Hit Rating",
+		["BINDING_NAME_MULTIACTIONBAR1BUTTON5"] = "BottomLeft Action Button 5",
+		["EMOTE4_CMD4"] = "/sorry",
 		["RESISTANCE_TOOLTIP_SUBTEXT"] = "Increases the ability to resist %s-based attacks, spells and abilities.\nResistance against level %d: |cffffffff%s|r",
-		["VOICEMACRO_1_Hu_0_FEMALE"] = "Guard yourself!",
-		["VOICEMACRO_1_Dw_1"] = "Heads up!",
+		["VOICEMACRO_19_Sc_2"] = "If rot was hot, I'd be a volcano.",
+		["FRIENDS"] = "Friends",
 		["VOICEMACRO_12_Dw_1"] = "Hello.",
 		["NEWBIE_TOOLTIP_SPELLBOOK"] = "To prepare a spell or ability for use, open the Spellbook & Abilities window, left-click the spell or ability and drag it down to your action bar.",
-		["VOICEMACRO_13_Gn_0"] = "Farewell.",
+		["FRIENDS_LIST"] = "Friends List",
 		["VOICEMACRO_20_Or_0_FEMALE"] = "Get between me and my food, and you'll lose a hand.",
 		["BINDING_HEADER_BLANK"] = "  ",
 		["VOICEMACRO_10_Hu_1_FEMALE"] = "Fire!",
-		["FRIENDS"] = "Friends",
-		["FRIENDS_LIST"] = "Friends List",
+		["EMOTE17_CMD1"] = "/bow",
+		["EMOTE121_CMD1"] = "/ponder",
 		["EMOTE62_CMD7"] = "/lay",
 		["SLASH_REPLY1"] = "/r",
 		["TUTORIAL11"] = "You can eat some food to regain your health faster.  Click on the food icon in the action bar across the bottom left of your screen.  Food will not work in combat, however.",
-		["EMOTE17_CMD1"] = "/bow",
-		["EMOTE121_CMD1"] = "/ponder",
-		["VOICEMACRO_13_Sc_1_FEMALE"] = "It's been real.",
+		["NEWBIE_TOOLTIP_LFGPARENT"] = "A tool to help you find a group to join or find additional players to complete your newly created or existing group.",
+		["BINDING_NAME_MULTIACTIONBAR4BUTTON11"] = "Right ActionBar 2 Button 11",
+		["VOICEMACRO_1_Dw_1"] = "Heads up!",
 		["TUTORIAL33"] = "You can press the spacebar to make your character jump. Jumping can help you past obstacles, and it can be particularly useful if you're having trouble getting out of the water and onto dry land.",
 		["SLASH_CHANNEL4"] = "/csay",
-		["BINDING_NAME_MULTIACTIONBAR4BUTTON11"] = "Right ActionBar 2 Button 11",
-		["EMOTE86_CMD1"] = "/sigh",
-		["VOICEMACRO_15_Tr_1_FEMALE"] = "No way.",
 		["GMSURVEYRATING2"] = "Poor",
-		["SPELL_TARGET_TEMPLATE"] = "Target %s",
 		["GUILD_INFO_TEMPLATE"] = "Guild created %d-%d-%d, %d players, %d accounts",
-		["BINDING_NAME_TOGGLEBATTLEFIELDMINIMAP"] = "Toggle Battle Map",
+		["VOICEMACRO_15_Tr_1_FEMALE"] = "No way.",
 		["ITEM_QUALITY4_DESC"] = "Epic",
+		["SPELL_TARGET_TEMPLATE"] = "Target %s",
 		["GUILD_MOTD_LABEL2"] = "Guild Message of the Day",
-		["VOICEMACRO_15_Tr_0_FEMALE"] = "No chance.",
-		["SPELL_FAILED_ONLY_SHAPESHIFT"] = "Must be in %s",
+		["BINDING_NAME_TOGGLEBATTLEFIELDMINIMAP"] = "Toggle Battle Map",
 		["EMOTE94_CMD2"] = "/talk",
 		["GUILD_PETITION_MEMBER_INSTRUCTIONS"] = "Click the <Sign Charter> button to become a charter member of this guild.",
+		["VOICEMACRO_15_Tr_0_FEMALE"] = "No chance.",
+		["SPELL_FAILED_ONLY_SHAPESHIFT"] = "Must be in %s",
 		["SPELLDURABILITYDAMAGEALLSELFOTHER"] = "You cast %s on %s: all items damaged.",
 		["EMOTE59_CMD2"] = "/blow",
 		["EMOTE28_CMD2"] = "/cough",
+		["BINDING_NAME_TURNRIGHT"] = "Turn Right",
+		["EMOTE42_CMD1"] = "/flex",
 		["VOICEMACRO_0_Tr_1_FEMALE"] = "Assist me!",
 		["CHAT_FLAG_DND"] = "<DND>",
 		["VOICEMACRO_0_Gn_0_FEMALE"] = "Can I get some help?",
@@ -5396,305 +5471,305 @@ CombatLogScribeDB = {
 		["ITEM_WRONG_CLASS"] = "That item can't be used by players of your class!",
 		["TUTORIAL_TITLE46"] = "Raid Groups",
 		["PVP_RANK_15_1_FEMALE"] = "Commander",
-		["VOICEMACRO_1_Ni_0"] = "Beware!",
+		["OPTION_TOOLTIP_GAMMA"] = "Controls the brightness of the game. Increase brightness until you can clearly see all 21 levels of gray bars to the right.",
 		["VOICEMACRO_LABEL_FLEE2"] = "run",
-		["VOICEMACRO_19_Hu_4"] = "Are you tired, cause you've been running through my mind all day.",
+		["BINDING_NAME_MULTIACTIONBAR3BUTTON7"] = "Right Action Button 7",
 		["SPELL_FAILED_TARGET_IN_COMBAT"] = "The target can't be in combat",
 		["VOICEMACRO_LABEL_GOODBYE2"] = "bye",
 		["SLASH_RAID5"] = "/ra",
-		["OPTION_TOOLTIP_GAMMA"] = "Controls the brightness of the game. Increase brightness until you can clearly see all 21 levels of gray bars to the right.",
+		["HELPFRAME_CHARACTER_BULLET3"] = "Skill level is showing as negative",
 		["VOICEMACRO_14_Or_2"] = "(grunt)",
 		["PVP_ZONE_OBJECTIVES"] = "Show PvP Zone Objectives",
-		["BINDING_NAME_MULTIACTIONBAR3BUTTON7"] = "Right Action Button 7",
-		["EMOTE169_CMD2"] = "/pat",
-		["HELPFRAME_CHARACTER_BULLET3"] = "Skill level is showing as negative",
-		["VOICEMACRO_12_Hu_3"] = "Well met.",
 		["HELPFRAME_ENVIRONMENTAL_BULLET4"] = "Falling through the world",
-		["SPELL_CAST_TIME_MIN"] = "%.3g min cast",
+		["EMOTE169_CMD2"] = "/pat",
 		["BINDING_NAME_MULTIACTIONBAR3BUTTON2"] = "Right Action Button 2",
+		["VOICEMACRO_12_Hu_3"] = "Well met.",
+		["GUILD_RANK3_DESC"] = "Member",
+		["SPELL_CAST_TIME_MIN"] = "%.3g min cast",
+		["VOICEMACRO_19_Gn_2_FEMALE"] = "Your ability to form a complete sentence is a plus.",
 		["EMOTE157_CMD2"] = "/incoming",
 		["EMOTE19_CMD5"] = "/goodbye",
 		["SLASH_HELP1"] = "/h",
 		["SPELL_FAILED_NO_EDIBLE_CORPSES"] = "There are no nearby corpses to eat",
 		["GUILD_HELP_TEXT_LINE8"] = "'/gdemote <player>' demotes a player one rank within your guild",
-		["BINDING_NAME_MULTIACTIONBAR1BUTTON3"] = "BottomLeft Action Button 3",
+		["VOICEMACRO_17_Gn_0_FEMALE"] = "Any time.",
 		["VOICEMACRO_16_Sc_0_FEMALE"] = "Thank you.",
-		["VOICEMACRO_19_Gn_2_FEMALE"] = "Your ability to form a complete sentence is a plus.",
 		["VOICEMACRO_19_Gn_2"] = "I like large posteriors, and I cannot prevaricate.",
+		["BINDING_NAME_MULTIACTIONBAR1BUTTON7"] = "BottomLeft Action Button 7",
 		["CANT_AFFORD_ITEM"] = "You can't afford that.",
 		["SLASH_WHISPER6"] = "/w",
-		["VOICEMACRO_17_Gn_0_FEMALE"] = "Any time.",
+		["SLASH_CHAT_HELP5"] = "/chathelp",
 		["SLASH_PET_AUTOCASTOFF2"] = "/petautocastoff",
-		["BINDING_NAME_MULTIACTIONBAR1BUTTON7"] = "BottomLeft Action Button 7",
-		["VOICEMACRO_19_Gn_0"] = "I have a number of inventions I'd like to show you back at my place.",
+		["EMOTE62_CMD6"] = "/liedown",
+		["EMOTE68_CMD2"] = "/yes",
 		["GMSURVEYRATING4"] = "Good",
 		["VOICEMACRO_17_Gn_1_FEMALE"] = "Anything for a friend.",
 		["SPELL_FAILED_TRAINING_POINTS"] = "Not enough training points",
-		["EMOTE62_CMD6"] = "/liedown",
+		["TUTORIAL15"] = "You can move spells and abilities to your action bar by opening the abilities page with the button in the bottom center of the screen and then dragging the ability icon to your action bar.  You can also use a spell or ability from the abilities page by clicking on it.",
 		["VOICEMACRO_18_Or_0_FEMALE"] = "Skillfully done.",
 		["TUTORIAL_TITLE11"] = "Food",
 		["SLASH_RAID_WARNING2"] = "/rw",
 		["VOICEMACRO_3_Dw_0_FEMALE"] = "Run away!",
-		["EMOTE68_CMD2"] = "/yes",
-		["TUTORIAL15"] = "You can move spells and abilities to your action bar by opening the abilities page with the button in the bottom center of the screen and then dragging the ability icon to your action bar.  You can also use a spell or ability from the abilities page by clicking on it.",
+		["EMOTE124_CMD2"] = "/purr",
+		["HELPFRAME_NONQUEST_TEXT"] = "Issues that deal with NPCs and Creeps functioning or interacting incorrectly",
 		["PVP_RATING"] = "Rating:",
 		["COMBAT_RATING_NAME2"] = "Defense Rating",
 		["EMOTE108_CMD2"] = "/boggle",
-		["TUTORIAL29"] = "You will see a Breath bar pop up when your character becomes submerged in water. If you run out of breath, you will begin to drown.",
-		["VOICEMACRO_12_Or_0_FEMALE"] = "Thram-ka.",
-		["HELPFRAME_NONQUEST_TEXT"] = "Issues that deal with NPCs and Creeps functioning or interacting incorrectly",
 		["HELPFRAME_TECHNICAL_TEXT"] = "Our Technical Support team is available to help you with any technical issues that occur while you are using World of Warcraft.",
-		["VOICEMACRO_1_Tr_0"] = "There be danger!",
+		["VOICEMACRO_12_Or_0_FEMALE"] = "Thram-ka.",
+		["BINDING_NAME_MULTIACTIONBAR3BUTTON12"] = "Right Action Button 12",
 		["COMBAT_TEXT_SHOW_AURAS_TEXT"] = "Show Auras",
+		["SLASH_TEAM_QUIT2"] = "/tquit",
+		["CHAT_FLAG_GM"] = "<GM>",
 		["VOICEMACRO_1_Hu_1_FEMALE"] = "On your guard!",
 		["EMOTE52_CMD2"] = "/peon",
 		["SLASH_CHAT_MODERATOR3"] = "/mod",
-		["BINDING_NAME_MULTIACTIONBAR3BUTTON12"] = "Right Action Button 12",
-		["SLASH_TEAM_QUIT2"] = "/tquit",
-		["SPELL_FAILED_REQUIRES_SPELL_FOCUS"] = "Requires %s",
-		["VOICEMACRO_14_Or_1"] = "Zug zug.",
 		["EMOTE44_CMD1"] = "/gasp",
 		["SLASH_EMOTE5"] = "/e",
-		["GM_TICKET_UNAVAILABLE"] = "Wait time currently unavailable.",
-		["EMOTE98_CMD4"] = "/thank",
+		["SPELL_FAILED_REQUIRES_SPELL_FOCUS"] = "Requires %s",
+		["VOICEMACRO_14_Or_1"] = "Zug zug.",
+		["EMOTE60_CMD3"] = "/kneel",
 		["VOICEMACRO_12_Gn_0"] = "Hello.",
-		["VOICEMACRO_18_Tr_2_FEMALE"] = "Wonderful.",
+		["VOICEMACRO_18_Tr_2"] = "They will speak of your exploits for generations.",
+		["EMOTE98_CMD4"] = "/thank",
+		["SPELL_FAILED_NOPATH"] = "No path available",
+		["INVTYPE_RANGEDRIGHT"] = "Ranged",
 		["VOICEMACRO_0_Gn_1_FEMALE"] = "Please, help me!",
 		["VOICEMACRO_20_Ta_1_FEMALE"] = "I once laughed so hard, I milked all over the floor.",
-		["VOICEMACRO_19_Ta_4"] = "You know, older bulls really only have one function.",
-		["INVTYPE_RANGEDRIGHT"] = "Ranged",
 		["INVTYPE_TABARD"] = "Tabard",
-		["BINDING_NAME_ITUNES_PLAYPAUSE"] = "iTunes Play/Pause",
 		["EMOTE146_CMD1"] = "/rasp",
+		["PVP_RANK_5_0_FEMALE"] = "Scout",
+		["BINDING_NAME_ITUNES_PLAYPAUSE"] = "iTunes Play/Pause",
+		["VOICEMACRO_20_Or_0"] = "I will crush and destroy and... ooo... shiny...",
 		["VOICEMACRO_1_Ni_1_FEMALE"] = "Be alert!",
 		["VOICEMACRO_16_Ni_0"] = "Thank you.",
 		["BINDING_NAME_TOGGLEKEYRING"] = "Toggle Keyring",
 		["EMOTE11_CMD2"] = "/blink",
 		["VOICEMACRO_4_Tr_1_FEMALE"] = "This the one to fight!",
 		["VOICEMACRO_5_Tr_0_FEMALE"] = "Me mana running low!",
-		["HELP_TEXT_LINE9"] = "- Tab to target nearest enemy",
-		["PVP_RANK_5_0_FEMALE"] = "Scout",
-		["VOICEMACRO_17_Tr_1_FEMALE"] = "My pleasure.",
-		["BINDING_NAME_MULTIACTIONBAR4BUTTON3"] = "Right ActionBar 2 Button 3",
+		["NEWBIE_TOOLTIP_UNIT_PET_PAPERDOLL"] = "Information about your pet, including its statistics, spell resistances, and diet.",
 		["ITEM_ENCHANT_DISCLAIMER"] = "Item will not be traded!",
+		["VOICEMACRO_17_Tr_1_FEMALE"] = "My pleasure.",
+		["ITEM_MIN_SKILL"] = "Requires %s (%d)",
+		["EMOTE141_CMD2"] = "/snicker",
 		["EMOTE57_CMD1"] = "/hug",
 		["VOICEMACRO_14_Ta_2"] = "It is meant to be.",
-		["ITEM_MIN_SKILL"] = "Requires %s (%d)",
-		["BINDING_NAME_MULTIACTIONBAR3BUTTON3"] = "Right Action Button 3",
-		["VOICEMACRO_16_Ni_2_FEMALE"] = "You are too kind.",
-		["SPELL_FAILED_INTERRUPTED"] = "Interrupted",
+		["PVP_TEAMSIZE"] = "(%dv%d)",
 		["HELP_TEXT_LINE12"] = "- 'r' or '/r' to reply to the last tell",
-		["OPTION_TOOLTIP_BUFFERING"] = "Enables triple buffering of frames when vertical sync is enabled. Selecting triple buffering may improve your framerate.",
+		["VOICEMACRO_16_Ni_2_FEMALE"] = "You are too kind.",
 		["EMOTE106_CMD2"] = "/work",
+		["HELPFRAME_OTHER_BUTTON_TEXT"] = "Other Issues:",
+		["OPTION_TOOLTIP_BUFFERING"] = "Enables triple buffering of frames when vertical sync is enabled. Selecting triple buffering may improve your framerate.",
+		["BINDING_NAME_MULTIACTIONBAR2BUTTON3"] = "BottomRight Action Button 3",
 		["PVP_RANK_8_0_FEMALE"] = "Senior Sergeant",
 		["EMOTE42_CMD2"] = "/strong",
 		["SLASH_CHAT_HELP2"] = "/chathelp",
 		["VOICEMACRO_7_Ta_0"] = "Rest a moment.",
 		["VOICEMACRO_17_Ta_0_FEMALE"] = "My pleasure.",
-		["KEY_NUMPADMINUS"] = "Num Pad -",
-		["BINDING_NAME_MULTIACTIONBAR2BUTTON3"] = "BottomRight Action Button 3",
+		["VOICEMACRO_13_Or_1"] = "Stay strong.",
+		["TUTORIAL_TITLE16"] = "Reputation",
 		["BINDING_NAME_TOGGLEGAMEMENU"] = "Toggle Game Menu",
 		["VOICEMACRO_18_Gn_2_FEMALE"] = "Excellent.",
 		["KEY_NUMPAD5"] = "Num Pad 5",
-		["VOICEMACRO_13_Or_1"] = "Stay strong.",
+		["TUTORIAL46"] = "You have joined a raid group: a group with an increased limit of 40 members.\n\n|cffff2020While in a raid group, you will not earn credit towards most non-raid quests by killing creatures or collecting items.|r",
 		["ITEM_SOCKETING"] = "Item Socketing",
-		["EMOTE32_CMD3"] = "/weep",
+		["ITEM_RESIST_ALL"] = "%c%d to All Resistances",
 		["SLASH_CHAT_BAN1"] = "/ban",
 		["HELPFRAME_GUILD_TEXT"] = "Any problems associated with the creation or functionality of a guild",
 		["EMOTE122_CMD2"] = "/pounce",
 		["SLASH_CHAT_ANNOUNCE3"] = "/announce",
 		["VOICEMACRO_7_Hu_1"] = "Stay here.",
-		["VOICEMACRO_8_Ta_0"] = "Heal me!",
-		["ITEM_RESIST_ALL"] = "%c%d to All Resistances",
-		["VOICEMACRO_19_Hu_2_FEMALE"] = "I need a hero.",
 		["EMOTE45_CMD1"] = "/gaze",
-		["VOICEMACRO_19_Ni_3_FEMALE"] = "There's nothing like sleeping in the forest under the moonlight.",
 		["EMOTE164_CMD1"] = "/wait",
+		["VOICEMACRO_19_Hu_2_FEMALE"] = "I need a hero.",
+		["BINDING_NAME_SAVEVIEW4"] = "Save View 4",
+		["VOICEMACRO_19_Ni_3_FEMALE"] = "There's nothing like sleeping in the forest under the moonlight.",
+		["SLASH_CHAT_CINVITE1"] = "/cinvite",
 		["TUTORIAL_TITLE44"] = "Ranged Weapons",
 		["EMOTE52_CMD1"] = "/grovel",
 		["SPELL_FAILED_SPELL_LEARNED"] = "You have already learned the spell",
-		["BINDING_NAME_SAVEVIEW4"] = "Save View 4",
-		["SLASH_CHAT_CINVITE1"] = "/cinvite",
-		["GUILD_RANK0_DESC"] = "Guild Master",
-		["BINDING_NAME_BONUSACTIONBUTTON10"] = "Secondary Action Button 10",
 		["COMBAT_RATING_NAME5"] = "Block Rating",
 		["EMOTE76_CMD1"] = "/roar",
+		["GUILD_RANK0_DESC"] = "Guild Master",
+		["BINDING_NAME_BONUSACTIONBUTTON10"] = "Secondary Action Button 10",
 		["VOICEMACRO_19_Ni_4"] = "Wanna bring out the animal in me?",
+		["SLASH_PET_PASSIVE1"] = "/petpassive",
+		["TUTORIAL_TITLE20"] = "Vendors",
 		["OPTION_TOOLTIP_SPELL_DETAIL"] = "Controls the detail level of spell effects.  Decrease to improve performance.",
-		["HELPFRAME_ITEM_BULLET3"] = "Enchantment or add-ons not working appropriately",
+		["EMOTE26_CMD2"] = "/congrats",
 		["VOICEMACRO_2_Tr_0_FEMALE"] = "For Zul'jin!",
 		["SLASH_GUILD_INFO2"] = "/guildinfo",
-		["GUILD_NOTES_LABEL"] = "Player Notes:",
+		["VOICEMACRO_16_Dw_1_FEMALE"] = "Ah, you're nice.",
 		["VOICEMACRO_17_Ni_2_FEMALE"] = "The honor was mine.",
-		["TUTORIAL_TITLE20"] = "Vendors",
+		["VOICEMACRO_17_Ni_1_FEMALE"] = "It was nothing.",
 		["VOICEMACRO_17_Ni_1"] = "My pleasure.",
 		["SLASH_SCRIPT3"] = "/script",
-		["EMOTE26_CMD2"] = "/congrats",
+		["ITEM_WRONG_RACE"] = "That item can't be used by players of your race!",
 		["RESISTANCE5_NAME"] = "Shadow Resistance",
 		["VOICEMACRO_2_Or_2"] = "Break their bones!",
 		["SPELL_FAILED_NOT_ON_TAXI"] = "You are in flight",
-		["VOICEMACRO_0_Or_0"] = "I need help!",
-		["ITEM_WRONG_RACE"] = "That item can't be used by players of your race!",
+		["NEWBIE_TOOLTIP_UNIT_UNINVITE"] = "Removes the selected player from the group.",
+		["PVP_RANK_10_0"] = "Stone Guard",
 		["TUTORIAL45"] = "You cannot fire bows and guns without ammunition. To purchase ammunition, visit a gun or bow merchant in a city. To equip ammunition, right-click it.",
 		["EMOTE9_CMD1"] = "/bite",
 		["EMOTE18_CMD3"] = "/burp",
-		["TUTORIAL_TITLE6"] = "Spells and Abilities",
-		["OPTION_TOOLTIP_MUSIC_VOLUME"] = "Adjusts the background music volume.",
-		["PVP_RANK_10_0"] = "Stone Guard",
-		["VOICEMACRO_17_Hu_2"] = "At your service.",
 		["EMOTE5_CMD3"] = "/applause",
+		["OPTION_TOOLTIP_MUSIC_VOLUME"] = "Adjusts the background music volume.",
+		["SLASH_RAID2"] = "/raid",
+		["VOICEMACRO_17_Hu_2"] = "At your service.",
+		["VOICEMACRO_17_Hu_2_FEMALE"] = "You're welcome.",
 		["EMOTE17_CMD2"] = "/bow",
 		["ITEM_COOLDOWN_TIME_DAYS_P1"] = "Cooldown remaining: %d days",
-		["VOICEMACRO_17_Hu_2_FEMALE"] = "You're welcome.",
+		["BINDING_NAME_SAVEVIEW2"] = "Save View 2",
 		["VOICEMACRO_3_Ni_1_FEMALE"] = "Our foe is too strong!",
 		["VOICEMACRO_14_Hu_1_FEMALE"] = "Sure.",
 		["VOICEMACRO_18_Or_2_FEMALE"] = "Congratulations.",
 		["NEWBIE_TOOLTIP_LFMTAB"] = "Click here to look for members to add to your existing group.",
 		["GUILDCONTROL_OPTION10"] = "Edit Public Note",
 		["VOICEMACRO_2_Dw_1"] = "For Khaz Modan!",
-		["BINDING_NAME_SAVEVIEW2"] = "Save View 2",
-		["VOICEMACRO_17_Dw_1_FEMALE"] = "My pleasure.",
 		["KEY_BUTTON4"] = "Mouse Button 4",
+		["CONFIRM_RESET_INSTANCES"] = "Do you really want to reset all of your instances?",
+		["KEY_ESCAPE"] = "Escape",
 		["VOICEMACRO_14_Tr_3"] = "I dig it.",
 		["NEWBIE_TOOLTIP_HONORABLE_KILLS"] = "Each time you or a group you are part of does damage to an enemy player in PvP that is subsequently killed you gain an honorable kill.   You only get an honorable kill if the target’s difficulty is green or better (the target would give you experience if it were a monster).    Only enemy players give honorable kills.",
 		["SLASH_GUILD_LEAVE4"] = "/guildquit",
 		["SLASH_LOOKINGFORMORE2"] = "/lfm",
 		["GUILD_NOTE_EDITLABEL"] = "Click here to set a Public Note.",
-		["OPTION_TOOLTIP_WORLD_LOD"] = "Check this to enable dynamic reduction of terrain polygon detail.  Check to increase performance.",
-		["KEY_ESCAPE"] = "Escape",
-		["SLASH_LIST_CHANNEL3"] = "/chatinfo",
-		["EMOTE130_CMD4"] = "/pest",
+		["BINDING_HEADER_ITUNES_REMOTE"] = "iTunes Remote",
 		["EMOTE126_CMD3"] = "/raise",
+		["SLASH_LIST_CHANNEL3"] = "/chatinfo",
+		["EMOTE147_CMD2"] = "/growl",
+		["VOICEMACRO_17_Dw_1"] = "My pleasure.",
 		["NEWBIE_TOOLTIP_IGNOREPLAYER"] = "Adds a player to your ignore list. You will no longer see messages or other text from players on your ignore list, nor will these players be able to communicate with you in any other way.",
 		["EMOTE118_CMD2"] = "/listen",
 		["EMOTE58_CMD2"] = "/food",
-		["VOICEMACRO_17_Dw_1"] = "My pleasure.",
+		["VOICEMACRO_17_Dw_0_FEMALE"] = "No problem.",
 		["PVP_RANK_17_1"] = "Field Marshal",
 		["VOICEMACRO_3_Sc_0"] = "Move your carcass!",
 		["EMOTE78_CMD2"] = "/rude",
 		["SLASH_UNIGNORE1"] = "/unignore",
-		["EMOTE147_CMD2"] = "/growl",
+		["EMOTE13_CMD4"] = "/doh",
 		["VOICEMACRO_13_Hu_2_FEMALE"] = "It's been fun.",
 		["SLASH_SAY1"] = "/s",
 		["TRAINER_REQ_ABILITY_RED"] = "|cffff2020%s|r",
 		["KEY_NUMPAD3"] = "Num Pad 3",
 		["VOICEMACRO_14_Sc_2"] = "I suppose so.",
-		["VOICEMACRO_17_Dw_0_FEMALE"] = "No problem.",
-		["EMOTE13_CMD4"] = "/doh",
-		["GUILDCONTROL_OPTION8"] = "Remove Member",
-		["EMOTE137_CMD1"] = "/taunt",
+		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_COMBO_POINTS"] = "Shows the number of combo points you have each time you acquire a new one.",
+		["SLASH_CHAT_ANNOUNCE4"] = "/ann",
 		["ITEM_ENCHANT_TIME_LEFT_HOURS"] = "%s (%d hour)",
+		["SPELL_FAILED_UNIT_NOT_BEHIND"] = "Target needs to be behind you",
+		["OPTION_TOOLTIP_SHOW_HELM"] = "Uncheck this box to hide your character's helm.",
 		["KEY_PAGEDOWN"] = "Page Down",
-		["EMOTE116_CMD2"] = "/jk",
+		["VOICEMACRO_16_Ta_2_FEMALE"] = "You are too kind.",
 		["VOICEMACRO_2_Or_2_FEMALE"] = "Leave none alive!",
 		["HELPFRAME_HOME_ISSUE3_HEADER"] = "PvP",
 		["ITEM_MIN_LEVEL"] = "Requires Level %d",
 		["EMOTE145_CMD2"] = "/smile",
-		["OPTION_TOOLTIP_SHOW_HELM"] = "Uncheck this box to hide your character's helm.",
-		["VOICEMACRO_20_Ta_2"] = "Homogenized?  No way.  I like the ladies.",
 		["SPELL_FAILED_TARGET_NOT_IN_INSTANCE"] = "Target must be in this instance",
 		["INVTYPE_WEAPON"] = "One-Hand",
-		["VOICEMACRO_6_Gn_0"] = "I'll lead the way.",
 		["SLASH_CHAT_MODERATOR1"] = "/mod",
 		["GUILDCONTROL_OPTION1"] = "Guildchat Listen",
+		["VOICEMACRO_6_Gn_0"] = "I'll lead the way.",
 		["SPELL_FAILED_NOT_MOUNTED"] = "You are mounted",
-		["ITEM_DURATION_MIN"] = "Duration: %d min",
-		["VOICEMACRO_3_Ta_0_FEMALE"] = "Retreat!",
 		["SLASH_TEAM_DISBAND2"] = "/tdisband",
 		["SLASH_GUILD_LEAVE1"] = "/gquit",
-		["PVP_ENABLED"] = "PvP",
+		["ITEM_DURATION_MIN"] = "Duration: %d min",
+		["VOICEMACRO_3_Ta_0_FEMALE"] = "Retreat!",
 		["EMOTE71_CMD2"] = "/peer",
+		["GUILD_NOTES_LABEL"] = "Player Notes:",
+		["PVP_ENABLED"] = "PvP",
+		["NEWBIE_TOOLTIP_XPBAR"] = "The amount of experience (XP) you have earned. The color of the XP bar indicates your rest state: light blue for Rested, and purple for Normal. Rested players earn twice the experience they would normally gain from slaying a monster. Characters become less rested when they kill monsters, and more rested by spending time at or logging out at an inn or city.",
 		["VOICEMACRO_7_Gn_0"] = "Stay here for a moment.",
-		["BINDING_NAME_MULTIACTIONBAR3BUTTON1"] = "Right Action Button 1",
-		["NEWBIE_TOOLTIP_UNIT_INSPECT"] = "Inspects any armor and weapons that the selected player has equipped.",
-		["HELPFRAME_ACCOUNT_TEXT"] = "Having problems setting up your account or need to make changes to your billing options?",
 		["NEWBIE_TOOLTIP_UNIT_PROMOTE"] = "Surrenders your leadership of the group, naming the selected player to succeed you.",
+		["EMOTE84_CMD2"] = "/shrug",
+		["HELPFRAME_ACCOUNT_TEXT"] = "Having problems setting up your account or need to make changes to your billing options?",
+		["EMOTE98_CMD1"] = "/thank",
 		["NEWBIE_TOOLTIP_RANK"] = "Rank is the final result of all the honor system calculations.  Based upon a comparison between your standing for the week versus your current rank, your rank may either rise, fall, or stay the same.  Higher level players rise more quickly in rank (and fall more slowly) than lower level players.  In addition, rank increases more quickly at low ranks than at high ranks.",
 		["VOICEMACRO_4_Dw_0_FEMALE"] = "Join my attack!",
-		["EMOTE84_CMD2"] = "/shrug",
+		["COMBAT_TEXT_SHOW_COMBO_POINTS_TEXT"] = "Show Combo Points",
 		["VOICEMACRO_16_Hu_2_FEMALE"] = "Much appreciated.",
 		["KEY_NUMPAD6"] = "Num Pad 6",
-		["EMOTE98_CMD1"] = "/thank",
+		["EMOTE157_CMD1"] = "/incoming",
 		["ITEM_MOD_CRIT_MELEE_RATING"] = "Improves melee critical strike rating by %d.",
-		["COMBAT_TEXT_SHOW_COMBO_POINTS_TEXT"] = "Show Combo Points",
+		["BUG_CATEGORY13"] = "Miscellaneous",
 		["EMOTE88_CMD1"] = "/sleep",
 		["VOICEMACRO_20_Or_3"] = "I come from the Orcs.  We eat with spoons and forks.  We love to eat our pork.",
 		["ITEM_MOD_HASTE_SPELL_RATING"] = "Improves spell haste rating by %d.",
 		["VOICEMACRO_13_Dw_0_FEMALE"] = "So long.",
-		["EMOTE157_CMD1"] = "/incoming",
+		["VOICEMACRO_19_Dw_1_FEMALE"] = "I'll have you know I can flatten steel with my thighs.",
 		["BINDING_NAME_SETVIEW5"] = "Set View 5",
-		["BUG_CATEGORY13"] = "Miscellaneous",
+		["EMOTE15_CMD1"] = "/bounce",
 		["KEY_BINDINGS"] = "Key Bindings",
 		["HELPFRAME_QUEST_TEXT"] = "An issue that results in the inability to initiate or complete a quest",
 		["VOICEMACRO_18_Ta_0"] = "Well done.",
 		["EMOTE99_CMD5"] = "/threaten",
 		["HELPFRAME_QUEST_BULLET1"] = "A quest related NPC or object is not functioning appropriately",
-		["EMOTE22_CMD2"] = "/flap",
+		["EMOTE114_CMD2"] = "/insult",
 		["GUILDCONTROL_OPTION2"] = "Guildchat Speak",
 		["SLASH_PET_ATTACK2"] = "/petattack",
-		["EMOTE15_CMD1"] = "/bounce",
-		["VOICEMACRO_18_Hu_1_FEMALE"] = "Excellent.",
-		["EMOTE114_CMD2"] = "/insult",
-		["NEWBIE_TOOLTIP_GUILDGROUPINVITE"] = "Invites the selected guild member to join a group.",
 		["VOICEMACRO_20_Ni_6"] = "What?  I didn't hear that.",
+		["VOICEMACRO_18_Hu_1_FEMALE"] = "Excellent.",
 		["EMOTE23_CMD1"] = "/chuckle",
+		["NEWBIE_TOOLTIP_GUILDGROUPINVITE"] = "Invites the selected guild member to join a group.",
+		["EMOTE20_CMD2"] = "/cackle",
+		["EMOTE13_CMD2"] = "/doh",
 		["SLASH_TRADE3"] = "/tr",
 		["SPELL_FAILED_NOT_TRADEABLE"] = "You can only use this on an object you own",
 		["VOICEMACRO_5_Sc_0_FEMALE"] = "I need mana!",
-		["EMOTE20_CMD2"] = "/cackle",
+		["HELPFRAME_TECHNICAL_BULLET5"] = "Connection/disconnection problems",
 		["VOICEMACRO_14_Ta_1"] = "I believe so.",
-		["EMOTE13_CMD2"] = "/doh",
+		["VOICEMACRO_18_Sc_2"] = "Good job.",
 		["ITEM_UNSELLABLE"] = "No sell price",
 		["HELPFRAME_ITEM_TEXT"] = "Issues regarding any problem dealing with item functionality or possession",
 		["BINDING_NAME_MOVEBACKWARD"] = "Move Backward",
 		["VOICEMACRO_6_Hu_0"] = "Follow me.",
 		["CHAT_MONSTER_YELL_GET"] = "%s yells: ",
-		["HELPFRAME_TECHNICAL_BULLET5"] = "Connection/disconnection problems",
+		["TUTORIAL29"] = "You will see a Breath bar pop up when your character becomes submerged in water. If you run out of breath, you will begin to drown.",
 		["PVP_RANK_10_1_FEMALE"] = "Knight",
-		["VOICEMACRO_18_Or_2"] = "You are worthy.",
+		["VOICEMACRO_15_Ta_2_FEMALE"] = "It is not meant to be.",
 		["VOICEMACRO_13_Or_2_FEMALE"] = "Until next time.",
-		["INVTYPE_WEAPONOFFHAND"] = "Off Hand",
+		["VOICEMACRO_15_Sc_0_FEMALE"] = "No.",
 		["KEY1"] = "Key 1",
 		["SLASH_CLEARTARGET2"] = "/cleartarget",
 		["VOICEMACRO_19_Dw_3_FEMALE"] = "I won't fall for any bad pickup line.  You've got to try two or three, at least.",
 		["NEWBIE_TOOLTIP_DISHONORABLE_KILLS"] = "Each time you assist in killing a civilian in PvP that is too low of a level to give you experience (a gray level number), you will get a dishonorable kill.   Each dishonorable kill you get immediately reduces your overall ranking slightly, and each additional dishonorable kill you get during a single day has a larger effect than the last one.   Dishonorable kills are directly applied to your ranking.",
-		["VOICEMACRO_15_Ta_2_FEMALE"] = "It is not meant to be.",
-		["COMBAT_TEXT_SHOW_COMBAT_STATE_TEXT"] = "Show Combat State",
-		["VOICEMACRO_7_Sc_1_FEMALE"] = "Don't move.",
 		["HELPFRAME_OTHER_BUTTON_DESCRIPTION"] = "Any issues that require GM assistance",
-		["SLASH_GUILD_ROSTER1"] = "/groster",
-		["VOICEMACRO_LABEL_HELP1"] = "helpme",
+		["COMBAT_TEXT_SHOW_COMBAT_STATE_TEXT"] = "Show Combat State",
+		["GUILDCONTROL_OPTION11"] = "View Officer Note",
 		["SLASH_SWAPACTIONBAR2"] = "/swapactionbar",
+		["SLASH_GUILD_ROSTER1"] = "/groster",
 		["EMOTE142_CMD1"] = "/tickle",
-		["TUTORIAL_TITLE4"] = "Targeting",
 		["NEWBIE_TOOLTIP_BATTLEFIELDMINIMAP_OPTIONS"] = "Right-click to get a list of customizable options for this window. Left-click and drag to move the window.",
-		["VOICEMACRO_18_Or_1_FEMALE"] = "Not bad.",
-		["PVP_RANK_18_0_FEMALE"] = "High Warlord",
+		["VOICEMACRO_15_Ni_0_FEMALE"] = "No.",
+		["TUTORIAL_TITLE4"] = "Targeting",
 		["NEWBIE_TOOLTIP_CHATOPTIONS"] = "Right-click to get a list of customizable options for this window. Left-click and drag to move the window.",
+		["BUG_SUBMITTED"] = "Bug submitted",
+		["PVP_RANK_18_0_FEMALE"] = "High Warlord",
+		["NEWBIE_TOOLTIP_ENCHANTSLOT"] = "Drop an item into this slot to permit other players to unlock a container, or enchant or poison an item. An item placed in this slot will not be traded; rather, it will simply return to its owner's inventory.",
 		["EMOTE46_CMD2"] = "/giggle",
 		["SLASH_TRADE4"] = "/trade",
 		["SPELL_FAILED_NEED_AMMO_POUCH"] = "Requires: %s",
-		["BUG_SUBMITTED"] = "Bug submitted",
+		["EMOTE109_CMD3"] = "/calm",
 		["VOICEMACRO_6_Dw_0_FEMALE"] = "I'll lead the way.",
 		["GUILDCONTROL_OPTION3"] = "Officerchat Listen",
 		["VOICEMACRO_20_Dw_5_FEMALE"] = "I give myself a Dutch oven pedicure every night.  I've got no foot fungus at all.  My toes are pristine.",
 		["VOICEMACRO_7_Hu_0"] = "Stay put.",
 		["EMOTE139_CMD1"] = "/thirsty",
 		["EMOTE155_CMD1"] = "/train",
-		["NEWBIE_TOOLTIP_ENCHANTSLOT"] = "Drop an item into this slot to permit other players to unlock a container, or enchant or poison an item. An item placed in this slot will not be traded; rather, it will simply return to its owner's inventory.",
+		["VOICEMACRO_13_Sc_1"] = "Have a bad day.",
 		["VOICEMACRO_12_Dw_1_FEMALE"] = "Hi, there.",
 		["ITEM_MOD_HIT_TAKEN_RANGED_RATING"] = "Improves ranged hit avoidance rating by %d.",
 		["ITEM_COOLDOWN_TIME_HOURS_P1"] = "Cooldown remaining: %d hrs",
-		["EMOTE109_CMD3"] = "/calm",
-		["VOICEMACRO_13_Sc_1"] = "Have a bad day.",
 		["EMOTE7_CMD1"] = "/beckon",
 		["NEWBIE_TOOLTIP_LATENCY"] = "The average time it takes to talk with the game server. A low latency will display as a green bar, higher latencies will be yellow or even red. Consistently high latencies may indicate a problem with your Internet connection.",
 		["ERR_CANT_USE_ITEM_IN_ARENA"] = "You can't use that item in an arena.",
+		["UNKNOWNOBJECT"] = "Unknown",
+		["SLASH_GUILD_LEADER3"] = "/gleader",
 		["VOICEMACRO_15_Gn_2"] = "I don't think so.",
 		["VOICEMACRO_0_Hu_0"] = "I require aid!",
 		["VOICEMACRO_18_Hu_0_FEMALE"] = "Congratulations.",
-		["UNKNOWNOBJECT"] = "Unknown",
-		["VOICEMACRO_15_Sc_0_FEMALE"] = "No.",
+		["NEWBIE_TOOLTIP_UNIT_INSPECT"] = "Inspects any armor and weapons that the selected player has equipped.",
+		["NEWBIE_TOOLTIP_WHOTAB"] = "Allows you to locate other players in the world.",
 		["PVP_RANK_11_0"] = "Blood Guard",
 		["SLASH_TEAM_DISBAND3"] = "/teamdisband",
 		["ITEM_QUALITY0_DESC"] = "Poor",
@@ -5703,253 +5778,253 @@ CombatLogScribeDB = {
 		["BINDING_NAME_TARGETPARTYPET3"] = "Target Party Pet 3",
 		["VOICEMACRO_0_Tr_0"] = "Help me!",
 		["EMOTE112_CMD3"] = "/cuddle",
-		["NEWBIE_TOOLTIP_WHOTAB"] = "Allows you to locate other players in the world.",
-		["NEWBIE_TOOLTIP_XPBAR"] = "The amount of experience (XP) you have earned. The color of the XP bar indicates your rest state: light blue for Rested, and purple for Normal. Rested players earn twice the experience they would normally gain from slaying a monster. Characters become less rested when they kill monsters, and more rested by spending time at or logging out at an inn or city.",
+		["VOICEMACRO_6_Ni_0_FEMALE"] = "I'll lead the way.",
+		["BINDING_NAME_BONUSACTIONBUTTON2"] = "Secondary Action Button 2",
 		["EMOTE167_CMD2"] = "/silly",
-		["VOICEMACRO_14_Or_2_FEMALE"] = "(grunt)",
+		["VOICEMACRO_14_Ni_2_FEMALE"] = "Naturally.",
 		["SLASH_LIST_CHANNEL6"] = "/chatwho",
 		["EMOTE62_CMD2"] = "/liedown",
-		["BINDING_NAME_BONUSACTIONBUTTON2"] = "Secondary Action Button 2",
+		["KEYBINDINGFRAME_MOUSEWHEEL_ERROR"] = "Can't bind mousewheel to actions with up and down states",
 		["VOICEMACRO_18_Dw_2"] = "Brilliant.",
 		["VOICEMACRO_17_Sc_0_FEMALE"] = "Any time.",
 		["EMOTE116_CMD1"] = "/jk",
-		["VOICEMACRO_6_Ni_0_FEMALE"] = "I'll lead the way.",
+		["VOICEMACRO_14_Ni_1_FEMALE"] = "Certainly.",
 		["VOICEMACRO_LABEL_WAITHERE1"] = "wait",
-		["KEYBINDINGFRAME_MOUSEWHEEL_ERROR"] = "Can't bind mousewheel to actions with up and down states",
-		["KEY_PRINTSCREEN"] = "Print Screen",
+		["VOICEMACRO_7_Sc_1"] = "Stay here.",
+		["VOICEMACRO_7_Ni_1_FEMALE"] = "Wait here.",
 		["GMSURVEY_REQUEST_TEXT"] = "Please answer the following questions:",
 		["BINDING_NAME_MASTERVOLUMEDOWN"] = "Master Volume Down",
 		["EMOTE136_CMD3"] = "/stink",
-		["VOICEMACRO_14_Ni_1_FEMALE"] = "Certainly.",
-		["VOICEMACRO_7_Ni_1_FEMALE"] = "Wait here.",
 		["OPTION_TOOLTIP_AUTO_LOOT_KEY_TEXT"] = "Key to use to auto loot a corpse",
-		["VOICEMACRO_4_Sc_0_FEMALE"] = "Join the slaughter!",
+		["OPTION_TOOLTIP_USE_RESOLUTION"] = "Changes the screen resolution of the game. Decrease to improve performance.",
+		["VOICEMACRO_19_Gn_1"] = "Everyone keeps talking about beer goggles.  I can't find the plans for them anywhere.",
+		["INVTYPE_LEGS"] = "Legs",
 		["EMOTE153_CMD1"] = "/moo",
-		["VOICEMACRO_2_Sc_1"] = "Rend flesh with me!",
+		["OPTION_TOOLTIP_AUTO_SELF_CAST_KEY_TEXT"] = "When held this key will allow self casting, even if an enemy is targeted.",
 		["EMOTE19_CMD3"] = "/farewell",
 		["EMOTE131_CMD2"] = "/slap",
-		["VOICEMACRO_4_Sc_1_FEMALE"] = "Help me attack!",
+		["INVTYPE_WAIST"] = "Waist",
 		["RESISTANCE_TYPE3"] = "nature",
 		["VOICEMACRO_7_Tr_0_FEMALE"] = "You stay here.",
 		["PETTAME_UNKNOWNERROR"] = "Unknown taming error",
 		["VOICEMACRO_15_Or_2"] = "(grunt)",
 		["SLASH_EQUIP3"] = "/equip",
-		["OPTION_TOOLTIP_AUTO_SELF_CAST_KEY_TEXT"] = "When held this key will allow self casting, even if an enemy is targeted.",
-		["VOICEMACRO_20_Or_2"] = "Man, dawg, you know, it's like I'm feeling you, but I'm not feeling you, you know?",
-		["SLASH_USE1"] = "/use",
 		["OPTION_TOOLTIP_CINEMATIC_SUBTITLES"] = "Enables subtitles during the intro cinematic.",
-		["ITEM_SPELL_TRIGGER_ONUSE"] = "Use:",
-		["VOICEMACRO_14_Hu_0"] = "Certainly.",
+		["VOICEMACRO_20_Or_2"] = "Man, dawg, you know, it's like I'm feeling you, but I'm not feeling you, you know?",
+		["SLASH_BATTLEGROUND3"] = "/bg",
 		["EMOTE35_CMD1"] = "/dance",
+		["ITEM_SPELL_TRIGGER_ONUSE"] = "Use:",
+		["EMOTE29_CMD3"] = "/cower",
+		["SLASH_UNINVITE5"] = "/u",
 		["EMOTE97_CMD1"] = "/tap",
-		["VOICEMACRO_14_Dw_2"] = "Aye.",
+		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_DODGE_PARRY_MISS"] = "Shows attacks against you that dodge, parry, or miss.",
 		["PVP_RANK_19_0"] = "Leader",
 		["VOICEMACRO_2_Or_1"] = "Slay them all!",
 		["VOICEMACRO_18_Gn_0"] = "Congratulations.",
-		["VOICEMACRO_7_Dw_2"] = "Stay here.",
+		["HELPFRAME_GUILD_BULLET_TITLE1"] = "The following are examples of guild issues:",
 		["EMOTE49_CMD3"] = "/greet",
-		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_DODGE_PARRY_MISS"] = "Shows attacks against you that dodge, parry, or miss.",
-		["SLASH_UNINVITE5"] = "/u",
 		["EMOTE99_CMD3"] = "/threat",
 		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_REPUTATION"] = "Shows a message when the player gains or loses reputation with a faction.",
+		["TUTORIAL20"] = "Right-clicking an item in the merchant pane will buy that item if you have enough money. While the merchant pane is open, right-clicking an item in your backpack will sell the item.",
+		["VOICEMACRO_3_Gn_0"] = "Run!",
 		["KEY_UP"] = "Up Arrow",
 		["VOICEMACRO_17_Or_0_FEMALE"] = "Any time.",
 		["NEWBIE_TOOLTIP_FIRST_AVAILABLE"] = "Join the queue to enter the first available battleground. If you select \"First Available\" and another party member enters a \"First Available\" battleground, then your preference will be changed to that battleground. ",
-		["EMOTE144_CMD1"] = "/violin",
-		["GUILD_LEAVE"] = "Leave Guild",
-		["VOICEMACRO_4_Or_2"] = "Shed blood with me!",
 		["OPTION_TOOLTIP_ENABLE_ERROR_SPEECH"] = "Enables speech from errors (e.g. \"Target out of range\").",
+		["BUG_CATEGORY8"] = "Quests & Story",
+		["VOICEMACRO_4_Or_2"] = "Shed blood with me!",
+		["OPTION_TOOLTIP_ENABLE_SOUND_AT_CHARACTER"] = "Listen to sound from the character's point of view rather than the camera.",
 		["PVP_RANK_7_0"] = "Sergeant",
 		["HELP_TEXT_LINE7"] = "- 'z' to draw/sheathe your weapons",
-		["BUG_CATEGORY8"] = "Quests & Story",
+		["OPTION_TOOLTIP_ENVIRONMENT_DETAIL"] = "Controls how far you can see objects. Decrease to improve performance.",
 		["TUTORIAL_TITLE40"] = "The Spellbook",
-		["OPTION_TOOLTIP_ENABLE_SOUND_AT_CHARACTER"] = "Listen to sound from the character's point of view rather than the camera.",
+		["BINDING_NAME_MULTIACTIONBAR2BUTTON6"] = "BottomRight Action Button 6",
 		["VOICEMACRO_6_Ta_0"] = "Come with me.",
 		["COMBAT_RATING_NAME1"] = "Weapon Skill",
 		["TUTORIAL_TITLE14"] = "Trainers",
-		["OPTION_TOOLTIP_ENVIRONMENT_DETAIL"] = "Controls how far you can see objects. Decrease to improve performance.",
-		["BINDING_NAME_MULTIACTIONBAR2BUTTON6"] = "BottomRight Action Button 6",
-		["SLASH_GUILD_PROMOTE4"] = "/guildpromote",
-		["VOICEMACRO_13_Or_0_FEMALE"] = "Stay strong.",
-		["SLASH_YELL6"] = "/yell",
+		["HELPFRAME_BUG_BUTTON_TEXT"] = "Submit a Bug:",
 		["BUG_CATEGORY7"] = "Monsters - Placement",
+		["SLASH_GUILD_PROMOTE4"] = "/guildpromote",
+		["HONOR_STANDING"] = "Standing",
+		["SLASH_YELL6"] = "/yell",
+		["SLASH_REPLY3"] = "/r",
 		["VOICEMACRO_7_Tr_2"] = "Don't you be going nowhere.",
 		["EMOTE10_CMD3"] = "/bleed",
-		["VOICEMACRO_16_Or_2"] = "Thank you.",
+		["OPTION_TOOLTIP_SCROLL_UP"] = "Scrolls combat text towards the top of the screen.",
 		["GUILDMEMBER_ALERT"] = "Guild Member Alert",
-		["PVP_RANK_9_0_FEMALE"] = "First Sergeant",
-		["EMOTE26_CMD4"] = "/congratulate",
 		["BINDING_NAME_MULTIACTIONBAR1BUTTON2"] = "BottomLeft Action Button 2",
-		["EMOTE103_CMD1"] = "/welcome",
+		["EMOTE26_CMD4"] = "/congratulate",
 		["KEY_SCROLLLOCK"] = "Scroll Lock",
+		["EMOTE103_CMD1"] = "/welcome",
 		["OPTION_TOOLTIP_PHONG_SHADING"] = "Enable this option for smooth lighting across characters.",
+		["VOICEMACRO_4_Sc_0_FEMALE"] = "Join the slaughter!",
 		["VOICEMACRO_6_Gn_1"] = "Follow me.",
 		["OPTION_TOOLTIP_FULL_SCREEN_GLOW"] = "Enables a full screen effect that softens edges and lighting. Disabling this can sometimes improve performance.",
-		["OPTION_TOOLTIP_SCROLL_UP"] = "Scrolls combat text towards the top of the screen.",
-		["VOICEMACRO_6_Hu_1_FEMALE"] = "I'll lead the way.",
 		["OPTION_TOOLTIP_SHOW_CLOAK"] = "Uncheck this box to hide your character's cloak.",
-		["VOICEMACRO_13_Dw_2"] = "See you.",
-		["PVP_RANK_15_1"] = "Commander",
+		["VOICEMACRO_6_Hu_1_FEMALE"] = "I'll lead the way.",
+		["BINDING_NAME_ACTIONPAGE2"] = "Action Page 2",
 		["OPTION_TOOLTIP_SHOW_MULTIBAR2"] = "Toggles an optional actionbar in the bottom right area of the screen.",
+		["PVP_RANK_15_1"] = "Commander",
 		["OPTION_TOOLTIP_SHOW_NPC_NAMES"] = "Always display NPC names in the game world.",
-		["EMOTE114_CMD1"] = "/insult",
 		["OPTION_TOOLTIP_SHOW_PET_MELEE_DAMAGE"] = "Show damage caused by your pet.",
+		["EMOTE114_CMD1"] = "/insult",
+		["OPTION_TOOLTIP_SHOW_QUEST_FADING"] = "Check this to make quest text appear instantly.",
 		["SPELL_FAILED_INTERRUPTED_COMBAT"] = "Interrupted",
 		["VOICEMACRO_12_Ta_1"] = "Hello.",
 		["VOICEMACRO_20_Gn_4"] = "I'd like to give a shout out to my boys in Gnomeregan.  Keeping it real Big-T, Snoop-Pup, and Little Dees.  Y'all are short, but you're real, baby.",
-		["OPTION_TOOLTIP_SHOW_QUEST_FADING"] = "Check this to make quest text appear instantly.",
 		["OPTION_TOOLTIP_SHOW_TUTORIALS"] = "Display tutorials which help introduce you to WoW.",
 		["OPTION_TOOLTIP_SHOW_UNIT_NAMES"] = "Display unit names in the game world.",
+		["OPTION_TOOLTIP_SIMPLE_CHAT"] = "Sets up a main chat window and a combat log that cannot be reconfigured.",
 		["BINDING_NAME_JUMP"] = "Jump",
 		["HELPFRAME_GUILD_BULLET1"] = "Unable to add/remove guild members",
-		["OPTION_TOOLTIP_SIMPLE_CHAT"] = "Sets up a main chat window and a combat log that cannot be reconfigured.",
 		["OPTION_TOOLTIP_SHOW_COMBAT_TEXT"] = "Checking this will enable additional combat messages to appear in the playfield.",
-		["EMOTE126_CMD4"] = "/volunteer",
-		["VOICEMACRO_LABEL_THANKYOU3"] = "thank",
-		["BINDING_NAME_TOGGLERAIDTAB"] = "Toggle Raid Pane",
+		["EMOTE59_CMD4"] = "/blow",
+		["KEY2"] = "Key 2",
 		["OPTION_TOOLTIP_TARGETOFTARGET_RAID"] = "Sets Target of Target to display when you are in a raid.",
+		["BINDING_NAME_TOGGLERAIDTAB"] = "Toggle Raid Pane",
 		["SPELL_FAILED_TARGET_AFFECTING_COMBAT"] = "Target is in combat",
 		["MELEE_ATTACK_POWER"] = "Melee Attack Power",
 		["OPTION_TOOLTIP_WINDOWED_MAXIMIZED"] = "Check to maximize window and remove borders.",
 		["OPTION_TOOLTIP_WINDOWED_MODE"] = "Check to play in a non-fullscreen window.\n\nIf this is checked the game will use your desktop gamma and you will not be able to adjust it via the slider below.",
 		["BINDING_NAME_TOGGLEWORLDSTATESCORES"] = "Toggle Score Screen",
 		["EMOTE130_CMD3"] = "/shoo",
-		["EMOTE170_CMD2"] = "/golfclap",
+		["VOICEMACRO_12_Ni_2_FEMALE"] = "Well met.",
+		["VOICEMACRO_12_Ni_1"] = "Well met.",
 		["HELPFRAME_OPENTICKET_TEXT"] = "Describe Your Question:",
-		["VOICEMACRO_12_Ni_2"] = "Hi.",
-		["SLASH_GUILD_MOTD3"] = "/gmotd",
 		["RESISTANCE_POOR"] = "Poor",
-		["VOICEMACRO_8_Tr_1_FEMALE"] = "Cure me!",
+		["SLASH_GUILD_MOTD3"] = "/gmotd",
+		["VOICEMACRO_12_Hu_2_FEMALE"] = "Greetings.",
+		["EMOTE116_CMD2"] = "/jk",
 		["GUILD_CHARTER"] = "Guild Charter",
 		["EMOTE171_CMD1"] = "/mountspecial",
 		["EMOTE32_CMD2"] = "/sob",
-		["HELPFRAME_OTHER_BUTTON_TEXT"] = "Other Issues:",
 		["BINDING_NAME_MULTIACTIONBAR4BUTTON8"] = "Right ActionBar 2 Button 8",
 		["VOICEMACRO_12_Hu_0_FEMALE"] = "Hi.",
+		["VOICEMACRO_LABEL_FLEE1"] = "flee",
 		["VOICEMACRO_19_Sc_2_FEMALE"] = "Us Undead girls really know how to have a good time because, after all, what's the worst thing that could happen?",
-		["HELP_TICKET_QUEUE_DISABLED"] = "GM Help Tickets are currently unavailable.",
+		["VOICEMACRO_12_Gn_1_FEMALE"] = "Greetings.",
 		["SLASH_CHAT_MUTE3"] = "/unvoice",
 		["SLASH_INSPECT1"] = "/ins",
-		["VOICEMACRO_12_Gn_1_FEMALE"] = "Greetings.",
+		["EMOTE55_CMD4"] = "/happy",
 		["EMOTE152_CMD2"] = "/love",
 		["VOICEMACRO_3_Or_0"] = "Retreat!",
 		["EMOTE82_CMD2"] = "/rear",
 		["EMOTE19_CMD4"] = "/bye",
-		["EMOTE55_CMD4"] = "/happy",
 		["BINDING_NAME_MULTIACTIONBAR2BUTTON1"] = "BottomRight Action Button 1",
-		["SLASH_WHISPER9"] = "/tell",
 		["VOICEMACRO_16_Gn_2_FEMALE"] = "Much appreciated.",
-		["VOICEMACRO_19_Sc_2"] = "If rot was hot, I'd be a volcano.",
-		["SPELL_FAILED_PROSPECT_WHILE_LOOTING"] = "Cannot prospect while looting",
-		["VOICEMACRO_5_Ta_0_FEMALE"] = "My mana must be replenished!",
+		["SLASH_WHISPER9"] = "/tell",
+		["OPTION_TOOLTIP_DISABLE_SPAM_FILTER"] = "Disables spam filtering on chat text.",
 		["VOICEMACRO_4_Hu_0"] = "Aid my attack!",
+		["SPELL_FAILED_PROSPECT_WHILE_LOOTING"] = "Cannot prospect while looting",
+		["SLASH_PARTY4"] = "/party",
+		["GUILD_HELP_TEXT_LINE9"] = "'/gmotd <message>' sets the guild's message of the day",
 		["BINDING_NAME_MASTERVOLUMEUP"] = "Master Volume Up",
 		["SLASH_CHAT_PASSWORD4"] = "/password",
 		["VOICEMACRO_12_Dw_2_FEMALE"] = "How are you?",
 		["RESISTANCE3_NAME"] = "Nature Resistance",
-		["GUILD_HELP_TEXT_LINE9"] = "'/gmotd <message>' sets the guild's message of the day",
-		["CHAT_EMOTE_SEND"] = "%s ",
-		["BUG_CATEGORY4"] = "Cities",
+		["PVP_RANK_2_0"] = "Outlaw",
 		["BINDING_NAME_SETVIEW4"] = "Set View 4",
+		["BUG_CATEGORY4"] = "Cities",
 		["BINDING_NAME_NAMEPLATES"] = "Show Name Plates",
-		["ITEM_MOD_DEFENSE_SKILL_RATING"] = "Increases defense rating by %d.",
 		["KEY_TAB"] = "Tab",
+		["ITEM_MOD_DEFENSE_SKILL_RATING"] = "Increases defense rating by %d.",
 		["EMOTE92_CMD1"] = "/surprised",
-		["VOICEMACRO_LABEL_CONGRATULATIONS3"] = "congratulations",
+		["SPELL_FAILED_PREVENTED_BY_MECHANIC"] = "Can't do that while %s",
+		["VOICEMACRO_14_Sc_0_FEMALE"] = "Yes.",
 		["SLASH_WHISPER4"] = "/tell",
 		["TUTORIAL_TITLE17"] = "Replying to Tells",
-		["VOICEMACRO_0_Or_1_FEMALE"] = "Aid me!",
-		["VOICEMACRO_5_Tr_1_FEMALE"] = "I be needing more mana!",
 		["SLASH_GUILD_DISBAND2"] = "/guilddisband",
+		["VOICEMACRO_5_Tr_1_FEMALE"] = "I be needing more mana!",
 		["VOICEMACRO_10_Ni_1_FEMALE"] = "Fire!",
+		["VOICEMACRO_10_Ni_0_FEMALE"] = "Strike quickly!",
 		["EMOTE117_CMD1"] = "/lick",
 		["ITEM_MOD_AGILITY"] = "%c%d Agility",
-		["VOICEMACRO_10_Ni_0_FEMALE"] = "Strike quickly!",
 		["VOICEMACRO_10_Tr_1_FEMALE"] = "Light 'em up!",
 		["VOICEMACRO_14_Hu_1"] = "Sounds fine.",
 		["EMOTE62_CMD3"] = "/lay",
-		["SLASH_TEAM_DISBAND1"] = "/teamdisband",
 		["VOICEMACRO_20_Tr_4_FEMALE"] = "If cannibalism be wrong, I don't want to be right.",
+		["SLASH_TEAM_DISBAND1"] = "/teamdisband",
 		["GMSURVEY_EXCELLENT"] = "5 (Excellent)",
 		["OPTION_TOOLTIP_PET_NAMEPLATES"] = "Toggles displaying of name plates on your pets, totems, and guardians.",
+		["OPTION_TOOLTIP_SHOW_DISPELLABLE_DEBUFFS"] = "Show only Debuffs that the player can dispel.  Only applies to raids.",
 		["VOICEMACRO_14_Dw_1"] = "Sure.",
 		["VOICEMACRO_18_Sc_1"] = "Well done.",
 		["TUTORIAL14"] = "You can go to your trainer in your the starting area and learn a new skill.  You may have to search around a little to find your trainer.",
 		["OPTION_TOOLTIP_VERTICAL_SYNC"] = "Synchronizes your framerate to some fraction of your monitor's refresh rate. Enable this if you see excessive screen tearing in game.",
 		["VOICEMACRO_7_Dw_1_FEMALE"] = "Wait here.",
-		["OPTION_TOOLTIP_SHOW_DISPELLABLE_DEBUFFS"] = "Show only Debuffs that the player can dispel.  Only applies to raids.",
 		["EMOTE59_CMD3"] = "/kiss",
-		["PVP_RANK_9_0"] = "First Sergeant",
 		["HELPFRAME_NONQUEST_BULLET5"] = "Request for Non-Quest NPC/Creep spawn or despawn",
+		["PVP_RANK_9_0"] = "First Sergeant",
 		["OPTION_TOOLTIP_DEATH_EFFECT"] = "Uncheck to disable glowing effect while in ghost form. Disabling this can sometimes improve performance.",
 		["EMOTE96_CMD2"] = "/question",
+		["ERR_QUEST_UNKNOWN_COMPLETE"] = "Objective Complete.",
 		["VOICEMACRO_17_Ta_1"] = "Always glad to help.",
 		["VOICEMACRO_18_Gn_1"] = "Well done.",
-		["ERR_QUEST_UNKNOWN_COMPLETE"] = "Objective Complete.",
 		["OPTION_TOOLTIP_SOUND_VOLUME"] = "Adjusts the sound effect volume.",
-		["EMOTE55_CMD5"] = "/glad",
 		["BUG_CATEGORY9"] = "Art",
-		["EMOTE139_CMD2"] = "/thirsty",
+		["EMOTE55_CMD5"] = "/glad",
 		["EMOTE43_CMD2"] = "/disappointed",
+		["EMOTE139_CMD2"] = "/thirsty",
 		["HELP_LABEL"] = "Help",
+		["EMOTE137_CMD1"] = "/taunt",
 		["SLASH_GUILD3"] = "/gu",
-		["SLASH_CHAT_ANNOUNCE4"] = "/ann",
 		["ITEM_MOD_DODGE_RATING"] = "Increases your dodge rating by %d.",
 		["BINDING_NAME_MULTIACTIONBAR2BUTTON8"] = "BottomRight Action Button 8",
 		["BINDING_NAME_TOGGLECHARACTER3"] = "Toggle Pet Pane",
 		["SPELL_FAILED_NO_PET"] = "You do not have a pet",
 		["EMOTE25_CMD1"] = "/confused",
+		["TUTORIAL_TITLE28"] = "Swimming",
 		["BUG_CATEGORY6"] = "Monsters - Balance/Abilities",
 		["VOICEMACRO_19_Ta_2_FEMALE"] = "I've got big soulful eyes, long eyelashes, and a wet tongue.  What more could a guy want?",
 		["GUILD_MOTD_EDITLABEL"] = "Click here to set the Guild Message Of The Day.",
-		["TUTORIAL_TITLE28"] = "Swimming",
 		["BINDING_NAME_SAVEVIEW1"] = "Save View 1",
-		["KEY_UNBOUND_ERROR"] = "|cffff0000%s Function is Now Unbound!|r",
 		["TUTORIAL_TITLE41"] = "Elite Quests",
+		["KEY_UNBOUND_ERROR"] = "|cffff0000%s Function is Now Unbound!|r",
+		["SPELL_FAILED_EQUIPPED_ITEM"] = "Must have the proper item equipped",
 		["SLASH_REMOVEFRIEND1"] = "/removefriend",
 		["VOICEMACRO_20_Or_1"] = "It's not easy being green.",
 		["TUTORIAL34"] = "You have completed your first quest! To collect your reward, you should return to the character who gave you the quest. When you complete a quest, you can see the corresponding quest giver on your minimap, provided you are nearby.",
 		["VOICEMACRO_1_Tr_0_FEMALE"] = "There be danger!",
-		["SPELL_FAILED_EQUIPPED_ITEM"] = "Must have the proper item equipped",
 		["VOICEMACRO_19_Dw_3"] = "You look pretty.  I like your hair.  Here's your drink.  Are you ready now?",
+		["SLASH_TARGET_LAST_TARGET2"] = "/targetlasttarget",
 		["GUILDCONTROL_OPTION13"] = "Modify Guild Info",
 		["SLASH_IGNORE2"] = "/ignore",
 		["VOICEMACRO_15_Ta_1"] = "I don't think so.",
-		["SLASH_TARGET_LAST_TARGET2"] = "/targetlasttarget",
+		["EMOTE144_CMD1"] = "/violin",
 		["BINDING_HEADER_TARGETING"] = "Targeting Functions",
 		["SLASH_LOOKINGFORGROUP2"] = "/lfg",
 		["VOICEMACRO_20_Dw_5"] = "I like my beer like I like my women; stout and bitter.",
 		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_RESISTANCES"] = "Shows when you resist taking damage from attacks or spells.",
-		["TUTORIAL20"] = "Right-clicking an item in the merchant pane will buy that item if you have enough money. While the merchant pane is open, right-clicking an item in your backpack will sell the item.",
-		["VOICEMACRO_8_Dw_2"] = "Heal me!",
 		["EMOTE11_CMD1"] = "/blink",
+		["VOICEMACRO_8_Dw_2"] = "Heal me!",
 		["VOICEMACRO_10_Hu_0"] = "Fire at will!",
-		["EMOTE120_CMD2"] = "/mock",
 		["BUG_CATEGORY14"] = "Player vs. Player",
+		["EMOTE120_CMD2"] = "/mock",
 		["BINDING_NAME_SHAPESHIFTBUTTON1"] = "Special Action Button 1",
+		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_FRIENDLY_NAMES"] = "Shows the name of a friendly caster when they cast a heal spell on you.",
 		["HELPFRAME_ENVIRONMENTAL_BULLET_TITLE1"] = "The following are examples of a Environmental issues:",
 		["BINDING_NAME_RESETVIEW3"] = "Reset View 3",
 		["TUTORIAL8"] = "An item went into your backpack. You can click on the backpack button in the lower right part of the screen to open your backpack.  Move the mouse over the item to see what it is.",
-		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_FRIENDLY_NAMES"] = "Shows the name of a friendly caster when they cast a heal spell on you.",
 		["EMOTE30_CMD1"] = "/crack",
-		["SPELL_FAILED_NOTHING_TO_STEAL"] = "Nothing to steal",
 		["SLASH_CHAT_PASSWORD1"] = "/password",
+		["SPELL_FAILED_NOTHING_TO_STEAL"] = "Nothing to steal",
+		["ITEM_QUALITY3_DESC"] = "Rare",
 		["EMOTE27_CMD1"] = "/unused",
 		["INVTYPE_CHEST"] = "Chest",
-		["ITEM_QUALITY3_DESC"] = "Rare",
+		["BINDING_NAME_ACTIONBUTTON5"] = "Action Button 5",
 		["NEWBIE_TOOLTIP_PVPFFA"] = "You can now attack and be attacked by any player in the game.",
 		["EMOTE15_CMD2"] = "/bounce",
 		["VOICEMACRO_19_Ta_1_FEMALE"] = "I want a man with soft hands.  Preferably four of them.",
 		["RESISTANCE4_NAME"] = "Frost Resistance",
 		["EMOTE63_CMD1"] = "/massage",
 		["EMOTE74_CMD2"] = "/poke",
-		["BINDING_NAME_ACTIONBUTTON5"] = "Action Button 5",
 		["HELPFRAME_ENVIRONMENTAL_TITLE"] = "Environmental",
-		["GUILDREMOVERANK_BUTTON_TOOLTIP"] = "Click to remove this rank",
 		["BINDING_NAME_MULTIACTIONBAR1BUTTON12"] = "BottomLeft Action Button 12",
+		["GUILDREMOVERANK_BUTTON_TOOLTIP"] = "Click to remove this rank",
+		["SPELL_FAILED_EQUIPPED_ITEM_CLASS_OFFHAND"] = "Must have a %s equipped in the offhand",
 		["GUILD_INFO_EDITLABEL"] = "Click here to set message",
 		["VOICEMACRO_5_Gn_1_FEMALE"] = "I'm short on mana!",
-		["SPELL_FAILED_EQUIPPED_ITEM_CLASS_OFFHAND"] = "Must have a %s equipped in the offhand",
+		["EMOTE93_CMD2"] = "/surrender",
 		["VOICEMACRO_15_Ta_0_FEMALE"] = "No.",
 		["OPTION_TOOLTIP_ENABLE_ALL_SOUND"] = "Enables or disables all game sound.",
 		["VOICEMACRO_14_Gn_0"] = "Sure.",
@@ -5958,73 +6033,73 @@ CombatLogScribeDB = {
 		["SLASH_JOIN1"] = "/join",
 		["OPTION_TOOLTIP_INVERT_MOUSE"] = "Invert the way that the mouse affects camera pitch.",
 		["VOICEMACRO_0_Dw_1_FEMALE"] = "I need help!",
-		["EMOTE93_CMD2"] = "/surrender",
 		["SLASH_TIME2"] = "/time",
+		["BINDING_NAME_MULTIACTIONBAR3BUTTON4"] = "Right Action Button 4",
 		["TUTORIAL_TITLE9"] = "Using Items",
 		["OPTION_TOOLTIP_AUTO_QUEST_WATCH"] = "Quests are automatically watched for 5 minutes when you achieve a quest objective.",
-		["BINDING_NAME_MULTIACTIONBAR3BUTTON4"] = "Right Action Button 4",
+		["BINDING_NAME_TARGETLASTTARGET"] = "Target Last Target",
 		["VOICEMACRO_12_Dw_2"] = "Greetings.",
 		["TUTORIAL44"] = "You have obtained a ranged weapon. To use it, equip it, and then open up your spellbook and drag the Shoot or Throw ability into your Action Bar.",
 		["GUILDADDRANK_BUTTON_TOOLTIP"] = "Click to add rank",
 		["EMOTE67_CMD1"] = "/no",
 		["VOICEMACRO_19_Or_4"] = "Lady, from the moment I see you I... I did not expect to get this far.",
-		["BINDING_NAME_TARGETLASTTARGET"] = "Target Last Target",
-		["OPTION_TOOLTIP_SHOW_MULTIBAR1"] = "Toggles an optional actionbar in the bottom left area of the screen.",
-		["VOICEMACRO_3_Sc_1"] = "Turn back!",
+		["VOICEMACRO_0_Tr_1"] = "Assist me!",
 		["SPELL_FAILED_WRONG_PET_FOOD"] = "Your pet doesn't like that food",
+		["VOICEMACRO_3_Sc_1"] = "Turn back!",
 		["OPTION_TOOLTIP_CAMERA_ALWAYS"] = "Set the camera to always prefer being behind your character.",
 		["PVP_FLAG"] = "Player vs. Player",
+		["EMOTE162_CMD2"] = "/oom",
 		["SLASH_DUEL_CANCEL2"] = "/concede",
 		["EMOTE106_CMD1"] = "/work",
 		["VOICEMACRO_17_Ta_1_FEMALE"] = "Always glad to help.",
 		["ITEM_STARTS_QUEST"] = "This Item Begins a Quest",
-		["EMOTE162_CMD2"] = "/oom",
-		["VOICEMACRO_6_Ta_1_FEMALE"] = "Follow my trail.",
 		["BINDING_NAME_ACTIONBUTTON11"] = "Action Button 11",
+		["VOICEMACRO_6_Ta_1_FEMALE"] = "Follow my trail.",
 		["PVP_MEDAL3"] = "Thane of Ironforge",
 		["HELPFRAME_NONQUEST_BULLET4"] = "Vendor NPC not itemized or not responding",
 		["OPTION_TOOLTIP_TARGETOFTARGET5"] = "Sets Target of Target to always display.",
-		["BINDING_NAME_COMBATLOGPAGEUP"] = "Combat Log Page Up",
+		["VOICEMACRO_17_Ni_0_FEMALE"] = "My pleasure.",
+		["TUTORIAL38"] = "Your character can learn up to two professions which will allow you to find or create items of value. To learn more about professions ask a guard in a major city for directions to the profession trainers.",
 		["INVTYPE_BODY"] = "Shirt",
 		["ITEM_UNIQUE_EQUIPPABLE"] = "Unique-Equipped",
-		["TUTORIAL38"] = "Your character can learn up to two professions which will allow you to find or create items of value. To learn more about professions ask a guard in a major city for directions to the profession trainers.",
+		["PVP_RANK_0_1_FEMALE"] = "Private",
 		["EMOTE98_CMD6"] = "/ty",
 		["EMOTE38_CMD6"] = "/feast",
-		["PVP_RANK_0_1_FEMALE"] = "Private",
-		["VOICEMACRO_14_Dw_0"] = "Yes.",
 		["VOICEMACRO_19_Ta_1"] = "Hey, you into leather?",
+		["VOICEMACRO_14_Dw_0"] = "Yes.",
+		["TUTORIAL_TITLE6"] = "Spells and Abilities",
 		["EMOTE21_CMD2"] = "/cheer",
 		["VOICEMACRO_1_Sc_0"] = "Danger!",
 		["EMOTE5_CMD4"] = "/applaud",
-		["NEWBIE_TOOLTIP_UNIT_UNINVITE"] = "Removes the selected player from the group.",
+		["BINDING_NAME_RAIDTARGETNONE"] = "Clear raid target icon",
 		["VOICEMACRO_20_Dw_3"] = "I don't have a drinking problem.  I drink, I get drunk, I fall down, no problem.",
 		["SLASH_CHAT_MODERATOR4"] = "/moderator",
 		["EMOTE71_CMD1"] = "/peer",
 		["GUILD_HELP_TEXT_LINE6"] = "'/gremove <player>' removes a player from your guild",
 		["VOICEMACRO_LABEL_FOLLOWME1"] = "followme",
-		["VOICEMACRO_LABEL_RASPBERRY1"] = "rasp",
+		["PVP_MEDAL7"] = "Avenger of Gnomeregan",
 		["SLASH_GUILD_INFO3"] = "/ginfo",
-		["BINDING_NAME_RAIDTARGETNONE"] = "Clear raid target icon",
+		["HELPFRAME_ITEM_TITLE"] = "Item",
 		["VOICEMACRO_20_Ta_0"] = "Mess with the bull, you get the horns.",
 		["ADDON_UNKNOWN_ERROR"] = "Unknown load problem",
-		["HELPFRAME_ITEM_TITLE"] = "Item",
-		["TUTORIAL16"] = "You can look at your reputation with different groups in the world in the character pane under the reputation tab.",
 		["PVP_RANK_13_1_FEMALE"] = "Knight-Champion",
+		["TUTORIAL16"] = "You can look at your reputation with different groups in the world in the character pane under the reputation tab.",
 		["PVP_RANK_14_1_FEMALE"] = "Lieutenant Commander",
+		["BINDING_NAME_TOGGLEACTIONBARLOCK"] = "Toggle ActionBar Lock",
 		["EMOTE58_CMD3"] = "/hungry",
 		["VOICEMACRO_19_Tr_1"] = "We Trolls mate for life.  'Course, we believe in frequent reincarnation.",
-		["BINDING_NAME_TOGGLEACTIONBARLOCK"] = "Toggle ActionBar Lock",
+		["PVP_RANK_11_1"] = "Knight-Lieutenant",
 		["SLASH_WHO2"] = "/who",
 		["SPELL_CAST_TIME_INSTANT_NO_MANA"] = "Instant",
-		["PVP_RANK_11_1"] = "Knight-Lieutenant",
-		["VOICEMACRO_17_Ta_0"] = "It was nothing.",
 		["VOICEMACRO_13_Or_1_FEMALE"] = "May you always be victorious.",
+		["VOICEMACRO_17_Ta_0"] = "It was nothing.",
 		["PVP_RANK_17_0_FEMALE"] = "Warlord",
-		["VOICEMACRO_15_Ni_1"] = "I don't think so.",
 		["BINDING_NAME_ACTIONPAGE4"] = "Action Page 4",
+		["VOICEMACRO_15_Ni_1"] = "I don't think so.",
 		["NEWBIE_TOOLTIP_ADDMEMBER"] = "Adds a new player to the guild.",
+		["VOICEMACRO_20_Or_5"] = "Stop poking me!  Well, that was okay.",
 		["EMOTE148_CMD1"] = "/bark",
-		["VOICEMACRO_20_Ta_1"] = "Here's the beef.",
+		["PVP_RANK_4_1"] = "Dishonored",
 		["EMOTE127_CMD4"] = "/rdy",
 		["EMOTE132_CMD2"] = "/smirk",
 		["VOICEMACRO_18_Ta_2_FEMALE"] = "Fate smiles upon you.",
@@ -6032,124 +6107,124 @@ CombatLogScribeDB = {
 		["ITEM_MOD_INTELLECT"] = "%c%d Intellect",
 		["EMOTE88_CMD2"] = "/sleep",
 		["VOICEMACRO_19_Ta_0"] = "You move me.",
-		["BINDING_HEADER_ITUNES_REMOTE"] = "iTunes Remote",
-		["VOICEMACRO_LABEL_HEALME1"] = "heal",
 		["PVP_RANK_19_0_FEMALE"] = "Leader",
+		["VOICEMACRO_LABEL_HEALME1"] = "heal",
 		["OPTION_TOOLTIP_SHOW_PLAYER_NAMES"] = "Always display player names in the game world.",
-		["VOICEMACRO_7_Ta_0_FEMALE"] = "Rest your haunches.",
 		["SPELL_FAILED_REAGENTS"] = "Missing reagent: %s",
+		["VOICEMACRO_7_Ta_0_FEMALE"] = "Rest your haunches.",
 		["PVP_RANK_3_0"] = "Exiled",
 		["PVP_RANK_3_1"] = "Exiled",
+		["PVP_RANK_4_0_FEMALE"] = "Dishonored",
 		["VOICEMACRO_8_Hu_0"] = "I need healing!",
 		["BINDING_NAME_TARGETNEARESTFRIEND"] = "Target Nearest Friend",
 		["PVP_RANK_14_0_FEMALE"] = "Champion",
 		["HELPFRAME_CHARACTER_TITLE"] = "Character",
-		["PVP_RANK_4_0_FEMALE"] = "Dishonored",
 		["GMSURVEYRATING1"] = "Bad",
 		["VOICEMACRO_12_Hu_1"] = "Good tidings.",
+		["EMOTE32_CMD3"] = "/weep",
 		["EMOTE94_CMD1"] = "/talk",
 		["VOICEMACRO_15_Sc_1"] = "Not on your life.",
 		["VOICEMACRO_16_Ta_1"] = "How kind of you.",
 		["VOICEMACRO_2_Or_0_FEMALE"] = "Attack!",
 		["EMOTE65_CMD1"] = "/moon",
-		["TUTORIAL_TITLE16"] = "Reputation",
+		["SPELL_FAILED_ONLY_DAYTIME"] = "Can only use during the day",
 		["CHAT_MONSTER_WHISPER_GET"] = "%s whispers: ",
 		["SLASH_EMOTE2"] = "/em",
-		["SPELL_FAILED_ONLY_DAYTIME"] = "Can only use during the day",
 		["PVP_RANK_6_0_FEMALE"] = "Grunt",
+		["PVP_RANK_6_1"] = "Corporal",
 		["SLASH_COMBATLOG2"] = "/combatlog",
 		["VOICEMACRO_12_Ta_1_FEMALE"] = "Hello.",
-		["PVP_RANK_6_1"] = "Corporal",
 		["TUTORIAL_TITLE42"] = "Welcome to World of Warcraft!",
-		["SLASH_REPLY3"] = "/r",
+		["VOICEMACRO_17_Ta_2_FEMALE"] = "You are welcome.",
+		["PVP_RANK_8_0"] = "Senior Sergeant",
 		["EMOTE81_CMD1"] = "/sexy",
 		["VOICEMACRO_15_Dw_2"] = "No way.",
-		["PVP_RANK_8_0"] = "Senior Sergeant",
 		["ITEM_MOD_HIT_MELEE_RATING"] = "Improves melee hit rating by %d.",
-		["VOICEMACRO_3_Sc_1_FEMALE"] = "Move your carcass!",
 		["EMOTE18_CMD2"] = "/belch",
+		["VOICEMACRO_3_Sc_1_FEMALE"] = "Move your carcass!",
 		["PVP_RANK_8_1"] = "Master Sergeant",
 		["EMOTE34_CMD1"] = "/curtsey",
+		["KEY_NUMPADMINUS"] = "Num Pad -",
 		["BAG_CANT_STACK"] = "This item cannot stack.",
 		["EMOTE49_CMD1"] = "/greet",
 		["PVP_REQUIRED_FOR_CAPTURE"] = "You must be flagged for PvP in order to help capture this objective.",
 		["EMOTE42_CMD4"] = "/strong",
 		["TUTORIAL35"] = "You have clicked a flight master who trains flying beasts to carry passengers from one location to another. For a minimal fee, you can swiftly travel to other flight masters that you have interacted with in the past. When you discover a new city, finding the flight master will allow you to return easily in the future.",
-		["VOICEMACRO_12_Hu_2_FEMALE"] = "Greetings.",
+		["COMBAT_TEXT_SHOW_RESISTANCES_TEXT"] = "Show Damage Reduction",
 		["VOICEMACRO_13_Or_0"] = "Until our paths cross again.",
 		["TUTORIAL50"] = "You now have a keyring to hold your dungeon keys. This keyring appears to the left of your bags on your action bar. The keyring can only store permanent keys.",
-		["COMBAT_TEXT_SHOW_RESISTANCES_TEXT"] = "Show Damage Reduction",
 		["SPELL_FAILED_MAINHAND_EMPTY"] = "Your weapon hand is empty",
 		["VOICEMACRO_1_Dw_1_FEMALE"] = "Heads up!",
+		["SLASH_REPLY2"] = "/reply",
 		["SPELL_FAILED_NOT_ON_SHAPESHIFT"] = "Cannot be cast on shapeshifted target.",
 		["BINDING_NAME_SETVIEW1"] = "Set View 1",
 		["PVP_RANK_14_1"] = "Lieutenant Commander",
-		["SLASH_REPLY2"] = "/reply",
+		["EMOTE64_CMD2"] = "/moan",
 		["VOICEMACRO_0_Ni_2"] = "Assist me!",
 		["EMOTE56_CMD2"] = "/hi",
-		["EMOTE64_CMD2"] = "/moan",
+		["SPELL_FAILED_INTERRUPTED"] = "Interrupted",
 		["EMOTE41_CMD1"] = "/fidget",
 		["VOICEMACRO_13_Sc_0_FEMALE"] = "Goodbye.",
 		["VOICEMACRO_1_Ta_1_FEMALE"] = "On your guard!",
 		["VOICEMACRO_16_Sc_1"] = "Gee, thanks.",
 		["VOICEMACRO_13_Sc_0"] = "Goodbye.",
 		["OPTION_TOOLTIP_HEAD_BOB"] = "Simulate head bobbing when in first-person perspective.",
-		["PVP_TEAMSIZE"] = "(%dv%d)",
-		["VOICEMACRO_20_Ta_4"] = "Moo.  Are you happy now?",
 		["EMOTE36_CMD1"] = "/drink",
+		["VOICEMACRO_20_Ta_4"] = "Moo.  Are you happy now?",
+		["VOICEMACRO_16_Or_2"] = "Thank you.",
 		["VOICEMACRO_16_Dw_0_FEMALE"] = "Thank you.",
-		["VOICEMACRO_3_Hu_1_FEMALE"] = "Retreat!",
 		["SPELL_FAILED_DISENCHANT_WHILE_LOOTING"] = "Cannot disenchant while looting",
 		["ITEM_PROSPECTABLE"] = "Prospectable",
+		["PVP_TOGGLE_OFF_VERBOSE"] = "You will be unflagged for PvP combat after five minutes of non-PvP action in friendly territory.",
 		["VOICEMACRO_19_Sc_4_FEMALE"] = "I don't care that much about romance.  I fell in love before, and look what happened to me.",
 		["VOICEMACRO_18_Hu_2"] = "Wonderful.",
-		["PVP_TOGGLE_OFF_VERBOSE"] = "You will be unflagged for PvP combat after five minutes of non-PvP action in friendly territory.",
 		["PVP_TOGGLE_ON_VERBOSE"] = "You are now flagged for PvP combat and will remain so until toggled off.",
 		["SPELL_FAILED_CANT_STEALTH"] = "You are too close to enemies",
 		["SPELL_FAILED_ALREADY_OPEN"] = "Already open",
 		["SPELL_FAILED_ALREADY_HAVE_CHARM"] = "You already control a charmed creature",
 		["TUTORIAL17"] = "You can respond to that player by hitting the R key and then typing a message, or by typing /tell <theirname> and then the message.",
 		["EMOTE12_CMD2"] = "/blush",
-		["VOICEMACRO_18_Gn_1_FEMALE"] = "Way to go.",
 		["EMOTE75_CMD2"] = "/pray",
+		["VOICEMACRO_18_Gn_1_FEMALE"] = "Way to go.",
 		["SLASH_QUIT3"] = "/quit",
 		["EMOTE128_CMD1"] = "/shimmy",
+		["OPTION_TOOLTIP_SECURE_ABILITY_TOGGLE"] = "When selected you will be protected from toggling your abilities off if accidently hitting the button more than once in a short period of time.",
 		["GUILD_ROSTER_TEMPLATE"] = "%d players, %d accounts",
 		["INVTYPE_HOLDABLE"] = "Held In Off-hand",
-		["OPTION_TOOLTIP_SECURE_ABILITY_TOGGLE"] = "When selected you will be protected from toggling your abilities off if accidently hitting the button more than once in a short period of time.",
 		["VOICEMACRO_20_Hu_4"] = "A guy walked up to me and said, \"I'm a teepee, I'm a wigwam, I'm a teepee, I'm a wigwam.\"  I said, \"Relax, man, you're too tense.\"",
+		["KEY_BACKSPACE"] = "Backspace",
 		["KEY_NUMPAD1"] = "Num Pad 1",
 		["TUTORIAL_TITLE25"] = "Death",
 		["HELPFRAME_TECHNICAL_BULLET_TITLE1"] = "The following are examples of Technical issues:",
-		["KEY_BACKSPACE"] = "Backspace",
+		["SLASH_WHO1"] = "/who",
 		["VOICEMACRO_17_Hu_0"] = "Always glad to help.",
 		["VOICEMACRO_17_Hu_1_FEMALE"] = "Anytime.",
-		["SLASH_WHO1"] = "/who",
 		["OPTION_TOOLTIP_STATUS_BAR"] = "Always display the text on XP, health, mana, rage, energy, or happiness status bars.",
 		["SLASH_UNINVITE1"] = "/u",
 		["SLASH_UNINVITE8"] = "/kick",
+		["BINDING_NAME_TOGGLEBAG3"] = "Toggle Bag 3",
 		["GENERIC_SEC"] = "%d second",
 		["VOICEMACRO_15_Gn_1_FEMALE"] = "Not on your life.",
-		["BINDING_NAME_TOGGLEBAG3"] = "Toggle Bag 3",
+		["KEY_PAUSE"] = "Pause",
 		["TUTORIAL43"] = "An NPC with a gray '!' over its head has a quest that you are too low level to accept. Check back once you gain a few levels.",
-		["VOICEMACRO_13_Ta_1_FEMALE"] = "Goodbye.",
 		["EMOTE26_CMD1"] = "/congratulate",
 		["SLASH_STARTATTACK2"] = "/startattack",
+		["EMOTE98_CMD2"] = "/thanks",
 		["VOICEMACRO_1_Or_1_FEMALE"] = "Incoming!",
 		["EMOTE103_CMD2"] = "/welcome",
 		["TUTORIAL_TITLE19"] = "Players",
 		["SLASH_SAVEGUILDROSTER1"] = "/saveguildroster",
 		["VOICEMACRO_17_Ni_2"] = "The honor was mine.",
-		["EMOTE98_CMD2"] = "/thanks",
 		["VOICEMACRO_2_Gn_1"] = "Attack!",
 		["BINDING_NAME_ITUNES_NEXTTRACK"] = "iTunes Next Track",
 		["VOICEMACRO_7_Or_0"] = "Remain here.",
 		["EMOTE50_CMD5"] = "/wicked",
 		["BINDING_NAME_MULTIACTIONBAR3BUTTON8"] = "Right Action Button 8",
-		["PVP_MEDAL6"] = "Chieftain of Thunderbluff",
 		["EMOTE165_CMD1"] = "/flirt",
+		["PVP_MEDAL6"] = "Chieftain of Thunderbluff",
 		["GUILDCONTROL_OPTION9"] = "Set MOTD",
 		["ITEM_WRAPPED_BY"] = "|cff00ff00<Gift from %s>|r",
+		["BINDING_NAME_COMBATLOGPAGEUP"] = "Combat Log Page Up",
 		["VOICEMACRO_1_Hu_1"] = "On your guard!",
 		["PVP_POLICY_URL"] = "|cffffd200http://www.worldofwarcraft.com/policy/pvp.shtml|r",
 		["HELPFRAME_GUILD_BUTTON_TEXT"] = "Report Guild Issue",
@@ -6158,7 +6233,7 @@ CombatLogScribeDB = {
 		["VOICEMACRO_20_Ni_1"] = "You know those Ancient Protectors in Darnassas?  They're not that old.",
 		["VOICEMACRO_12_Sc_0"] = "Hello.",
 		["SLASH_PET_AUTOCASTOFF1"] = "/petautocastoff",
-		["VOICEMACRO_17_Ni_0_FEMALE"] = "My pleasure.",
+		["OPTION_TOOLTIP_LOCALE"] = "Select which language you would like to play in.",
 		["GUILD_CHARTER_CREATOR"] = "Guild Master: %s",
 		["HELPFRAME_ACCOUNT_BUTTON_TEXT"] = "Report Account/Billing Issue",
 		["SLASH_CHAT_KICK2"] = "/ckick",
@@ -6167,51 +6242,51 @@ CombatLogScribeDB = {
 		["SLASH_CHAT_UNMUTE6"] = "/voice",
 		["TUTORIAL48"] = "You are now in a queue to enter a battleground.  You may check your status by mousing over the icon on your minimap.",
 		["GMSURVEYRATING5"] = "Excellent",
-		["OPTION_TOOLTIP_LOCALE"] = "Select which language you would like to play in.",
 		["SLASH_PROMOTE1"] = "/pr",
+		["VOICEMACRO_15_Ni_2"] = "Absolutely not.",
 		["ITEM_REQ_SKILL"] = "Requires %s",
 		["VOICEMACRO_7_Tr_2_FEMALE"] = "Don't you be going nowhere.",
-		["VOICEMACRO_15_Ni_2"] = "Absolutely not.",
+		["SLASH_PLAYED2"] = "/played",
 		["VOICEMACRO_12_Ta_0_FEMALE"] = "Hi.",
 		["BINDING_NAME_MULTIACTIONBAR1BUTTON10"] = "BottomLeft Action Button 10",
 		["VOICEMACRO_20_Gn_2_FEMALE"] = "You know, squirrels can be deadly when cornered.",
 		["INVTYPE_CLOAK"] = "Back",
 		["NEWBIE_TOOLTIP_REMOVEFRIEND"] = "Removes the selected player from your friends list.",
 		["BINDING_NAME_RESETVIEW2"] = "Reset View 2",
-		["SLASH_PLAYED2"] = "/played",
-		["SPELL_FAILED_TRANSFORM_UNUSABLE"] = "You can't use the new item",
 		["HELPFRAME_TECHNICAL_BULLET2"] = "Display errors (black boxes, flickering objects, distortions, etc)",
+		["SPELL_FAILED_TRANSFORM_UNUSABLE"] = "You can't use the new item",
 		["VOICEMACRO_17_Or_1"] = "Honor required it.",
 		["SLASH_PET_DEFENSIVE2"] = "/petdefensive",
+		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_AURA_FADE"] = "Shows a message when an aura fades from the player.",
 		["VOICEMACRO_5_Sc_0"] = "My mana is drained!",
 		["VOICEMACRO_13_Or_2"] = "May your blade be true.",
 		["BUG_CATEGORY_CHOOSE"] = "--> Please Choose a Category",
 		["EMOTE43_CMD1"] = "/frown",
-		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_AURA_FADE"] = "Shows a message when an aura fades from the player.",
+		["EMOTE3_CMD3"] = "/angry",
 		["VOICEMACRO_20_Gn_1"] = "I think that last vendor short changed me.  Oh, that was a bad one.",
 		["SLASH_STOPCASTING1"] = "/stopcasting",
 		["KEYRING"] = "Keyring",
-		["EMOTE3_CMD3"] = "/angry",
 		["BINDING_NAME_ITUNES_VOLUMEUP"] = "iTunes Volume Up",
 		["SLASH_CLEARTARGET1"] = "/cleartarget",
+		["VOICEMACRO_3_Ni_1"] = "Scatter!",
 		["KEY_BACKSLASH"] = "\\",
 		["HELP_TEXT_LINE3"] = "- To group/inspect/trade: target another player, right click their portrait",
-		["VOICEMACRO_3_Ni_1"] = "Scatter!",
-		["VOICEMACRO_20_Gn_2"] = "I do hope to find some interesting gadgets around here.  I do love tinkering with things.",
 		["BINDING_NAME_TOGGLEBAG2"] = "Toggle Bag 2",
+		["VOICEMACRO_20_Gn_2"] = "I do hope to find some interesting gadgets around here.  I do love tinkering with things.",
+		["PVP_RANK_2_1"] = "Outlaw",
 		["NEWBIE_TOOLTIP_UNIT_GROUP_LOOT"] = "Under group loot rules, players take turns looting just like in round-robin with the exception that all group members will be eligible to roll for items over the loot threshold.",
 		["VOICEMACRO_6_Or_1_FEMALE"] = "Come.",
-		["PVP_RANK_2_1"] = "Outlaw",
-		["VOICEMACRO_16_Or_2_FEMALE"] = "Thanks.",
 		["HELPFRAME_GUILD_BULLET3"] = "Unable to reassign or rename ranks within the guild",
+		["VOICEMACRO_16_Or_2_FEMALE"] = "Thanks.",
 		["VOICEMACRO_17_Tr_1"] = "Any time, man.",
 		["VOICEMACRO_18_Dw_2_FEMALE"] = "Oh, that's great.",
+		["BINDING_NAME_RAIDTARGET6"] = "Assign Square to Target",
 		["SLASH_FRIENDS4"] = "/friend",
 		["VOICEMACRO_14_Ni_1"] = "Of course.",
 		["EMOTE67_CMD2"] = "/no",
 		["SLASH_EQUIP1"] = "/equip",
 		["BUG_CATEGORY2"] = "Outdoor Zones",
-		["BINDING_NAME_RAIDTARGET6"] = "Assign Square to Target",
+		["SPELL_FAILED_CASTER_AURASTATE"] = "You can't do that yet",
 		["PVP_RANK_12_1"] = "Knight-Captain",
 		["EMOTE54_CMD1"] = "/hail",
 		["SLASH_LOGOUT4"] = "/camp",
@@ -6219,17 +6294,17 @@ CombatLogScribeDB = {
 		["SLASH_GUILD_DEMOTE1"] = "/gdemote",
 		["BUG_CATEGORY12"] = "Tradeskills",
 		["TUTORIAL25"] = "You are now a ghost.  You can return to life by either finding your corpse or talking to a nearby spirit healer.  Your corpse shows up as an icon in the minimap at the upper right hand portion of the screen.",
-		["SPELL_FAILED_CASTER_AURASTATE"] = "You can't do that yet",
 		["KEY_NUMLOCK"] = "Num Lock",
 		["SLASH_INVITE6"] = "/invite",
-		["EMOTE43_CMD4"] = "/frown",
 		["BINDING_NAME_TOGGLECHARACTER2"] = "Toggle Reputation Pane",
-		["VOICEMACRO_16_Tr_2"] = "I owe you one.",
+		["EMOTE43_CMD4"] = "/frown",
 		["OPTION_TOOLTIP_CLICK_CAMERA2"] = "Sets the camera to always be aligned with your character when changing direction with click-to-move.",
-		["VOICEMACRO_2_Ta_0_FEMALE"] = "For Kalimdor!",
+		["VOICEMACRO_16_Tr_2"] = "I owe you one.",
 		["SLASH_INVITE1"] = "/i",
+		["VOICEMACRO_2_Ta_0_FEMALE"] = "For Kalimdor!",
 		["EMOTE147_CMD1"] = "/growl",
 		["VOICEMACRO_15_Dw_0_FEMALE"] = "No.",
+		["RESILIENCE_TOOLTIP"] = "Decreases chance of enemy scoring a critical hit on you by %.2f%%.\nReduces damage taken from critical strikes by %.2f%%.",
 		["RESISTANCE0_NAME"] = "Armor",
 		["EMOTE70_CMD2"] = "/panic",
 		["VOICEMACRO_7_Tr_1_FEMALE"] = "Stay put.",
@@ -6378,10 +6453,10 @@ CombatLogScribeDB = {
 		["SPELL_FAILED_SILENCED"] = "Can't do that while silenced",
 		["PVP_RANK_1_0"] = "Pariah",
 		["SLASH_PROMOTE4"] = "/promote",
-		["VOICEMACRO_3_Ni_0"] = "Retreat!",
+		["VOICEMACRO_20_Tr_1"] = "I like my women dumpy and droopy with halitosis.",
 		["EMOTE19_CMD6"] = "/farewell",
 		["SLASH_CAST4"] = "/spell",
-		["KEY_SPACE"] = "Spacebar",
+		["EMOTE8_CMD2"] = "/beg",
 		["SPELL_FAILED_LOW_CASTLEVEL"] = "Skill not high enough",
 		["SLASH_GUILD_PROMOTE1"] = "/gpromote",
 		["OPTION_TOOLTIP_MULTISAMPLING"] = "Increase multisampling to smooth out model edges.",
@@ -6439,7 +6514,7 @@ CombatLogScribeDB = {
 		["SPELL_FAILED_AFFECTING_COMBAT"] = "You are in combat",
 		["EMOTE30_CMD4"] = "/knuckles",
 		["VOICEMACRO_7_Hu_1_FEMALE"] = "Stay here.",
-		["HELPFRAME_HARASSMENT_BUTTON_TEXT"] = "Harassment:",
+		["VOICEMACRO_18_Sc_2_FEMALE"] = "Well, aren't you lucky.",
 		["KEY_NUMPADDECIMAL"] = "Num Pad .",
 		["VOICEMACRO_1_Or_0_FEMALE"] = "On your guard!",
 		["EMOTE29_CMD1"] = "/cower",
@@ -6460,7 +6535,7 @@ CombatLogScribeDB = {
 		["SLASH_UNINVITE3"] = "/kick",
 		["GUILD_MEMBER_OPTIONS"] = "Guild Member Options",
 		["VOICEMACRO_18_Ta_1"] = "You are worthy.",
-		["EMOTE26_CMD3"] = "/cong",
+		["VOICEMACRO_13_Ta_1_FEMALE"] = "Goodbye.",
 		["EMOTE171_CMD2"] = "/mountspecial",
 		["OPTION_TOOLTIP_CLICKCAMERA_LOCKED"] = "Sets the camera to always be aligned with your character when changing direction with click-to-move.",
 		["VOICEMACRO_18_Tr_0"] = "Good job.",
@@ -6540,7 +6615,7 @@ CombatLogScribeDB = {
 		["EMOTE165_CMD2"] = "/flirt",
 		["COMBAT_TEXT_SHOW_REPUTATION_TEXT"] = "Show Reputation",
 		["VOICEMACRO_19_Tr_3"] = "I hope you're well rested.  You're going to need your strength.",
-		["SLASH_GUILD_UNINVITE3"] = "/gremove",
+		["VOICEMACRO_7_Gn_1"] = "Wait here, please.",
 		["SLASH_JOIN4"] = "/join",
 		["OPTION_TOOLTIP_CLICKCAMERA_NEVER"] = "Sets the camera to not move when changing direction with click-to-move.",
 		["SLASH_LEAVE6"] = "/chatleave",
@@ -6602,7 +6677,7 @@ CombatLogScribeDB = {
 		["VOICEMACRO_16_Hu_2"] = "How kind of you.",
 		["VOICEMACRO_5_Sc_1"] = "I need mana!",
 		["OPTION_TOOLTIP_SHOW_TARGET_CASTBAR_IN_V_KEY"] = "If the Name Plate is displayed for your current target, show the enemy cast bar with the target's health bar in the game field.",
-		["VOICEMACRO_20_Sc_1_FEMALE"] = "Yes, they're real.  They're not mine, but they're real.",
+		["EMOTE112_CMD2"] = "/spoon",
 		["SPELL_FAILED_NO_COMBO_POINTS"] = "That ability requires combo points",
 		["PVP_RANK_LEADER"] = "Leader",
 		["SLASH_STARTATTACK1"] = "/startattack",
@@ -6663,7 +6738,7 @@ CombatLogScribeDB = {
 		["EMOTE13_CMD3"] = "/bonk",
 		["BINDING_NAME_SCREENSHOT"] = "Screen Shot",
 		["HELPFRAME_STUCK_TEXT1"] = "If you find yourself stuck and unable to move, please try the auto-unstuck feature prior to petitioning a GM. In most cases, this should solve the problem. Activating the auto-unstuck command will first attempt to use your hearthstone to port you back to your inn. If this is not possible, it will attempt to nudge your character out of position.\n\nPlease note this option can only be used every 5 minutes. Using the auto-unstuck option will log your character and location so that we can verify and fix the location in the future.",
-		["TUTORIAL47"] = "You are now waiting to join a group through a meeting stone. The meeting stone indicator is a bubble attached to the mini-map. You can click on that indicator to remove yourself from the meeting stone queue.",
+		["VOICEMACRO_14_Ni_2"] = "Naturally.",
 		["PVP_RANK_15_0_FEMALE"] = "Lieutenant General",
 		["SPELL_FAILED_NOT_BEHIND"] = "You must be behind your target",
 		["OPTION_TOOLTIP_CHAT_BUBBLES"] = "Shows /say and /yell text in speech bubbles above characters' heads.",
@@ -6675,7 +6750,7 @@ CombatLogScribeDB = {
 		["SHOW_PARTY_BACKGROUND_TEXT"] = "Show Party Background",
 		["SLASH_TARGET4"] = "/tar",
 		["VOICEMACRO_LABEL_FLIRT1"] = "flirt",
-		["OPTION_TOOLTIP_USE_RESOLUTION"] = "Changes the screen resolution of the game. Decrease to improve performance.",
+		["SLASH_USE1"] = "/use",
 		["SPELL_FAILED_HIGHLEVEL"] = "Target is too high level",
 		["OPTION_TOOLTIP_FOLLOW_TERRAIN"] = "Automatically change the camera angle based on the terrain. If your character climbs a slope, the camera will rotate upwards; if you descend, it will rotate downwards.",
 		["VOICEMACRO_19_Or_2"] = "You have six different smiles; one for when you're angry, one for when you tear flesh, one for when you chew flesh, one for when you loot bodies, one for when you skin game, and one for when you want to kill something.",
@@ -6866,7 +6941,7 @@ CombatLogScribeDB = {
 		["EMOTE89_CMD2"] = "/snarl",
 		["EMOTE30_CMD3"] = "/crack",
 		["TUTORIAL_TITLE50"] = "Keyrings",
-		["VOICEMACRO_8_Hu_1"] = "Heal me!",
+		["VOICEMACRO_LABEL_JOKE1"] = "silly",
 		["VOICEMACRO_13_Ta_2_FEMALE"] = "May our paths cross again.",
 		["OPTION_TOOLTIP_SHOW_BUFF_DURATION"] = "Toggle text counters for buff durations on and off.",
 		["VOICEMACRO_6_Tr_0"] = "Follow me.",
@@ -6920,7 +6995,7 @@ CombatLogScribeDB = {
 		["SLASH_CHAT_UNMUTE1"] = "/unmute",
 		["ITEM_SIGNABLE"] = "<Right Click for Details>",
 		["VOICEMACRO_10_Or_1"] = "Let 'em have it!",
-		["SPELL_FAILED_PREVENTED_BY_MECHANIC"] = "Can't do that while %s",
+		["VOICEMACRO_10_Ta_1_FEMALE"] = "Strike now!",
 		["TITLE_TEMPLATE"] = "%s of the %s",
 		["CONFIRM_TEAM_PROMOTE"] = "Really promote %s to Team Captain?",
 		["OPTION_TOOLTIP_SHOW_MULTIBAR4"] = "Toggles an additional optional actionbar on the right side of the screen.",
@@ -6928,13 +7003,13 @@ CombatLogScribeDB = {
 		["GUILD_HELP_TEXT_LINE11"] = "'/groster' gives an entire guild roster",
 		["KEY_NUMPADPLUS"] = "Num Pad +",
 		["VOICEMACRO_13_Gn_1"] = "Goodbye.",
-		["ITEM_BIND_ON_PICKUP"] = "Binds when picked up",
-		["VOICEMACRO_16_Or_1_FEMALE"] = "Thank you.",
 		["TUTORIAL39"] = "You may want to invite other players to team up with you to more easily overcome your enemies. Many difficult quests can be quickly completed in a group, as quest credit is shared by the group. Moreover, groups earn bonus experience, relative to solo players.",
+		["VOICEMACRO_16_Or_1_FEMALE"] = "Thank you.",
+		["ITEM_BIND_ON_PICKUP"] = "Binds when picked up",
 		["SLASH_PVP2"] = "/pvp",
-		["PVP_RANK_2_0"] = "Outlaw",
+		["VOICEMACRO_LABEL_CONGRATULATIONS3"] = "congratulations",
 		["GUILDCONTROL_OPTION7"] = "Invite Member",
-		["VOICEMACRO_10_Ta_1_FEMALE"] = "Strike now!",
+		["CHAT_EMOTE_SEND"] = "%s ",
 		["COMBAT_TEXT_SHOW_HONOR_GAINED_TEXT"] = "Show Honor Gained",
 		["VOICEMACRO_16_Or_0"] = "I will return the favor.",
 		["EMOTE112_CMD1"] = "/cuddle",
@@ -6942,23 +7017,23 @@ CombatLogScribeDB = {
 		["EMOTE29_CMD4"] = "/fear",
 		["VOICEMACRO_14_Sc_0"] = "Yes.",
 		["VOICEMACRO_6_Gn_0_FEMALE"] = "Follow me.",
-		["CONFIRM_XP_LOSS_AGAIN_NO_SICKNESS"] = "Remember, if you find your corpse there is no penalty.  Are you sure you want to have all your items take 25% durability damage?",
 		["VOICEMACRO_12_Gn_0_FEMALE"] = "Hello.",
+		["CONFIRM_XP_LOSS_AGAIN_NO_SICKNESS"] = "Remember, if you find your corpse there is no penalty.  Are you sure you want to have all your items take 25% durability damage?",
 		["BINDING_NAME_MULTIACTIONBAR3BUTTON9"] = "Right Action Button 9",
 		["HELPFRAME_CHARACTER_BULLET_TITLE1"] = "The following are examples of character issues:",
 		["KEY_END"] = "End",
 		["VOICEMACRO_14_Hu_2"] = "Uh huh.",
+		["HELP_TICKET_QUEUE_DISABLED"] = "GM Help Tickets are currently unavailable.",
 		["NEWBIE_TOOLTIP_MINIMAPTOGGLE"] = "Toggle display of the minimap.",
 		["HELPFRAME_HOME_TEXT"] = "The following are the types of issues that a GM can assist with:",
-		["VOICEMACRO_LABEL_FLEE1"] = "flee",
 		["SPELL_FAILED_ONLY_ABOVEWATER"] = "Cannot use while swimming",
-		["OPTION_TOOLTIP_AUTO_LOOT_DEFAULT"] = "Sets Auto Looting as the default action when clicking on a lootable creature. (Looting when this is checked, or Auto Looting when it is not, is performed by holding the Loot Key / Auto Loot Key)",
+		["BINDING_NAME_MULTIACTIONBAR3BUTTON1"] = "Right Action Button 1",
 		["HELPFRAME_NONQUEST_BULLET6"] = "Request for Non-Quest NPC/Creep information",
 		["BINDING_NAME_TOGGLEBAG1"] = "Toggle Bag 1",
 		["CONFIRM_XP_LOSS_NO_SICKNESS"] = "If you find your corpse, you can resurrect for no penalty.  If I resurrect you all of your items will take 25%% durability damage (equipped and inventory).",
 		["VOICEMACRO_19_Sc_1_FEMALE"] = "One good thing about being dead, biological clock seems to have stopped.",
 		["EMOTE77_CMD2"] = "/rofl",
-		["SPELL_FAILED_UNIT_NOT_BEHIND"] = "Target needs to be behind you",
+		["OPTION_TOOLTIP_AUTO_LOOT_DEFAULT"] = "Sets Auto Looting as the default action when clicking on a lootable creature. (Looting when this is checked, or Auto Looting when it is not, is performed by holding the Loot Key / Auto Loot Key)",
 		["INVTYPE_BAG"] = "Bag",
 		["GUILD_TOTALONLINE"] = "(|cffffffff%d|r |cff00ff00Online|r)",
 		["SLASH_EMOTE3"] = "/emote",
@@ -6966,23 +7041,23 @@ CombatLogScribeDB = {
 		["OPTION_TOOLTIP_ASSIST_ATTACK"] = "Automatically attack a target when you acquire it by using \"/assist\".",
 		["BINDING_NAME_RAIDTARGET1"] = "Assign Star to Target",
 		["VOICEMACRO_17_Or_2_FEMALE"] = "You're welcome.",
+		["VOICEMACRO_8_Tr_1_FEMALE"] = "Cure me!",
 		["VOICEMACRO_8_Tr_1"] = "Heal me!",
-		["VOICEMACRO_12_Ni_1"] = "Well met.",
 		["BINDING_NAME_MULTIACTIONBAR1BUTTON9"] = "BottomLeft Action Button 9",
 		["VOICEMACRO_16_Dw_3_FEMALE"] = "May your generosity be returned to you one hundred fold.",
-		["VOICEMACRO_12_Ni_2_FEMALE"] = "Well met.",
+		["VOICEMACRO_12_Ni_2"] = "Hi.",
 		["HELPFRAME_ITEM_BUTTON_TEXT"] = "Report Item Issue",
 		["TUTORIAL_TITLE48"] = "Battleground Queue",
+		["EMOTE170_CMD2"] = "/golfclap",
 		["VOICEMACRO_12_Or_0"] = "Thram-ka.",
-		["EMOTE153_CMD2"] = "/moo",
 		["VOICEMACRO_6_Tr_1"] = "You go with me.",
-		["INVTYPE_TRINKET"] = "Trinket",
+		["EMOTE153_CMD2"] = "/moo",
 		["VOICEMACRO_LABEL_FOLLOWME3"] = "fol",
 		["VOICEMACRO_20_Dw_2"] = "Oh, I'm having a wardrobe malfunction.  Oh, there's my hammer.",
 		["VOICEMACRO_6_Or_0_FEMALE"] = "Follow me.",
-		["OPTION_TOOLTIP_FIX_LAG"] = "Enabling this will reduce user interface lag, but can reduce frame rates.",
+		["INVTYPE_TRINKET"] = "Trinket",
 		["VOICEMACRO_12_Sc_1"] = "Hi, there.",
-		["EMOTE8_CMD2"] = "/beg",
+		["OPTION_TOOLTIP_FIX_LAG"] = "Enabling this will reduce user interface lag, but can reduce frame rates.",
 		["VOICEMACRO_12_Sc_1_FEMALE"] = "Hi, there.",
 		["KEY_PLUS"] = "+",
 		["EMOTE5_CMD6"] = "/applause",
@@ -6990,165 +7065,165 @@ CombatLogScribeDB = {
 		["SLASH_CASTRANDOM2"] = "/castrandom",
 		["VOICEMACRO_17_Gn_1"] = "Any time.",
 		["VOICEMACRO_12_Sc_2"] = "Greetings.",
-		["VOICEMACRO_LABEL_JOKE1"] = "silly",
+		["KEY_SPACE"] = "Spacebar",
 		["VOICEMACRO_3_Sc_0_FEMALE"] = "Run!",
 		["TUTORIAL_TITLE8"] = "Backpack",
-		["VOICEMACRO_12_Ta_2"] = "Greetings.",
+		["VOICEMACRO_8_Hu_1"] = "Heal me!",
 		["VOICEMACRO_5_Sc_1_FEMALE"] = "My mana is exhausted!",
+		["VOICEMACRO_12_Ta_2"] = "Greetings.",
 		["HELPFRAME_NONQUEST_TITLE"] = "Non-Quest NPC/Creep",
-		["KEY2"] = "Key 2",
 		["OPTION_TOOLTIP_CLICK_CAMERA3"] = "Sets the camera to not move when changing direction with click-to-move.",
 		["SLASH_TEAM_CAPTAIN2"] = "/tcaptain",
 		["VOICEMACRO_12_Tr_0"] = "Hey, there.",
+		["VOICEMACRO_LABEL_THANKYOU3"] = "thank",
+		["VOICEMACRO_13_Tr_0_FEMALE"] = "Goodbye.",
 		["VOICEMACRO_12_Tr_1"] = "Hey, man.",
-		["EMOTE59_CMD4"] = "/blow",
-		["SLASH_OFFICER2"] = "/osay",
 		["EMOTE99_CMD8"] = "/wrath",
-		["OPTION_TOOLTIP_COMBAT_TEXT_SCROLL_DOWN"] = "Scroll combat text down instead of up.",
+		["SLASH_OFFICER2"] = "/osay",
 		["NEWBIE_TOOLTIP_MANABAR1"] = "Warrior abilities require Rage. Rage is gained when you cause damage or take damage.",
 		["VOICEMACRO_17_Dw_2_FEMALE"] = "You're welcome.",
+		["OPTION_TOOLTIP_COMBAT_TEXT_SCROLL_DOWN"] = "Scroll combat text down instead of up.",
+		["EMOTE126_CMD4"] = "/volunteer",
 		["SLASH_PET_AGGRESSIVE1"] = "/petaggressive",
-		["VOICEMACRO_12_Tr_1_FEMALE"] = "Hey, there.",
-		["GUILD_INFORMATION"] = "Guild Information",
 		["SPELL_FAILED_TARGET_NO_WEAPONS"] = "Target has no weapons equipped",
+		["VOICEMACRO_12_Tr_1_FEMALE"] = "Hey, there.",
 		["TUTORIAL_TITLE15"] = "Spells and Abilities Book",
+		["GUILD_INFORMATION"] = "Guild Information",
 		["VOICEMACRO_13_Dw_0"] = "Farewell.",
-		["BINDING_NAME_ACTIONPAGE2"] = "Action Page 2",
 		["VOICEMACRO_7_Tr_0"] = "You stay here.",
-		["VOICEMACRO_7_Ta_2"] = "Stew here.",
 		["SPELL_FAILED_ITEM_ALREADY_ENCHANTED"] = "Item is already enchanted",
+		["VOICEMACRO_7_Ta_2"] = "Stew here.",
+		["VOICEMACRO_13_Dw_2"] = "See you.",
 		["SLASH_TEAM_INVITE3"] = "/teaminvite",
-		["VOICEMACRO_13_Gn_0_FEMALE"] = "Farewell.",
-		["EMOTE121_CMD2"] = "/ponder",
 		["VOICEMACRO_15_Tr_0"] = "No.",
+		["VOICEMACRO_13_Gn_0_FEMALE"] = "Farewell.",
 		["VOICEMACRO_13_Gn_3"] = "I'll miss you.",
+		["EMOTE121_CMD2"] = "/ponder",
+		["VOICEMACRO_19_Dw_0_FEMALE"] = "I like tall men.",
 		["EMOTE56_CMD1"] = "/hello",
 		["SPELL_FAILED_TARGET_NOT_DEAD"] = "Target is alive",
-		["VOICEMACRO_19_Dw_0_FEMALE"] = "I like tall men.",
+		["HELPFRAME_TECHNICAL_BUTTON_TEXT"] = "Report Technical Issue",
 		["VOICEMACRO_7_Or_1"] = "Stay here.",
 		["OPTION_TOOLTIP_CAMERA1"] = "Set the camera to stay where placed, except when your character is moving.",
-		["HELPFRAME_TECHNICAL_BUTTON_TEXT"] = "Report Technical Issue",
-		["HELPFRAME_BUG_BUTTON_TEXT"] = "Submit a Bug:",
-		["FACTION_OTHER"] = "Other",
 		["OPTION_TOOLTIP_CAMERA_NEVER"] = "Set the camera to stay where set, and never auto adjust.",
-		["VOICEMACRO_16_Ta_2_FEMALE"] = "You are too kind.",
+		["FACTION_OTHER"] = "Other",
 		["BINDING_NAME_TOGGLEWHOTAB"] = "Toggle Who Pane",
 		["SLASH_EMOTE7"] = "/emote",
 		["HELPFRAME_ACCOUNT_BULLET2"] = "Canceling your World of Warcraft account",
 		["EMOTE90_CMD1"] = "/spit",
 		["EMOTE5_CMD5"] = "/bravo",
 		["SLASH_INVITE2"] = "/inv",
-		["ITEM_ENCHANT_TIME_LEFT_HOURS_P1"] = "%s (%d hrs)",
+		["VOICEMACRO_3_Hu_1_FEMALE"] = "Retreat!",
 		["EMOTE16_CMD2"] = "/brb",
-		["VOICEMACRO_16_Tr_0"] = "Thanks.",
-		["NEWBIE_TOOLTIP_LFGPARENT"] = "A tool to help you find a group to join or find additional players to complete your newly created or existing group.",
-		["VOICEMACRO_14_Ta_1_FEMALE"] = "Naturally.",
+		["VOICEMACRO_13_Or_0_FEMALE"] = "Stay strong.",
+		["ITEM_ENCHANT_TIME_LEFT_HOURS_P1"] = "%s (%d hrs)",
+		["GUILD_LEAVE"] = "Leave Guild",
 		["GUILD"] = "Guild",
-		["BINDING_NAME_STRAFERIGHT"] = "Strafe Right",
-		["SLASH_INVITE5"] = "/inv",
+		["VOICEMACRO_13_Sc_1_FEMALE"] = "It's been real.",
+		["VOICEMACRO_14_Ta_1_FEMALE"] = "Naturally.",
 		["BINDING_NAME_MULTIACTIONBAR2BUTTON9"] = "BottomRight Action Button 9",
 		["SLASH_LEAVE3"] = "/chatexit",
+		["BINDING_NAME_STRAFERIGHT"] = "Strafe Right",
+		["SLASH_INVITE5"] = "/inv",
 		["VOICEMACRO_13_Sc_2_FEMALE"] = "Good luck.",
 		["VOICEMACRO_13_Ta_0_FEMALE"] = "Farewell.",
-		["KEY_PAUSE"] = "Pause",
-		["GMSURVEY_POOR"] = "1 (Poor)",
 		["SLASH_TARGET_NEAREST_RAID1"] = "/targetraid",
-		["EMOTE50_CMD6"] = "/wickedly",
+		["GMSURVEY_POOR"] = "1 (Poor)",
 		["SLASH_DUEL_CANCEL1"] = "/yield",
 		["SLASH_EMOTE6"] = "/em",
 		["BINDING_NAME_COMBATLOGBOTTOM"] = "Combat Log Bottom",
-		["GUILD_CHARTER_TITLE"] = "Guild Name: %s",
-		["EMOTE29_CMD3"] = "/cower",
+		["EMOTE50_CMD6"] = "/wickedly",
+		["OPTION_TOOLTIP_AUTO_JOIN_GUILD_CHANNEL"] = "Check this option to automatically join the Guild Recruitment chat channel based upon whether or not you are in a guild.",
 		["HELPFRAME_CHARACTER_BUTTON_TEXT"] = "Report Character Issue",
-		["EMOTE111_CMD1"] = "/comfort",
-		["SLASH_BATTLEGROUND3"] = "/bg",
+		["GUILD_CHARTER_TITLE"] = "Guild Name: %s",
+		["VOICEMACRO_7_Dw_2"] = "Stay here.",
 		["GUILD_HELP_TEXT_LINE12"] = "'/gleader <player>' sets another player as the guild leader",
 		["HELPFRAME_ENVIRONMENTAL_BULLET_TITLE2"] = "The following are not considered environment issues:",
-		["VOICEMACRO_7_Dw_0_FEMALE"] = "Stay here.",
+		["EMOTE111_CMD1"] = "/comfort",
 		["VOICEMACRO_10_Dw_1_FEMALE"] = "Open fire!",
-		["INVTYPE_WAIST"] = "Waist",
+		["VOICEMACRO_14_Dw_2"] = "Aye.",
 		["SLASH_CHAT_DND2"] = "/dnd",
 		["BINDING_NAME_RAIDTARGET7"] = "Assign Cross to Target",
-		["INVTYPE_LEGS"] = "Legs",
+		["VOICEMACRO_7_Dw_0_FEMALE"] = "Stay here.",
 		["PVP_RANK_1_0_FEMALE"] = "Pariah",
 		["EMOTE161_CMD2"] = "/attacktarget",
 		["ITEM_QUALITY2_DESC"] = "Uncommon",
-		["VOICEMACRO_19_Gn_1"] = "Everyone keeps talking about beer goggles.  I can't find the plans for them anywhere.",
+		["VOICEMACRO_14_Hu_0"] = "Certainly.",
 		["EMOTE43_CMD3"] = "/disappointment",
 		["SPELL_FAILED_ERROR"] = "Internal error",
 		["VOICEMACRO_20_Ni_0_FEMALE"] = "You know I have to keep moving at night or I'll disappear.",
 		["BINDING_NAME_BONUSACTIONBUTTON4"] = "Secondary Action Button 4",
-		["VOICEMACRO_7_Sc_1"] = "Stay here.",
+		["VOICEMACRO_2_Sc_1"] = "Rend flesh with me!",
 		["PVPFFA"] = "Free for All PVP",
-		["VOICEMACRO_19_Dw_5"] = "I must be asleep, cause you're a dream come true.  Also, I'm slightly damp.",
+		["VOICEMACRO_8_Gn_1"] = "Would you please heal me?",
 		["SPELL_FAILED_NOT_SHAPESHIFT"] = "You are in shapeshift form",
 		["VOICEMACRO_LABEL_NO1"] = "no",
 		["HELP_TEXT_SIMPLE"] = "Type '/help' for a listing of a few commands.",
-		["VOICEMACRO_20_Or_5"] = "Stop poking me!  Well, that was okay.",
+		["VOICEMACRO_19_Dw_5"] = "I must be asleep, cause you're a dream come true.  Also, I'm slightly damp.",
 		["OPTION_TOOLTIP_ENABLE_AMBIENCE"] = "Enable ambient sounds.",
-		["VOICEMACRO_14_Ni_2_FEMALE"] = "Naturally.",
+		["PVP_RANK_9_0_FEMALE"] = "First Sergeant",
 		["OPTION_TOOLTIP_SHOW_TARGET_OF_TARGET"] = "Toggles the display of the target of your target.",
 		["FRIENDS_LEVEL_TEMPLATE"] = "Level %d %s",
 		["EMOTE168_CMD2"] = "/wink",
 		["VOICEMACRO_13_Gn_2"] = "It's been fun.",
-		["BINDING_NAME_PITCHUP"] = "Pitch Up",
+		["KEY_PRINTSCREEN"] = "Print Screen",
 		["ITEM_DURATION_HOURS"] = "Duration: %d hrs",
 		["BINDING_NAME_TOGGLEIGNORETAB"] = "Toggle Ignore Pane",
-		["VOICEMACRO_14_Sc_0_FEMALE"] = "Yes.",
+		["EMOTE130_CMD4"] = "/pest",
+		["BINDING_NAME_PITCHUP"] = "Pitch Up",
+		["VOICEMACRO_14_Or_2_FEMALE"] = "(grunt)",
+		["OPTION_TOOLTIP_CLICK_CAMERA_STYLE"] = "Determines the way the camera follows the player while in Click-to-Move mode.",
 		["VOICEMACRO_14_Sc_1"] = "Certainly.",
 		["EMOTE5_CMD1"] = "/applaud",
-		["OPTION_TOOLTIP_CLICK_CAMERA_STYLE"] = "Determines the way the camera follows the player while in Click-to-Move mode.",
+		["VOICEMACRO_5_Hu_0_FEMALE"] = "I'm out of mana!",
+		["VOICEMACRO_16_Sc_0"] = "I am in your debt.",
 		["SLASH_STOPATTACK2"] = "/stopattack",
 		["VOICEMACRO_14_Ta_0_FEMALE"] = "Yes.",
 		["VOICEMACRO_5_Tr_0"] = "Me mana be running low!",
-		["VOICEMACRO_16_Sc_0"] = "I am in your debt.",
-		["SLASH_PARTY4"] = "/party",
-		["TUTORIAL26"] = "You are rested. Being rested gives you a temporary bonus to experience from killing monsters.",
-		["VOICEMACRO_15_Dw_1_FEMALE"] = "Get bent.",
 		["SLASH_QUIT2"] = "/exit",
-		["VOICEMACRO_15_Gn_0"] = "No.",
+		["VOICEMACRO_5_Ta_0_FEMALE"] = "My mana must be replenished!",
 		["SPELL_FAILED_NOT_WHILE_FATIGUED"] = "Can't cast while fatigued",
-		["OPTION_TOOLTIP_CLICKCAMERA_SMART"] = "Sets the camera to follow your character after a brief delay when changing direction with click-to-move. (Recommended Mode) ",
+		["TUTORIAL26"] = "You are rested. Being rested gives you a temporary bonus to experience from killing monsters.",
 		["VOICEMACRO_13_Tr_2_FEMALE"] = "Catch you later.",
 		["EMOTE154_CMD2"] = "/commend",
-		["PVP_RANK_1_1_FEMALE"] = "Pariah",
+		["VOICEMACRO_15_Gn_0"] = "No.",
 		["EMOTE143_CMD1"] = "/stand",
-		["VOICEMACRO_15_Gn_2_FEMALE"] = "I don't think so.",
+		["OPTION_TOOLTIP_CLICKCAMERA_SMART"] = "Sets the camera to follow your character after a brief delay when changing direction with click-to-move. (Recommended Mode) ",
 		["GM_EMAIL_NAME"] = "Customer Support",
+		["VOICEMACRO_4_Or_0_FEMALE"] = "Attack over here!",
+		["VOICEMACRO_15_Gn_2_FEMALE"] = "I don't think so.",
+		["PVP_RANK_1_1_FEMALE"] = "Pariah",
 		["VOICEMACRO_15_Hu_0"] = "No.",
 		["VOICEMACRO_15_Hu_0_FEMALE"] = "No.",
 		["ITEM_DISENCHANT_MIN_SKILL"] = "Disenchanting requires %s (%d)",
 		["VOICEMACRO_15_Hu_3"] = "Not.",
 		["VOICEMACRO_12_Tr_2"] = "What be happening?",
-		["VOICEMACRO_5_Hu_0_FEMALE"] = "I'm out of mana!",
-		["VOICEMACRO_15_Ni_0_FEMALE"] = "No.",
-		["GUILDCONTROL_OPTION11"] = "View Officer Note",
 		["VOICEMACRO_3_Ta_0"] = "Run!",
 		["EMOTE119_CMD2"] = "/lost",
 		["EMOTE18_CMD4"] = "/belch",
 		["VOICEMACRO_3_Dw_1_FEMALE"] = "Run!",
-		["VOICEMACRO_18_Hu_0"] = "Congratulations.",
+		["VOICEMACRO_0_Or_1_FEMALE"] = "Aid me!",
 		["VOICEMACRO_15_Hu_1_FEMALE"] = "No way.",
 		["VOICEMACRO_1_Ni_0_FEMALE"] = "Danger!",
 		["NEWBIE_TOOLTIP_UNIT_FREE_FOR_ALL"] = "Under free-for-all rules, all group members may loot a monster that they help the group to kill. Money is automatically divided between group members.",
 		["EMOTE_MESSAGE"] = "Emote",
-		["VOICEMACRO_19_Tr_3_FEMALE"] = "I won't bite you where it shows.",
-		["VOICEMACRO_18_Ta_1_FEMALE"] = "Excellent.",
+		["VOICEMACRO_LABEL_HELP1"] = "helpme",
+		["VOICEMACRO_7_Sc_1_FEMALE"] = "Don't move.",
 		["SPELL_FAILED_TOTEMS"] = "Requires %s",
-		["EMOTE124_CMD2"] = "/purr",
+		["VOICEMACRO_19_Tr_3_FEMALE"] = "I won't bite you where it shows.",
 		["KEY_BOUND"] = "Key Bound Successfully",
-		["SLASH_RAID_INFO1"] = "/raidinfo",
+		["VOICEMACRO_18_Ta_1_FEMALE"] = "Excellent.",
 		["HELP_TEXT_LINE14"] = "- /chat for a list of chat commands",
 		["VOICEMACRO_LABEL_INCOMING2"] = "inc",
 		["SLASH_TEAM_QUIT4"] = "/tquit",
 		["EMOTE37_CMD2"] = "/drool",
-		["VOICEMACRO_18_Sc_2"] = "Good job.",
+		["SLASH_RAID_INFO1"] = "/raidinfo",
 		["EMOTE38_CMD1"] = "/eat",
 		["OPTION_TOOLTIP_WORLD_PVP_DISPLAY_NEVER"] = "This will turn off the World PVP objectives.",
-		["VOICEMACRO_16_Dw_1_FEMALE"] = "Ah, you're nice.",
+		["INVTYPE_WEAPONOFFHAND"] = "Off Hand",
 		["VOICEMACRO_1_Dw_0_FEMALE"] = "Danger approaching!",
 		["EMOTE62_CMD4"] = "/lie",
-		["VOICEMACRO_2_Sc_0"] = "For the forsaken!",
+		["VOICEMACRO_20_Hu_3"] = "How does a Tauren hide in a cherry tree?  He paints his hooves red.",
 		["INVTYPE_HEAD"] = "Head",
 		["VOICEMACRO_16_Dw_2_FEMALE"] = "Thanks a lot.",
 		["BINDING_NAME_MULTIACTIONBAR2BUTTON5"] = "BottomRight Action Button 5",
@@ -7156,43 +7231,43 @@ CombatLogScribeDB = {
 		["NEWBIE_TOOLTIP_MANABAR2"] = "Hunters require focus to use their abilities.  Focus generates while standing still.",
 		["VOICEMACRO_LABEL_OUTOFMANA1"] = "oom",
 		["BINDING_NAME_RESETVIEW5"] = "Reset View 5",
-		["SLASH_PET_PASSIVE1"] = "/petpassive",
+		["NEWBIE_TOOLTIP_TALENTS"] = "The array of talents available to enhance and specialize your character.",
 		["VOICEMACRO_16_Hu_0_FEMALE"] = "Thank you.",
 		["VOICEMACRO_8_Or_1_FEMALE"] = "I need healing!",
 		["VOICEMACRO_20_Or_1_FEMALE"] = "I have no respect for people with small piercings.  I say go full hog.  Put a spear through your head.",
 		["SLASH_REMOVEFRIEND2"] = "/remfriend",
-		["VOICEMACRO_0_Tr_1"] = "Assist me!",
+		["OPTION_TOOLTIP_SHOW_MULTIBAR1"] = "Toggles an optional actionbar in the bottom left area of the screen.",
 		["GUILD_OFFICERNOTE_EDITLABEL"] = "Click here to set an Officer's Note.",
 		["EMOTE55_CMD2"] = "/glad",
 		["EMOTE133_CMD1"] = "/sniff",
-		["VOICEMACRO_19_Dw_1_FEMALE"] = "I'll have you know I can flatten steel with my thighs.",
-		["ITEM_BIND_ON_USE"] = "Binds when used",
-		["BINDING_NAME_MULTIACTIONBAR2BUTTON10"] = "BottomRight Action Button 10",
-		["ERR_CANT_USE_ITEM"] = "You can't use that item.",
-		["SLASH_CASTSEQUENCE1"] = "/castsequence",
-		["SLASH_LEAVE2"] = "/chatleave",
 		["EMOTE123_CMD1"] = "/praise",
+		["ITEM_BIND_ON_USE"] = "Binds when used",
+		["EMOTE22_CMD2"] = "/flap",
+		["ERR_CANT_USE_ITEM"] = "You can't use that item.",
+		["BINDING_NAME_MULTIACTIONBAR2BUTTON10"] = "BottomRight Action Button 10",
+		["SLASH_LEAVE2"] = "/chatleave",
+		["SLASH_CASTSEQUENCE1"] = "/castsequence",
 		["VOICEMACRO_19_Ni_2"] = "Baby, I'm mortal now.  Time's a wasting.",
 		["VOICEMACRO_3_Ta_1_FEMALE"] = "Save your hide!",
 		["EMOTE170_CMD1"] = "/golfclap",
 		["PVP_RANK_19_1_FEMALE"] = "Leader",
 		["ITEM_OPENABLE"] = "<Right Click to Open>",
-		["HELPFRAME_GUILD_BULLET_TITLE1"] = "The following are examples of guild issues:",
 		["KEY_BUTTON5"] = "Mouse Button 5",
+		["VOICEMACRO_LABEL_RASPBERRY1"] = "rasp",
 		["VOICEMACRO_16_Ni_2"] = "Much appreciated.",
 		["EMOTE101_CMD2"] = "/victory",
 		["EMOTE58_CMD6"] = "/pizza",
 		["OPTION_TOOLTIP_TARGETOFTARGET_RAID_AND_PARTY"] = "Sets Target of Target to display when you are in a raid or a party.",
 		["EMOTE51_CMD2"] = "/groan",
+		["BINDING_NAME_FOCUSTARGET"] = "Focus Target",
 		["VOICEMACRO_20_Ni_3"] = "Is that thing sharp?  Could that thing cut me?  I'm not immortal now, you know.",
-		["PVP_RANK_4_1"] = "Dishonored",
 		["VOICEMACRO_7_Ni_0_FEMALE"] = "Remain here.",
 		["VOICEMACRO_LABEL_THANKYOU1"] = "thankyou",
 		["SLASH_LEAVE1"] = "/leave",
-		["BINDING_NAME_FOCUSTARGET"] = "Focus Target",
-		["TUTORIAL_TITLE1"] = "Questgivers",
 		["OPTION_TOOLTIP_AMBIENCE_VOLUME"] = "Adjusts the ambient sound volume.",
+		["TUTORIAL_TITLE1"] = "Questgivers",
 		["EMOTE80_CMD2"] = "/cat",
+		["VOICEMACRO_16_Sc_2_FEMALE"] = "How generous.",
 		["VOICEMACRO_5_Hu_1_FEMALE"] = "I need more mana!",
 		["ITEM_DISENCHANT_ANY_SKILL"] = "Disenchantable",
 		["VOICEMACRO_6_Ta_1"] = "I'll lead the way.",
@@ -7208,13 +7283,13 @@ CombatLogScribeDB = {
 		["VOICEMACRO_16_Ta_1_FEMALE"] = "How kind of you.",
 		["SLASH_TARGET_NEAREST_RAID2"] = "/targetraid",
 		["VOICEMACRO_10_Hu_1"] = "Fire!",
-		["SLASH_GUILD_INVITE3"] = "/ginvite",
+		["VOICEMACRO_18_Hu_2_FEMALE"] = "Hazzah.",
 		["COMBAT_TEXT_COMBO_POINTS_P1"] = "<%d Combo Points>",
-		["VOICEMACRO_3_Gn_0"] = "Run!",
+		["SLASH_GUILD_INVITE3"] = "/ginvite",
 		["HELPFRAME_GUILD_TITLE"] = "Guild",
-		["SLASH_CLEAR1"] = "/clear",
-		["VOICEMACRO_20_Ni_7"] = "I don't mind the Gnomes, but I'm always worried about tripping over one.",
+		["VOICEMACRO_20_Ta_2"] = "Homogenized?  No way.  I like the ladies.",
 		["SLASH_OFFICER4"] = "/osay",
+		["VOICEMACRO_20_Ni_7"] = "I don't mind the Gnomes, but I'm always worried about tripping over one.",
 		["KEY_NUMPAD8"] = "Num Pad 8",
 		["SLASH_CHAT_CINVITE2"] = "/chatinvite",
 		["BINDING_NAME_TOGGLEAUTOSELFCAST"] = "Toggle Auto Self Cast",
@@ -7227,7 +7302,7 @@ CombatLogScribeDB = {
 		["OPTION_TOOLTIP_GAMEFIELD_DESELECT"] = "Checking this will prevent the deselection of targets by clicking on the gamefield.  Targets can only be cleared by pressing escape or clicking another target.",
 		["VOICEMACRO_16_Tr_1"] = "Big thanks.",
 		["GUILD_INVITATION"] = "%s invites you to join the guild: %s",
-		["OPTION_TOOLTIP_COMBAT_TEXT_SHOW_COMBO_POINTS"] = "Shows the number of combo points you have each time you acquire a new one.",
+		["GUILDCONTROL_OPTION8"] = "Remove Member",
 		["VOICEMACRO_4_Hu_0_FEMALE"] = "Aid my attack!",
 		["SLASH_CHAT_PASSWORD5"] = "/pass",
 		["SLASH_CHAT_MUTE2"] = "/squelch",
@@ -7240,58 +7315,58 @@ CombatLogScribeDB = {
 		["GUILD_ONLINE_LABEL"] = "Online",
 		["OPTION_TOOLTIP_USE_UISCALE"] = "Check to use the UI Scale Slider, uncheck to use the system default scale.",
 		["ITEM_RESIST_SINGLE"] = "%c%d %s Resistance",
-		["EMOTE138_CMD2"] = "/tease",
 		["VOICEMACRO_2_Dw_0_FEMALE"] = "Charge!",
 		["HELPFRAME_GUILD_BULLET2"] = "Not able to form a guild",
+		["OPTION_TOOLTIP_WORLD_LOD"] = "Check this to enable dynamic reduction of terrain polygon detail.  Check to increase performance.",
 		["SLASH_CONSOLE2"] = "/console",
-		["CONFIRM_RESET_INSTANCES"] = "Do you really want to reset all of your instances?",
 		["SPELL_FAILED_CANT_BE_CHARMED"] = "Target can't be charmed",
+		["VOICEMACRO_17_Dw_1_FEMALE"] = "My pleasure.",
 		["EMOTE119_CMD1"] = "/lost",
 		["BINDING_NAME_SHAPESHIFTBUTTON6"] = "Special Action Button 6",
 		["VOICEMACRO_20_Tr_5"] = "I heard if you cut off an extremity, it'll regenerate a little bigger.  Don't believe it.",
 		["BACKGROUND"] = "Background",
 		["TUTORIAL7"] = "Right-Click on a creature’s corpse to loot it.  You can then right click on items in the loot pane to place them in your backpack.",
 		["PVP_RANK_18_1_FEMALE"] = "Grand Marshal",
-		["SLASH_RAID2"] = "/raid",
 		["BINDING_NAME_TARGETPARTYMEMBER3"] = "Target Party Member 3",
 		["VOICEMACRO_13_Ni_0"] = "Good journey.",
-		["PVP_RANK_14_0"] = "Champion",
 		["EMOTE111_CMD2"] = "/comfort",
+		["PVP_RANK_14_0"] = "Champion",
+		["VOICEMACRO_0_Or_0"] = "I need help!",
 		["EMOTE108_CMD1"] = "/boggle",
-		["VOICEMACRO_17_Ni_1_FEMALE"] = "It was nothing.",
 		["VOICEMACRO_14_Tr_2_FEMALE"] = "Yeah, man.",
+		["HELPFRAME_ITEM_BULLET3"] = "Enchantment or add-ons not working appropriately",
 		["EMOTE95_CMD4"] = "/excited",
 		["BINDING_NAME_TOGGLECHARACTER4"] = "Toggle Honor Pane",
 		["VOICEMACRO_LABEL_GOODBYE1"] = "goodbye",
 		["VOICEMACRO_6_Or_0"] = "Follow me.",
-		["VOICEMACRO_13_Tr_0_FEMALE"] = "Goodbye.",
+		["VOICEMACRO_19_Ta_3_FEMALE"] = "Come over here, sailor.",
 		["PVP_LABEL_ARENA"] = "ARENA:",
-		["NEWBIE_TOOLTIP_TALENTS"] = "The array of talents available to enhance and specialize your character.",
 		["VOICEMACRO_20_Ta_3_FEMALE"] = "You know how hard it is to get your groove on with the spirit of your great grandmother looking over you?",
-		["SLASH_LEAVE7"] = "/chatexit",
 		["VOICEMACRO_17_Or_2"] = "It was nothing.",
+		["SLASH_LEAVE7"] = "/chatexit",
 		["ITEM_COOLDOWN_TIME_DAYS"] = "Cooldown remaining: %d day",
+		["VOICEMACRO_12_Dw_0"] = "How's it hanging?",
 		["VOICEMACRO_8_Sc_0_FEMALE"] = "Heal me!",
 		["SLASH_GUILD_WHO1"] = "/glist",
 		["VOICEMACRO_14_Sc_2_FEMALE"] = "I suppose so.",
-		["VOICEMACRO_12_Dw_0"] = "How's it hanging?",
+		["VOICEMACRO_8_Ta_0"] = "Heal me!",
 		["VOICEMACRO_2_Hu_1_FEMALE"] = "To battle!",
 		["VOICEMACRO_15_Ni_0"] = "No.",
-		["TUTORIAL46"] = "You have joined a raid group: a group with an increased limit of 40 members.\n\n|cffff2020While in a raid group, you will not earn credit towards most non-raid quests by killing creatures or collecting items.|r",
-		["VOICEMACRO_LABEL_ATTACKMYTARGET1"] = "assist",
 		["VOICEMACRO_10_Sc_0"] = "Shoot to kill!",
-		["VOICEMACRO_20_Sc_7_FEMALE"] = "I heard a knee slapper once, and skipped my kneecap right across a lake.",
+		["VOICEMACRO_LABEL_ATTACKMYTARGET1"] = "assist",
+		["PVP_RANK_2_0_FEMALE"] = "Outlaw",
+		["VOICEMACRO_17_Tr_2_FEMALE"] = "Any time, man.",
 		["VOICEMACRO_10_Ta_0"] = "Unleash your fury!",
 		["TUTORIAL24"] = "You can equip items by opening your character screen with the button in the bottom center of the screen, and dragging them from your backpack onto your character.",
-		["VOICEMACRO_17_Tr_2_FEMALE"] = "Any time, man.",
+		["HELPFRAME_ENVIRONMENTAL_TEXT"] = "Issues that deal with a character not being able to interact with the environment or operate in the environment",
 		["VOICEMACRO_2_Gn_2"] = "For Gnomeregan!",
 		["SLASH_PET_DEFENSIVE1"] = "/petdefensive",
 		["EMOTE107_CMD2"] = "/yawn",
-		["HELPFRAME_ENVIRONMENTAL_TEXT"] = "Issues that deal with a character not being able to interact with the environment or operate in the environment",
-		["VOICEMACRO_13_Dw_1"] = "Till we meet again.",
-		["EMOTE141_CMD2"] = "/snicker",
+		["EMOTE54_CMD2"] = "/hail",
+		["VOICEMACRO_20_Sc_1_FEMALE"] = "Yes, they're real.  They're not mine, but they're real.",
+		["BINDING_NAME_MULTIACTIONBAR3BUTTON3"] = "Right Action Button 3",
 		["VOICEMACRO_1_Hu_0"] = "Guard yourself!",
-		["EMOTE128_CMD2"] = "/shimmy",
+		["BINDING_NAME_MULTIACTIONBAR1BUTTON8"] = "BottomLeft Action Button 8",
 		["SLASH_CLEARFOCUS2"] = "/clearfocus",
 		["VOICEMACRO_8_Or_1"] = "I need healing!",
 		["KEY_HOME"] = "Home",
@@ -7299,165 +7374,165 @@ CombatLogScribeDB = {
 		["VOICEMACRO_4_Ni_0_FEMALE"] = "Assault this foe!",
 		["VOICEMACRO_4_Ta_0_FEMALE"] = "Fight at my side!",
 		["OPTION_TOOLTIP_ENABLE_MUSIC_LOOPING"] = "Enable to continuously play background music.",
-		["EMOTE61_CMD2"] = "/lol",
+		["BINDING_NAME_MULTIACTIONBAR4BUTTON3"] = "Right ActionBar 2 Button 3",
 		["VOICEMACRO_14_Ta_0"] = "Yes.",
 		["NEWBIE_TOOLTIP_HEALTHBAR"] = "The amount of health you currently have. If your health reaches zero, you will die. Health automatically regenerates when you are out of combat.",
 		["PVP_RANK_15_0"] = "Lieutenant General",
-		["SPELL_FAILED_NOPATH"] = "No path available",
+		["EMOTE61_CMD2"] = "/lol",
 		["EMOTE148_CMD2"] = "/bark",
-		["VOICEMACRO_18_Hu_2_FEMALE"] = "Hazzah.",
+		["VOICEMACRO_18_Hu_0"] = "Congratulations.",
 		["VOICEMACRO_7_Ta_1"] = "Remain here.",
-		["EMOTE60_CMD3"] = "/kneel",
+		["VOICEMACRO_2_Sc_0"] = "For the forsaken!",
 		["VOICEMACRO_6_Dw_0"] = "I'll lead the way.",
 		["EMOTE38_CMD4"] = "/eat",
-		["VOICEMACRO_20_Hu_4_FEMALE"] = "Me and my girlfriends exchange clothes all the time.  We're all the same size.",
-		["SLASH_GUILD_LEADER3"] = "/gleader",
+		["VOICEMACRO_20_Sc_7_FEMALE"] = "I heard a knee slapper once, and skipped my kneecap right across a lake.",
+		["GM_TICKET_UNAVAILABLE"] = "Wait time currently unavailable.",
 		["VOICEMACRO_15_Or_0"] = "No.",
-		["CHAT_FLAG_GM"] = "<GM>",
+		["VOICEMACRO_18_Or_1_FEMALE"] = "Not bad.",
 		["BINDING_NAME_BONUSACTIONBUTTON5"] = "Secondary Action Button 5",
 		["VOICEMACRO_19_Sc_4"] = "Check my breath.  Is it bad enough for you?",
 		["VOICEMACRO_10_Ta_1"] = "Strike now!",
 		["VOICEMACRO_19_Hu_2"] = "Hey, baby cakes.",
-		["VOICEMACRO_15_Hu_2"] = "I don't think so.",
+		["VOICEMACRO_18_Or_2"] = "You are worthy.",
 		["GM_TICKET_SERVICE_SOON"] = "Your ticket will be serviced soon.",
 		["SLASH_LIST_CHANNEL5"] = "/chatlist",
 		["SLASH_PARTY1"] = "/p",
-		["VOICEMACRO_6_Sc_0_FEMALE"] = "This way.",
+		["VOICEMACRO_15_Hu_2"] = "I don't think so.",
 		["VOICEMACRO_18_Gn_3_FEMALE"] = "Wonderful.",
-		["VOICEMACRO_18_Tr_1"] = "Fantastic.",
-		["VOICEMACRO_18_Tr_1_FEMALE"] = "Way to go.",
+		["VOICEMACRO_6_Sc_0_FEMALE"] = "This way.",
+		["VOICEMACRO_1_Tr_0"] = "There be danger!",
 		["SLASH_RANDOM4"] = "/random",
-		["SLASH_GUILD_WHO4"] = "/glist",
+		["VOICEMACRO_18_Tr_1"] = "Fantastic.",
 		["HELP_TEXT_LINE4"] = "- 'F1-F5' to target self/groupmates",
-		["VOICEMACRO_18_Tr_2"] = "They will speak of your exploits for generations.",
-		["VOICEMACRO_3_Hu_0_FEMALE"] = "Run!",
+		["VOICEMACRO_18_Tr_1_FEMALE"] = "Way to go.",
+		["SLASH_GUILD_WHO4"] = "/glist",
 		["INVTYPE_FEET"] = "Feet",
 		["EMOTE140_CMD1"] = "/veto",
 		["VOICEMACRO_1_Ta_0"] = "Danger approaches!",
-		["VOICEMACRO_20_Dw_0"] = "Hi ho, hi ho... uh... second verse, same as the first.",
+		["VOICEMACRO_18_Tr_2_FEMALE"] = "Wonderful.",
+		["OPTION_TOOLTIP_SHOW_DAMAGE"] = "Display damage numbers over hostile creatures when damaged.",
 		["VOICEMACRO_19_Dw_4"] = "Where are you from?  Not that it matters.",
-		["SLASH_CHAT_HELP5"] = "/chathelp",
 		["OPTION_TOOLTIP_USE_UBERTOOLTIPS"] = "Enable detailed tooltips in the lower right hand corner of the screen.",
 		["VOICEMACRO_1_Or_1"] = "Incoming!",
 		["OPTION_TOOLTIP_COMBAT_TEXT_MODE"] = "Sets the direction that combat text scrolls.",
 		["SPELLDURABILITYDAMAGESELFOTHER"] = "You cast %s on %s: %s damaged.",
-		["VOICEMACRO_1_Sc_1_FEMALE"] = "Incoming!",
+		["VOICEMACRO_19_Gn_0"] = "I have a number of inventions I'd like to show you back at my place.",
 		["HELPFRAME_GM_BUTTON_TEXT"] = "Page a GM:",
 		["GUILD_FRAME_TITLE"] = "Guild Roster",
 		["VOICEMACRO_16_Gn_2"] = "Allow me to express my deepest thanks.",
 		["VOICEMACRO_1_Sc_0_FEMALE"] = "Danger!",
 		["CONFIRM_GUILD_DISBAND"] = "Do you really want to disband your guild?",
 		["VOICEMACRO_16_Ta_2"] = "I thank you.",
-		["GUILD_RANK3_DESC"] = "Member",
+		["VOICEMACRO_13_Dw_1"] = "Till we meet again.",
 		["VOICEMACRO_4_Dw_2"] = "Help me with this cretin!",
 		["EMOTE33_CMD1"] = "/curious",
+		["BINDING_NAME_MULTIACTIONBAR1BUTTON3"] = "BottomLeft Action Button 3",
 		["SLASH_GUILD6"] = "/gc",
 		["VOICEMACRO_19_Hu_0"] = "How you doing?",
 		["VOICEMACRO_19_Hu_1_FEMALE"] = "My turn offs are rude people, mean people, and people who aren't nice.",
 		["SPELL_FAILED_CANT_BE_PROSPECTED"] = "There are no gems in this",
-		["EMOTE42_CMD1"] = "/flex",
 		["BINDING_NAME_ACTIONBUTTON1"] = "Action Button 1",
-		["BINDING_NAME_TURNRIGHT"] = "Turn Right",
+		["VOICEMACRO_19_Hu_4"] = "Are you tired, cause you've been running through my mind all day.",
 		["VOICEMACRO_18_Dw_4"] = "Way to go.",
 		["EMOTE48_CMD1"] = "/gloat",
 		["EMOTE36_CMD3"] = "/drink",
 		["TUTORIAL23"] = "You can send a message by hitting the enter key and typing a message.  Other players nearby will hear what you say.",
 		["EMOTE130_CMD1"] = "/shoo",
 		["SLASH_INSPECT4"] = "/inspect",
-		["CHAT_CHANNEL_GET"] = "%s: ",
+		["HELPFRAME_HARASSMENT_BUTTON_TEXT"] = "Harassment:",
 		["VOICEMACRO_14_Tr_1"] = "Sure thing.",
 		["VOICEMACRO_19_Ni_1"] = "I hope you're not afraid of snakes.",
-		["VOICEMACRO_19_Ni_1_FEMALE"] = "Sure I've got exotic piercings.",
+		["CHAT_CHANNEL_GET"] = "%s: ",
 		["VOICEMACRO_0_Ta_1_FEMALE"] = "Help!",
+		["VOICEMACRO_19_Ni_2_FEMALE"] = "I'm the type of girl my mother warned me about.",
 		["VOICEMACRO_19_Or_1_FEMALE"] = "I'll give you crazy love.",
 		["VOICEMACRO_15_Tr_2_FEMALE"] = "Not on your life.",
-		["VOICEMACRO_19_Tr_1_FEMALE"] = "When enraged, and in heat, a female Troll can mate over eighty times in one night.  Be you prepared?",
 		["NEWBIE_TOOLTIP_UNIT_FOLLOW"] = "Causes you to begin following the selected player. You will automatically continue to follow the player until this auto follow mode is disrupted.",
 		["BINDING_NAME_PETATTACK"] = "Pet Attack",
 		["SLASH_FOLLOW5"] = "/follow",
 		["SLASH_WHISPER2"] = "/whisper",
 		["SLASH_CHANGEACTIONBAR2"] = "/changeactionbar",
-		["OPTION_TOOLTIP_DISABLE_SPAM_FILTER"] = "Disables spam filtering on chat text.",
-		["VOICEMACRO_20_Tr_3"] = "New Troll here.",
+		["VOICEMACRO_13_Gn_0"] = "Farewell.",
+		["EMOTE86_CMD1"] = "/sigh",
 		["NEWBIE_TOOLTIP_HONOR_STANDING"] = "Standing is how you are doing compared to all other players on your side (Horde or Alliance).   If your standing is 150, then there were 149 players who gained more honor than you did during that time period. You must get at least 25 Honorable Kills in a week in order to be eligible to gain Standing and Rank.",
 		["ITEM_MOD_CRIT_TAKEN_SPELL_RATING"] = "Improves spell critical avoidance rating by %d.",
-		["VOICEMACRO_17_Gn_2"] = "You're welcome.",
+		["BINDING_NAME_REPLY"] = "Chat Reply",
 		["KEY_BUTTON3"] = "Middle Mouse",
 		["BINDING_NAME_TOGGLESHEATH"] = "Sheath/Unsheath Weapon",
 		["EMOTE95_CMD1"] = "/talkex",
-		["EMOTE4_CMD4"] = "/sorry",
+		["VOICEMACRO_20_Tr_3"] = "New Troll here.",
 		["OPTION_TOOLTIP_AUTO_SELF_CAST_ALT_KEY"] = "Use the \"ALT\" key to cast friendly target spells on yourself even if an enemy is targeted, or there is no target.",
 		["NEXT_ABILITY"] = "Next Ability",
-		["VOICEMACRO_19_Ta_3_FEMALE"] = "Come over here, sailor.",
+		["VOICEMACRO_LABEL_CONGRATULATIONS1"] = "grats",
 		["BINDING_NAME_OPENCHATSLASH"] = "Open Chat Slash",
 		["NEWBIE_TOOLTIP_BATTLEFIELD_GROUP_JOIN"] = "If you are the leader of a group, this button will add your current group to the battleground queue. Your group will be guaranteed to get into the same battleground instance at the same time.  Any group member added after you click this button or a group member in a queue for another battleground will not be guaranteed entrance to the same battleground.",
-		["OPTION_TOOLTIP_AUTO_FOLLOW_SPEED"] = "Adjust the camera movement speed in Always and Smart following styles.",
+		["VOICEMACRO_19_Tr_1_FEMALE"] = "When enraged, and in heat, a female Troll can mate over eighty times in one night.  Be you prepared?",
 		["SLASH_GUILD7"] = "/gu",
-		["BINDING_NAME_MULTIACTIONBAR1BUTTON5"] = "BottomLeft Action Button 5",
+		["OPTION_TOOLTIP_AUTO_FOLLOW_SPEED"] = "Adjust the camera movement speed in Always and Smart following styles.",
 		["EMOTE95_CMD3"] = "/talkex",
 		["VOICEMACRO_16_Ni_1"] = "Excellent.",
-		["VOICEMACRO_1_Or_0"] = "Watch it!",
-		["EMOTE54_CMD2"] = "/hail",
+		["VOICEMACRO_1_Hu_0_FEMALE"] = "Guard yourself!",
+		["VOICEMACRO_1_Ni_0"] = "Beware!",
 		["GUILD_RANK2_DESC"] = "Veteran",
-		["BINDING_NAME_CHATBOTTOM"] = "Chat Bottom",
+		["VOICEMACRO_1_Or_0"] = "Watch it!",
 		["VOICEMACRO_16_Or_0_FEMALE"] = "I won't forget this.",
-		["GUILD_MOTD"] = "Guild MOTD",
-		["BINDING_HEADER_MULTIACTIONBAR"] = "MultiActionBar Bindings",
+		["VOICEMACRO_1_Sc_1_FEMALE"] = "Incoming!",
+		["BINDING_NAME_CHATBOTTOM"] = "Chat Bottom",
 		["EMOTE136_CMD2"] = "/smell",
-		["EMOTE112_CMD2"] = "/spoon",
+		["VOICEMACRO_20_Dw_0"] = "Hi ho, hi ho... uh... second verse, same as the first.",
 		["SLASH_VOICEMACRO1"] = "/v",
-		["VOICEMACRO_2_Ta_0"] = "For Kalimdor!",
+		["GUILD_MOTD"] = "Guild MOTD",
 		["KEY_MOUSEWHEELDOWN"] = "Mouse Wheel Down",
-		["VOICEMACRO_20_Gn_3_FEMALE"] = "Some day, I hope to find the nuggets on a chicken.",
+		["BINDING_HEADER_MULTIACTIONBAR"] = "MultiActionBar Bindings",
 		["OPTION_TOOLTIP_SCROLL_DOWN"] = "Scrolls combat text towards the bottom of the screen.",
+		["VOICEMACRO_2_Ta_0"] = "For Kalimdor!",
+		["VOICEMACRO_20_Gn_3_FEMALE"] = "Some day, I hope to find the nuggets on a chicken.",
 		["OPTION_TOOLTIP_CAMERA2"] = "Set the camera to always prefer being behind your character.",
-		["VOICEMACRO_20_Ni_2"] = "Man, I was halfway through the Emerald Dream when I had to pee.",
-		["VOICEMACRO_20_Or_0"] = "I will crush and destroy and... ooo... shiny...",
-		["VOICEMACRO_LABEL_FOLLOWME2"] = "follow",
+		["VOICEMACRO_20_Hu_4_FEMALE"] = "Me and my girlfriends exchange clothes all the time.  We're all the same size.",
 		["SLASH_CHAT_CINVITE4"] = "/chatinvite",
-		["ITEM_SPELL_CHARGES"] = "%d Charge",
+		["VOICEMACRO_20_Ni_2"] = "Man, I was halfway through the Emerald Dream when I had to pee.",
 		["ITEM_MOD_CRIT_TAKEN_RANGED_RATING"] = "Improves ranged critical avoidance rating by %d.",
-		["VOICEMACRO_14_Ni_2"] = "Naturally.",
-		["VOICEMACRO_20_Or_5_FEMALE"] = "Man, I think that boar meat's coming back on me.  I gotta hit the can.  Anyone have a hearthstone?",
+		["HELP_TEXT_LINE9"] = "- Tab to target nearest enemy",
+		["VOICEMACRO_LABEL_FOLLOWME2"] = "follow",
 		["SPELL_FAILED_TARGET_AURASTATE"] = "You can't do that yet",
 		["BINDING_NAME_SHAPESHIFTBUTTON8"] = "Special Action Button 8",
 		["SPELL_FAILED_BAD_IMPLICIT_TARGETS"] = "No target",
-		["PVP_RANK_2_0_FEMALE"] = "Outlaw",
-		["VOICEMACRO_15_Sc_0"] = "No.",
+		["VOICEMACRO_20_Or_5_FEMALE"] = "Man, I think that boar meat's coming back on me.  I gotta hit the can.  Anyone have a hearthstone?",
+		["VOICEMACRO_20_Sc_2_FEMALE"] = "I'm in a rotten mood.",
 		["SLASH_ASSIST2"] = "/assist",
 		["VOICEMACRO_LABEL_HELPME2"] = "helpme",
 		["OPTION_TOOLTIP_USE_WEATHER_SHADER"] = "Uncheck this if weather effects are causing your computer to crash.",
 		["NEWBIE_TOOLTIP_ENTER_BATTLEGROUND"] = "Join the queue to enter this battleground when space becomes available.  This will result in a longer wait than selecting \"First Available\".",
-		["KEY_INSERT_MAC"] = "Help",
+		["VOICEMACRO_15_Sc_0"] = "No.",
 		["GUILDCONTROL"] = "Guild Control",
-		["VOICEMACRO_20_Tr_1"] = "I like my women dumpy and droopy with halitosis.",
-		["OPTION_TOOLTIP_AUTO_JOIN_GUILD_CHANNEL"] = "Check this option to automatically join the Guild Recruitment chat channel based upon whether or not you are in a guild.",
+		["VOICEMACRO_20_Ta_2_FEMALE"] = "Happy Taurens come from Mulgore.",
+		["EMOTE133_CMD2"] = "/sniff",
 		["BINDING_NAME_FLIPCAMERAYAW"] = "Flip Camera",
 		["ITEM_SOCKETABLE"] = "<Shift Right Click to Socket>",
 		["SLASH_CAST3"] = "/cast",
 		["VOICEMACRO_16_Dw_0"] = "Thank you.",
 		["VOICEMACRO_14_Dw_0_FEMALE"] = "Sure.",
-		["VOICEMACRO_4_Hu_1"] = "Attack over here!",
+		["HELPFRAME_ACCOUNT_TITLE"] = "Billing & Account Services",
 		["PVP_RANK_4_1_FEMALE"] = "Dishonored",
 		["CONFIRM_ACCEPT_SOCKETS"] = "One or more gems will be destroyed by socketing. Do you really want to socket the new gem(s)?",
 		["OPTION_TOOLTIP_FARCLIP"] = "Changes how far you can see terrain. Decrease to improve performance.",
 		["EMOTE19_CMD1"] = "/bye",
+		["EMOTE69_CMD4"] = "/pick",
+		["BINDING_NAME_TARGETPARTYPET1"] = "Target Party Pet 1",
 		["VOICEMACRO_15_Tr_2"] = "Hell, no.",
 		["OPTION_TOOLTIP_TARGETOFTARGET_SOLO"] = "Sets Target of Target to display when solo.",
 		["VOICEMACRO_2_Dw_0"] = "Charge!",
 		["VOICEMACRO_6_Dw_1_FEMALE"] = "Follow me!",
 		["VOICEMACRO_0_Tr_0_FEMALE"] = "Help me!",
-		["VOICEMACRO_18_Sc_2_FEMALE"] = "Well, aren't you lucky.",
-		["VOICEMACRO_7_Gn_1"] = "Wait here, please.",
 		["SLASH_JOIN2"] = "/channel",
-		["VOICEMACRO_7_Hu_2_FEMALE"] = "Wait here.",
+		["SLASH_GUILD_UNINVITE3"] = "/gremove",
 		["NEWBIE_TOOLTIP_GUILDCONTROL"] = "Allows you to customize the names of each rank in your guild, along with its privileges.",
-		["GUILD_NAME_TEMPLATE"] = "Guild: %s",
+		["VOICEMACRO_7_Hu_2_FEMALE"] = "Wait here.",
 		["SLASH_GUILD_LEADER4"] = "/guildleader",
-		["VOICEMACRO_15_Dw_1"] = "Uh uh.",
+		["VOICEMACRO_8_Ni_0_FEMALE"] = "Heal me!",
 		["COMBAT_TEXT_SHOW_MANA_TEXT"] = "Show Energy Gains",
 		["BINDING_NAME_MULTIACTIONBAR4BUTTON10"] = "Right ActionBar 2 Button 10",
-		["VOICEMACRO_LABEL_CHARGE1"] = "charge",
+		["VOICEMACRO_15_Dw_1"] = "Uh uh.",
 		["VOICEMACRO_20_Ni_1_FEMALE"] = "Actually, I'm more of a morning elf.",
 		["ITEM_MOUSE_OVER"] = "Mouse over icon for more info",
 		["EMOTE158_CMD2"] = "/openfire",
@@ -7466,68 +7541,11 @@ CombatLogScribeDB = {
 		["BINDING_NAME_BONUSACTIONBUTTON3"] = "Secondary Action Button 3",
 		["GUILD_MOTD_TEMPLATE"] = "Guild Message of the Day: %s",
 		["VOICEMACRO_0_Ta_1"] = "Help!",
-		["PVP_MEDAL7"] = "Avenger of Gnomeregan",
-		["VOICEMACRO_19_Sc_3"] = "Once you go dead, you never go back.",
-		["BINDING_NAME_FOLLOWTARGET"] = "Follow Target",
+		["EMOTE32_CMD4"] = "/cry",
+		["VOICEMACRO_17_Gn_2"] = "You're welcome.",
+		["HELPFRAME_QUEST_BULLET_TITLE1"] = "The following are examples of Quest/Quest NPC issues:",
 		["EMOTE66_CMD1"] = "/mourn",
 		["OPTION_TOOLTIP_PET_SPELL_DAMAGE"] = "Show spell damage caused by your pet.",
 		["OPTION_TOOLTIP_TRILINEAR"] = "Enables high quality filtering of texture maps. Turn this feature off to increase performance.",
-	},
-	["ambiguous"] = {
-		"SPELLLOGSELF", -- [1]
-		"COMBATHITOTHERSELF", -- [2]
-		"COMBATHITOTHEROTHER", -- [3]
-		"SPELLPERFORMGOOTHERTARGETTED", -- [4]
-		"OPEN_LOCK_OTHER", -- [5]
-		"SPELLLOGCRITOTHER", -- [6]
-		"COMBATHITCRITOTHEROTHER", -- [7]
-		"SPELLCASTGOOTHER", -- [8]
-		"SIMPLEPERFORMOTHEROTHER", -- [9]
-		"SPELLTERSE_OTHER", -- [10]
-		"SPELLTERSE_SELF", -- [11]
-		"POWERGAINSELF", -- [12]
-		"POWERGAINSELFOTHER", -- [13]
-		"POWERGAINSELFSELF", -- [14]
-		"SIMPLECASTOTHEROTHER", -- [15]
-		"HEALEDOTHERSELF", -- [16]
-		"SPELLPERFORMGOOTHER", -- [17]
-		"SPELLLOGCRITSELF", -- [18]
-		"SPELLTERSEPERFORM_OTHER", -- [19]
-		"COMBATHITCRITOTHERSELF", -- [20]
-		"PERIODICAURAHEALSELF", -- [21]
-		"PERIODICAURAHEALSELFSELF", -- [22]
-		"JOINED_PARTY", -- [23]
-		"ERR_JOINED_GROUP_S", -- [24]
-		"ERR_LEFT_GROUP_S", -- [25]
-		"SPELLCASTGOSELFTARGETTED", -- [26]
-		"ERR_IGNORE_NOT_FOUND", -- [27]
-		"SIMPLECASTSELFOTHER", -- [28]
-		"SKILL_RANK_UP", -- [29]
-		"OPEN_LOCK_SELF", -- [30]
-		"SPELLPERFORMGOSELFTARGETTED", -- [31]
-		"ERR_SKILL_UP_SI", -- [32]
-		"SPELLPERFORMGOSELF", -- [33]
-		"SIMPLEPERFORMSELFOTHER", -- [34]
-		"SPELLTERSEPERFORM_SELF", -- [35]
-		"SIMPLEPERFORMSELFSELF", -- [36]
-		"SPELLCASTGOOTHERTARGETTED", -- [37]
-		"SPELLLOGOTHER", -- [38]
-		"HEALEDSELF", -- [39]
-		"LEFT_PARTY", -- [40]
-		"SPELLCASTGOSELF", -- [41]
-		"SIMPLECASTSELFSELF", -- [42]
-		"POWERGAINOTHER", -- [43]
-		"COMBATLOG_XPGAIN_EXHAUSTION1", -- [44]
-		"COMBATHITSCHOOLOTHEROTHER", -- [45]
-		"SPELLLOGSCHOOLOTHER", -- [46]
-		"COMBATHITSCHOOLOTHERSELF", -- [47]
-		"SPELLLOGSCHOOLSELF", -- [48]
-		"COMBATLOG_XPGAIN_EXHAUSTION1_GROUP", -- [49]
-		"SPELLLOGCRITSCHOOLOTHER", -- [50]
-		"COMBATHITCRITSCHOOLOTHEROTHER", -- [51]
-		"SPELLLOGCRITSCHOOLSELF", -- [52]
-		"COMBATHITCRITSCHOOLOTHERSELF", -- [53]
-		"ERR_FRIEND_NOT_FOUND", -- [54]
-		"YOU_LOOT_MONEY", -- [55]
 	},
 }
