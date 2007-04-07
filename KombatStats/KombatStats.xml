@@ -179,7 +179,7 @@
 					</Anchors>
 					<TexCoords left="0.1" right="1.0" top="0" bottom="0.25"/>
 				</Texture>
-				<FontString name="$parentLeftTopSpace" inherits="GameFontNormalSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentLeftTopSpace" inherits="GameFontNormalSmall" hidden="true">
 					<Size>
 						<AbsDimension x="35" y="12"/>
 					</Size>
@@ -191,7 +191,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCountTitle" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentCountTitle" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -199,7 +199,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentLeftTopSpace" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCountPercent" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="center">
+				<FontString name="$parentCountPercent" inherits="GameFontNormalSmall" justifyH="center">
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -207,7 +207,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCountTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMinTitle" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentMinTitle" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -215,7 +215,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCountPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentAvgTitle" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentAvgTitle" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -223,7 +223,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMinTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMaxTitle" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentMaxTitle" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -231,7 +231,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentAvgTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentTotalTitle" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentTotalTitle" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="60" y="12"/>
 					</Size>
@@ -239,7 +239,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMaxTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentTotalPercent" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="center">
+				<FontString name="$parentTotalPercent" inherits="GameFontNormalSmall" justifyH="center">
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -247,7 +247,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentTotalTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentHitTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="35" y="12"/>
 					</Size>
@@ -255,7 +255,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentLeftTopSpace" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -263,7 +263,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitCountPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitCountPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -271,7 +271,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitMin" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitMin" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -279,7 +279,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitCountPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitAvg" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitAvg" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -287,7 +287,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitMin" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitMax" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitMax" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -295,7 +295,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitAvg" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitTotal" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitTotal" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="60" y="12"/>
 					</Size>
@@ -303,7 +303,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitMax" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHitTotalPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentHitTotalPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -311,7 +311,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitTotal" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentCritTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="35" y="12"/>
 					</Size>
@@ -319,7 +319,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentHitTitle" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -327,7 +327,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritCountPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritCountPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -335,7 +335,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritMin" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritMin" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -343,7 +343,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritCountPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritAvg" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritAvg" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -351,7 +351,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritMin" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritMax" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritMax" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -359,7 +359,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritAvg" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritTotal" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritTotal" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="60" y="12"/>
 					</Size>
@@ -367,7 +367,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritMax" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCritTotalPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentCritTotalPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -375,7 +375,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritTotal" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentDOTTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="35" y="12"/>
 					</Size>
@@ -383,7 +383,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCritTitle" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -391,7 +391,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTCountPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentDOTCountPercent" inherits="GameFontHighlightSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -399,7 +399,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTMin" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTMin" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -407,7 +407,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTCountPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTAvg" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTAvg" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -415,7 +415,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTMin" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTMax" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTMax" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -423,7 +423,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTAvg" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTTotal" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTTotal" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="60" y="12"/>
 					</Size>
@@ -431,7 +431,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDOTMax" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDOTTotalPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDOTTotalPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -453,7 +453,7 @@
 					</Anchors>
 					<TexCoords left="0.1" right="1.0" top="0" bottom="0.25"/>
 				</Texture>
-				<FontString name="$parentMissTypeHeader1" inherits="GameFontNormalSmall" setAllPoints="true" hidden="true" >
+				<FontString name="$parentMissTypeHeader1" inherits="GameFontNormalSmall" hidden="true" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -465,7 +465,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCountTitle1" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentCountTitle1" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -473,7 +473,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissTypeHeader1" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentPercentTitle1" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="center">
+				<FontString name="$parentPercentTitle1" inherits="GameFontNormalSmall" justifyH="center">
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -481,7 +481,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCountTitle1" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSeparator1" inherits="GameFontNormalSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentSeparator1" inherits="GameFontNormalSmall" hidden="true">
 					<Size>
 						<AbsDimension x="20" y="12"/>
 					</Size>
@@ -489,7 +489,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentPercentTitle1" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMissTypeHeader2" inherits="GameFontNormalSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentMissTypeHeader2" inherits="GameFontNormalSmall" hidden="true">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -497,7 +497,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentSeparator1" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentCountTitle2" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="right">
+				<FontString name="$parentCountTitle2" inherits="GameFontNormalSmall" justifyH="right">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -505,7 +505,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissTypeHeader2" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentPercentTitle2" inherits="GameFontNormalSmall" setAllPoints="true" justifyH="center">
+				<FontString name="$parentPercentTitle2" inherits="GameFontNormalSmall" justifyH="center">
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -513,7 +513,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentCountTitle2" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMissTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentMissTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -521,7 +521,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissTypeHeader1" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMissCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentMissCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -529,7 +529,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMissPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentMissPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -537,7 +537,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSeparator2" inherits="GameFontHighlightSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentSeparator2" inherits="GameFontHighlightSmall" hidden="true">
 					<Size>
 						<AbsDimension x="20" y="12"/>
 					</Size>
@@ -545,7 +545,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDodgeTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentDodgeTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -553,7 +553,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentSeparator2" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDodgeCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDodgeCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -561,7 +561,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDodgeTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDodgePercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDodgePercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -569,7 +569,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDodgeCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentParryTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentParryTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -577,7 +577,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentMissTitle" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentParryCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentParryCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -585,7 +585,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentParryTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentParryPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentParryPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -593,7 +593,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentParryCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSeparator3" inherits="GameFontHighlightSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentSeparator3" inherits="GameFontHighlightSmall" hidden="true">
 					<Size>
 						<AbsDimension x="20" y="12"/>
 					</Size>
@@ -601,7 +601,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentParryPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentBlockTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentBlockTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -609,7 +609,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentSeparator3" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentBlockCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentBlockCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -617,7 +617,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentBlockTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentBlockPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentBlockPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -625,7 +625,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentBlockCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDeflectTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentDeflectTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -633,7 +633,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentParryTitle" relativePoint="BOTTOMLEFT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDeflectCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDeflectCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -641,7 +641,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDeflectTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentDeflectPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentDeflectPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
@@ -649,7 +649,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDeflectCount" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentSeparator4" inherits="GameFontHighlightSmall" setAllPoints="true" hidden="true">
+				<FontString name="$parentSeparator4" inherits="GameFontHighlightSmall" hidden="true">
 					<Size>
 						<AbsDimension x="20" y="12"/>
 					</Size>
@@ -657,7 +657,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentDeflectPercent" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentResistTitle" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="left">
+				<FontString name="$parentResistTitle" inherits="GameFontHighlightSmall" justifyH="left">
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -665,7 +665,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentSeparator4" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentResistCount" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentResistCount" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="50" y="12"/>
 					</Size>
@@ -673,7 +673,7 @@
 						<Anchor point="TOPLEFT" relativeTo="$parentResistTitle" relativePoint="TOPRIGHT"/>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentResistPercent" inherits="GameFontHighlightSmall" setAllPoints="true" justifyH="right" >
+				<FontString name="$parentResistPercent" inherits="GameFontHighlightSmall" justifyH="right" >
 					<Size>
 						<AbsDimension x="40" y="12"/>
 					</Size>
