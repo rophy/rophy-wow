@@ -464,7 +464,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 								<AbsDimension x="31" y="256"/>
 							</Size>
 							<Anchors>
-										<AbsDimension x="-2" y="-4"/>
 								<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
 									<Offset>
 										<AbsDimension x="-2" y="5"/>
