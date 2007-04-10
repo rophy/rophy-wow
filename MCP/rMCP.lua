@@ -728,14 +728,13 @@ function rMCP:LoadSet(set)
 end
 
 function rMCP:RenameSet(set, name)
-
 	local oldName = self:GetSetName(set)
 	if not savedVar then savedVar = {} end
 	if not savedVar.AddonSet then savedVar.AddonSet = {} end
 	if not savedVar.AddonSet[set] then savedVar.AddonSet[set] = {} end
 	savedVar.AddonSet[set].name = name
 	
-	self:Print(L["Addons [%s] renamed to [%s]."]:format(oldName,name) )
+	self:Print(L["Addons [%s] renamed to [%s]."]:format(oldName,tostring(name)) )
 
 end
 
