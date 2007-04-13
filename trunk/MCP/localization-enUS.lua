@@ -17,6 +17,24 @@ rMCP:UpdateLocale( {
 	["Sets"] = true,
 	["No information available."] = true,
 	["Loaded"] = true,
+	["Memory: %.3f%s"] = true,	-- Memory: 1.234MB
+	["CPU: %.3f%s"] = true,	-- CPU: 1.234s
+	["Author: %s"] = true,
+	["Version: %s"] = true,
+	["Dependencies: "] = true,
+	
+	["Default"] = true,
+	["Set %s"] = true,
+
+	["ROGUE"] = true,
+	["PALADIN"] = true,
+	["WARRIOR"] = true,
+	["WARLOCK"] = true,
+	["DRUID"] = true,
+	["PRIEST"] = true,
+	["MAGE"] = true,
+	["SHAMAN"] = true,
+	["HUNTER"] = true,
 	
 	
 	["Blizzard_AuctionUI"] = "Blizzard: Auction",

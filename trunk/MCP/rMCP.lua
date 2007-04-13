@@ -507,7 +507,7 @@ addonListBuilders["Load State"] = function()
 	end )
 end
 
-if GetAddOnMemoryUse then
+if GetAddOnMemoryUsage then
 	addonListBuilders["Memory"] = function()
 		UpdateAddOnMemoryUsage()
 		for k in pairs(masterAddonList) do
@@ -521,7 +521,7 @@ if GetAddOnMemoryUse then
 			table.insert(masterAddonList, name)
 		end
 		table.sort(masterAddonList, function(a,b)
-			return GetAddOnMemoryUse(a) > GetAddOnMemoryUse(b)
+			return GetAddOnMemoryUsage(a) > GetAddOnMemoryUsage(b)
 		end )
 	end
 end
@@ -669,11 +669,11 @@ end
 
 function rMCP:GetSetName(set)
 	if set == MCP_DEFAULT_SET then
-		return "Default"
+		return L["Default"]
 	elseif savedVar and savedVar.AddonSet and savedVar.AddonSet[set] and savedVar.AddonSet[set].name then
 		return savedVar.AddonSet[set].name
 	else
-		return "Set " .. set
+		return L["Set %s"]:format(set)
 	end
 end
 
@@ -1023,7 +1023,7 @@ function rMCP:SetDropDown_Populate(level)
 			count = 0
 		end	
 		info = UIDropDownMenu_CreateInfo()
-		info.text = string.format("%s (%d)", playerClass, count)
+		info.text = string.format("%s (%d)", L[playerClass] or playerClass, count)
 		info.value = playerClass
 		info.hasArrow = 1
 		info.notCheckable = 1
@@ -1031,7 +1031,7 @@ function rMCP:SetDropDown_Populate(level)
 		
 		-- Default set.
 		info = UIDropDownMenu_CreateInfo()
-		info.text = string.format("Default (%d)", table.getn(MCP_DefaultSet))
+		info.text = string.format("%s (%d)", L["Default"], table.getn(MCP_DefaultSet))
 		info.value = MCP_DEFAULT_SET
 		info.hasArrow = 1
 		info.notCheckable = 1
@@ -1107,10 +1107,10 @@ function rMCP:ShowTooltip(index)
 	  GameTooltip:AddLine(name)
 	end
 	if author then
-		GameTooltip:AddLine(string.format("Author: %s", author), 0, 1, 0, 1)
+		GameTooltip:AddLine(string.format(L["Author: %s"], author), 0, 1, 0, 1)
 	end
 	if version then
-		GameTooltip:AddLine(string.format("Version: %s", version), 0, 1, 0, 1)
+		GameTooltip:AddLine(string.format(L["Version: %s"], version), 0, 1, 0, 1)
 	end
 	
 	if notes then
@@ -1120,7 +1120,7 @@ function rMCP:ShowTooltip(index)
 	end
 	
 	if deps[1] then
-		depLine = "Dependencies: "..deps[1]
+		depLine = L["Dependencies: "]..deps[1]
 		 for i = 2, table.getn(deps) do
 		 	if deps[i] then
 		 		depLine = depLine..", "..deps[i]
@@ -1129,14 +1129,35 @@ function rMCP:ShowTooltip(index)
 		 GameTooltip:AddLine(depLine)
 	end
 	
-	if GetAddOnMemoryUse then
-		local mem = GetAddOnMemoryUse(index)
-		GameTooltip:AddLine("Memory: " .. tostring(mem), 1, 1, 0, 1)
+	if GetAddOnMemoryUsage then
+		local mem = GetAddOnMemoryUsage(index)
+		if mem then
+			local unit
+			if mem > 1000 then
+				mem = mem / 1000
+				unit = "MB"
+			else
+				unit = "KB"
+			end
+			GameTooltip:AddLine(string.format(L["Memory: %.3f%s"], mem, unit), 1, 1, 0, 1)
+		end
 	end
 	
 	if GetAddOnCPUUsage then
-		local cpu = GetAddOnCPUUsage
-		GameTooltip:AddLine("CPU: " .. tostring(cpu), 1, 1, 0, 1)
+		local cpu = GetAddOnCPUUsage(index)
+		if cpu then
+			local unit
+			if cpu > 3600 then
+				cpu = cpu / 3600
+				unit = "h"
+			elseif cpu > 60 then
+				cpu = cpu / 60
+				unit = "m"
+			else
+				unit = "s"
+			end
+			GameTooltip:AddLine(string.format(L["CPU: %.3f%s"], cpu, unit), 1, 1, 0, 1)
+		end
 	end
 	
 	GameTooltip:Show()
