@@ -509,6 +509,7 @@ end
 
 if GetAddOnMemoryUse then
 	addonListBuilders["Memory"] = function()
+		UpdateAddOnMemoryUsage()
 		for k in pairs(masterAddonList) do
 			masterAddonList[k] = nil
 		end
@@ -527,6 +528,7 @@ end
 
 if GetAddOnCPUUsage then
 	addonListBuilders["CPU"] = function()
+		UpdateAddOnCPUUsage()
 		for k in pairs(masterAddonList) do
 			masterAddonList[k] = nil
 		end
