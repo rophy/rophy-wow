@@ -1042,7 +1042,6 @@ function rMCP:SetDropDown_Populate(level)
 		info.keepShownOnClick = 1
 		info.hasArrow = 1
 		info.notCheckable = 1
-		info.disabled = true
 		UIDropDownMenu_AddButton(info)
 		
 		-- Default set.
