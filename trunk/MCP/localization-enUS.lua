@@ -23,6 +23,8 @@ rMCP:UpdateLocale( {
 	["Version: %s"] = true,
 	["Dependencies: "] = true,
 	
+	["You may Shift-Click to load the set, Alt-Click to unload the set."] = true,
+	
 	["Default"] = true,
 	["Set %s"] = true,
 

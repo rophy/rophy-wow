@@ -989,14 +989,29 @@ function rMCP:SetButton_OnClick()
 	ToggleDropDownMenu(1, nil, self.dropDownFrame, this, 0, 0)
 end
 
+-- func handlers of UIDropDownMenu.
+local function OnClickSet()
+	if IsShiftKeyDown() then
+		rMCP:LoadSet(UIDROPDOWNMENU_MENU_VALUE)
+	elseif IsAltKeyDown() then
+		rMCP:UnloadSet(UIDROPDOWNMENU_MENU_VALUE)
+	end
+end
+
+local info
+local rInfo = setmetatable({}, {
+	__newindex = function() end,
+	__index = function(t,k) return info[k] end
+})
+
 
 function rMCP:SetDropDown_Populate(level)
 	if not savedVar then return end
 	
 	if level == 1 then
 
-		local info, count, name
-		for i = 1, 	MCP_SET_SIZE do
+		local count, name
+		for i = 1, MCP_SET_SIZE do
 			local name = nil
 			
 			info = UIDropDownMenu_CreateInfo()
@@ -1011,9 +1026,13 @@ function rMCP:SetDropDown_Populate(level)
 			info = UIDropDownMenu_CreateInfo()
 			info.text = string.format("%s (%d)", name, count)
 			info.value = i
+			info.func = OnClickSet
+			info.keepShownOnClick = 1
 			info.hasArrow = 1
 			info.notCheckable = 1
-			UIDropDownMenu_AddButton(info)
+			info.tooltipTitle = name
+			info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
+			UIDropDownMenu_AddButton(rInfo)
 		end	
 		
 		-- Class set.
@@ -1025,17 +1044,22 @@ function rMCP:SetDropDown_Populate(level)
 		info = UIDropDownMenu_CreateInfo()
 		info.text = string.format("%s (%d)", L[playerClass] or playerClass, count)
 		info.value = playerClass
+		info.func = OnClickSet
+		info.keepShownOnClick = 1
 		info.hasArrow = 1
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info)
+		info.disabled = true
+		UIDropDownMenu_AddButton(rInfo)
+			ChatFrame1:AddMessage(tostring(info.checked))
 		
 		-- Default set.
 		info = UIDropDownMenu_CreateInfo()
 		info.text = string.format("%s (%d)", L["Default"], table.getn(MCP_DefaultSet))
 		info.value = MCP_DEFAULT_SET
-		info.hasArrow = 1
+		info.func = OnClickSet
 		info.notCheckable = 1
-		UIDropDownMenu_AddButton(info)
+		info.keepShownOnClick = 1
+		UIDropDownMenu_AddButton(rInfo)
 	
 	elseif level == 2 then
 	
