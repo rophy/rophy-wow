@@ -998,22 +998,16 @@ local function OnClickSet()
 	end
 end
 
-local info
-local rInfo = setmetatable({}, {
-	__newindex = function() end,
-	__index = function(t,k) return info[k] end
-})
-
-
 function rMCP:SetDropDown_Populate(level)
 	if not savedVar then return end
 	
+	local info, setName
+	
 	if level == 1 then
 
-		local count, name
+		local count
 		for i = 1, MCP_SET_SIZE do
-			local name = nil
-			
+		
 			info = UIDropDownMenu_CreateInfo()
 			if savedVar.AddonSet and savedVar.AddonSet[i] then
 				count = table.getn(savedVar.AddonSet[i])
@@ -1021,18 +1015,18 @@ function rMCP:SetDropDown_Populate(level)
 				count = 0
 			end
 			
-			name = self:GetSetName(i)
+			setName = self:GetSetName(i)
 			
 			info = UIDropDownMenu_CreateInfo()
-			info.text = string.format("%s (%d)", name, count)
+			info.text = string.format("%s (%d)", setName, count)
 			info.value = i
 			info.func = OnClickSet
 			info.keepShownOnClick = 1
 			info.hasArrow = 1
 			info.notCheckable = 1
-			info.tooltipTitle = name
+			info.tooltipTitle = setName
 			info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
-			UIDropDownMenu_AddButton(rInfo)
+			UIDropDownMenu_AddButton(info)
 		end	
 		
 		-- Class set.
@@ -1049,8 +1043,7 @@ function rMCP:SetDropDown_Populate(level)
 		info.hasArrow = 1
 		info.notCheckable = 1
 		info.disabled = true
-		UIDropDownMenu_AddButton(rInfo)
-			ChatFrame1:AddMessage(tostring(info.checked))
+		UIDropDownMenu_AddButton(info)
 		
 		-- Default set.
 		info = UIDropDownMenu_CreateInfo()
@@ -1059,11 +1052,11 @@ function rMCP:SetDropDown_Populate(level)
 		info.func = OnClickSet
 		info.notCheckable = 1
 		info.keepShownOnClick = 1
-		UIDropDownMenu_AddButton(rInfo)
+		UIDropDownMenu_AddButton(info)
 	
 	elseif level == 2 then
 	
-		local setName = self:GetSetName(UIDROPDOWNMENU_MENU_VALUE)
+		setName = self:GetSetName(UIDROPDOWNMENU_MENU_VALUE)
 		info = UIDropDownMenu_CreateInfo()
 		info.text = setName
 		info.isTitle = 1
