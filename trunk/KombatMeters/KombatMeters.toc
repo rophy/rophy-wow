@@ -4,9 +4,14 @@
 ## SavedVariables: KombatMetersData
 ## SavedVariablesPerCharacter: KombatMetersDataPerChar
 
+ChatThrottleLib.lua
 Dongle.lua
+
 RaidUnits.lua
 Data.lua
 
-Display.lua
+#Display.lua
+BarDisplay.lua
+
+Report.lua
 

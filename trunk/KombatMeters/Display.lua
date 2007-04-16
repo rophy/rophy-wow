@@ -10,16 +10,27 @@ function Display:Enable()
 	)
 
 	tablet:Detach(frame)
+	
+	
+	self:RegisterMessage("KombatMeters_Data_Updated", "Refresh")
+	self:RegisterMessage("KombatMeters_Data_Cleared", "Refresh")
+	
+	self:Refresh()
 
 end
 
 function Display:OnTooltipUpdate()
+	tablet:SetTitle("KombatMeters")
+	local showType = KombatMeters:GetShownValueType()
 	local cat = tablet:AddCategory(
+		'text', showType or "None",
 		'columns', 2
 	)
-	local showType = KombatMeters.db.profile.showType
-	if showType and KombatMeters.data[showType] then
-		for name, value in pairs(KombatMeters.data[showType]) do
+	if showType then
+		local index = KombatMeters:GetSortedDataIndexes(showType)
+		local data = KombatMeters:GetDataTable(showType)
+		for i, name in ipairs(index) do
+			local value = data[name]
 			cat:AddLine(
 				'text', name,
 				'text2', value
@@ -32,5 +43,4 @@ function Display:Refresh()
 	tablet:Refresh(frame)
 end
 
-
-KombatMeters.display = Display
+KSDisplay = Display
