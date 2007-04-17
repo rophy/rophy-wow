@@ -135,6 +135,7 @@ local ignoreList = {
 	"UNKNOWNOBJECT",
 	"UNKNOWN",
 	"^VOICEMACRO",
+	"VULNERABLE_TRAILER",
 };
 
 
