@@ -6,21 +6,21 @@ CombatLogScribeDB = {
 				"%s gains %s.", -- [1]
 				"Seasoned Guardian gains Shield Block.", -- [2]
 			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 10 Mana from Unknown Entity's Blessing of Wisdom.", -- [2]
-			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Hatecrest Screamer gains 80 health from Hatecrest Screamer's Renew.", -- [2]
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Angelstouch gains 15 Mana from Unknown Entity's Blessing of Wisdom.", -- [2]
 			},
 			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
 				"%s gains %s (%d).", -- [1]
 				"Hulking Helboar gains Hulk (2).", -- [2]
 			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Angelstouch gains 15 Mana from Unknown Entity's Blessing of Wisdom.", -- [2]
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Hatecrest Screamer gains 80 health from Hatecrest Screamer's Renew.", -- [2]
+			},
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 10 Mana from Unknown Entity's Blessing of Wisdom.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE"] = {
@@ -32,9 +32,9 @@ CombatLogScribeDB = {
 				"%s is afflicted by %s.", -- [1]
 				"Pete is afflicted by Earthbind.", -- [2]
 			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Pestillence's Corruption is absorbed by Mos.", -- [2]
+			["PERIODICAURADAMAGESELFOTHER"] = {
+				"%s suffers %d %s damage from your %s.", -- [1]
+				"Mistress Natalia Mar'alith suffers 186 Shadow damage from your Corruption.", -- [2]
 			},
 			["SPELLPOWERDRAINOTHEROTHER"] = {
 				"%s's %s drains %d %s from %s.", -- [1]
@@ -52,12 +52,17 @@ CombatLogScribeDB = {
 				"%s is absorbed by %s.", -- [1]
 				"Flame Wave is absorbed by Kruztique.", -- [2]
 			},
-			["PERIODICAURADAMAGESELFOTHER"] = {
-				"%s suffers %d %s damage from your %s.", -- [1]
-				"Mistress Natalia Mar'alith suffers 186 Shadow damage from your Corruption.", -- [2]
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Pestillence's Corruption is absorbed by Mos.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_MISSES"] = {
+			["VSEVADEOTHEROTHER"] = {
+				"%s attacks. %s evades.", -- [1]
+				"Frostmane Troll attacks. Ironforge Guard evades.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
 			["VSIMMUNEOTHEROTHER"] = {
 				"%s attacks but %s is immune.", -- [1]
 				"Lava Annihilator attacks but Athenna is immune.", -- [2]
@@ -88,18 +93,13 @@ CombatLogScribeDB = {
 				"%s gains %s.", -- [1]
 				"Yurneroo gains Berserker Stance.", -- [2]
 			},
-			["RESILIENCE"] = {
-				"Resilience", -- [1]
-				"Resilience gains Water Shield.", -- [2]
-				"2.0.10.6448", -- [3]
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Yurneroo gains 174 health from Vyxxenn's Renew.", -- [2]
 			},
 			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
 				"%s gains %s (%d).", -- [1]
 				"Hadesspawn gains Unstable Power (8).", -- [2]
-			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Yurneroo gains 174 health from Vyxxenn's Renew.", -- [2]
 			},
 			["POWERGAINOTHEROTHER"] = {
 				"%s gains %d %s from %s's %s.", -- [1]
@@ -127,21 +127,21 @@ CombatLogScribeDB = {
 				"%s is afflicted by %s.", -- [1]
 				"Vyxxenn is afflicted by Frost Nova.", -- [2]
 			},
-			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s (%d).", -- [1]
-				"Tehsnipe is afflicted by Ignite (2).", -- [2]
-			},
 			["SPELLPOWERLEECHOTHEROTHER"] = {
 				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
 				"Xcel's Drain Mana drains 140 Mana from Preacha. Xcel gains 140 Mana.", -- [2]
 			},
-			["SPELLLOGABSORBSELFOTHER"] = {
-				"Your %s is absorbed by %s.", -- [1]
-				"Your Immolate is absorbed by Althion.", -- [2]
+			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s (%d).", -- [1]
+				"Tehsnipe is afflicted by Ignite (2).", -- [2]
 			},
 			["PERIODICAURADAMAGEOTHER"] = {
 				"%s suffers %d %s damage from %s.", -- [1]
 				"Hien suffers 1644 Shadow damage from Shadow Word: Death.", -- [2]
+			},
+			["SPELLLOGABSORBSELFOTHER"] = {
+				"Your %s is absorbed by %s.", -- [1]
+				"Your Immolate is absorbed by Althion.", -- [2]
 			},
 			["SPELLLOGABSORBOTHER"] = {
 				"%s is absorbed by %s.", -- [1]
@@ -163,75 +163,34 @@ CombatLogScribeDB = {
 				"Stealth fades from you.", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_SELF_BUFF"] = {
-			["SIMPLEPERFORMSELFSELF"] = {
-				"You perform %s.[SIMPLEPERFORMSELFSELF]", -- [1]
-				"You perform Vanish.[SIMPLEPERFORMSELFSELF]", -- [2]
+		["CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES"] = {
+			["VSEVADEOTHEROTHER"] = {
+				"%s attacks. %s evades.", -- [1]
+				"Mistick attacks. Lava Annihilator evades.", -- [2]
 			},
-			["SIMPLECASTSELFOTHER"] = {
-				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
-				"You cast Demonic Sacrifice on Yazlop.[SIMPLECASTSELFOTHER]", -- [2]
+			["VSIMMUNEOTHEROTHER"] = {
+				"%s attacks but %s is immune.", -- [1]
+				"Sekaikaze attacks but Morike is immune.", -- [2]
 			},
-			["POWERGAINSELFOTHER"] = {
-				"%s gains %d %s from %s.[POWERGAINSELFOTHER]", -- [1]
-				"Khuunam gains 247 Mana from Life Tap.[POWERGAINSELFOTHER]", -- [2]
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Sapito attacks. Yurneroo absorbs all the damage.", -- [2]
 			},
-			["ITEMENCHANTMENTADDSELFSELF"] = {
-				"You cast %s on your %s.", -- [1]
-				"You cast Stamina +7 on your Felheart Bracers.", -- [2]
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Jeebes misses Seasoned Guardian.", -- [2]
 			},
-			["HEALEDCRITSELFSELF"] = {
-				"Your %s critically heals you for %d.", -- [1]
-				"Your Healing Wave critically heals you for 113.", -- [2]
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Sekaikaze attacks. Alterac Ram dodges.", -- [2]
 			},
-			["DISPELFAILEDSELFSELF"] = {
-				"You fail to dispel your %s.", -- [1]
-				"You fail to dispel your Frost Nova.", -- [2]
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Sekaikaze attacks. Alterac Ram parries.", -- [2]
 			},
-			["SPELLTERSEPERFORM_SELF"] = {
-				"You perform %s.[SPELLTERSEPERFORM_SELF]", -- [1]
-				"You perform Preparation.[SPELLTERSEPERFORM_SELF]", -- [2]
-			},
-			["SPELLEXTRAATTACKSSELF_SINGULAR"] = {
-				"You gain %d extra attack through %s.", -- [1]
-				"You gain 1 extra attack through Thrash.", -- [2]
-			},
-			["SPELLEVADEDSELFOTHER"] = {
-				"Your %s was evaded by %s.", -- [1]
-				"Your Curse of Agony was evaded by Hive'Zara Hatchling.", -- [2]
-			},
-			["OPEN_LOCK_SELF"] = {
-				"You perform %s on %s.[OPEN_LOCK_SELF]", -- [1]
-				"You perform Pick Lock on Thorium Lockbox.[OPEN_LOCK_SELF]", -- [2]
-			},
-			["SPELLIMMUNESELFOTHER"] = {
-				"Your %s failed. %s is immune.", -- [1]
-				"Your Curse of Agony failed. Lava Annihilator is immune.", -- [2]
-			},
-			["SPELLSPLITDAMAGESELFOTHER"] = {
-				"Your %s causes %s %d damage.", -- [1]
-				"Your Blessing of Sacrifice causes Nino 55 damage.", -- [2]
-			},
-			["SPELLMISSSELFOTHER"] = {
-				"Your %s missed %s.", -- [1]
-				"Your Steal Weapon missed Gan'arg Warp-Tinker.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["HEALEDSELFSELF"] = {
-				"Your %s heals you for %d.", -- [1]
-				"Your Healing Draught heals you for 536.", -- [2]
-			},
-			["POWERGAINSELFSELF"] = {
-				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
-				"You gain 750 Mana from Life Tap.[POWERGAINSELFSELF]", -- [2]
-			},
-			["ITEMENCHANTMENTADDSELFOTHER"] = {
-				"You cast %s on %s's %s.", -- [1]
-				"You cast Minor Speed Increase on Kruztique's Faith Healer's Boots.", -- [2]
-			},
-			["SPELLTERSE_SELF"] = {
-				"You cast %s.[SPELLTERSE_SELF]", -- [1]
-				"You cast Life Tap.[SPELLTERSE_SELF]", -- [2]
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"maide attacks. Thermopolis blocks.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES"] = {
@@ -260,35 +219,34 @@ CombatLogScribeDB = {
 				"Spectral Researcher attacks. Nimbus blocks.", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_BREAK_AURA"] = {
-			["AURADISPELSELF3"] = {
-				"Your %s is removed by %s's %s.", -- [1]
-				"Your Cone of Cold is removed by Ballis's Escape Artist.", -- [2]
+		["CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS"] = {
+			["PERIODICAURAHEALSELFOTHER"] = {
+				"%s gains %d health from your %s.", -- [1]
+				"Shair gains 100 health from your First Aid.", -- [2]
 			},
-			["AURADISPELOTHER"] = {
-				"%s's %s is removed.", -- [1]
-				"Seasoned Guardian's Sap is removed.", -- [2]
+			["AURAADDEDOTHERHELPFUL"] = {
+				"%s gains %s.", -- [1]
+				"Gjonnydanger gains Devotion Aura.", -- [2]
 			},
-			["AURADISPELSELF"] = {
-				"Your %s is removed.", -- [1]
-				"Your Stealth is removed.", -- [2]
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Styxson's Flee drains 485 Mana from Styxson.", -- [2]
 			},
-			["AURADISPELOTHER2"] = {
-				"%s's %s is removed by %s.", -- [1]
-				"Yukishiro's Scatter Shot is removed by Tondogger.", -- [2]
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Minimonty gains 33 Mana from Minimonty's Blessing of Wisdom.", -- [2]
 			},
-			["AURADISPELOTHER3"] = {
-				"%s's %s is removed by %s's %s.", -- [1]
-				"Applebee's Scatter Shot is removed by Tondogger's Sinister Strike.", -- [2]
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Minimonty gains 249 health from Aneptios's Renew.", -- [2]
 			},
-			["AURADISPELSELF2"] = {
-				"Your %s is removed by %s.", -- [1]
-				"Your Scatter Shot is removed by Ko.", -- [2]
+			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
+				"%s gains %s (%d).", -- [1]
+				"Narwen gains Unstable Power (8).", -- [2]
 			},
-			["AURASTOLENOTHEROTHER"] = {
-				"%s steals %s's %s.", -- [1]
-				"Kruztique steals Isra's Divine Spirit.", -- [2]
-				"2.0.10.6448", -- [3]
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 10 Mana from Aubrie's Blessing of Wisdom.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_XP_GAIN"] = {
@@ -300,17 +258,17 @@ CombatLogScribeDB = {
 				"%s dies, you gain %d experience. (%s exp %s bonus)[COMBATLOG_XPGAIN_EXHAUSTION1]", -- [1]
 				"Infernal Warbringer dies, you gain 472 experience. (+236 exp Rested bonus)[COMBATLOG_XPGAIN_EXHAUSTION1]", -- [2]
 			},
-			["COMBATLOG_XPGAIN_FIRSTPERSON_UNNAMED"] = {
-				"You gain %d experience.", -- [1]
-				"You gain 40 experience.", -- [2]
+			["COMBATLOG_XPGAIN_EXHAUSTION1_GROUP"] = {
+				"%s dies, you gain %d experience. (%s exp %s bonus, +%d group bonus)[COMBATLOG_XPGAIN_EXHAUSTION1_GROUP]", -- [1]
+				"Bonestripper Buzzard dies, you gain 362 experience. (+181 exp Rested bonus, +24 group bonus)[COMBATLOG_XPGAIN_EXHAUSTION1_GROUP]", -- [2]
 			},
 			["COMBATLOG_XPGAIN_FIRSTPERSON_GROUP"] = {
 				"%s dies, you gain %d experience. (+%d group bonus)", -- [1]
 				"Shadowmoon Adept dies, you gain 593 experience. (+170 group bonus)", -- [2]
 			},
-			["COMBATLOG_XPGAIN_EXHAUSTION1_GROUP"] = {
-				"%s dies, you gain %d experience. (%s exp %s bonus, +%d group bonus)[COMBATLOG_XPGAIN_EXHAUSTION1_GROUP]", -- [1]
-				"Bonestripper Buzzard dies, you gain 362 experience. (+181 exp Rested bonus, +24 group bonus)[COMBATLOG_XPGAIN_EXHAUSTION1_GROUP]", -- [2]
+			["COMBATLOG_XPGAIN_FIRSTPERSON_UNNAMED"] = {
+				"You gain %d experience.", -- [1]
+				"You gain 40 experience.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_HOSTILEPLAYER_HITS"] = {
@@ -368,17 +326,17 @@ CombatLogScribeDB = {
 				"Greater Fire Elemental crits Styxson for 606 Fire damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
-				"%s suffers %d points of fire damage.", -- [1]
-				"Kruztique suffers 12 points of fire damage.", -- [2]
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Zryan crits Irondeep Miner for 309.[COMBATHITCRITOTHEROTHER]", -- [2]
 			},
 			["COMBATHITCRITOTHERSELF"] = {
 				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
 				"Kcid crits you for 318.[COMBATHITCRITOTHERSELF] (80 absorbed)", -- [2]
 			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Zryan crits Irondeep Miner for 309.[COMBATHITCRITOTHEROTHER]", -- [2]
+			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
+				"%s suffers %d points of fire damage.", -- [1]
+				"Kruztique suffers 12 points of fire damage.", -- [2]
 			},
 			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
 				"%s loses %d health for swimming in lava.", -- [1]
@@ -414,118 +372,100 @@ CombatLogScribeDB = {
 				"%s's %s drains %d %s from you.", -- [1]
 				"Murkblood Spearman's Viper Sting drains 342 Mana from you.", -- [2]
 			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Marshfang Ripper's Drain Mana drains 154 Mana from Haaroon. Marshfang Ripper gains 154 Mana.", -- [2]
-			},
 			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
 				"%s is afflicted by %s (%d).", -- [1]
 				"Sea Elemental is afflicted by Sunder Armor (2).", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Marshfang Ripper's Drain Mana drains 154 Mana from Haaroon. Marshfang Ripper gains 154 Mana.", -- [2]
 			},
 			["PERIODICAURADAMAGESELFOTHER"] = {
 				"%s suffers %d %s damage from your %s.", -- [1]
 				"Stone Maw Basilisk suffers 37 Physical damage from your Deep Wound.", -- [2]
 			},
 		},
-		["CHAT_MSG_LOOT"] = {
-			["LOOT_ROLL_WON"] = {
-				"%s won: %s", -- [1]
-				"Kruztique won: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
+		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS"] = {
+			["PERIODICAURAHEALSELFOTHER"] = {
+				"%s gains %d health from your %s.", -- [1]
+				"Rokugo gains 250 health from your First Aid.", -- [2]
 			},
-			["LOOT_ITEM_SELF_MULTIPLE"] = {
-				"You receive loot: %sx%d.", -- [1]
-				"You receive loot: |cffffffff|Hitem:2589:0:0:0:0:0:0:0|h[Linen Cloth]|h|rx2.", -- [2]
+			["AURAADDEDOTHERHELPFUL"] = {
+				"%s gains %s.", -- [1]
+				"Haihachi gains Obsidian Insight.", -- [2]
 			},
-			["LOOT_ROLL_ROLLED_GREED"] = {
-				"Greed Roll - %d for %s by %s", -- [1]
-				"Greed Roll - 67 for |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r by Verytall", -- [2]
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Icebringer's Flee drains 517 Mana from Icebringer.", -- [2]
 			},
-			["LOOT_ITEM"] = {
-				"%s receives loot: %s.", -- [1]
-				"Clausvolka receives loot: |cffffffff|Hitem:8948:0:0:0:0:0:0:1389958314|h[Dried King Bolete]|h|r.", -- [2]
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Chickenlady gains 1 Rage from Chickenlady's Bloodrage.", -- [2]
 			},
-			["LOOT_ROLL_PASSED_SELF"] = {
-				"You passed on: %s", -- [1]
-				"You passed on: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
+			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
+				"%s gains %s (%d).", -- [1]
+				"Felmas gains Unstable Power (8).", -- [2]
 			},
-			["CREATED_ITEM"] = {
-				"%s creates: %s.", -- [1]
-				"Dorwin creates: |cffffffff|Hitem:6265:0:0:0:0:0:0:1644796545|h[Soul Shard]|h|r.", -- [2]
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Loradam gains 250 health from Loradam's First Aid.", -- [2]
 			},
-			["LOOT_ITEM_MULTIPLE"] = {
-				"%s receives loot: %sx%d.", -- [1]
-				"Cheeky receives loot: |cffffffff|Hitem:21038:0:0:0:0:0:0:1031883341|h[Hardpacked Snowball]|h|rx5.", -- [2]
-			},
-			["LOOT_ITEM_PUSHED_SELF"] = {
-				"You receive item: %s.", -- [1]
-				"You receive item: |cff0070dd|Hitem:19045:0:0:0:0:0:0:0|h[Stormpike Battle Standard]|h|r.", -- [2]
-			},
-			["LOOT_ROLL_PASSED"] = {
-				"%s passed on: %s", -- [1]
-				"Nedru passed on: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
-			},
-			["LOOT_ROLL_ALL_PASSED"] = {
-				"Everyone passed on: %s", -- [1]
-				"Everyone passed on: |cff0070dd|Hitem:24384:0:0:0:0:0:0:1766089234|h[Diamond-Core Sledgemace]|h|r", -- [2]
-			},
-			["LOOT_ROLL_NEED_SELF"] = {
-				"You have selected Need for: %s", -- [1]
-				"You have selected Need for: |cff0070dd|Hitem:27799:0:0:0:0:0:0:-1882943822|h[Vermillion Robes of the Dominant]|h|r", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["LOOT_ITEM_CREATED_SELF"] = {
-				"You create: %s.", -- [1]
-				"You create: |cffffffff|Hitem:6265:0:0:0:0:0:0:993161637|h[Soul Shard]|h|r.", -- [2]
-			},
-			["LOOT_ROLL_YOU_WON"] = {
-				"You won: %s", -- [1]
-				"You won: |cff1eff00|Hitem:25045:0:0:0:0:0:-32:-1863909355|h[Azurite Ring of Fire Protection]|h|r", -- [2]
-			},
-			["LOOT_ROLL_ROLLED_NEED"] = {
-				"Need Roll - %d for %s by %s", -- [1]
-				"Need Roll - 78 for |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r by Kruztique", -- [2]
-			},
-			["CREATED_ITEM_MULTIPLE"] = {
-				"%s creates: %sx%d.", -- [1]
-				"Songstress creates: |cffffffff|Hitem:8079:0:0:0:0:0:0:869506249|h[Conjured Crystal Water]|h|rx10.", -- [2]
-			},
-			["LOOT_ROLL_NEED"] = {
-				"%s has selected Need for: %s", -- [1]
-				"Kruztique has selected Need for: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
-			},
-			["LOOT_ITEM_SELF"] = {
-				"You receive loot: %s.", -- [1]
-				"You receive loot: |cffffffff|Hitem:17503:0:0:0:0:0:0:4289959|h[Frostwolf Lieutenant's Medal]|h|r.", -- [2]
-			},
-			["LOOT_ROLL_GREED"] = {
-				"%s has selected Greed for: %s", -- [1]
-				"Nedru has selected Greed for: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
-			},
-			["LOOT_ITEM_CREATED_SELF_MULTIPLE"] = {
-				"You create: %sx%d.", -- [1]
-				"You create: |cff1eff00|Hitem:20560:0:0:0:0:0:0:1719621430|h[Alterac Valley Mark of Honor]|h|rx3.", -- [2]
-			},
-			["LOOT_ITEM_PUSHED_SELF_MULTIPLE"] = {
-				"You receive item: %sx%d.", -- [1]
-				"You receive item: |cffffffff|Hitem:19307:0:0:0:0:0:0:0|h[Alterac Heavy Runecloth Bandage]|h|rx20.", -- [2]
-			},
-			["LOOT_ROLL_GREED_SELF"] = {
-				"You have selected Greed for: %s", -- [1]
-				"You have selected Greed for: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 10 Mana from Aubrie's Blessing of Wisdom.", -- [2]
 			},
 		},
-		["CHAT_MSG_SPELL_TRADESKILLS"] = {
-			["TRADESKILL_LOG_FIRSTPERSON"] = {
-				"You create %s.", -- [1]
-				"You create Blinding Powder.", -- [2]
+		["CHAT_MSG_COMBAT_PARTY_HITS"] = {
+			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
+				"%s suffers %d points of fire damage.", -- [1]
+				"Nimbus suffers 15 points of fire damage.", -- [2]
 			},
-			["TRADESKILL_LOG_THIRDPERSON"] = {
-				"%s creates %s.", -- [1]
-				"Aradan creates Thorium Bar.", -- [2]
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Shadowfiend crits Ethereal Scavenger for 232 Shadow damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
+				"2.0.6", -- [3]
 			},
-			["FEEDPET_LOG_THIRDPERSON"] = {
-				"%s's pet begins eating a %s.", -- [1]
-				"Roidzz's pet begins eating a Moist Cornbread.", -- [2]
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Chula's Auto Shot crits Treant for 360.", -- [2]
+			},
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Sherbs crits Ludachriz for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Kruztique's Shoot crits Earthbind Totem for 135 Arcane damage.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Riane's Shoot hits Mana Spring Totem IV for 111 Shadow damage.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Chula's Auto Shot hits Commander Louis Philips for 219.", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Unknown hits Bonelasher for 111 Shadow damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+				"2.0.6", -- [3]
+			},
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Frucheman hits Nauxinc for 441.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITCRITOTHERSELF"] = {
+				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
+				"Treant crits you for 321.[COMBATHITCRITOTHERSELF]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["COMBATHITOTHERSELF"] = {
+				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
+				"Bonechewer Hungerer hits you for 211.[COMBATHITOTHERSELF] (53 absorbed)", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
+				"%s loses %d health for swimming in lava.", -- [1]
+				"Kal'los loses 1446 health for swimming in lava.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_FACTION_CHANGE"] = {
@@ -540,595 +480,6 @@ CombatLogScribeDB = {
 			["FACTION_STANDING_INCREASED"] = {
 				"Reputation with %s increased by %d.", -- [1]
 				"Reputation with Honor Hold increased by 275.", -- [2]
-			},
-		},
-		["CHAT_MSG_SYSTEM"] = {
-			["ERR_EXHAUSTION_NORMAL"] = {
-				"You feel normal.", -- [1]
-				"You feel normal.", -- [2]
-			},
-			["ERR_RAID_MEMBER_ADDED_S"] = {
-				"%s has joined the raid group", -- [1]
-				"Ssugarr has joined the raid group", -- [2]
-			},
-			["ERR_MEETING_STONE_IN_QUEUE_S"] = {
-				"You are now in the queue to join a party for %s.", -- [1]
-				"You are now in the queue to join a party for Hellfire Citadel - Hellfire Ramparts.", -- [2]
-			},
-			["ERR_QUEST_COMPLETE_S"] = {
-				"%s completed.", -- [1]
-				"Divine Retribution completed.", -- [2]
-			},
-			["ERR_QUEST_FAILED_S"] = {
-				"%s failed.", -- [1]
-				"Someone Else's Hard Work Pays Off failed.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["ERR_INITIATE_TRADE_S"] = {
-				"You have requested to trade with %s.", -- [1]
-				"You have requested to trade with Ponnie.", -- [2]
-			},
-			["ERR_ZONE_EXPLORED_XP"] = {
-				"Discovered %s: %d experience gained", -- [1]
-				"Discovered The Cauldron: 440 experience gained", -- [2]
-			},
-			["ERR_NOT_LEADER"] = {
-				"You are not the party leader.", -- [1]
-				"You are not the party leader.", -- [2]
-			},
-			["ERR_RAID_YOU_JOINED"] = {
-				"You have joined a raid group", -- [1]
-				"You have joined a raid group", -- [2]
-			},
-			["ERR_QUEST_REWARD_EXP_I"] = {
-				"Experience gained: %d.", -- [1]
-				"Experience gained: 2400.", -- [2]
-			},
-			["MARKED_AFK_MESSAGE"] = {
-				"You are now AFK: %s", -- [1]
-				"You are now AFK: Away from Keyboard", -- [2]
-			},
-			["RAID_INSTANCE_WARNING_HOURS_P1"] = {
-				"WARNING! %s is scheduled to reset in %d hours.", -- [1]
-				"WARNING! Zul'gurub is scheduled to reset in 4 hours.", -- [2]
-			},
-			["ERR_QUEST_PUSH_LOG_FULL_S"] = {
-				"%s's quest log is full", -- [1]
-				"Kruztique's quest log is full", -- [2]
-			},
-			["DUEL_WINNER_KNOCKOUT"] = {
-				"%1$s has defeated %2$s in a duel", -- [1]
-				"Powderpuff has defeated Pwnzoors in a duel", -- [2]
-			},
-			["ERR_DUNGEON_DIFFICULTY_CHANGED_S"] = {
-				"Dungeon difficulty set to %s (All saved instances have been reset)", -- [1]
-				"Dungeon difficulty set to Heroic (All saved instances have been reset)", -- [2]
-				"2.0.12.6546", -- [3]
-			},
-			["ERR_QUEST_ACCEPTED_S"] = {
-				"Quest accepted: %s", -- [1]
-				"Quest accepted: Curse These Fat Fingers", -- [2]
-			},
-			["ERR_PLAYER_BUSY_S"] = {
-				"%s is busy right now.", -- [1]
-				"Zay is busy right now.", -- [2]
-			},
-			["WHO_NUM_RESULTS"] = {
-				"%d player total", -- [1]
-				"1 player total", -- [2]
-			},
-			["ERR_DEATHBIND_SUCCESS_S"] = {
-				"%s is now your home.", -- [1]
-				"Cenarion Hold is now your home.", -- [2]
-			},
-			["ERR_FRIEND_SELF"] = {
-				"You can't put yourself on your friend list.", -- [1]
-				"You can't put yourself on your friend list.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["ERR_IGNORE_REMOVED_S"] = {
-				"%s is no longer being ignored.", -- [1]
-				"Afterthefall is no longer being ignored.", -- [2]
-			},
-			["MATCHMAKING_MATCH_S"] = {
-				"You have been matched to a group for %s.", -- [1]
-				"You have been matched to a group for Auchindoun - Shadow Labyrinth.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["DUEL_WINNER_RETREAT"] = {
-				"%2$s has fled from %1$s in a duel", -- [1]
-				"Chria has fled from Eru in a duel", -- [2]
-			},
-			["INSTANCE_SAVED"] = {
-				"You are now saved to this instance", -- [1]
-				"You are now saved to this instance", -- [2]
-			},
-			["ERR_RAID_LEADER_READY_CHECK_START_S"] = {
-				"%s has initiated a ready check", -- [1]
-				"Zaroc has initiated a ready check", -- [2]
-			},
-			["ERR_AUCTION_BID_PLACED"] = {
-				"Bid accepted.", -- [1]
-				"Bid accepted.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["ERR_IGNORE_ALREADY_S"] = {
-				"%s is already being ignored.", -- [1]
-				"Toppol is already being ignored.", -- [2]
-			},
-			["ERR_LEARN_SPELL_S"] = {
-				"You have learned a new spell: %s.", -- [1]
-				"You have learned a new spell: Corruption (Rank 7).", -- [2]
-			},
-			["WHO_LIST_FORMAT"] = {
-				"|Hplayer:%s|h[%s]|h: Level %d %s %s - %s", -- [1]
-				"|Hplayer:Discoverer|h[Discoverer]|h: Level 1 Night Elf Warrior - Teldrassil", -- [2]
-			},
-			["ERR_QUEST_PUSH_ONQUEST_S"] = {
-				"%s is already on that quest", -- [1]
-				"Ponnie is already on that quest", -- [2]
-			},
-			["WHO_NUM_RESULTS_P1"] = {
-				"%d players total", -- [1]
-				"2 players total", -- [2]
-			},
-			["ERR_LEARN_ABILITY_S"] = {
-				"You have learned a new ability: %s.", -- [1]
-				"You have learned a new ability: Piercing Howl.", -- [2]
-			},
-			["ERR_QUEST_FAILED_BAG_FULL_S"] = {
-				"%s failed: Inventory is full.", -- [1]
-				"Fiery Menace! failed: Inventory is full.", -- [2]
-			},
-			["DUEL_COUNTDOWN"] = {
-				"Duel starting: %d", -- [1]
-				"Duel starting: 3", -- [2]
-			},
-			["ERR_MATCHMAKING_MADE_LEADER"] = {
-				"You are the party leader!", -- [1]
-				"You are the party leader!", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["RANDOM_ROLL_RESULT"] = {
-				"%s rolls %d (%d-%d)", -- [1]
-				"Afterthefall rolls 432 (1-1000)", -- [2]
-			},
-			["ERR_QUEST_PUSH_SUCCESS_S"] = {
-				"Sharing quest with %s...", -- [1]
-				"Sharing quest with Ponnie...", -- [2]
-			},
-			["ERR_SET_LOOT_FREEFORALL"] = {
-				"Looting changed to free-for-all.", -- [1]
-				"Looting changed to free-for-all.", -- [2]
-			},
-			["ERR_FRIEND_ADDED_S"] = {
-				"%s added to friends.", -- [1]
-				"Agywen added to friends.", -- [2]
-			},
-			["ERR_JOINED_GROUP_S"] = {
-				"%s joins the party.[ERR_JOINED_GROUP_S]", -- [1]
-				"Kruztique joins the party.[ERR_JOINED_GROUP_S]", -- [2]
-			},
-			["ERR_QUEST_NEED_PREREQS"] = {
-				"You don't meet the requirements for that quest", -- [1]
-				"You don't meet the requirements for that quest", -- [2]
-			},
-			["ERR_NEW_LOOT_MASTER_S"] = {
-				"%s is now the loot master.", -- [1]
-				"Bollie is now the loot master.", -- [2]
-			},
-			["ERR_GROUP_DISBANDED"] = {
-				"Your group has been disbanded.", -- [1]
-				"Your group has been disbanded.", -- [2]
-			},
-			["ERR_SET_LOOT_ROUNDROBIN"] = {
-				"Looting changed to round robin.", -- [1]
-				"Looting changed to round robin.", -- [2]
-			},
-			["DRUNK_MESSAGE_OTHER1"] = {
-				"%s seems to be sobering up.", -- [1]
-				"Akronius seems to be sobering up.", -- [2]
-			},
-			["ERR_NOT_IN_RAID"] = {
-				"You are not in a raid group", -- [1]
-				"You are not in a raid group", -- [2]
-			},
-			["UNIT_PVP_NAME"] = {
-				"%s %s", -- [1]
-				"Welcome to the World of Warcraft!", -- [2]
-			},
-			["ERR_QUEST_PUSH_ACCEPTED_S"] = {
-				"%s has accepted your quest", -- [1]
-				"Ponnie has accepted your quest", -- [2]
-			},
-			["ERR_RAID_MEMBER_REMOVED_S"] = {
-				"%s has left the raid group", -- [1]
-				"Sspicee has left the raid group", -- [2]
-			},
-			["ERR_GROUP_FULL"] = {
-				"Your party is full.", -- [1]
-				"Your party is full.", -- [2]
-			},
-			["RAID_INSTANCE_WELCOME"] = {
-				"Welcome to %s. This raid instance is scheduled to reset in %dd %dh %dm.", -- [1]
-				"Welcome to Onyxias Lair Instance. This raid instance is scheduled to reset in 4d 21h 56m.", -- [2]
-			},
-			["ERR_MATCHMAKING_OTHER_MEMBER_LEFT"] = {
-				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [1]
-				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["ERR_BG_PLAYER_JOINED_SS"] = {
-				"|Hplayer:%s|h[%s]|h has joined the battle", -- [1]
-				"|Hplayer:Dangerousjoe|h[Dangerousjoe]|h has joined the battle", -- [2]
-			},
-			["ERR_INVITE_PLAYER_S"] = {
-				"You have invited %s to join your group.", -- [1]
-				"You have invited Lunarjustice to join your group.", -- [2]
-			},
-			["ERR_FRIEND_ALREADY_S"] = {
-				"%s is already your friend.", -- [1]
-				"Ruru is already your friend.", -- [2]
-				"2.0.8.6403", -- [3]
-			},
-			["ERR_AUCTION_STARTED"] = {
-				"Auction created.", -- [1]
-				"Auction created.", -- [2]
-			},
-			["RAID_INSTANCE_INFO_HDR"] = {
-				"Raid Instance Time Remaining:", -- [1]
-				"Raid Instance Time Remaining:", -- [2]
-			},
-			["ERR_SET_LOOT_MASTER"] = {
-				"Looting changed to master looter.", -- [1]
-				"Looting changed to master looter.", -- [2]
-			},
-			["CLEARED_AFK"] = {
-				"You are no longer AFK.", -- [1]
-				"You are no longer AFK.", -- [2]
-			},
-			["IDLE_MESSAGE"] = {
-				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [1]
-				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [2]
-			},
-			["ERR_QUEST_PUSH_DECLINED_S"] = {
-				"%s has declined your quest", -- [1]
-				"Rannie has declined your quest", -- [2]
-			},
-			["ERR_GUILD_DEMOTE_SSS"] = {
-				"%s has demoted %s to %s.", -- [1]
-				"Dragonx has demoted Minie to Noob.", -- [2]
-			},
-			["ERR_FRIEND_OFFLINE_S"] = {
-				"%s has gone offline.", -- [1]
-				"Ponnie has gone offline.", -- [2]
-			},
-			["ERR_SET_LOOT_NBG"] = {
-				"Looting set to need before greed.", -- [1]
-				"Looting set to need before greed.", -- [2]
-			},
-			["DRUNK_MESSAGE_SELF2"] = {
-				"You feel tipsy.  Whee!", -- [1]
-				"You feel tipsy.  Whee!", -- [2]
-			},
-			["DRUNK_MESSAGE_OTHER3"] = {
-				"%s looks drunk.", -- [1]
-				"Akronius looks drunk.", -- [2]
-			},
-			["ERR_GUILD_LEAVE_S"] = {
-				"%s has left the guild.", -- [1]
-				"Styxson has left the guild.", -- [2]
-			},
-			["ERR_PLAYER_DIED_S"] = {
-				"%s has died.", -- [1]
-				"Ponnie has died.", -- [2]
-			},
-			["ERR_QUEST_PUSH_ALREADY_DONE_S"] = {
-				"%s has completed that quest", -- [1]
-				"Lunarjustice has completed that quest", -- [2]
-			},
-			["ERR_AUCTION_EXPIRED_S"] = {
-				"Your auction of %s has expired.", -- [1]
-				"Your auction of Runn Tum Tuber Surprise has expired.", -- [2]
-			},
-			["ERR_QUEST_REWARD_ITEM_S"] = {
-				"Received item: %s.", -- [1]
-				"Received item: |cff1eff00|Hitem:19125:0:0:0|h[Seared Mail Girdle]|h|r.", -- [2]
-			},
-			["ERR_FRIEND_REMOVED_S"] = {
-				"%s removed from friends list.", -- [1]
-				"Garohunter removed from friends list.", -- [2]
-			},
-			["ERR_TRADE_BLOCKED_S"] = {
-				"%s has requested to trade.  You have refused.", -- [1]
-				"Kruztique has requested to trade.  You have refused.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["ERR_SET_LOOT_GROUP"] = {
-				"Looting changed to group loot.", -- [1]
-				"Looting changed to group loot.", -- [2]
-			},
-			["TRANSFER_ABORT_MAX_PLAYERS"] = {
-				"Transfer Aborted: instance is full", -- [1]
-				"Transfer Aborted: instance is full", -- [2]
-			},
-			["ERR_QUEST_PUSH_TOO_FAR_S"] = {
-				"%s is too far away to receive your quest", -- [1]
-				"Kruztique is too far away to receive your quest", -- [2]
-			},
-			["ERR_LEFT_GROUP_YOU"] = {
-				"You leave the group.", -- [1]
-				"You leave the group.", -- [2]
-			},
-			["ERR_NEW_LEADER_S"] = {
-				"%s is now the group leader.", -- [1]
-				"Dragonx is now the group leader.", -- [2]
-			},
-			["ERR_MEETING_STONE_LEFT_QUEUE_S"] = {
-				"You have left the queue to join a party for %s.", -- [1]
-				"You have left the queue to join a party for Hellfire Citadel - Hellfire Ramparts.", -- [2]
-			},
-			["ERR_BG_PLAYER_LEFT_S"] = {
-				"%s has left the battle", -- [1]
-				"Deiliana has left the battle", -- [2]
-			},
-			["MARKED_DND"] = {
-				"You are now DND: %s.", -- [1]
-				"You are now DND: Do not Disturb.", -- [2]
-			},
-			["ERR_FRIEND_ONLINE_SS"] = {
-				"|Hplayer:%s|h[%s]|h has come online.", -- [1]
-				"|Hplayer:Inverno|h[Inverno]|h has come online.", -- [2]
-			},
-			["ERR_IGNORE_NOT_FOUND"] = {
-				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [1]
-				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [2]
-			},
-			["ERR_CHAT_PLAYER_NOT_FOUND_S"] = {
-				"No player named '%s' is currently playing.", -- [1]
-				"No player named 'say' is currently playing.", -- [2]
-			},
-			["ERR_QUEST_REWARD_MONEY_S"] = {
-				"Received %s.", -- [1]
-				"Received 70 Silver.", -- [2]
-			},
-			["ERR_UNINVITE_YOU"] = {
-				"You have been removed from the group.", -- [1]
-				"You have been removed from the group.", -- [2]
-			},
-			["ERR_SET_LOOT_THRESHOLD_S"] = {
-				"Loot threshold set to %s", -- [1]
-				"Loot threshold set to Rare", -- [2]
-			},
-			["DRUNK_MESSAGE_SELF1"] = {
-				"You feel sober again.", -- [1]
-				"You feel sober again.", -- [2]
-			},
-			["ERR_EXHAUSTION_RESTED"] = {
-				"You feel rested.", -- [1]
-				"You feel rested.", -- [2]
-			},
-			["ERR_LEFT_GROUP_S"] = {
-				"%s leaves the party.[ERR_LEFT_GROUP_S]", -- [1]
-				"Kruztique leaves the party.[ERR_LEFT_GROUP_S]", -- [2]
-			},
-			["ERR_DECLINE_GROUP_S"] = {
-				"%s declines your group invitation.", -- [1]
-				"Librabear declines your group invitation.", -- [2]
-			},
-			["WHO_LIST_GUILD_FORMAT"] = {
-				"|Hplayer:%s|h[%s]|h: Level %d %s %s <%s> - %s", -- [1]
-				"|Hplayer:Mimicat|h[Mimicat]|h: Level 60 Human Warlock <D i v i n i t y> - Ironforge", -- [2]
-			},
-			["ERR_IGNORE_ADDED_S"] = {
-				"%s is now being ignored.", -- [1]
-				"Toppol is now being ignored.", -- [2]
-			},
-			["CLEARED_DND"] = {
-				"You are no longer marked DND.", -- [1]
-				"You are no longer marked DND.", -- [2]
-			},
-			["ERR_GUILD_JOIN_S"] = {
-				"%s has joined the guild.", -- [1]
-				"Feel has joined the guild.", -- [2]
-			},
-			["ERR_ALREADY_IN_GROUP_S"] = {
-				"%s is already in a group.", -- [1]
-				"Sai is already in a group.", -- [2]
-			},
-			["FACTION_STANDING_CHANGED"] = {
-				"You are now %s with %s.", -- [1]
-				"You are now Friendly with The League of Arathor.", -- [2]
-			},
-			["ERR_MATCHMAKING_IN_PROGRESS"] = {
-				"You are still seeking more members through the LFG matchmaking system.", -- [1]
-				"You are still seeking more members through the LFG matchmaking system.", -- [2]
-			},
-			["ERR_FRIEND_NOT_FOUND"] = {
-				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [1]
-				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["ERR_LEARN_RECIPE_S"] = {
-				"You have learned how to create a new item: %s.", -- [1]
-				"You have learned how to create a new item: Brightcloth Pants.", -- [2]
-			},
-			["ERR_SPELL_UNLEARNED_S"] = {
-				"You have unlearned %s.", -- [1]
-				"You have unlearned Cold Snap.", -- [2]
-			},
-			["ERR_QUEST_ALREADY_ON"] = {
-				"You are already on that quest", -- [1]
-				"You are already on that quest", -- [2]
-				"2.0.6", -- [3]
-			},
-			["DRUNK_MESSAGE_OTHER2"] = {
-				"%s looks tipsy.", -- [1]
-				"Brownee looks tipsy.", -- [2]
-			},
-			["ERR_QUEST_PUSH_BUSY_S"] = {
-				"%s is busy", -- [1]
-				"Rannie is busy", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["ERR_RAID_YOU_LEFT"] = {
-				"You have left the raid group", -- [1]
-				"You have left the raid group", -- [2]
-			},
-			["ERR_DUEL_REQUESTED"] = {
-				"You have requested a duel.", -- [1]
-				"You have requested a duel.", -- [2]
-			},
-			["ERR_AUCTION_WON_S"] = {
-				"You won an auction for %s", -- [1]
-				"You won an auction for Runed Blood Garnet", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["ERR_NOT_IN_GROUP"] = {
-				"You aren't in a party.", -- [1]
-				"You aren't in a party.", -- [2]
-			},
-			["ERR_INVITED_TO_GROUP_S"] = {
-				"%s has invited you to join a group.", -- [1]
-				"Iceangelz hat Euch in eine Gruppe eingeladen.", -- [2]
-			},
-			["ERR_GUILD_PROMOTE_SSS"] = {
-				"%s has promoted %s to %s.", -- [1]
-				"Zay has promoted Feel to Noob.", -- [2]
-			},
-			["ERR_QUEST_FAILED_MISSING_ITEMS"] = {
-				"You don't have the required items with you.  Check storage.", -- [1]
-				"You don't have the required items with you.  Check storage.", -- [2]
-			},
-			["DRUNK_MESSAGE_SELF3"] = {
-				"You feel drunk.  Woah!", -- [1]
-				"You feel drunk.  Woah!", -- [2]
-			},
-			["DRUNK_MESSAGE_OTHER4"] = {
-				"%s looks completely smashed.", -- [1]
-				"Northstorm looks completely smashed.", -- [2]
-			},
-			["ERR_MATCHMAKING_MEMBER_ADDED_S"] = {
-				"%s has been added to the group by the LFG matchmaking system.", -- [1]
-				"Meralog has been added to the group by the LFG matchmaking system.", -- [2]
-			},
-			["DRUNK_MESSAGE_SELF4"] = {
-				"You feel completely smashed.", -- [1]
-				"You feel completely smashed.", -- [2]
-			},
-			["ERR_NEW_LEADER_YOU"] = {
-				"You are now the group leader.", -- [1]
-				"You are now the group leader.", -- [2]
-			},
-			["ERR_QUEST_PUSH_INVALID_S"] = {
-				"%s is not eligible for that quest", -- [1]
-				"Sayune is not eligible for that quest", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_SELF_DAMAGE"] = {
-			["SPELLRESISTSELFSELF"] = {
-				"You resisted your %s.", -- [1]
-				"You resisted your Drain Soul.", -- [2]
-			},
-			["SPELLIMMUNESELFSELF"] = {
-				"Your %s failed.  You are immune.", -- [1]
-				"Your Soulshatter failed.  You are immune.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SIMPLECASTSELFOTHER"] = {
-				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
-				"You cast Polymorph on Young Stranglethorn Tiger.[SIMPLECASTSELFOTHER]", -- [2]
-			},
-			["SPELLLOGSELFOTHER"] = {
-				"Your %s hits %s for %d.", -- [1]
-				"Your Hemorrhage hits Alterac Ram for 132.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELF"] = {
-				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
-				"Arcane Explosion hits you for 1432 Arcane damage.[SPELLLOGSCHOOLSELF]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLTERSE_SELF"] = {
-				"You cast %s.[SPELLTERSE_SELF]", -- [1]
-				"You cast Soulshatter.[SPELLTERSE_SELF]", -- [2]
-				"2.0.8.6403", -- [3]
-			},
-			["SPELLMISSSELFOTHER"] = {
-				"Your %s missed %s.", -- [1]
-				"Your Hemorrhage missed Seasoned Guardian.", -- [2]
-			},
-			["SIMPLEPERFORMSELFOTHER"] = {
-				"You perform %s on %s.[SIMPLEPERFORMSELFOTHER]", -- [1]
-				"You perform Distract on Kasinoll.[SIMPLEPERFORMSELFOTHER]", -- [2]
-			},
-			["SPELLLOGABSORBSELFOTHER"] = {
-				"Your %s is absorbed by %s.", -- [1]
-				"Your Hemorrhage is absorbed by Vyxxenn.", -- [2]
-			},
-			["IMMUNESPELLSELFOTHER"] = {
-				"%s is immune to your %s.", -- [1]
-				"Lava Annihilator is immune to your Corruption.", -- [2]
-			},
-			["SPELLPARRIEDSELFOTHER"] = {
-				"Your %s is parried by %s.", -- [1]
-				"Your Hemorrhage is parried by Hillel.", -- [2]
-			},
-			["SPELLEVADEDSELFOTHER"] = {
-				"Your %s was evaded by %s.", -- [1]
-				"Your Cleave was evaded by Hatecrest Serpent Guard.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELFOTHER"] = {
-				"Your %s hits %s for %d %s damage.", -- [1]
-				"Your Instant Poison VI hits Singh for 125 Nature damage.", -- [2]
-			},
-			["SPELLIMMUNESELFOTHER"] = {
-				"Your %s failed. %s is immune.", -- [1]
-				"Your Polymorph failed. Orbatron is immune.", -- [2]
-			},
-			["SPELLREFLECTSELFOTHER"] = {
-				"Your %s is reflected back by %s.", -- [1]
-				"Your Corruption is reflected back by Greater Obsidian Elemental.", -- [2]
-			},
-			["SPELLDODGEDSELFOTHER"] = {
-				"Your %s was dodged by %s.", -- [1]
-				"Your Hemorrhage was dodged by Humlae.", -- [2]
-			},
-			["SPELLBLOCKEDSELFOTHER"] = {
-				"Your %s was blocked by %s.", -- [1]
-				"Your Hamstring was blocked by Zapped Wave Strider.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Arcane Explosion hits Bryantia for 1427 Arcane damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGCRITSELFOTHER"] = {
-				"Your %s crits %s for %d.", -- [1]
-				"Your Hemorrhage crits Alterac Ram for 308.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELFSELF"] = {
-				"Your %s hits you for %d %s damage.", -- [1]
-				"Your Shadow Bolt hits you for 763 Shadow damage.", -- [2]
-			},
-			["SPELLLOGABSORBSELFSELF"] = {
-				"You absorb your %s.", -- [1]
-				"You absorb your Plague Effect.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
-				"Your %s crits %s for %d %s damage.", -- [1]
-				"Your Smite crits Mindless Zombie for 26 Holy damage.", -- [2]
-			},
-			["SPELLRESISTSELFOTHER"] = {
-				"Your %s was resisted by %s.", -- [1]
-				"Your Cheap Shot was resisted by Yurneroo.", -- [2]
-			},
-			["SPELLINTERRUPTSELFOTHER"] = {
-				"You interrupt %s's %s.", -- [1]
-				"You interrupt Eliza's Frostbolt.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLSELFSELF"] = {
-				"Your %s crits you for %d %s damage.", -- [1]
-				"Your Shadow Bolt crits you for 1158 Shadow damage.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_MISSES"] = {
@@ -1177,26 +528,152 @@ CombatLogScribeDB = {
 				"Hukku's Voidwalker misses you.", -- [2]
 			},
 		},
+		["CHAT_MSG_SPELL_SELF_DAMAGE"] = {
+			["SPELLRESISTSELFSELF"] = {
+				"You resisted your %s.", -- [1]
+				"You resisted your Drain Soul.", -- [2]
+			},
+			["SPELLIMMUNESELFSELF"] = {
+				"Your %s failed.  You are immune.", -- [1]
+				"Your Soulshatter failed.  You are immune.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SIMPLECASTSELFOTHER"] = {
+				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
+				"You cast Polymorph on Young Stranglethorn Tiger.[SIMPLECASTSELFOTHER]", -- [2]
+			},
+			["SPELLLOGSELFOTHER"] = {
+				"Your %s hits %s for %d.", -- [1]
+				"Your Hemorrhage hits Alterac Ram for 132.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELF"] = {
+				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
+				"Arcane Explosion hits you for 1432 Arcane damage.[SPELLLOGSCHOOLSELF]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLTERSE_SELF"] = {
+				"You cast %s.[SPELLTERSE_SELF]", -- [1]
+				"You cast Soulshatter.[SPELLTERSE_SELF]", -- [2]
+				"2.0.8.6403", -- [3]
+			},
+			["SPELLMISSSELFOTHER"] = {
+				"Your %s missed %s.", -- [1]
+				"Your Hemorrhage missed Seasoned Guardian.", -- [2]
+			},
+			["SIMPLEPERFORMSELFOTHER"] = {
+				"You perform %s on %s.[SIMPLEPERFORMSELFOTHER]", -- [1]
+				"You perform Distract on Kasinoll.[SIMPLEPERFORMSELFOTHER]", -- [2]
+			},
+			["SPELLLOGABSORBSELFOTHER"] = {
+				"Your %s is absorbed by %s.", -- [1]
+				"Your Hemorrhage is absorbed by Vyxxenn.", -- [2]
+			},
+			["IMMUNESPELLSELFOTHER"] = {
+				"%s is immune to your %s.", -- [1]
+				"Lava Annihilator is immune to your Corruption.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLSELF"] = {
+				"%s crits you for %d %s damage.[SPELLLOGCRITSCHOOLSELF]", -- [1]
+				"Spore Explosion crits you for 5989 Nature damage.[SPELLLOGCRITSCHOOLSELF]", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["SPELLPARRIEDSELFOTHER"] = {
+				"Your %s is parried by %s.", -- [1]
+				"Your Hemorrhage is parried by Hillel.", -- [2]
+			},
+			["SPELLEVADEDSELFOTHER"] = {
+				"Your %s was evaded by %s.", -- [1]
+				"Your Cleave was evaded by Hatecrest Serpent Guard.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHER"] = {
+				"%s crits %s for %d %s damage.[SPELLLOGCRITSCHOOLOTHER]", -- [1]
+				"Spore Explosion crits Kruztique for 5968 Nature damage.[SPELLLOGCRITSCHOOLOTHER]", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["SPELLLOGCRITSCHOOLSELFSELF"] = {
+				"Your %s crits you for %d %s damage.", -- [1]
+				"Your Shadow Bolt crits you for 1158 Shadow damage.", -- [2]
+			},
+			["SPELLIMMUNESELFOTHER"] = {
+				"Your %s failed. %s is immune.", -- [1]
+				"Your Polymorph failed. Orbatron is immune.", -- [2]
+			},
+			["SPELLREFLECTSELFOTHER"] = {
+				"Your %s is reflected back by %s.", -- [1]
+				"Your Corruption is reflected back by Greater Obsidian Elemental.", -- [2]
+			},
+			["SPELLINTERRUPTSELFOTHER"] = {
+				"You interrupt %s's %s.", -- [1]
+				"You interrupt Eliza's Frostbolt.", -- [2]
+			},
+			["SPELLBLOCKEDSELFOTHER"] = {
+				"Your %s was blocked by %s.", -- [1]
+				"Your Hamstring was blocked by Zapped Wave Strider.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Arcane Explosion hits Bryantia for 1427 Arcane damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGCRITSELFOTHER"] = {
+				"Your %s crits %s for %d.", -- [1]
+				"Your Hemorrhage crits Alterac Ram for 308.", -- [2]
+			},
+			["SPELLRESISTSELFOTHER"] = {
+				"Your %s was resisted by %s.", -- [1]
+				"Your Cheap Shot was resisted by Yurneroo.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
+				"Your %s crits %s for %d %s damage.", -- [1]
+				"Your Smite crits Mindless Zombie for 26 Holy damage.", -- [2]
+			},
+			["SPELLLOGABSORBSELFSELF"] = {
+				"You absorb your %s.", -- [1]
+				"You absorb your Plague Effect.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELFSELF"] = {
+				"Your %s hits you for %d %s damage.", -- [1]
+				"Your Shadow Bolt hits you for 763 Shadow damage.", -- [2]
+			},
+			["SPELLDODGEDSELFOTHER"] = {
+				"Your %s was dodged by %s.", -- [1]
+				"Your Hemorrhage was dodged by Humlae.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELFOTHER"] = {
+				"Your %s hits %s for %d %s damage.", -- [1]
+				"Your Instant Poison VI hits Singh for 125 Nature damage.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_HOSTILE_DEATH"] = {
+			["UNITDIESOTHER"] = {
+				"%s dies.", -- [1]
+				"Alterac Ram dies.", -- [2]
+			},
+			["PARTYKILLOTHER"] = {
+				"%s is slain by %s!", -- [1]
+				"Chevr is slain by Mos!", -- [2]
+			},
+			["UNITDESTROYEDOTHER"] = {
+				"%s is destroyed.", -- [1]
+				"Magma Totem IV is destroyed.", -- [2]
+			},
+			["SELFKILLOTHER"] = {
+				"You have slain %s!", -- [1]
+				"You have slain Forest Spider!", -- [2]
+			},
+		},
 		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF"] = {
 			["SPELLIMMUNEOTHEROTHER"] = {
 				"%s's %s fails. %s is immune.", -- [1]
 				"Wildspawn Satyr's Battle Shout fails. Wildspawn Betrayer is immune.", -- [2]
 			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Captain Balinda Stonehearth casts Dispel Magic on Greethun.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
 			["DISPELFAILEDOTHEROTHER"] = {
 				"%s fails to dispel %s's %s.", -- [1]
 				"Garr fails to dispel Typhoonsfury's Greater Blessing of Wisdom.", -- [2]
 			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Honor Hold Archer performs Shoot Bow.[SPELLTERSEPERFORM_OTHER]", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Zevrim Thornhoof's Sacrifice heals Zevrim Thornhoof for 300.", -- [2]
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Scholomance Dark Summoner begins to perform Summon Risen Lackey.", -- [2]
 			},
 			["POWERGAINOTHEROTHER"] = {
 				"%s gains %d %s from %s's %s.", -- [1]
@@ -1207,9 +684,9 @@ CombatLogScribeDB = {
 				"Fel Cannon MKI's Fel Cannon Blast was resisted by Juckus.", -- [2]
 				"2.0.6", -- [3]
 			},
-			["SPELLEXTRAATTACKSOTHER"] = {
-				"%s gains %d extra attacks through %s.", -- [1]
-				"Stormpike Owl gains 2 extra attacks through Thrash.", -- [2]
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Honor Hold Archer performs Shoot Bow.[SPELLTERSEPERFORM_OTHER]", -- [2]
 			},
 			["HEALEDOTHER"] = {
 				"%s heals %s for %d.", -- [1]
@@ -1219,6 +696,14 @@ CombatLogScribeDB = {
 			["SPELLTERSE_OTHER"] = {
 				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
 				"Irondeep Shaman casts Earthbind Totem.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Zevrim Thornhoof's Sacrifice heals Zevrim Thornhoof for 300.", -- [2]
+			},
+			["SPELLEXTRAATTACKSOTHER"] = {
+				"%s gains %d extra attacks through %s.", -- [1]
+				"Stormpike Owl gains 2 extra attacks through Thrash.", -- [2]
 			},
 			["PROCRESISTOTHEROTHER"] = {
 				"%s resists %s's %s.", -- [1]
@@ -1232,91 +717,53 @@ CombatLogScribeDB = {
 				"%s's %s critically heals %s for %d.", -- [1]
 				"Aleoso's Vampiric Embrace critically heals Jerick for 470.", -- [2]
 			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Scholomance Dark Summoner begins to perform Summon Risen Lackey.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] = {
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Sludge's Thorns was resisted by Bloodrage.", -- [2]
-			},
-			["DAMAGESHIELDOTHEROTHER"] = {
-				"%s reflects %d %s damage to %s.", -- [1]
-				"Grizzly reflects 18 Nature damage to Jagnus.", -- [2]
-			},
-			["SPELLRESISTOTHERSELF"] = {
-				"%s's %s was resisted.", -- [1]
-				"Diokles's Thorns was resisted.", -- [2]
-			},
-			["DAMAGESHIELDOTHERSELF"] = {
-				"%s reflects %d %s damage to you.", -- [1]
-				"Plethora reflects 15 Nature damage to you.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_PARTY_BUFF"] = {
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Ilyena's Weakened Soul fails. Akronius is immune.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Minimonty's Holy Light heals Huntzor for 2030.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Kruztique's Dispel Magic is reflected back by Mageslayer.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Sruufenn fails to dispel Aladinsane's Demon Armor.", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.", -- [1]
-				"Thookun casts Devour Magic on you.", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Woft's Teleport to Player was evaded by Onyxian Whelp.", -- [2]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Icehammer gains 60 Mana from Morisen's Rejuvenation.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Steam Tonk casts Mortar.[SPELLTERSE_OTHER]", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Lionkingz's Zulian Slice missed Lava Reaver.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Ponnie's Transmogrify! was resisted by Deep Strider.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Lionkingz's Zulian Slice was parried by Molten Giant.", -- [2]
-			},
-			["PROCRESISTOTHEROTHER"] = {
-				"%s resists %s's %s.", -- [1]
-				"Qiraji Gladiator resists Sejet's Blessing of Sanctuary.", -- [2]
-			},
 			["SIMPLECASTOTHEROTHER"] = {
 				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Kruztique casts Dispel Magic on Grimbow.[SIMPLECASTOTHEROTHER]", -- [2]
+				"Captain Balinda Stonehearth casts Dispel Magic on Greethun.[SIMPLECASTOTHEROTHER]", -- [2]
 			},
-			["HEALEDCRITOTHEROTHER"] = {
-				"%s's %s critically heals %s for %d.", -- [1]
-				"Minimonty's Flash of Light critically heals Kiraa for 806.", -- [2]
+		},
+		["CHAT_MSG_SPELL_AURA_GONE_OTHER"] = {
+			["AURAREMOVEDOTHER"] = {
+				"%s fades from %s.", -- [1]
+				"Cheap Shot fades from Alterac Ram.", -- [2]
 			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Lionkingz's Zulian Slice was dodged by Molten Giant.", -- [2]
+		},
+		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE"] = {
+			["PERIODICAURADAMAGEOTHEROTHER"] = {
+				"%s suffers %d %s damage from %s's %s.", -- [1]
+				"Sekaikaze suffers 26 Physical damage from Alterac Ram's Rend.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Sapo's Viper Sting drains 277 Mana from Vyxxenn.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Yurneroo's Deep Wound is absorbed by Proxor.", -- [2]
+			},
+			["AURAADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s.", -- [1]
+				"Sekaikaze is afflicted by Rend.", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Regnier's Drain Mana drains 140 Mana from Darigaaz. Regnier gains 140 Mana.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHER"] = {
+				"%s suffers %d %s damage from %s.", -- [1]
+				"Nyctrico suffers 259 Fire damage from Flame Wave.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s (%d).", -- [1]
+				"Loradam is afflicted by Shadow Vulnerability (2).", -- [2]
+			},
+			["SPELLLOGABSORBSELFOTHER"] = {
+				"Your %s is absorbed by %s.", -- [1]
+				"Your Corruption is absorbed by Sansetsu.", -- [2]
+			},
+			["PERIODICAURADAMAGESELFOTHER"] = {
+				"%s suffers %d %s damage from your %s.", -- [1]
+				"Dreamstriker suffers 158 Shadow damage from your Corruption.", -- [2]
 			},
 		},
 		["CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS"] = {
@@ -1350,51 +797,27 @@ CombatLogScribeDB = {
 				"Shadowfiend hits Rijak for 82 Shadow damage.[COMBATHITSCHOOLOTHEROTHER] (27 resisted)", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Adeillis hits Syntaks for 240.[COMBATHITOTHEROTHER]", -- [2]
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Adeillis crits Syntaks for 227.[COMBATHITCRITOTHEROTHER]", -- [2]
 			},
 			["SPELLLOGOTHEROTHER"] = {
 				"%s's %s hits %s for %d.", -- [1]
 				"Potshot's Auto Shot hits Nitayes for 455.", -- [2]
 			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Adeillis crits Syntaks for 227.[COMBATHITCRITOTHEROTHER]", -- [2]
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Adeillis hits Syntaks for 240.[COMBATHITOTHEROTHER]", -- [2]
 			},
 			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
 				"%s loses %d health for swimming in lava.", -- [1]
 				"Windlore loses 603 health for swimming in lava.", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS"] = {
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Onyxia's Elite Guard hits Highlord Bolvar Fordragon for 405.[COMBATHITOTHEROTHER]", -- [2]
-			},
-			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
-				"%s suffers %d points of fire damage.", -- [1]
-				"Ironforge Brigade Rifleman suffers 14 points of fire damage.", -- [2]
-			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Rot crits Hephaiston for 263 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Infernal Siegebreaker hits Stormwind Soldier for 1874 Fire damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Voljaka's Auto Shot crits Softhard for 761.", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Irondeep Miner crits Irondeep Skullthumper for 56.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Irondeep Trogg hits Irondeep Miner for 32.[COMBATHITOTHEROTHER]", -- [2]
+		["CHAT_MSG_SPELL_AURA_GONE_PARTY"] = {
+			["AURAREMOVEDOTHER"] = {
+				"%s fades from %s.", -- [1]
+				"Detect Greater Invisibility fades from Kruztique.", -- [2]
 			},
 		},
 		["CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE"] = {
@@ -1512,18 +935,19 @@ CombatLogScribeDB = {
 				"%s's %s was parried.", -- [1]
 				"Southsea Dock Worker's Head Crack was parried.", -- [2]
 			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Epoch Hunter casts Disrupt Magic on Yazlop.[SIMPLECASTOTHEROTHER]", -- [2]
+			["SPELLSPLITDAMAGEOTHERSELF"] = {
+				"%s's %s causes you %d damage.", -- [1]
+				"Kirin'Var Ghost's Soulbind causes you 105 damage.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
 			["SPELLLOGSCHOOLOTHEROTHER"] = {
 				"%s's %s hits %s for %d %s damage.", -- [1]
 				"Wildspawn Imp's Fire Blast hits Wildspawn Hellcaller for 210 Fire damage. (210 resisted)", -- [2]
 			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Bryantia for 259 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			["SPELLPOWERDRAINOTHERSELF"] = {
+				"%s's %s drains %d %s from you.", -- [1]
+				"Firewing Defender's Mana Tap drains 1270 Mana from you.", -- [2]
+				"2.0.8.6403", -- [3]
 			},
 			["SPELLLOGOTHEROTHER"] = {
 				"%s's %s hits %s for %d.", -- [1]
@@ -1533,30 +957,1410 @@ CombatLogScribeDB = {
 				"%s's %s crits you for %d %s damage.", -- [1]
 				"Magma Totem's Magma Totem crits you for 31 Fire damage. (7 resisted)", -- [2]
 			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Frostwolf Legionnaire performs Dazed on Khuunam.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			["SPELLIMMUNEOTHER"] = {
+				"%s fails. %s is immune.", -- [1]
+				"Flame Wave fails. Infernal is immune.", -- [2]
 			},
 			["SPELLRESISTOTHEROTHER"] = {
 				"%s's %s was resisted by %s.", -- [1]
 				"Wildspawn Rogue's Poison was resisted by Wildspawn Rogue.", -- [2]
 			},
-			["SPELLIMMUNEOTHER"] = {
-				"%s fails. %s is immune.", -- [1]
-				"Flame Wave fails. Infernal is immune.", -- [2]
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Frostwolf Legionnaire performs Dazed on Khuunam.[SIMPLEPERFORMOTHEROTHER]", -- [2]
 			},
 			["SPELLLOGABSORBOTHERSELF"] = {
 				"You absorb %s's %s.", -- [1]
 				"You absorb Wildspawn Hellcaller's Fire Shield.", -- [2]
 			},
-			["SPELLPOWERDRAINOTHERSELF"] = {
-				"%s's %s drains %d %s from you.", -- [1]
-				"Firewing Defender's Mana Tap drains 1270 Mana from you.", -- [2]
-				"2.0.8.6403", -- [3]
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Bryantia for 259 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
 			},
-			["SPELLSPLITDAMAGEOTHERSELF"] = {
-				"%s's %s causes you %d damage.", -- [1]
-				"Kirin'Var Ghost's Soulbind causes you 105 damage.", -- [2]
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Epoch Hunter casts Disrupt Magic on Yazlop.[SIMPLECASTOTHEROTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF"] = {
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Arcatraz Sentinel's Energy Discharge fails. Nino is immune.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Arcatraz Sentinel's Energy Discharge was resisted by Nedru.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Sethekk Ravenguard's Bloodthirst was dodged by Shair.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["PROCRESISTOTHEROTHER"] = {
+				"%s resists %s's %s.", -- [1]
+				"Librabear resists Winterfall Shaman's Lightning Shield.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Shattered Hand Heathen's Bloodthirst was parried by Roond.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Kruztique gains 280 Mana from Shadowfiend's Mana Leech.", -- [2]
+				"2.0.6", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"Blackhand Veteran's Shield Bash was blocked by Hang.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Molten Destroyer interrupts Narwen's Frostbolt.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Damnh is immune to Buru the Gorger's Creeping Plague.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Unknown Entity's Ambush crits Darkvillian for 1322.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Epoch Hunter casts Disrupt Magic on Thrall.[SIMPLECASTOTHEROTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Unknown's Lash of Pain crits Treka for 110 Shadow damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Slim's Friend's Poison was resisted by Gilman.", -- [2]
+			},
+			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
+				"%s casts %s on %s: %s damaged.", -- [1]
+				"Ragnaros casts Melt Weapon on Dragonx: Bloodlord's Defender damaged.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Prairie Wolf begins to cast Threatening Growl.", -- [2]
+			},
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Entropic Eye performs Chaos Breath.[SPELLTERSEPERFORM_OTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Flamewaker's Fist of Ragnaros fails. Librabear is immune.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Stormpike Mountaineer begins to perform Shoot.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Firewing Warlock's Mana Tap drains 1270 Mana from Tyranno.", -- [2]
+				"2.0.6", -- [3]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Alliance Sentinel's Cleave was dodged by Tric.", -- [2]
+			},
+			["INSTAKILLOTHER"] = {
+				"%s is killed by %s.", -- [1]
+				"Gan'arg Sapper is killed by Power Burn.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Stormpike Mountaineer's Explosive Shot hits Zunk for 215 Fire damage.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Liquid Fire's Blaze was evaded by Champion Defender.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Stormpike Mountaineer's Shoot is absorbed by Maulive.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Seasoned Guardian's Revenge hits Cleatus for 71.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Stormpike Mountaineer's Shoot missed Zunk.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Dreamcatcher for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Arazzius the Cruel casts Inferno.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["SPELLSPLITDAMAGEOTHEROTHER"] = {
+				"%s's %s causes %s %d damage.", -- [1]
+				"Dreghood Drudge's Shared Bonds causes Dreghood Drudge 71 damage.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Irondeep Trogg performs Dazed on Irondeep Miner.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Obsidian Eradicator's Drain Mana drains 250 Mana from Dizdk. Obsidian Eradicator gains 500 Mana.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Southsea Pirate's Strike was parried by Thimtamuya.", -- [2]
+			},
+		},
+		["CHAT_MSG_SKILL"] = {
+			["ERR_SKILL_UP_SI"] = {
+				"Your skill in %s has increased to %d.[ERR_SKILL_UP_SI]", -- [1]
+				"Your skill in Riding has increased to 150.[ERR_SKILL_UP_SI]", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_PET_MISSES"] = {
+			["VSDODGEOTHERSELF"] = {
+				"%s attacks. You dodge.", -- [1]
+				"Wrathbringer attacks. You dodge.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["VSIMMUNEOTHEROTHER"] = {
+				"%s attacks but %s is immune.", -- [1]
+				"Wildspawn Rogue attacks but Wildspawn Rogue is immune.", -- [2]
+			},
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Khuunam attacks. Althion absorbs all the damage.", -- [2]
+			},
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Wildspawn Rogue misses Wildspawn Trickster.", -- [2]
+			},
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Wildspawn Rogue attacks. Wildspawn Trickster dodges.", -- [2]
+			},
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Wildspawn Rogue attacks. Wildspawn Trickster parries.", -- [2]
+			},
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"Phantaz attacks. Risen Guard blocks.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS"] = {
+			["PERIODICAURAHEALSELFOTHER"] = {
+				"%s gains %d health from your %s.", -- [1]
+				"Wildspawn Rogue gains 153 health from your Health Funnel.", -- [2]
+			},
+			["POWERGAINSELFSELF"] = {
+				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
+				"You gain 144 Mana from Fel Energy.[POWERGAINSELFSELF]", -- [2]
+			},
+			["AURAADDEDSELFHELPFUL"] = {
+				"You gain %s.", -- [1]
+				"You gain Sprint.", -- [2]
+			},
+			["PERIODICAURAHEALOTHEROTHER"] = {
+				"%s gains %d health from %s's %s.", -- [1]
+				"Wildspawn Hellcaller gains 223 health from Kruztique's Renew.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDSELFHELPFUL"] = {
+				"You gain %s (%d).", -- [1]
+				"You gain Lifebloom (2).", -- [2]
+			},
+			["AURAADDEDOTHERHELPFUL"] = {
+				"%s gains %s.", -- [1]
+				"Khuunam gains Master Demonologist.", -- [2]
+			},
+			["PERIODICAURAHEALSELFSELF"] = {
+				"You gain %d health from %s.[PERIODICAURAHEALSELFSELF]", -- [1]
+				"You gain 250 health from First Aid.[PERIODICAURAHEALSELFSELF]", -- [2]
+			},
+			["PERIODICAURAHEALOTHERSELF"] = {
+				"You gain %d health from %s's %s.", -- [1]
+				"You gain 223 health from Kruztique's Renew.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
+				"%s gains %s (%d).", -- [1]
+				"Haaroon gains Demonic Frenzy (2).", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] = {
+			["DAMAGESHIELDOTHEROTHER"] = {
+				"%s reflects %d %s damage to %s.", -- [1]
+				"Deranged Helboar reflects 25 Fire damage to Deranged Helboar.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Deranged Helboar's Burning Spikes was resisted by Deranged Helboar.", -- [2]
+			},
+			["DAMAGESHIELDSELFOTHER"] = {
+				"You reflect %d %s damage to %s.", -- [1]
+				"You reflect 15 Nature damage to Southsea Freebooter.", -- [2]
+			},
+			["SPELLRESISTSELFOTHER"] = {
+				"Your %s was resisted by %s.", -- [1]
+				"Your Thorns was resisted by Southsea Swashbuckler.", -- [2]
+			},
+			["DAMAGESHIELDOTHERSELF"] = {
+				"%s reflects %d %s damage to you.", -- [1]
+				"Phantaz reflects 32 Nature damage to you.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"Blackhand Iron Guard's Shield Slam was blocked by Cleatus.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Molten Destroyer interrupts Souldreamer's Holy Light.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Athenna is immune to Buru the Gorger's Creeping Plague.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Unknown Entity's Ambush crits Ponnie for 1090.", -- [2]
+			},
+			["SPELLRESISTOTHER"] = {
+				"%s was resisted by %s.", -- [1]
+				"Frostbite was resisted by Kruztique.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Unknown's Firebolt crits Bleinmeis for 170 Fire damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Wildspawn Trickster's Curse of Weakness was resisted by Kruztique.", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Obsidian Eradicator's Drain Mana drains 250 Mana from Bapakloe. Obsidian Eradicator gains 500 Mana.", -- [2]
+			},
+			["SPELLLOGABSORBOTHER"] = {
+				"%s is absorbed by %s.", -- [1]
+				"Flame Wave is absorbed by Kruztique.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Gehennas's Shadow Bolt fails. Souldreamer is immune.", -- [2]
+			},
+			["SPELLSPLITDAMAGEOTHEROTHER"] = {
+				"%s's %s causes %s %d damage.", -- [1]
+				"Kirin'Var Ghost's Soulbind causes Alanfoster 159 damage.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Hatecrest Warrior's Disarm was dodged by Ponnie.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Epoch Hunter fails to dispel Dartanion's Fire Shield.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Commander Louis Philips performs Dazed on Kruztique.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Eliza's Frostbolt hits Aubrie for 120 Frost damage.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike is absorbed by Kruztique.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Wildspawn Rogue's Sinister Strike hits Kruztique for 331.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Hatecrest Warrior's Disarm missed Ponnie.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Firewing Bloodwarder's Mana Tap drains 1290 Mana from Kruztique.", -- [2]
+				"2.0.6", -- [3]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Shadowmoon Warlock's Shadow Bolt is reflected back by Iamvj.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Southsea Pirate's Strike was parried by Ponnie.", -- [2]
+			},
+			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
+				"%s casts %s on %s: %s damaged.", -- [1]
+				"Ragnaros casts Melt Weapon on Guntlien: Silent Fang damaged.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Kruztique for 275 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Epoch Hunter casts Disrupt Magic on Shair.[SIMPLECASTOTHEROTHER]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+		},
+		["CHAT_MSG_COMBAT_HOSTILEPLAYER_MISSES"] = {
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"Rokugo attacks. Cleatus blocks.", -- [2]
+			},
+			["MISSEDOTHERSELF"] = {
+				"%s misses you.", -- [1]
+				"Himta misses you.", -- [2]
+			},
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Hannibal attacks. Euthanatos dodges.", -- [2]
+			},
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Sludge attacks. Sharrakor parries.", -- [2]
+			},
+			["VSIMMUNEOTHERSELF"] = {
+				"%s attacks but you are immune.", -- [1]
+				"Plethora attacks but you are immune.", -- [2]
+			},
+			["VSPARRYOTHERSELF"] = {
+				"%s attacks. You parry.", -- [1]
+				"Zibana attacks. You parry.", -- [2]
+			},
+			["VSEVADEOTHEROTHER"] = {
+				"%s attacks. %s evades.", -- [1]
+				"Irenala attacks. Champion Guardsman evades.", -- [2]
+			},
+			["VSIMMUNEOTHEROTHER"] = {
+				"%s attacks but %s is immune.", -- [1]
+				"Snackpak attacks but Minimonty is immune.", -- [2]
+			},
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Blaymord misses Sharrakor.", -- [2]
+			},
+			["VSABSORBOTHERSELF"] = {
+				"%s attacks. You absorb all the damage.", -- [1]
+				"Stupifier attacks. You absorb all the damage.", -- [2]
+			},
+			["VSDODGEOTHERSELF"] = {
+				"%s attacks. You dodge.", -- [1]
+				"Fiasco attacks. You dodge.", -- [2]
+			},
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Thermopolis attacks. Proxor absorbs all the damage.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_MISC_INFO"] = {
+			["DURABILITYDAMAGE_DEATH"] = {
+				"Your equipped items suffer a 10%% durability loss.", -- [1]
+				"Your equipped items suffer a 10% durability loss.", -- [2]
+			},
+			["SPELLDISMISSPETOTHER"] = {
+				"%s's %s is dismissed.", -- [1]
+				"Zay's Kay is dismissed.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF"] = {
+			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
+				"%s gains %d extra attack through %s.", -- [1]
+				"Sludge gains 1 extra attack through Hand of Justice.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Shammycow begins to perform Skinning.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Lokris performs Vanish on Lokris.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLIMMUNEOTHERSELF"] = {
+				"%s's %s failed. You are immune.", -- [1]
+				"Ponnie's First Aid failed. You are immune.", -- [2]
+			},
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Colding performs Cannibalize.[SPELLTERSEPERFORM_OTHER]", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHEROTHER"] = {
+				"%s casts %s on %s's %s.", -- [1]
+				"Zay casts +15 Fire Resistance on Cleatus's Onyxia Scale Cloak.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Fzuufenn's Devour Magic was resisted by Ponnie.", -- [2]
+			},
+			["SPELLEXTRAATTACKSOTHER"] = {
+				"%s gains %d extra attacks through %s.", -- [1]
+				"Petergibbons gains 2 extra attacks through Windfury Attack.", -- [2]
+			},
+			["HEALEDOTHERSELF"] = {
+				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
+				"Kruztique's Flash Heal heals you for 1176.[HEALEDOTHERSELF]", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Amantar begins to cast Greater Heal.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Kruztique's Weakened Soul fails. Narwen is immune.", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHERSELF"] = {
+				"%s casts %s on your %s.", -- [1]
+				"Erato casts +26 Attack Power on your Marshal's Leather Handgrips.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Ponnie casts Cleanse on you.SIMPLECASTOTHERSELF", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Magosko's Dark Pact drains 250 Mana from Unknown Entity. Magosko gains 250 Mana.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Khuudom fails to dispel Boonie's Demon Armor.", -- [2]
+			},
+			["OPEN_LOCK_OTHER"] = {
+				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
+				"Kruztique performs Herb Gathering on Dreamfoil.[OPEN_LOCK_OTHER]", -- [2]
+			},
+			["SPELLRESISTOTHERSELF"] = {
+				"%s's %s was resisted.", -- [1]
+				"Khuudom's Devour Magic was resisted.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Bakmoi casts Dispel Magic on Frucheman.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Lionkingz's Zulian Slice missed Cleatus.", -- [2]
+			},
+			["DISPELFAILEDOTHERSELF"] = {
+				"%s fails to dispel your %s.", -- [1]
+				"Poyayan fails to dispel your Power Word: Fortitude.", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Vyxxenn's Devouring Plague heals Vyxxenn for 106.", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Zryan casts Mana Spring Totem.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Yurneroo gains 15 Rage from Yurneroo's Charge.", -- [2]
+			},
+			["HEALEDCRITOTHERSELF"] = {
+				"%s's %s critically heals you for %d.", -- [1]
+				"Kruztique's Greater Heal critically heals you for 3183.", -- [2]
+			},
+			["HEALEDCRITOTHEROTHER"] = {
+				"%s's %s critically heals %s for %d.", -- [1]
+				"Evelgest's Flash Heal critically heals Neckrataal for 1597.", -- [2]
+			},
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 60 Mana from Morisen's Rejuvenation.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_HONOR_GAIN"] = {
+			["COMBATLOG_HONORAWARD"] = {
+				"You have been awarded %d honor points.", -- [1]
+				"You have been awarded 198 honor points.", -- [2]
+			},
+			["COMBATLOG_HONORGAIN"] = {
+				"%s dies, honorable kill Rank: %s (Estimated Honor Points: %d)", -- [1]
+				"Vyxxenn dies, honorable kill Rank: Stone Guard (Estimated Honor Points: 80)", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_SELF_MISSES"] = {
+			["VSPARRYSELFOTHER"] = {
+				"You attack. %s parries.", -- [1]
+				"You attack. Zakarum parries.", -- [2]
+			},
+			["VSEVADESELFOTHER"] = {
+				"You attack. %s evades.", -- [1]
+				"You attack. Zukk'ash Stinger evades.", -- [2]
+			},
+			["MISSEDSELFOTHER"] = {
+				"You miss %s.", -- [1]
+				"You miss Alterac Ram.", -- [2]
+			},
+			["VSABSORBSELFOTHER"] = {
+				"You attack. %s absorbs all the damage.", -- [1]
+				"You attack. Vyxxenn absorbs all the damage.", -- [2]
+			},
+			["VSDODGESELFOTHER"] = {
+				"You attack. %s dodges.", -- [1]
+				"You attack. Vyxxenn dodges.", -- [2]
+			},
+			["VSBLOCKSELFOTHER"] = {
+				"You attack. %s blocks.", -- [1]
+				"You attack. Flamekin Rager blocks.", -- [2]
+			},
+			["VSIMMUNESELFOTHER"] = {
+				"You attack but %s is immune.", -- [1]
+				"You attack but Wildspawn Shadowstalker is immune.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_FRIENDLY_DEATH"] = {
+			["PARTYKILLOTHER"] = {
+				"%s is slain by %s!", -- [1]
+				"Singh is slain by Mos!", -- [2]
+			},
+			["SELFKILLOTHER"] = {
+				"You have slain %s!", -- [1]
+				"You have slain Phantaz!", -- [2]
+			},
+			["UNITDIESSELF"] = {
+				"You die.", -- [1]
+				"You die.", -- [2]
+			},
+			["UNITDESTROYEDOTHER"] = {
+				"%s is destroyed.", -- [1]
+				"Grounding Totem is destroyed.", -- [2]
+			},
+			["UNITDIESOTHER"] = {
+				"%s dies.", -- [1]
+				"Sapo dies.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF"] = {
+			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
+				"%s gains %d extra attack through %s.", -- [1]
+				"Cleatus gains 1 extra attack through Sword Specialization.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Aradan begins to perform Smelt Thorium.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Adeillis performs Vanish on Adeillis.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLTERSEPERFORM_OTHER"] = {
+				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
+				"Illik performs Preparation.[SPELLTERSEPERFORM_OTHER]", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHEROTHER"] = {
+				"%s casts %s on %s's %s.", -- [1]
+				"Hrotngar casts Scope (+7 Damage) on Hrotngar's Precisely Calibrated Boomstick.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Pryyfun's Devour Magic was resisted by Darigaaz.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Lionkingz's Zulian Slice was parried by Flamewaker.", -- [2]
+			},
+			["PROCRESISTOTHEROTHER"] = {
+				"%s resists %s's %s.", -- [1]
+				"Anubisath Sentinel resists Sejet's Greater Blessing of Sanctuary.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Greil begins to cast Summon Charger.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Loughlenn's Dispel Magic fails. Moiranna is immune.", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Sikate's Zulian Slice was dodged by Firewalker.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Pameli fails to dispel Cleatus's Poisonous Blood.", -- [2]
+			},
+			["OPEN_LOCK_OTHER"] = {
+				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
+				"Dalimar performs Pick Lock on Wicker Chest.[OPEN_LOCK_OTHER]", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Nedru's Teleport to Player was evaded by Onyxian Whelp.", -- [2]
+			},
+			["SPELLEXTRAATTACKSOTHER"] = {
+				"%s gains %d extra attacks through %s.", -- [1]
+				"Yukimoto gains 2 extra attacks through Windfury Attack.", -- [2]
+			},
+			["HEALEDCRITOTHEROTHER"] = {
+				"%s's %s critically heals %s for %d.", -- [1]
+				"Xolkar's Holy Light critically heals Skopey for 2987.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Sikate's Zulian Slice missed Lava Spawn.", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Jeebes's Holy Strength heals Jeebes for 107.", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Kadom casts Life Tap.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Sekaikaze gains 1 Rage from Sekaikaze's Unbridled Wrath.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Fluxx casts Dispel Magic on Fluxx.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Slooghon casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
+			},
+			["SPELLPOWERLEECHOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
+				"Magosko's Dark Pact drains 250 Mana from Bizmir. Magosko gains 250 Mana.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"Aurean's Auto Shot was blocked by Groghole.", -- [2]
+			},
+			["SPELLPOWERDRAINOTHEROTHER"] = {
+				"%s's %s drains %d %s from %s.", -- [1]
+				"Fuzzboy's Mana Drain drains 8 Mana from Djiaar.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Sapo begins to perform Auto Shot.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Sekaikaze's Mortal Strike crits Alterac Ram for 531.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"BeMyFriend casts Growl on fuzzbat.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["INSTAKILLOTHER"] = {
+				"%s is killed by %s.", -- [1]
+				"Yanglt is killed by Divine Intervention.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHERSELF"] = {
+				"%s's %s hits you for %d %s damage.", -- [1]
+				"Gateli's Plague Effect hits you for 593 Nature damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Cleatus's Charge Stun was resisted by Yurneroo.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Sapito's Claw was parried by Yurneroo.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Haihachi begins to cast Pyroblast.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Bibliography's Pyroblast fails. Evilsoul is immune.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Accalonia's Searing Pain crits Hoofarted for 498 Fire damage.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Onyxia is immune to Dragonx's Fire Shield.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Trixaria's Polymorph is reflected back by Flamewaker Healer.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Fimbulstran fails to dispel Librabear's Gehennas' Curse.", -- [2]
+			},
+			["SPELLSPLITDAMAGEOTHEROTHER"] = {
+				"%s's %s causes %s %d damage.", -- [1]
+				"Tarlic's Soul Link causes Khaajhom 28 damage.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Mistick's Taunt was evaded by Lava Annihilator.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Sapo's Wing Clip is absorbed by Yurneroo.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Sekaikaze's Mortal Strike hits Alterac Ram for 243.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Jeebes's Hemorrhage missed Seasoned Guardian.", -- [2]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Bz performs Distract on Emianich.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Kimbeatina casts Judgement of Command.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Haihachi's Frost Nova hits Vyxxenn for 88 Frost damage.", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Cleatus's Execute was dodged by Yurneroo.", -- [2]
+			},
+			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
+				"%s casts %s on %s: %s damaged.", -- [1]
+				"Damnh casts Force Reactive Disk on Damnh: Force Reactive Disk damaged.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Euthanatos interrupts Victron's Lesser Healing Wave.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE"] = {
+			["SPELLLOGABSORBSELF"] = {
+				"You absorb %s.", -- [1]
+				"You absorb Flame Wave.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHER"] = {
+				"%s suffers %d %s damage from %s.", -- [1]
+				"Wrathguard suffers 259 Fire damage from Flame Wave.", -- [2]
+			},
+			["SPELLLOGABSORBOTHER"] = {
+				"%s is absorbed by %s.", -- [1]
+				"Flame Wave is absorbed by Bryantia.", -- [2]
+			},
+			["PERIODICAURADAMAGESELFSELF"] = {
+				"You suffer %d %s damage from your %s.", -- [1]
+				"You suffer 215 Fire damage from your Hellfire.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHEROTHER"] = {
+				"%s suffers %d %s damage from %s's %s.", -- [1]
+				"Wildspawn Rogue suffers 100 Physical damage from Wildspawn Rogue's Rupture.", -- [2]
+			},
+			["AURAADDEDSELFHARMFUL"] = {
+				"You are afflicted by %s.", -- [1]
+				"You are afflicted by Rend.", -- [2]
+			},
+			["PERIODICAURADAMAGESELFOTHER"] = {
+				"%s suffers %d %s damage from your %s.", -- [1]
+				"Doomguard suffers 283 Shadow damage from your Corruption.", -- [2]
+			},
+			["SPELLPOWERDRAINSELFOTHER"] = {
+				"Your %s drains %d %s from %s.", -- [1]
+				"Your Viper Sting drains 154 Mana from Skeletal Mage.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Wildspawn Felsworn's Shadow Word: Pain is absorbed by Wildspawn Shadowstalker.", -- [2]
+			},
+			["SPELLPOWERLEECHSELFOTHER"] = {
+				"Your %s drains %d %s from %s. You gain %d %s.", -- [1]
+				"Your Drain Mana drains 140 Mana from Althion. You gain 140 Mana.", -- [2]
+			},
+			["AURAADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s.", -- [1]
+				"Wildspawn Rogue is afflicted by Enslave Demon.", -- [2]
+			},
+			["PERIODICAURADAMAGEOTHERSELF"] = {
+				"You suffer %d %s damage from %s's %s.", -- [1]
+				"You suffer 26 Physical damage from Alterac Ram's Rend.", -- [2]
+			},
+			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
+				"%s is afflicted by %s (%d).", -- [1]
+				"Wildspawn Hellcaller is afflicted by Submersion (2).", -- [2]
+			},
+			["AURAAPPLICATIONADDEDSELFHARMFUL"] = {
+				"You are afflicted by %s (%d).", -- [1]
+				"You are afflicted by Shadow Vulnerability (2).", -- [2]
+			},
+			["SPELLLOGABSORBOTHERSELF"] = {
+				"You absorb %s's %s.", -- [1]
+				"You absorb Wildspawn Hellcaller's Rain of Fire.", -- [2]
+			},
+			["PERIODICAURADAMAGESELF"] = {
+				"You suffer %d %s damage from %s.", -- [1]
+				"You suffer 275 Fire damage from Flame Wave.", -- [2]
+			},
+			["SPELLLOGABSORBSELFSELF"] = {
+				"You absorb your %s.", -- [1]
+				"You absorb your Hellfire.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_SELF_HITS"] = {
+			["COMBATHITSELFOTHER"] = {
+				"You hit %s for %d.", -- [1]
+				"You hit Alterac Ram for 164.", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_FALLING_SELF"] = {
+				"You fall and lose %d health.", -- [1]
+				"You fall and lose 843 health.", -- [2]
+			},
+			["COMBATHITCRITSELFOTHER"] = {
+				"You crit %s for %d.", -- [1]
+				"You crit Vyxxenn for 152.", -- [2]
+			},
+			["SPELLLOGSELFOTHER"] = {
+				"Your %s hits %s for %d.", -- [1]
+				"Your Shoot Crossbow hits Rat for 277.", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_DROWNING_SELF"] = {
+				"You are drowning and lose %d health.", -- [1]
+				"You are drowning and lose 958 health.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
+				"Your %s crits %s for %d %s damage.", -- [1]
+				"Your Shoot crits Edilio for 99 Shadow damage.", -- [2]
+			},
+			["SPELLLOGCRITSELFOTHER"] = {
+				"Your %s crits %s for %d.", -- [1]
+				"Your Throw crits Shattered Hand Berserker for 247.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["VSENVIRONMENTALDAMAGE_LAVA_SELF"] = {
+				"You lose %d health for swimming in lava.", -- [1]
+				"You lose 603 health for swimming in lava.", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_FIRE_SELF"] = {
+				"You suffer %d points of fire damage.", -- [1]
+				"You suffer 13 points of fire damage.", -- [2]
+			},
+			["SPELLLOGSCHOOLSELFOTHER"] = {
+				"Your %s hits %s for %d %s damage.", -- [1]
+				"Your Shoot hits Edilio for 82 Shadow damage.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_PET_HITS"] = {
+			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
+				"%s suffers %d points of fire damage.", -- [1]
+				"Wildspawn Hellcaller suffers 12 points of fire damage.", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Infernal Soul hits Deathforge Tinkerer for 210 Fire damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Khuunam hits Irondeep Skullthumper for 154.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITOTHERSELF"] = {
+				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
+				"Nethervine Reaper hits you for 1308.[COMBATHITOTHERSELF]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Khuunam crits Irondeep Skullthumper for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
+			},
+			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
+				"%s loses %d health for swimming in lava.", -- [1]
+				"Khuunam loses 1087 health for swimming in lava. (362 resisted)", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_PET_BUFF"] = {
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Khuunam's Devour Magic fails. Grounding Totem is immune.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Khuunam's Devour Magic is reflected back by Iamvj.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Khuunam fails to dispel Horrobull's Lightning Shield.", -- [2]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Phantaz gains 46 Mana from Phantaz's Judgement of Wisdom.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Khuunam casts Devour Magic on Vooy.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Khuunam's Devour Magic was resisted by Althion.", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Wrathguard casts Flame Wave.[SPELLTERSE_OTHER]", -- [2]
+			},
+			["HEALEDCRITOTHEROTHER"] = {
+				"%s's %s critically heals %s for %d.", -- [1]
+				"Bryantia's Improved Leader of the Pack critically heals Bryantia for 174.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Hound of Culuthas begins to cast Double Breath.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Khuunam casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Khuunam's Judgement of Light heals Khuunam for 61.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS"] = {
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Hukku's Voidwalker hits Cornholyo for 25.", -- [2]
+			},
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Alterac Ram hits Kruztique for 88.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Oozeling crits Kruztique for 40 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Rot hits Kruztique for 156 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Atal'ai Deathwalker's Spirit crits Ponnie for 467.", -- [2]
+			},
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Frostwolf crits Kruztique for 184.[COMBATHITCRITOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Frayer Protector's Shoot Thorns hits Kruztique for 962 Nature damage.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_ITEM_ENCHANTMENTS"] = {
+			["ITEMENCHANTMENTADDOTHERSELF"] = {
+				"%s casts %s on your %s.", -- [1]
+				"Narwen casts Brilliant Wizard Oil on your Sageclaw.", -- [2]
+			},
+			["ITEMENCHANTMENTADDOTHEROTHER"] = {
+				"%s casts %s on %s's %s.", -- [1]
+				"Shammycow casts Rockbiter 7 on Shammycow's Lord Alexander's Battle Axe.", -- [2]
+			},
+			["ITEMENCHANTMENTADDSELFOTHER"] = {
+				"You cast %s on %s's %s.", -- [1]
+				"You cast Wizard Oil on Kruztique's Benediction.", -- [2]
+			},
+			["ITEMENCHANTMENTADDSELFSELF"] = {
+				"You cast %s on your %s.", -- [1]
+				"You cast Crippling Poison on your Stormstrike Hammer.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_FAILED_LOCALPLAYER"] = {
+			["ERR_TARGET_NOT_IN_GROUP_S"] = {
+				"%s is not in your party.", -- [1]
+				"You fail to cast Ritual of Summoning: Target is not in your party.", -- [2]
+			},
+			["SPELLFAILPERFORMSELF"] = {
+				"You fail to perform %s: %s.", -- [1]
+				"You fail to perform Hemorrhage: Not yet recovered.", -- [2]
+			},
+			["SPELLFAILCASTSELF"] = {
+				"You fail to cast %s: %s.", -- [1]
+				"You fail to cast Immune Charm/Fear/Polymorph: Item is not ready yet.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_PARTY_DAMAGE"] = {
+			["SPELLBLOCKEDOTHEROTHER"] = {
+				"%s's %s was blocked by %s.", -- [1]
+				"feedsontroll's Bite was blocked by Dark Iron Sentry.", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Bigpotato interrupts Scholomance Neophyte's Shadow Bolt.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Phase Lasher is immune to Kruztique's Shadow Word: Pain.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Mos's Auto Shot crits Sorcer for 172. (570 absorbed)", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Nino casts Righteous Defense on Frostwolf Guardian.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Mos's Arcane Shot crits Chevr for 439 Arcane damage.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHERSELF"] = {
+				"%s's %s hits you for %d %s damage.", -- [1]
+				"Arcanite Dragonling's Flame Breath hits you for 180 Fire damage. (75 resisted) (45 absorbed)", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Minimonty's Hammer of Justice was resisted by Xeranuus.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Ponnie's Seal of Command was parried by Hatecrest Screamer.", -- [2]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Arcanite Dragonling begins to cast Flame Buffet.", -- [2]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Mos's Auto Shot fails. Moiranna is immune.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Narwen's Frostbolt is reflected back by Flamewaker Elite.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Kruztique fails to dispel Trixaria's Soul Burn.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Ponnie's Judgement was evaded by Zukk'ash Stinger.", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Dragonx's Intercept Stun is absorbed by Narwen.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Mos's Auto Shot hits Chevr for 242.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Mos's Scatter Shot missed Petergibbons.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHER"] = {
+				"%s crits %s for %d %s damage.[SPELLLOGCRITSCHOOLOTHER]", -- [1]
+				"Spore Explosion crits SingaMaut for 4664 Nature damage.[SPELLLOGCRITSCHOOLOTHER]", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Raging Flames hits Spat for 219 Fire damage.[SPELLLOGSCHOOLOTHER] (656 resisted)", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["SIMPLEPERFORMOTHEROTHER"] = {
+				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
+				"Librabear performs Taunt on West Frostwolf Warmaster.[SIMPLEPERFORMOTHEROTHER]", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Ponnie's Seal of Command was dodged by Hatecrest Warrior.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Mos's Arcane Shot hits Neckrataal for 187 Arcane damage.", -- [2]
+			},
+		},
+		["CHAT_MSG_SPELL_PET_DAMAGE"] = {
+			["SIMPLEPERFORMOTHERSELF"] = {
+				"%s performs %s on you.SIMPLEPERFORMOTHERSELF", -- [1]
+				"Wildspawn Shadowstalker performs Dazed on you.SIMPLEPERFORMOTHERSELF", -- [2]
+			},
+			["SPELLINTERRUPTOTHEROTHER"] = {
+				"%s interrupts %s's %s.", -- [1]
+				"Khuunam interrupts Althion's Mind Blast.", -- [2]
+			},
+			["IMMUNESPELLOTHEROTHER"] = {
+				"%s is immune to %s's %s.", -- [1]
+				"Wildspawn Shadowstalker is immune to Wildspawn Rogue's Poison.", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Wildspawn Satyr's Strike crits Fel Lash for 1046.", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHER"] = {
+				"%s crits %s for %d %s damage.[SPELLLOGCRITSCHOOLOTHER]", -- [1]
+				"Spore Explosion crits Haaroon for 2684 Nature damage.[SPELLLOGCRITSCHOOLOTHER]", -- [2]
+			},
+			["INSTAKILLOTHER"] = {
+				"%s is killed by %s.", -- [1]
+				"Khuunam is killed by Demonic Sacrifice.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHERSELF"] = {
+				"%s's %s hits you for %d %s damage.", -- [1]
+				"Wildspawn Hellcaller's Fire Shield hits you for 67 Fire damage.", -- [2]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Wildspawn Rogue's Poison was resisted by Wildspawn Rogue.", -- [2]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Wildspawn Rogue's Rupture was parried by Wildspawn Rogue.", -- [2]
+			},
+			["SPELLPERFORMOTHERSTART"] = {
+				"%s begins to perform %s.", -- [1]
+				"Nethervine Inciter begins to perform Deadly Poison.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLCASTOTHERSTART"] = {
+				"%s begins to cast %s.", -- [1]
+				"Bryantia begins to cast Seduction.", -- [2]
+			},
+			["SPELLLOGABSORBOTHER"] = {
+				"%s is absorbed by %s.", -- [1]
+				"Flame Wave is absorbed by Kruztique.", -- [2]
+			},
+			["SPELLLOGABSORBSELF"] = {
+				"You absorb %s.", -- [1]
+				"You absorb Arcane Explosion.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLIMMUNEOTHEROTHER"] = {
+				"%s's %s fails. %s is immune.", -- [1]
+				"Wildspawn Shadowstalker's Slowing Poison fails. Fel Lash is immune.", -- [2]
+			},
+			["SIMPLECASTOTHEROTHER"] = {
+				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
+				"Haaroon casts Anguish on Unyielding Footman.[SIMPLECASTOTHEROTHER]", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike was dodged by Wildspawn Trickster.", -- [2]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Phantaz's Torment is reflected back by Greater Obsidian Elemental.", -- [2]
+			},
+			["DISPELFAILEDOTHEROTHER"] = {
+				"%s fails to dispel %s's %s.", -- [1]
+				"Khuunam fails to dispel Gibbles's Corruption.", -- [2]
+			},
+			["SPELLLOGOTHEROTHER"] = {
+				"%s's %s hits %s for %d.", -- [1]
+				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 238.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Wildspawn Hellcaller's Fire Shield hits Wildspawn Imp for 51 Fire damage. (17 resisted)", -- [2]
+			},
+			["SPELLLOGABSORBOTHEROTHER"] = {
+				"%s's %s is absorbed by %s.", -- [1]
+				"Wildspawn Shadowstalker's Backstab is absorbed by Wildspawn Felsworn.", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHER"] = {
+				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
+				"Flame Wave hits Wrathguard for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Wildspawn Rogue's Sinister Strike missed Wildspawn Trickster.", -- [2]
+			},
+			["SPELLLOGOTHERSELF"] = {
+				"%s's %s hits you for %d.", -- [1]
+				"Doomsaw's Doomsaw hits you for 344.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["DISPELFAILEDOTHERSELF"] = {
+				"%s fails to dispel your %s.", -- [1]
+				"Khuunam fails to dispel your Corruption.", -- [2]
+			},
+			["SPELLEVADEDOTHEROTHER"] = {
+				"%s's %s was evaded by %s.", -- [1]
+				"Khuunam's Tainted Blood Effect was evaded by Wing Commander Guse.", -- [2]
+			},
+			["SPELLLOGABSORBOTHERSELF"] = {
+				"You absorb %s's %s.", -- [1]
+				"You absorb Fel Imp's Firebolt.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGSCHOOLSELF"] = {
+				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
+				"Flame Wave hits you for 275 Fire damage.[SPELLLOGSCHOOLSELF]", -- [2]
+			},
+			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+				"%s's %s crits %s for %d %s damage.", -- [1]
+				"Wildspawn Hellcaller's Fire Shield crits Wildspawn Imp for 76 Fire damage. (17 resisted)", -- [2]
+			},
+		},
+		["CHAT_MSG_MONEY"] = {
+			["LOOT_MONEY_SPLIT"] = {
+				"Your share of the loot is %s.", -- [1]
+				"Your share of the loot is 22 Copper.", -- [2]
+			},
+			["YOU_LOOT_MONEY"] = {
+				"You loot %s[YOU_LOOT_MONEY]", -- [1]
+				"You loot 2 Silver, 31 Copper[YOU_LOOT_MONEY]", -- [2]
+				"2.0.6", -- [3]
+			},
+		},
+		["CHAT_MSG_COMBAT_PARTY_MISSES"] = {
+			["VSABSORBOTHEROTHER"] = {
+				"%s attacks. %s absorbs all the damage.", -- [1]
+				"Cat attacks. Althion absorbs all the damage.", -- [2]
+			},
+			["MISSEDOTHERSELF"] = {
+				"%s misses you.", -- [1]
+				"Treant misses you.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["VSDODGEOTHEROTHER"] = {
+				"%s attacks. %s dodges.", -- [1]
+				"Kruztique attacks. Wildspawn Trickster dodges.", -- [2]
+			},
+			["VSPARRYOTHEROTHER"] = {
+				"%s attacks. %s parries.", -- [1]
+				"Kruztique attacks. Whip Lasher parries.", -- [2]
+			},
+			["VSEVADEOTHEROTHER"] = {
+				"%s attacks. %s evades.", -- [1]
+				"Ponnie attacks. Zukk'ash Stinger evades.", -- [2]
+			},
+			["VSIMMUNEOTHEROTHER"] = {
+				"%s attacks but %s is immune.", -- [1]
+				"Styxson attacks but Anvilrage Officer is immune.", -- [2]
+			},
+			["MISSEDOTHEROTHER"] = {
+				"%s misses %s.", -- [1]
+				"Pete misses Petergibbons.", -- [2]
+			},
+			["VSDODGEOTHERSELF"] = {
+				"%s attacks. You dodge.", -- [1]
+				"Treant attacks. You dodge.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["VSBLOCKOTHEROTHER"] = {
+				"%s attacks. %s blocks.", -- [1]
+				"Kruztique attacks. Hydrospawn blocks.", -- [2]
+			},
+		},
+		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS"] = {
+			["COMBATHITOTHEROTHER"] = {
+				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
+				"Irondeep Trogg hits Khuunam for 30.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Rot crits Haaroon for 197 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER] (39 resisted)", -- [2]
+			},
+			["COMBATHITCRITOTHEROTHER"] = {
+				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
+				"Irondeep Trogg crits Khuunam for 70.[COMBATHITCRITOTHEROTHER]", -- [2]
+			},
+			["COMBATHITSCHOOLOTHERSELF"] = {
+				"%s hits you for %d %s damage.[COMBATHITSCHOOLOTHERSELF]", -- [1]
+				"Blistering Oozeling hits you for 21 Nature damage.[COMBATHITSCHOOLOTHERSELF]", -- [2]
+			},
+			["SPELLLOGSCHOOLOTHERSELF"] = {
+				"%s's %s hits you for %d %s damage.", -- [1]
+				"Frayer Protector's Shoot Thorns hits you for 955 Nature damage. (239 absorbed)", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLLOGOTHERSELF"] = {
+				"%s's %s hits you for %d.", -- [1]
+				"Hukku's Voidwalker hits you for 23.", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Rot hits Terrorfiend for 149 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["COMBATHITCRITOTHERSELF"] = {
+				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
+				"Irondeep Shaman crits you for 68.[COMBATHITCRITOTHERSELF] (17 absorbed)", -- [2]
+			},
+			["COMBATHITOTHERSELF"] = {
+				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
+				"Irondeep Trogg hits you for 26.[COMBATHITOTHERSELF] (7 absorbed)", -- [2]
+			},
+			["COMBATHITCRITSCHOOLOTHERSELF"] = {
+				"%s crits you for %d %s damage.[COMBATHITCRITSCHOOLOTHERSELF]", -- [1]
+				"Nexus Terror crits you for 772 Shadow damage.[COMBATHITCRITSCHOOLOTHERSELF] (482 resisted) (193 absorbed)", -- [2]
+				"2.0.6", -- [3]
+			},
+		},
+		["CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF"] = {
+			["PROCRESISTOTHERSELF"] = {
+				"You resist %s's %s.", -- [1]
+				"You resist Winterfall Shaman's Lightning Shield.", -- [2]
+			},
+			["SPELLDODGEDOTHEROTHER"] = {
+				"%s's %s was dodged by %s.", -- [1]
+				"Mo'arg Warp-Master's Steal Weapon was dodged by Gan'arg Warp-Tinker.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Haaroon gains 20 Mana from Arcane Vortex's Arcane Surge.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLRESISTOTHEROTHER"] = {
+				"%s's %s was resisted by %s.", -- [1]
+				"Legion Fel Cannon's Fel Cannon Blast was resisted by Haaroon.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SPELLRESISTOTHERSELF"] = {
+				"%s's %s was resisted.", -- [1]
+				"High Inquisitor Fairbanks's Dispel Magic was resisted.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["SPELLPARRIEDOTHEROTHER"] = {
+				"%s's %s was parried by %s.", -- [1]
+				"Gan'arg Warp-Tinker's Steal Weapon was parried by Gan'arg Warp-Tinker.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["PROCRESISTOTHEROTHER"] = {
+				"%s resists %s's %s.", -- [1]
+				"Khuunam resists Winterfall Shaman's Lightning Shield.", -- [2]
+			},
+			["HEALEDOTHERSELF"] = {
+				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
+				"Kruztique's Greater Heal heals you for 2824.[HEALEDOTHERSELF]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
+				"Chained Spirit casts Revive on you.SIMPLECASTOTHERSELF", -- [2]
+			},
+			["POWERGAINOTHERSELF"] = {
+				"You gain %d %s from %s's %s.", -- [1]
+				"You gain 20 Mana from Arcane Vortex's Arcane Surge.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
 		},
@@ -1691,6 +2495,10 @@ CombatLogScribeDB = {
 				"Arcane Explosion is absorbed by Kruztique.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
+			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
+				"%s gains %d extra attack through %s.", -- [1]
+				"Datexy gains 1 extra attack through Stormstrike.", -- [2]
+			},
 			["SPELLDODGEDOTHEROTHER"] = {
 				"%s's %s was dodged by %s.", -- [1]
 				"Sludge's Mortal Strike was dodged by Sharrakor.", -- [2]
@@ -1699,17 +2507,19 @@ CombatLogScribeDB = {
 				"%s's %s was parried.", -- [1]
 				"Fiasco's Claw was parried.", -- [2]
 			},
-			["SPELLRESISTOTHERSELF"] = {
-				"%s's %s was resisted.", -- [1]
-				"Vyxxenn's Shoot was resisted.", -- [2]
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Whuzed's Earth Shock is reflected back by Mageslayer.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 			["SPELLLOGSCHOOLOTHEROTHER"] = {
 				"%s's %s hits %s for %d %s damage.", -- [1]
 				"Vyxxenn's Touch of Weakness hits Cleatus for 65 Shadow damage.", -- [2]
 			},
-			["SPELLPOWERDRAINOTHERSELF"] = {
-				"%s's %s drains %d %s from you.", -- [1]
-				"Jezzable's Mana Drain drains 8 Mana from you.", -- [2]
+			["SPELLLOGABSORBSELF"] = {
+				"You absorb %s.", -- [1]
+				"You absorb Arcane Explosion.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 			["SPELLLOGSCHOOLOTHER"] = {
 				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
@@ -1728,2520 +2538,908 @@ CombatLogScribeDB = {
 				"%s's %s hits %s for %d.", -- [1]
 				"Yurneroo's Whirlwind hits Sapito for 236.", -- [2]
 			},
-			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
-				"%s gains %d extra attack through %s.", -- [1]
-				"Datexy gains 1 extra attack through Stormstrike.", -- [2]
-			},
 			["SPELLLOGABSORBOTHERSELF"] = {
 				"You absorb %s's %s.", -- [1]
 				"You absorb Dasbean's Immolate.", -- [2]
 			},
-			["SPELLLOGABSORBSELF"] = {
-				"You absorb %s.", -- [1]
-				"You absorb Arcane Explosion.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Whuzed's Earth Shock is reflected back by Mageslayer.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF"] = {
-			["PROCRESISTOTHERSELF"] = {
-				"You resist %s's %s.", -- [1]
-				"You resist Winterfall Shaman's Lightning Shield.", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Mo'arg Warp-Master's Steal Weapon was dodged by Gan'arg Warp-Tinker.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Haaroon gains 20 Mana from Arcane Vortex's Arcane Surge.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Legion Fel Cannon's Fel Cannon Blast was resisted by Haaroon.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Gan'arg Warp-Tinker's Steal Weapon was parried by Gan'arg Warp-Tinker.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["PROCRESISTOTHEROTHER"] = {
-				"%s resists %s's %s.", -- [1]
-				"Khuunam resists Winterfall Shaman's Lightning Shield.", -- [2]
-			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 20 Mana from Arcane Vortex's Arcane Surge.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Chained Spirit casts Revive on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["HEALEDOTHERSELF"] = {
-				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
-				"Kruztique's Greater Heal heals you for 2824.[HEALEDOTHERSELF]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SKILL"] = {
-			["ERR_SKILL_UP_SI"] = {
-				"Your skill in %s has increased to %d.[ERR_SKILL_UP_SI]", -- [1]
-				"Your skill in Riding has increased to 150.[ERR_SKILL_UP_SI]", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"Blackhand Veteran's Shield Bash was blocked by Hang.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Molten Destroyer interrupts Narwen's Frostbolt.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Damnh is immune to Buru the Gorger's Creeping Plague.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Unknown Entity's Ambush crits Darkvillian for 1322.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Epoch Hunter casts Disrupt Magic on Thrall.[SIMPLECASTOTHEROTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Unknown's Lash of Pain crits Treka for 110 Shadow damage.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Slim's Friend's Poison was resisted by Gilman.", -- [2]
-			},
-			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
-				"%s casts %s on %s: %s damaged.", -- [1]
-				"Ragnaros casts Melt Weapon on Dragonx: Bloodlord's Defender damaged.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Prairie Wolf begins to cast Threatening Growl.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Southsea Pirate's Strike was parried by Thimtamuya.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Flamewaker's Fist of Ragnaros fails. Librabear is immune.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Obsidian Eradicator's Drain Mana drains 250 Mana from Dizdk. Obsidian Eradicator gains 500 Mana.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Irondeep Trogg performs Dazed on Irondeep Miner.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Alliance Sentinel's Cleave was dodged by Tric.", -- [2]
-			},
-			["SPELLSPLITDAMAGEOTHEROTHER"] = {
-				"%s's %s causes %s %d damage.", -- [1]
-				"Dreghood Drudge's Shared Bonds causes Dreghood Drudge 71 damage.", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Liquid Fire's Blaze was evaded by Champion Defender.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Stormpike Mountaineer's Explosive Shot hits Zunk for 215 Fire damage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Stormpike Mountaineer's Shoot is absorbed by Maulive.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Seasoned Guardian's Revenge hits Cleatus for 71.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Stormpike Mountaineer's Shoot missed Zunk.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Dreamcatcher for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Arazzius the Cruel casts Inferno.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["INSTAKILLOTHER"] = {
-				"%s is killed by %s.", -- [1]
-				"Gan'arg Sapper is killed by Power Burn.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Firewing Warlock's Mana Tap drains 1270 Mana from Tyranno.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Stormpike Mountaineer begins to perform Shoot.", -- [2]
-			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Entropic Eye performs Chaos Breath.[SPELLTERSEPERFORM_OTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS"] = {
-			["PERIODICAURAHEALSELFOTHER"] = {
-				"%s gains %d health from your %s.", -- [1]
-				"Wildspawn Rogue gains 153 health from your Health Funnel.", -- [2]
-			},
-			["POWERGAINSELFSELF"] = {
-				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
-				"You gain 144 Mana from Fel Energy.[POWERGAINSELFSELF]", -- [2]
-			},
-			["AURAADDEDSELFHELPFUL"] = {
-				"You gain %s.", -- [1]
-				"You gain Sprint.", -- [2]
-			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Wildspawn Hellcaller gains 223 health from Kruztique's Renew.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDSELFHELPFUL"] = {
-				"You gain %s (%d).", -- [1]
-				"You gain Lifebloom (2).", -- [2]
-			},
-			["AURAADDEDOTHERHELPFUL"] = {
-				"%s gains %s.", -- [1]
-				"Khuunam gains Master Demonologist.", -- [2]
-			},
-			["PERIODICAURAHEALSELFSELF"] = {
-				"You gain %d health from %s.[PERIODICAURAHEALSELFSELF]", -- [1]
-				"You gain 250 health from First Aid.[PERIODICAURAHEALSELFSELF]", -- [2]
-			},
-			["PERIODICAURAHEALOTHERSELF"] = {
-				"You gain %d health from %s's %s.", -- [1]
-				"You gain 223 health from Kruztique's Renew.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
-				"%s gains %s (%d).", -- [1]
-				"Haaroon gains Demonic Frenzy (2).", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_SELF"] = {
-			["DAMAGESHIELDSELFOTHER"] = {
-				"You reflect %d %s damage to %s.", -- [1]
-				"You reflect 15 Nature damage to Southsea Freebooter.", -- [2]
-			},
-			["SPELLRESISTSELFOTHER"] = {
-				"Your %s was resisted by %s.", -- [1]
-				"Your Thorns was resisted by Southsea Swashbuckler.", -- [2]
-			},
-			["DAMAGESHIELDOTHEROTHER"] = {
-				"%s reflects %d %s damage to %s.", -- [1]
-				"Deranged Helboar reflects 25 Fire damage to Deranged Helboar.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Deranged Helboar's Burning Spikes was resisted by Deranged Helboar.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_HOSTILEPLAYER_BUFF"] = {
-			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
-				"%s gains %d extra attack through %s.", -- [1]
-				"Sludge gains 1 extra attack through Hand of Justice.", -- [2]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Shammycow begins to perform Skinning.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Lokris performs Vanish on Lokris.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLIMMUNEOTHERSELF"] = {
-				"%s's %s failed. You are immune.", -- [1]
-				"Ponnie's First Aid failed. You are immune.", -- [2]
-			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Colding performs Cannibalize.[SPELLTERSEPERFORM_OTHER]", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHEROTHER"] = {
-				"%s casts %s on %s's %s.", -- [1]
-				"Zay casts +15 Fire Resistance on Cleatus's Onyxia Scale Cloak.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Fzuufenn's Devour Magic was resisted by Ponnie.", -- [2]
-			},
-			["SPELLEXTRAATTACKSOTHER"] = {
-				"%s gains %d extra attacks through %s.", -- [1]
-				"Petergibbons gains 2 extra attacks through Windfury Attack.", -- [2]
-			},
-			["HEALEDOTHERSELF"] = {
-				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
-				"Kruztique's Flash Heal heals you for 1176.[HEALEDOTHERSELF]", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Amantar begins to cast Greater Heal.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Kruztique's Weakened Soul fails. Narwen is immune.", -- [2]
-			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 60 Mana from Morisen's Rejuvenation.", -- [2]
-			},
-			["HEALEDCRITOTHEROTHER"] = {
-				"%s's %s critically heals %s for %d.", -- [1]
-				"Evelgest's Flash Heal critically heals Neckrataal for 1597.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Magosko's Dark Pact drains 250 Mana from Unknown Entity. Magosko gains 250 Mana.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Khuudom fails to dispel Boonie's Demon Armor.", -- [2]
-			},
-			["OPEN_LOCK_OTHER"] = {
-				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
-				"Kruztique performs Herb Gathering on Dreamfoil.[OPEN_LOCK_OTHER]", -- [2]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Yurneroo gains 15 Rage from Yurneroo's Charge.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Bakmoi casts Dispel Magic on Frucheman.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["DISPELFAILEDOTHERSELF"] = {
-				"%s fails to dispel your %s.", -- [1]
-				"Poyayan fails to dispel your Power Word: Fortitude.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Lionkingz's Zulian Slice missed Cleatus.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Vyxxenn's Devouring Plague heals Vyxxenn for 106.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Zryan casts Mana Spring Totem.[SPELLTERSE_OTHER]", -- [2]
+			["SPELLPOWERDRAINOTHERSELF"] = {
+				"%s's %s drains %d %s from you.", -- [1]
+				"Jezzable's Mana Drain drains 8 Mana from you.", -- [2]
 			},
 			["SPELLRESISTOTHERSELF"] = {
 				"%s's %s was resisted.", -- [1]
-				"Khuudom's Devour Magic was resisted.", -- [2]
-			},
-			["HEALEDCRITOTHERSELF"] = {
-				"%s's %s critically heals you for %d.", -- [1]
-				"Kruztique's Greater Heal critically heals you for 3183.", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Ponnie casts Cleanse on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHERSELF"] = {
-				"%s casts %s on your %s.", -- [1]
-				"Erato casts +26 Attack Power on your Marshal's Leather Handgrips.", -- [2]
-				"2.0.10.6448", -- [3]
+				"Vyxxenn's Shoot was resisted.", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_HOSTILEPLAYER_MISSES"] = {
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"Rokugo attacks. Cleatus blocks.", -- [2]
-			},
-			["MISSEDOTHERSELF"] = {
-				"%s misses you.", -- [1]
-				"Himta misses you.", -- [2]
-			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Hannibal attacks. Euthanatos dodges.", -- [2]
-			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Sludge attacks. Sharrakor parries.", -- [2]
-			},
-			["VSIMMUNEOTHERSELF"] = {
-				"%s attacks but you are immune.", -- [1]
-				"Plethora attacks but you are immune.", -- [2]
-			},
-			["VSPARRYOTHERSELF"] = {
-				"%s attacks. You parry.", -- [1]
-				"Zibana attacks. You parry.", -- [2]
-			},
-			["VSEVADEOTHEROTHER"] = {
-				"%s attacks. %s evades.", -- [1]
-				"Irenala attacks. Champion Guardsman evades.", -- [2]
-			},
-			["VSIMMUNEOTHEROTHER"] = {
-				"%s attacks but %s is immune.", -- [1]
-				"Snackpak attacks but Minimonty is immune.", -- [2]
-			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Blaymord misses Sharrakor.", -- [2]
-			},
-			["VSABSORBOTHERSELF"] = {
-				"%s attacks. You absorb all the damage.", -- [1]
-				"Stupifier attacks. You absorb all the damage.", -- [2]
-			},
-			["VSDODGEOTHERSELF"] = {
-				"%s attacks. You dodge.", -- [1]
-				"Fiasco attacks. You dodge.", -- [2]
-			},
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Thermopolis attacks. Proxor absorbs all the damage.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_MISC_INFO"] = {
-			["DURABILITYDAMAGE_DEATH"] = {
-				"Your equipped items suffer a 10%% durability loss.", -- [1]
-				"Your equipped items suffer a 10% durability loss.", -- [2]
-			},
-			["SPELLDISMISSPETOTHER"] = {
-				"%s's %s is dismissed.", -- [1]
-				"Zay's Kay is dismissed.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_PARTY_MISSES"] = {
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Cat attacks. Althion absorbs all the damage.", -- [2]
-			},
-			["MISSEDOTHERSELF"] = {
-				"%s misses you.", -- [1]
-				"Treant misses you.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Kruztique attacks. Wildspawn Trickster dodges.", -- [2]
-			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Kruztique attacks. Whip Lasher parries.", -- [2]
-			},
-			["VSEVADEOTHEROTHER"] = {
-				"%s attacks. %s evades.", -- [1]
-				"Ponnie attacks. Zukk'ash Stinger evades.", -- [2]
-			},
-			["VSIMMUNEOTHEROTHER"] = {
-				"%s attacks but %s is immune.", -- [1]
-				"Styxson attacks but Anvilrage Officer is immune.", -- [2]
-			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Pete misses Petergibbons.", -- [2]
-			},
-			["VSDODGEOTHERSELF"] = {
-				"%s attacks. You dodge.", -- [1]
-				"Treant attacks. You dodge.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"Kruztique attacks. Hydrospawn blocks.", -- [2]
-			},
-		},
-		["CHAT_MSG_MONEY"] = {
-			["LOOT_MONEY_SPLIT"] = {
-				"Your share of the loot is %s.", -- [1]
-				"Your share of the loot is 22 Copper.", -- [2]
-			},
-			["YOU_LOOT_MONEY"] = {
-				"You loot %s[YOU_LOOT_MONEY]", -- [1]
-				"You loot 2 Silver, 31 Copper[YOU_LOOT_MONEY]", -- [2]
-				"2.0.6", -- [3]
-			},
-		},
-		["CHAT_MSG_COMBAT_SELF_MISSES"] = {
-			["VSPARRYSELFOTHER"] = {
-				"You attack. %s parries.", -- [1]
-				"You attack. Zakarum parries.", -- [2]
-			},
-			["VSEVADESELFOTHER"] = {
-				"You attack. %s evades.", -- [1]
-				"You attack. Zukk'ash Stinger evades.", -- [2]
-			},
-			["MISSEDSELFOTHER"] = {
-				"You miss %s.", -- [1]
-				"You miss Alterac Ram.", -- [2]
-			},
-			["VSIMMUNESELFOTHER"] = {
-				"You attack but %s is immune.", -- [1]
-				"You attack but Wildspawn Shadowstalker is immune.", -- [2]
-			},
-			["VSBLOCKSELFOTHER"] = {
-				"You attack. %s blocks.", -- [1]
-				"You attack. Flamekin Rager blocks.", -- [2]
-			},
-			["VSDODGESELFOTHER"] = {
-				"You attack. %s dodges.", -- [1]
-				"You attack. Vyxxenn dodges.", -- [2]
-			},
-			["VSABSORBSELFOTHER"] = {
-				"You attack. %s absorbs all the damage.", -- [1]
-				"You attack. Vyxxenn absorbs all the damage.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_PET_DAMAGE"] = {
-			["SIMPLEPERFORMOTHERSELF"] = {
-				"%s performs %s on you.SIMPLEPERFORMOTHERSELF", -- [1]
-				"Wildspawn Shadowstalker performs Dazed on you.SIMPLEPERFORMOTHERSELF", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Khuunam interrupts Althion's Mind Blast.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Wildspawn Shadowstalker is immune to Wildspawn Rogue's Poison.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Wildspawn Satyr's Strike crits Fel Lash for 1046.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHER"] = {
-				"%s crits %s for %d %s damage.[SPELLLOGCRITSCHOOLOTHER]", -- [1]
-				"Spore Explosion crits Haaroon for 2684 Nature damage.[SPELLLOGCRITSCHOOLOTHER]", -- [2]
-			},
-			["INSTAKILLOTHER"] = {
-				"%s is killed by %s.", -- [1]
-				"Khuunam is killed by Demonic Sacrifice.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHERSELF"] = {
-				"%s's %s hits you for %d %s damage.", -- [1]
-				"Wildspawn Hellcaller's Fire Shield hits you for 67 Fire damage.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Wildspawn Rogue's Poison was resisted by Wildspawn Rogue.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Wildspawn Rogue's Rupture was parried by Wildspawn Rogue.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Wildspawn Hellcaller's Fire Shield crits Wildspawn Imp for 76 Fire damage. (17 resisted)", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Bryantia begins to cast Seduction.", -- [2]
-			},
-			["SPELLLOGABSORBOTHER"] = {
-				"%s is absorbed by %s.", -- [1]
-				"Flame Wave is absorbed by Kruztique.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELF"] = {
-				"%s hits you for %d %s damage.[SPELLLOGSCHOOLSELF]", -- [1]
-				"Flame Wave hits you for 275 Fire damage.[SPELLLOGSCHOOLSELF]", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Wildspawn Shadowstalker's Slowing Poison fails. Fel Lash is immune.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Haaroon casts Anguish on Unyielding Footman.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Khuunam's Tainted Blood Effect was evaded by Wing Commander Guse.", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike was dodged by Wildspawn Trickster.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Khuunam fails to dispel Gibbles's Corruption.", -- [2]
-			},
-			["DISPELFAILEDOTHERSELF"] = {
-				"%s fails to dispel your %s.", -- [1]
-				"Khuunam fails to dispel your Corruption.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Wildspawn Hellcaller's Fire Shield hits Wildspawn Imp for 51 Fire damage. (17 resisted)", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Wildspawn Shadowstalker's Backstab is absorbed by Wildspawn Felsworn.", -- [2]
-			},
+		["CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS"] = {
 			["SPELLLOGOTHEROTHER"] = {
 				"%s's %s hits %s for %d.", -- [1]
-				"Wildspawn Rogue's Sinister Strike hits Wildspawn Rogue for 238.", -- [2]
+				"Onyxia's Elite Guard hits Highlord Bolvar Fordragon for 405.[COMBATHITOTHEROTHER]", -- [2]
 			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike missed Wildspawn Trickster.", -- [2]
-			},
-			["SPELLLOGOTHERSELF"] = {
-				"%s's %s hits you for %d.", -- [1]
-				"Doomsaw's Doomsaw hits you for 344.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Wrathguard for 255 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Phantaz's Torment is reflected back by Greater Obsidian Elemental.", -- [2]
-			},
-			["SPELLLOGABSORBOTHERSELF"] = {
-				"You absorb %s's %s.", -- [1]
-				"You absorb Fel Imp's Firebolt.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGABSORBSELF"] = {
-				"You absorb %s.", -- [1]
-				"You absorb Arcane Explosion.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Nethervine Inciter begins to perform Deadly Poison.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SPELL_PARTY_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"feedsontroll's Bite was blocked by Dark Iron Sentry.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Bigpotato interrupts Scholomance Neophyte's Shadow Bolt.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Phase Lasher is immune to Kruztique's Shadow Word: Pain.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Mos's Auto Shot crits Sorcer for 172. (570 absorbed)", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Nino casts Righteous Defense on Frostwolf Guardian.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Mos's Arcane Shot crits Chevr for 439 Arcane damage.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHERSELF"] = {
-				"%s's %s hits you for %d %s damage.", -- [1]
-				"Arcanite Dragonling's Flame Breath hits you for 180 Fire damage. (75 resisted) (45 absorbed)", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Minimonty's Hammer of Justice was resisted by Xeranuus.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Ponnie's Seal of Command was parried by Hatecrest Screamer.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Arcanite Dragonling begins to cast Flame Buffet.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Mos's Auto Shot fails. Moiranna is immune.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Narwen's Frostbolt is reflected back by Flamewaker Elite.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Kruztique fails to dispel Trixaria's Soul Burn.", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Ponnie's Judgement was evaded by Zukk'ash Stinger.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Dragonx's Intercept Stun is absorbed by Narwen.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Mos's Auto Shot hits Chevr for 242.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Mos's Scatter Shot missed Petergibbons.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Mos's Arcane Shot hits Neckrataal for 187 Arcane damage.", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Ponnie's Seal of Command was dodged by Hatecrest Warrior.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Librabear performs Taunt on West Frostwolf Warmaster.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"Aurean's Auto Shot was blocked by Groghole.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Fuzzboy's Mana Drain drains 8 Mana from Djiaar.", -- [2]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Sapo begins to perform Auto Shot.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Sekaikaze's Mortal Strike crits Alterac Ram for 531.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"BeMyFriend casts Growl on fuzzbat.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["INSTAKILLOTHER"] = {
-				"%s is killed by %s.", -- [1]
-				"Yanglt is killed by Divine Intervention.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHERSELF"] = {
-				"%s's %s hits you for %d %s damage.", -- [1]
-				"Gateli's Plague Effect hits you for 593 Nature damage.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Cleatus's Charge Stun was resisted by Yurneroo.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Sapito's Claw was parried by Yurneroo.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Haihachi begins to cast Pyroblast.", -- [2]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Bibliography's Pyroblast fails. Evilsoul is immune.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Euthanatos interrupts Victron's Lesser Healing Wave.", -- [2]
-			},
-			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
-				"%s casts %s on %s: %s damaged.", -- [1]
-				"Damnh casts Force Reactive Disk on Damnh: Force Reactive Disk damaged.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Trixaria's Polymorph is reflected back by Flamewaker Healer.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Fimbulstran fails to dispel Librabear's Gehennas' Curse.", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Cleatus's Execute was dodged by Yurneroo.", -- [2]
-			},
-			["SPELLEVADEDOTHEROTHER"] = {
-				"%s's %s was evaded by %s.", -- [1]
-				"Mistick's Taunt was evaded by Lava Annihilator.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Sapo's Wing Clip is absorbed by Yurneroo.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Sekaikaze's Mortal Strike hits Alterac Ram for 243.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Jeebes's Hemorrhage missed Seasoned Guardian.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Haihachi's Frost Nova hits Vyxxenn for 88 Frost damage.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Kimbeatina casts Judgement of Command.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Bz performs Distract on Emianich.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLSPLITDAMAGEOTHEROTHER"] = {
-				"%s's %s causes %s %d damage.", -- [1]
-				"Tarlic's Soul Link causes Khaajhom 28 damage.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Onyxia is immune to Dragonx's Fire Shield.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Accalonia's Searing Pain crits Hoofarted for 498 Fire damage.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_ITEM_ENCHANTMENTS"] = {
-			["ITEMENCHANTMENTADDOTHERSELF"] = {
-				"%s casts %s on your %s.", -- [1]
-				"Narwen casts Brilliant Wizard Oil on your Sageclaw.", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHEROTHER"] = {
-				"%s casts %s on %s's %s.", -- [1]
-				"Shammycow casts Rockbiter 7 on Shammycow's Lord Alexander's Battle Axe.", -- [2]
-			},
-			["ITEMENCHANTMENTADDSELFOTHER"] = {
-				"You cast %s on %s's %s.", -- [1]
-				"You cast Wizard Oil on Kruztique's Benediction.", -- [2]
-			},
-			["ITEMENCHANTMENTADDSELFSELF"] = {
-				"You cast %s on your %s.", -- [1]
-				"You cast Crippling Poison on your Stormstrike Hammer.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_SELF_HITS"] = {
-			["COMBATHITSELFOTHER"] = {
-				"You hit %s for %d.", -- [1]
-				"You hit Alterac Ram for 164.", -- [2]
-			},
-			["VSENVIRONMENTALDAMAGE_FALLING_SELF"] = {
-				"You fall and lose %d health.", -- [1]
-				"You fall and lose 843 health.", -- [2]
-			},
-			["COMBATHITCRITSELFOTHER"] = {
-				"You crit %s for %d.", -- [1]
-				"You crit Vyxxenn for 152.", -- [2]
-			},
-			["SPELLLOGSELFOTHER"] = {
-				"Your %s hits %s for %d.", -- [1]
-				"Your Shoot Crossbow hits Rat for 277.", -- [2]
-			},
-			["VSENVIRONMENTALDAMAGE_DROWNING_SELF"] = {
-				"You are drowning and lose %d health.", -- [1]
-				"You are drowning and lose 958 health.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGCRITSCHOOLSELFOTHER"] = {
-				"Your %s crits %s for %d %s damage.", -- [1]
-				"Your Shoot crits Edilio for 99 Shadow damage.", -- [2]
-			},
-			["SPELLLOGCRITSELFOTHER"] = {
-				"Your %s crits %s for %d.", -- [1]
-				"Your Throw crits Shattered Hand Berserker for 247.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["VSENVIRONMENTALDAMAGE_LAVA_SELF"] = {
-				"You lose %d health for swimming in lava.", -- [1]
-				"You lose 603 health for swimming in lava.", -- [2]
-			},
-			["VSENVIRONMENTALDAMAGE_FIRE_SELF"] = {
-				"You suffer %d points of fire damage.", -- [1]
-				"You suffer 13 points of fire damage.", -- [2]
-			},
-			["SPELLLOGSCHOOLSELFOTHER"] = {
-				"Your %s hits %s for %d %s damage.", -- [1]
-				"Your Shoot hits Edilio for 82 Shadow damage.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_PET_HITS"] = {
 			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
 				"%s suffers %d points of fire damage.", -- [1]
-				"Wildspawn Hellcaller suffers 12 points of fire damage.", -- [2]
+				"Ironforge Brigade Rifleman suffers 14 points of fire damage.", -- [2]
+			},
+			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
+				"Blistering Rot crits Hephaiston for 263 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
+			},
+			["COMBATHITSCHOOLOTHEROTHER"] = {
+				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
+				"Infernal Siegebreaker hits Stormwind Soldier for 1874 Fire damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
 			},
 			["COMBATHITOTHEROTHER"] = {
 				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Khuunam hits Irondeep Skullthumper for 154.[COMBATHITOTHEROTHER]", -- [2]
+				"Irondeep Trogg hits Irondeep Miner for 32.[COMBATHITOTHEROTHER]", -- [2]
+			},
+			["SPELLLOGCRITOTHEROTHER"] = {
+				"%s's %s crits %s for %d.", -- [1]
+				"Voljaka's Auto Shot crits Softhard for 761.", -- [2]
 			},
 			["COMBATHITCRITOTHEROTHER"] = {
 				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Khuunam crits Irondeep Skullthumper for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
+				"Irondeep Miner crits Irondeep Skullthumper for 56.[COMBATHITCRITOTHEROTHER]", -- [2]
 			},
-			["COMBATHITOTHERSELF"] = {
-				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
-				"Nethervine Reaper hits you for 1308.[COMBATHITOTHERSELF]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
-				"%s loses %d health for swimming in lava.", -- [1]
-				"Khuunam loses 1087 health for swimming in lava. (362 resisted)", -- [2]
+			["SPELLLOGSCHOOLOTHEROTHER"] = {
+				"%s's %s hits %s for %d %s damage.", -- [1]
+				"Laalaa's Shoot hits Darkkenny for 270 Shadow damage.", -- [2]
+				"2.0.12.6546", -- [3]
 			},
 		},
-		["CHAT_MSG_SPELL_PET_BUFF"] = {
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Khuunam's Devour Magic fails. Grounding Totem is immune.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Khuunam's Devour Magic is reflected back by Iamvj.", -- [2]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Khuunam fails to dispel Horrobull's Lightning Shield.", -- [2]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Phantaz gains 46 Mana from Phantaz's Judgement of Wisdom.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Khuunam's Judgement of Light heals Khuunam for 61.", -- [2]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Khuunam's Devour Magic was resisted by Althion.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Wrathguard casts Flame Wave.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Khuunam casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Hound of Culuthas begins to cast Double Breath.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["HEALEDCRITOTHEROTHER"] = {
-				"%s's %s critically heals %s for %d.", -- [1]
-				"Bryantia's Improved Leader of the Pack critically heals Bryantia for 174.", -- [2]
-			},
+		["CHAT_MSG_SPELL_PARTY_BUFF"] = {
 			["SIMPLECASTOTHEROTHER"] = {
 				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Khuunam casts Devour Magic on Vooy.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF"] = {
-			["SPELLEXTRAATTACKSOTHER_SINGULAR"] = {
-				"%s gains %d extra attack through %s.", -- [1]
-				"Cleatus gains 1 extra attack through Sword Specialization.", -- [2]
-			},
-			["SPELLPERFORMOTHERSTART"] = {
-				"%s begins to perform %s.", -- [1]
-				"Aradan begins to perform Smelt Thorium.", -- [2]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Adeillis performs Vanish on Adeillis.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLTERSEPERFORM_OTHER"] = {
-				"%s performs %s.[SPELLTERSEPERFORM_OTHER]", -- [1]
-				"Illik performs Preparation.[SPELLTERSEPERFORM_OTHER]", -- [2]
-			},
-			["ITEMENCHANTMENTADDOTHEROTHER"] = {
-				"%s casts %s on %s's %s.", -- [1]
-				"Hrotngar casts Scope (+7 Damage) on Hrotngar's Precisely Calibrated Boomstick.", -- [2]
+				"Kruztique casts Dispel Magic on Grimbow.[SIMPLECASTOTHEROTHER]", -- [2]
 			},
 			["SPELLRESISTOTHEROTHER"] = {
 				"%s's %s was resisted by %s.", -- [1]
-				"Pryyfun's Devour Magic was resisted by Darigaaz.", -- [2]
+				"Ponnie's Transmogrify! was resisted by Deep Strider.", -- [2]
 			},
 			["SPELLPARRIEDOTHEROTHER"] = {
 				"%s's %s was parried by %s.", -- [1]
-				"Lionkingz's Zulian Slice was parried by Flamewaker.", -- [2]
+				"Lionkingz's Zulian Slice was parried by Molten Giant.", -- [2]
 			},
 			["PROCRESISTOTHEROTHER"] = {
 				"%s resists %s's %s.", -- [1]
-				"Anubisath Sentinel resists Sejet's Greater Blessing of Sanctuary.", -- [2]
-			},
-			["SPELLCASTOTHERSTART"] = {
-				"%s begins to cast %s.", -- [1]
-				"Greil begins to cast Summon Charger.", -- [2]
+				"Qiraji Gladiator resists Sejet's Blessing of Sanctuary.", -- [2]
 			},
 			["SPELLIMMUNEOTHEROTHER"] = {
 				"%s's %s fails. %s is immune.", -- [1]
-				"Loughlenn's Dispel Magic fails. Moiranna is immune.", -- [2]
+				"Ilyena's Weakened Soul fails. Akronius is immune.", -- [2]
 			},
 			["SPELLDODGEDOTHEROTHER"] = {
 				"%s's %s was dodged by %s.", -- [1]
-				"Sikate's Zulian Slice was dodged by Firewalker.", -- [2]
+				"Lionkingz's Zulian Slice was dodged by Molten Giant.", -- [2]
 			},
 			["DISPELFAILEDOTHEROTHER"] = {
 				"%s fails to dispel %s's %s.", -- [1]
-				"Pameli fails to dispel Cleatus's Poisonous Blood.", -- [2]
-			},
-			["OPEN_LOCK_OTHER"] = {
-				"%s performs %s on %s.[OPEN_LOCK_OTHER]", -- [1]
-				"Dalimar performs Pick Lock on Wicker Chest.[OPEN_LOCK_OTHER]", -- [2]
+				"Sruufenn fails to dispel Aladinsane's Demon Armor.", -- [2]
 			},
 			["SPELLEVADEDOTHEROTHER"] = {
 				"%s's %s was evaded by %s.", -- [1]
-				"Nedru's Teleport to Player was evaded by Onyxian Whelp.", -- [2]
+				"Woft's Teleport to Player was evaded by Onyxian Whelp.", -- [2]
 			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Magosko's Dark Pact drains 250 Mana from Bizmir. Magosko gains 250 Mana.", -- [2]
-			},
-			["SIMPLECASTOTHERSELF"] = {
-				"%s casts %s on you.SIMPLECASTOTHERSELF", -- [1]
-				"Slooghon casts Devour Magic on you.SIMPLECASTOTHERSELF", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Sikate's Zulian Slice missed Lava Spawn.", -- [2]
-			},
-			["HEALEDOTHEROTHER"] = {
-				"%s's %s heals %s for %d.", -- [1]
-				"Jeebes's Holy Strength heals Jeebes for 107.", -- [2]
-			},
-			["SPELLTERSE_OTHER"] = {
-				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
-				"Kadom casts Life Tap.[SPELLTERSE_OTHER]", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Fluxx casts Dispel Magic on Fluxx.[SIMPLECASTOTHEROTHER]", -- [2]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Sekaikaze gains 1 Rage from Sekaikaze's Unbridled Wrath.", -- [2]
+			["HEALEDOTHERSELF"] = {
+				"%s's %s heals you for %d.[HEALEDOTHERSELF]", -- [1]
+				"Murkblood Healer's Prayer of Healing heals you for 3170.[HEALEDOTHERSELF]", -- [2]
+				"2.0.12.6546", -- [3]
 			},
 			["HEALEDCRITOTHEROTHER"] = {
 				"%s's %s critically heals %s for %d.", -- [1]
-				"Xolkar's Holy Light critically heals Skopey for 2987.", -- [2]
+				"Minimonty's Flash of Light critically heals Kiraa for 806.", -- [2]
+			},
+			["SPELLMISSOTHEROTHER"] = {
+				"%s's %s missed %s.", -- [1]
+				"Lionkingz's Zulian Slice missed Lava Reaver.", -- [2]
+			},
+			["HEALEDOTHEROTHER"] = {
+				"%s's %s heals %s for %d.", -- [1]
+				"Minimonty's Holy Light heals Huntzor for 2030.", -- [2]
+			},
+			["SPELLTERSE_OTHER"] = {
+				"%s casts %s.[SPELLTERSE_OTHER]", -- [1]
+				"Steam Tonk casts Mortar.[SPELLTERSE_OTHER]", -- [2]
+				"2.0.6", -- [3]
+			},
+			["SPELLREFLECTOTHEROTHER"] = {
+				"%s's %s is reflected back by %s.", -- [1]
+				"Kruztique's Dispel Magic is reflected back by Mageslayer.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["POWERGAINOTHEROTHER"] = {
+				"%s gains %d %s from %s's %s.", -- [1]
+				"Icehammer gains 60 Mana from Morisen's Rejuvenation.", -- [2]
+			},
+			["SIMPLECASTOTHERSELF"] = {
+				"%s casts %s on you.", -- [1]
+				"Thookun casts Devour Magic on you.", -- [2]
 			},
 			["SPELLEXTRAATTACKSOTHER"] = {
 				"%s gains %d extra attacks through %s.", -- [1]
-				"Yukimoto gains 2 extra attacks through Windfury Attack.", -- [2]
+				"Cabal Cultist gains 2 extra attacks through Thrash.", -- [2]
+				"2.0.12.6546", -- [3]
 			},
 		},
-		["CHAT_MSG_COMBAT_FRIENDLY_DEATH"] = {
-			["PARTYKILLOTHER"] = {
-				"%s is slain by %s!", -- [1]
-				"Singh is slain by Mos!", -- [2]
+		["CHAT_MSG_SPELL_DAMAGESHIELDS_ON_OTHERS"] = {
+			["DAMAGESHIELDOTHEROTHER"] = {
+				"%s reflects %d %s damage to %s.", -- [1]
+				"Grizzly reflects 18 Nature damage to Jagnus.", -- [2]
 			},
-			["SELFKILLOTHER"] = {
-				"You have slain %s!", -- [1]
-				"You have slain Phantaz!", -- [2]
-			},
-			["UNITDIESSELF"] = {
-				"You die.", -- [1]
-				"You die.", -- [2]
-			},
-			["UNITDESTROYEDOTHER"] = {
-				"%s is destroyed.", -- [1]
-				"Grounding Totem is destroyed.", -- [2]
-			},
-			["UNITDIESOTHER"] = {
-				"%s dies.", -- [1]
-				"Sapo dies.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_FAILED_LOCALPLAYER"] = {
-			["ERR_TARGET_NOT_IN_GROUP_S"] = {
-				"%s is not in your party.", -- [1]
-				"You fail to cast Ritual of Summoning: Target is not in your party.", -- [2]
-			},
-			["SPELLFAILCASTSELF"] = {
-				"You fail to cast %s: %s.", -- [1]
-				"You fail to cast Immune Charm/Fear/Polymorph: Item is not ready yet.", -- [2]
-			},
-			["SPELLFAILPERFORMSELF"] = {
-				"You fail to perform %s: %s.", -- [1]
-				"You fail to perform Hemorrhage: Not yet recovered.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS"] = {
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Hukku's Voidwalker hits Cornholyo for 25.", -- [2]
-			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Alterac Ram hits Kruztique for 88.[COMBATHITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Oozeling crits Kruztique for 40 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Rot hits Kruztique for 156 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Atal'ai Deathwalker's Spirit crits Ponnie for 467.", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Frostwolf crits Kruztique for 184.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Frayer Protector's Shoot Thorns hits Kruztique for 962 Nature damage.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE"] = {
-			["SPELLLOGABSORBSELF"] = {
-				"You absorb %s.", -- [1]
-				"You absorb Flame Wave.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHER"] = {
-				"%s suffers %d %s damage from %s.", -- [1]
-				"Wrathguard suffers 259 Fire damage from Flame Wave.", -- [2]
-			},
-			["SPELLLOGABSORBOTHER"] = {
-				"%s is absorbed by %s.", -- [1]
-				"Flame Wave is absorbed by Bryantia.", -- [2]
-			},
-			["PERIODICAURADAMAGESELFSELF"] = {
-				"You suffer %d %s damage from your %s.", -- [1]
-				"You suffer 215 Fire damage from your Hellfire.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHEROTHER"] = {
-				"%s suffers %d %s damage from %s's %s.", -- [1]
-				"Wildspawn Rogue suffers 100 Physical damage from Wildspawn Rogue's Rupture.", -- [2]
-			},
-			["SPELLLOGABSORBSELFSELF"] = {
-				"You absorb your %s.", -- [1]
-				"You absorb your Hellfire.", -- [2]
-			},
-			["PERIODICAURADAMAGESELFOTHER"] = {
-				"%s suffers %d %s damage from your %s.", -- [1]
-				"Doomguard suffers 283 Shadow damage from your Corruption.", -- [2]
-			},
-			["SPELLPOWERDRAINSELFOTHER"] = {
-				"Your %s drains %d %s from %s.", -- [1]
-				"Your Viper Sting drains 154 Mana from Skeletal Mage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Wildspawn Felsworn's Shadow Word: Pain is absorbed by Wildspawn Shadowstalker.", -- [2]
-			},
-			["SPELLPOWERLEECHSELFOTHER"] = {
-				"Your %s drains %d %s from %s. You gain %d %s.", -- [1]
-				"Your Drain Mana drains 140 Mana from Althion. You gain 140 Mana.", -- [2]
-			},
-			["AURAADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s.", -- [1]
-				"Wildspawn Rogue is afflicted by Enslave Demon.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHERSELF"] = {
-				"You suffer %d %s damage from %s's %s.", -- [1]
-				"You suffer 26 Physical damage from Alterac Ram's Rend.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s (%d).", -- [1]
-				"Wildspawn Hellcaller is afflicted by Submersion (2).", -- [2]
-			},
-			["AURAAPPLICATIONADDEDSELFHARMFUL"] = {
-				"You are afflicted by %s (%d).", -- [1]
-				"You are afflicted by Shadow Vulnerability (2).", -- [2]
-			},
-			["SPELLLOGABSORBOTHERSELF"] = {
-				"You absorb %s's %s.", -- [1]
-				"You absorb Wildspawn Hellcaller's Rain of Fire.", -- [2]
-			},
-			["PERIODICAURADAMAGESELF"] = {
-				"You suffer %d %s damage from %s.", -- [1]
-				"You suffer 275 Fire damage from Flame Wave.", -- [2]
-			},
-			["AURAADDEDSELFHARMFUL"] = {
-				"You are afflicted by %s.", -- [1]
-				"You are afflicted by Rend.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE"] = {
-			["SPELLBLOCKEDOTHEROTHER"] = {
-				"%s's %s was blocked by %s.", -- [1]
-				"Blackhand Iron Guard's Shield Slam was blocked by Cleatus.", -- [2]
-			},
-			["SPELLINTERRUPTOTHEROTHER"] = {
-				"%s interrupts %s's %s.", -- [1]
-				"Molten Destroyer interrupts Souldreamer's Holy Light.", -- [2]
-			},
-			["IMMUNESPELLOTHEROTHER"] = {
-				"%s is immune to %s's %s.", -- [1]
-				"Athenna is immune to Buru the Gorger's Creeping Plague.", -- [2]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Unknown Entity's Ambush crits Ponnie for 1090.", -- [2]
-			},
-			["SPELLRESISTOTHER"] = {
-				"%s was resisted by %s.", -- [1]
-				"Frostbite was resisted by Kruztique.", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Unknown's Firebolt crits Bleinmeis for 170 Fire damage.", -- [2]
+			["SPELLRESISTOTHERSELF"] = {
+				"%s's %s was resisted.", -- [1]
+				"Diokles's Thorns was resisted.", -- [2]
 			},
 			["SPELLRESISTOTHEROTHER"] = {
 				"%s's %s was resisted by %s.", -- [1]
-				"Wildspawn Trickster's Curse of Weakness was resisted by Kruztique.", -- [2]
+				"Sludge's Thorns was resisted by Bloodrage.", -- [2]
 			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Obsidian Eradicator's Drain Mana drains 250 Mana from Bapakloe. Obsidian Eradicator gains 500 Mana.", -- [2]
-			},
-			["SPELLLOGABSORBOTHER"] = {
-				"%s is absorbed by %s.", -- [1]
-				"Flame Wave is absorbed by Kruztique.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Gehennas's Shadow Bolt fails. Souldreamer is immune.", -- [2]
-			},
-			["SIMPLECASTOTHEROTHER"] = {
-				"%s casts %s on %s.[SIMPLECASTOTHEROTHER]", -- [1]
-				"Epoch Hunter casts Disrupt Magic on Shair.[SIMPLECASTOTHEROTHER]", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLSPLITDAMAGEOTHEROTHER"] = {
-				"%s's %s causes %s %d damage.", -- [1]
-				"Kirin'Var Ghost's Soulbind causes Alanfoster 159 damage.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["DISPELFAILEDOTHEROTHER"] = {
-				"%s fails to dispel %s's %s.", -- [1]
-				"Epoch Hunter fails to dispel Dartanion's Fire Shield.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGSCHOOLOTHER"] = {
-				"%s hits %s for %d %s damage.[SPELLLOGSCHOOLOTHER]", -- [1]
-				"Flame Wave hits Kruztique for 275 Fire damage.[SPELLLOGSCHOOLOTHER]", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Eliza's Frostbolt hits Aubrie for 120 Frost damage.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Wildspawn Rogue's Sinister Strike is absorbed by Kruztique.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Wildspawn Rogue's Sinister Strike hits Kruztique for 331.", -- [2]
-			},
-			["SPELLMISSOTHEROTHER"] = {
-				"%s's %s missed %s.", -- [1]
-				"Hatecrest Warrior's Disarm missed Ponnie.", -- [2]
-			},
-			["SPELLDURABILITYDAMAGEOTHEROTHER"] = {
-				"%s casts %s on %s: %s damaged.", -- [1]
-				"Ragnaros casts Melt Weapon on Guntlien: Silent Fang damaged.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Southsea Pirate's Strike was parried by Ponnie.", -- [2]
-			},
-			["SPELLREFLECTOTHEROTHER"] = {
-				"%s's %s is reflected back by %s.", -- [1]
-				"Shadowmoon Warlock's Shadow Bolt is reflected back by Iamvj.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Firewing Bloodwarder's Mana Tap drains 1290 Mana from Kruztique.", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SIMPLEPERFORMOTHEROTHER"] = {
-				"%s performs %s on %s.[SIMPLEPERFORMOTHEROTHER]", -- [1]
-				"Commander Louis Philips performs Dazed on Kruztique.[SIMPLEPERFORMOTHEROTHER]", -- [2]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Hatecrest Warrior's Disarm was dodged by Ponnie.", -- [2]
+			["DAMAGESHIELDOTHERSELF"] = {
+				"%s reflects %d %s damage to you.", -- [1]
+				"Plethora reflects 15 Nature damage to you.", -- [2]
 			},
 		},
-		["CHAT_MSG_COMBAT_HONOR_GAIN"] = {
-			["COMBATLOG_HONORAWARD"] = {
-				"You have been awarded %d honor points.", -- [1]
-				"You have been awarded 198 honor points.", -- [2]
+		["CHAT_MSG_SYSTEM"] = {
+			["ERR_IGNORE_REMOVED_S"] = {
+				"%s is no longer being ignored.", -- [1]
+				"Afterthefall is no longer being ignored.", -- [2]
 			},
-			["COMBATLOG_HONORGAIN"] = {
-				"%s dies, honorable kill Rank: %s (Estimated Honor Points: %d)", -- [1]
-				"Vyxxenn dies, honorable kill Rank: Stone Guard (Estimated Honor Points: 80)", -- [2]
+			["ERR_ALREADY_IN_GROUP_S"] = {
+				"%s is already in a group.", -- [1]
+				"Sai is already in a group.", -- [2]
 			},
-		},
-		["CHAT_MSG_COMBAT_CREATURE_VS_SELF_HITS"] = {
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Irondeep Trogg hits Khuunam for 30.[COMBATHITOTHEROTHER]", -- [2]
+			["ERR_MEETING_STONE_IN_QUEUE_S"] = {
+				"You are now in the queue to join a party for %s.", -- [1]
+				"You are now in the queue to join a party for Hellfire Citadel - Hellfire Ramparts.", -- [2]
 			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Rot crits Haaroon for 197 Nature damage.[COMBATHITCRITSCHOOLOTHEROTHER] (39 resisted)", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Irondeep Trogg crits Khuunam for 70.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITSCHOOLOTHERSELF"] = {
-				"%s hits you for %d %s damage.[COMBATHITSCHOOLOTHERSELF]", -- [1]
-				"Blistering Oozeling hits you for 21 Nature damage.[COMBATHITSCHOOLOTHERSELF]", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHERSELF"] = {
-				"%s's %s hits you for %d %s damage.", -- [1]
-				"Frayer Protector's Shoot Thorns hits you for 955 Nature damage. (239 absorbed)", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLLOGOTHERSELF"] = {
-				"%s's %s hits you for %d.", -- [1]
-				"Hukku's Voidwalker hits you for 23.", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Blistering Rot hits Terrorfiend for 149 Nature damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-			},
-			["COMBATHITCRITOTHERSELF"] = {
-				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
-				"Irondeep Shaman crits you for 68.[COMBATHITCRITOTHERSELF] (17 absorbed)", -- [2]
-			},
-			["COMBATHITOTHERSELF"] = {
-				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
-				"Irondeep Trogg hits you for 26.[COMBATHITOTHERSELF] (7 absorbed)", -- [2]
-			},
-			["COMBATHITCRITSCHOOLOTHERSELF"] = {
-				"%s crits you for %d %s damage.[COMBATHITCRITSCHOOLOTHERSELF]", -- [1]
-				"Nexus Terror crits you for 772 Shadow damage.[COMBATHITCRITSCHOOLOTHERSELF] (482 resisted) (193 absorbed)", -- [2]
-				"2.0.6", -- [3]
-			},
-		},
-		["CHAT_MSG_COMBAT_PET_MISSES"] = {
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"Phantaz attacks. Risen Guard blocks.", -- [2]
-			},
-			["VSIMMUNEOTHEROTHER"] = {
-				"%s attacks but %s is immune.", -- [1]
-				"Wildspawn Rogue attacks but Wildspawn Rogue is immune.", -- [2]
-			},
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Khuunam attacks. Althion absorbs all the damage.", -- [2]
-			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Wildspawn Rogue misses Wildspawn Trickster.", -- [2]
-			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Wildspawn Rogue attacks. Wildspawn Trickster dodges.", -- [2]
-			},
-			["VSDODGEOTHERSELF"] = {
-				"%s attacks. You dodge.", -- [1]
-				"Wrathbringer attacks. You dodge.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Wildspawn Rogue attacks. Wildspawn Trickster parries.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_CREATURE_VS_PARTY_BUFF"] = {
-			["SPELLIMMUNEOTHEROTHER"] = {
-				"%s's %s fails. %s is immune.", -- [1]
-				"Arcatraz Sentinel's Energy Discharge fails. Nino is immune.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLRESISTOTHEROTHER"] = {
-				"%s's %s was resisted by %s.", -- [1]
-				"Arcatraz Sentinel's Energy Discharge was resisted by Nedru.", -- [2]
-				"2.0.10.6448", -- [3]
-			},
-			["SPELLDODGEDOTHEROTHER"] = {
-				"%s's %s was dodged by %s.", -- [1]
-				"Sethekk Ravenguard's Bloodthirst was dodged by Shair.", -- [2]
+			["ERR_GUILD_QUIT_S"] = {
+				"You are no longer a member of %s.", -- [1]
+				"You are no longer a member of DND.", -- [2]
 				"2.0.12.6546", -- [3]
 			},
-			["PROCRESISTOTHEROTHER"] = {
-				"%s resists %s's %s.", -- [1]
-				"Librabear resists Winterfall Shaman's Lightning Shield.", -- [2]
-			},
-			["SPELLPARRIEDOTHEROTHER"] = {
-				"%s's %s was parried by %s.", -- [1]
-				"Shattered Hand Heathen's Bloodthirst was parried by Roond.", -- [2]
-				"2.0.12.6546", -- [3]
-			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Kruztique gains 280 Mana from Shadowfiend's Mana Leech.", -- [2]
+			["ERR_QUEST_FAILED_S"] = {
+				"%s failed.", -- [1]
+				"Someone Else's Hard Work Pays Off failed.", -- [2]
 				"2.0.6", -- [3]
 			},
-		},
-		["CHAT_MSG_SPELL_AURA_GONE_PARTY"] = {
-			["AURAREMOVEDOTHER"] = {
-				"%s fades from %s.", -- [1]
-				"Detect Greater Invisibility fades from Kruztique.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE"] = {
-			["PERIODICAURADAMAGEOTHEROTHER"] = {
-				"%s suffers %d %s damage from %s's %s.", -- [1]
-				"Sekaikaze suffers 26 Physical damage from Alterac Ram's Rend.", -- [2]
-			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Sapo's Viper Sting drains 277 Mana from Vyxxenn.", -- [2]
-			},
-			["SPELLLOGABSORBOTHEROTHER"] = {
-				"%s's %s is absorbed by %s.", -- [1]
-				"Yurneroo's Deep Wound is absorbed by Proxor.", -- [2]
-			},
-			["AURAADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s.", -- [1]
-				"Sekaikaze is afflicted by Rend.", -- [2]
-			},
-			["SPELLPOWERLEECHOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s. %s gains %d %s.", -- [1]
-				"Regnier's Drain Mana drains 140 Mana from Darigaaz. Regnier gains 140 Mana.", -- [2]
-			},
-			["PERIODICAURADAMAGEOTHER"] = {
-				"%s suffers %d %s damage from %s.", -- [1]
-				"Nyctrico suffers 259 Fire damage from Flame Wave.", -- [2]
-			},
-			["SPELLLOGABSORBSELFOTHER"] = {
-				"Your %s is absorbed by %s.", -- [1]
-				"Your Corruption is absorbed by Sansetsu.", -- [2]
-			},
-			["AURAAPPLICATIONADDEDOTHERHARMFUL"] = {
-				"%s is afflicted by %s (%d).", -- [1]
-				"Loradam is afflicted by Shadow Vulnerability (2).", -- [2]
-			},
-			["PERIODICAURADAMAGESELFOTHER"] = {
-				"%s suffers %d %s damage from your %s.", -- [1]
-				"Dreamstriker suffers 158 Shadow damage from your Corruption.", -- [2]
-			},
-		},
-		["CHAT_MSG_SPELL_AURA_GONE_OTHER"] = {
-			["AURAREMOVEDOTHER"] = {
-				"%s fades from %s.", -- [1]
-				"Cheap Shot fades from Alterac Ram.", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_HOSTILE_DEATH"] = {
-			["SELFKILLOTHER"] = {
-				"You have slain %s!", -- [1]
-				"You have slain Forest Spider!", -- [2]
-			},
-			["UNITDIESOTHER"] = {
-				"%s dies.", -- [1]
-				"Alterac Ram dies.", -- [2]
-			},
-			["UNITDESTROYEDOTHER"] = {
-				"%s is destroyed.", -- [1]
-				"Magma Totem IV is destroyed.", -- [2]
-			},
-			["PARTYKILLOTHER"] = {
-				"%s is slain by %s!", -- [1]
-				"Chevr is slain by Mos!", -- [2]
-			},
-		},
-		["CHAT_MSG_COMBAT_PARTY_HITS"] = {
-			["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
-				"%s suffers %d points of fire damage.", -- [1]
-				"Nimbus suffers 15 points of fire damage.", -- [2]
-			},
-			["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-				"%s crits %s for %d %s damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [1]
-				"Shadowfiend crits Ethereal Scavenger for 232 Shadow damage.[COMBATHITCRITSCHOOLOTHEROTHER]", -- [2]
-				"2.0.6", -- [3]
-			},
-			["SPELLLOGCRITOTHEROTHER"] = {
-				"%s's %s crits %s for %d.", -- [1]
-				"Chula's Auto Shot crits Treant for 360.", -- [2]
-			},
-			["COMBATHITCRITOTHEROTHER"] = {
-				"%s crits %s for %d.[COMBATHITCRITOTHEROTHER]", -- [1]
-				"Sherbs crits Ludachriz for 206.[COMBATHITCRITOTHEROTHER]", -- [2]
-			},
-			["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-				"%s's %s crits %s for %d %s damage.", -- [1]
-				"Kruztique's Shoot crits Earthbind Totem for 135 Arcane damage.", -- [2]
-			},
-			["SPELLLOGSCHOOLOTHEROTHER"] = {
-				"%s's %s hits %s for %d %s damage.", -- [1]
-				"Riane's Shoot hits Mana Spring Totem IV for 111 Shadow damage.", -- [2]
-			},
-			["SPELLLOGOTHEROTHER"] = {
-				"%s's %s hits %s for %d.", -- [1]
-				"Chula's Auto Shot hits Commander Louis Philips for 219.", -- [2]
-			},
-			["COMBATHITSCHOOLOTHEROTHER"] = {
-				"%s hits %s for %d %s damage.[COMBATHITSCHOOLOTHEROTHER]", -- [1]
-				"Unknown hits Bonelasher for 111 Shadow damage.[COMBATHITSCHOOLOTHEROTHER]", -- [2]
-				"2.0.6", -- [3]
-			},
-			["COMBATHITOTHEROTHER"] = {
-				"%s hits %s for %d.[COMBATHITOTHEROTHER]", -- [1]
-				"Frucheman hits Nauxinc for 441.[COMBATHITOTHEROTHER]", -- [2]
-			},
-			["COMBATHITCRITOTHERSELF"] = {
-				"%s crits you for %d.[COMBATHITCRITOTHERSELF]", -- [1]
-				"Treant crits you for 321.[COMBATHITCRITOTHERSELF]", -- [2]
+			["ERR_FRIEND_SELF"] = {
+				"You can't put yourself on your friend list.", -- [1]
+				"You can't put yourself on your friend list.", -- [2]
 				"2.0.10.6448", -- [3]
 			},
-			["COMBATHITOTHERSELF"] = {
-				"%s hits you for %d.[COMBATHITOTHERSELF]", -- [1]
-				"Bonechewer Hungerer hits you for 211.[COMBATHITOTHERSELF] (53 absorbed)", -- [2]
+			["ERR_ZONE_EXPLORED_XP"] = {
+				"Discovered %s: %d experience gained", -- [1]
+				"Discovered The Cauldron: 440 experience gained", -- [2]
 			},
-			["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
-				"%s loses %d health for swimming in lava.", -- [1]
-				"Kal'los loses 1446 health for swimming in lava.", -- [2]
+			["ERR_NOT_LEADER"] = {
+				"You are not the party leader.", -- [1]
+				"You are not the party leader.", -- [2]
 			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS"] = {
-			["PERIODICAURAHEALSELFOTHER"] = {
-				"%s gains %d health from your %s.", -- [1]
-				"Rokugo gains 250 health from your First Aid.", -- [2]
+			["ERR_QUEST_REWARD_EXP_I"] = {
+				"Experience gained: %d.", -- [1]
+				"Experience gained: 2400.", -- [2]
 			},
-			["AURAADDEDOTHERHELPFUL"] = {
-				"%s gains %s.", -- [1]
-				"Haihachi gains Obsidian Insight.", -- [2]
+			["MARKED_AFK_MESSAGE"] = {
+				"You are now AFK: %s", -- [1]
+				"You are now AFK: Away from Keyboard", -- [2]
 			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Icebringer's Flee drains 517 Mana from Icebringer.", -- [2]
+			["ERR_NEW_LEADER_S"] = {
+				"%s is now the group leader.", -- [1]
+				"Dragonx is now the group leader.", -- [2]
 			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 10 Mana from Aubrie's Blessing of Wisdom.", -- [2]
+			["ERR_QUEST_ACCEPTED_S"] = {
+				"Quest accepted: %s", -- [1]
+				"Quest accepted: Curse These Fat Fingers", -- [2]
 			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Loradam gains 250 health from Loradam's First Aid.", -- [2]
+			["ERR_PLAYER_BUSY_S"] = {
+				"%s is busy right now.", -- [1]
+				"Zay is busy right now.", -- [2]
 			},
-			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
-				"%s gains %s (%d).", -- [1]
-				"Felmas gains Unstable Power (8).", -- [2]
+			["WHO_NUM_RESULTS"] = {
+				"%d player total", -- [1]
+				"1 player total", -- [2]
 			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Chickenlady gains 1 Rage from Chickenlady's Bloodrage.", -- [2]
+			["ERR_DEATHBIND_SUCCESS_S"] = {
+				"%s is now your home.", -- [1]
+				"Cenarion Hold is now your home.", -- [2]
 			},
-		},
-		["CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS"] = {
-			["PERIODICAURAHEALSELFOTHER"] = {
-				"%s gains %d health from your %s.", -- [1]
-				"Shair gains 100 health from your First Aid.", -- [2]
+			["MATCHMAKING_MATCH_S"] = {
+				"You have been matched to a group for %s.", -- [1]
+				"You have been matched to a group for Auchindoun - Shadow Labyrinth.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
-			["AURAADDEDOTHERHELPFUL"] = {
-				"%s gains %s.", -- [1]
-				"Gjonnydanger gains Devotion Aura.", -- [2]
+			["ERR_QUEST_PUSH_ONQUEST_S"] = {
+				"%s is already on that quest", -- [1]
+				"Ponnie is already on that quest", -- [2]
 			},
-			["SPELLPOWERDRAINOTHEROTHER"] = {
-				"%s's %s drains %d %s from %s.", -- [1]
-				"Styxson's Flee drains 485 Mana from Styxson.", -- [2]
+			["INSTANCE_SAVED"] = {
+				"You are now saved to this instance", -- [1]
+				"You are now saved to this instance", -- [2]
 			},
-			["POWERGAINOTHERSELF"] = {
-				"You gain %d %s from %s's %s.", -- [1]
-				"You gain 10 Mana from Aubrie's Blessing of Wisdom.", -- [2]
+			["ERR_BG_PLAYER_LEFT_S"] = {
+				"%s has left the battle", -- [1]
+				"Deiliana has left the battle", -- [2]
 			},
-			["AURAAPPLICATIONADDEDOTHERHELPFUL"] = {
-				"%s gains %s (%d).", -- [1]
-				"Narwen gains Unstable Power (8).", -- [2]
+			["ERR_LEFT_GROUP_YOU"] = {
+				"You leave the group.", -- [1]
+				"You leave the group.", -- [2]
 			},
-			["PERIODICAURAHEALOTHEROTHER"] = {
-				"%s gains %d health from %s's %s.", -- [1]
-				"Minimonty gains 249 health from Aneptios's Renew.", -- [2]
+			["ERR_LEARN_ABILITY_S"] = {
+				"You have learned a new ability: %s.", -- [1]
+				"You have learned a new ability: Piercing Howl.", -- [2]
 			},
-			["POWERGAINOTHEROTHER"] = {
-				"%s gains %d %s from %s's %s.", -- [1]
-				"Minimonty gains 33 Mana from Minimonty's Blessing of Wisdom.", -- [2]
+			["DUEL_COUNTDOWN"] = {
+				"Duel starting: %d", -- [1]
+				"Duel starting: 3", -- [2]
 			},
-		},
-		["CHAT_MSG_COMBAT_FRIENDLYPLAYER_MISSES"] = {
-			["VSEVADEOTHEROTHER"] = {
-				"%s attacks. %s evades.", -- [1]
-				"Mistick attacks. Lava Annihilator evades.", -- [2]
+			["DRUNK_MESSAGE_SELF3"] = {
+				"You feel drunk.  Woah!", -- [1]
+				"You feel drunk.  Woah!", -- [2]
 			},
-			["VSIMMUNEOTHEROTHER"] = {
-				"%s attacks but %s is immune.", -- [1]
-				"Sekaikaze attacks but Morike is immune.", -- [2]
+			["ERR_QUEST_PUSH_SUCCESS_S"] = {
+				"Sharing quest with %s...", -- [1]
+				"Sharing quest with Ponnie...", -- [2]
 			},
-			["VSABSORBOTHEROTHER"] = {
-				"%s attacks. %s absorbs all the damage.", -- [1]
-				"Sapito attacks. Yurneroo absorbs all the damage.", -- [2]
+			["ERR_SET_LOOT_FREEFORALL"] = {
+				"Looting changed to free-for-all.", -- [1]
+				"Looting changed to free-for-all.", -- [2]
 			},
-			["MISSEDOTHEROTHER"] = {
-				"%s misses %s.", -- [1]
-				"Jeebes misses Seasoned Guardian.", -- [2]
+			["ERR_GROUP_DISBANDED"] = {
+				"Your group has been disbanded.", -- [1]
+				"Your group has been disbanded.", -- [2]
 			},
-			["VSDODGEOTHEROTHER"] = {
-				"%s attacks. %s dodges.", -- [1]
-				"Sekaikaze attacks. Alterac Ram dodges.", -- [2]
+			["ERR_NOT_IN_RAID"] = {
+				"You are not in a raid group", -- [1]
+				"You are not in a raid group", -- [2]
 			},
-			["VSPARRYOTHEROTHER"] = {
-				"%s attacks. %s parries.", -- [1]
-				"Sekaikaze attacks. Alterac Ram parries.", -- [2]
+			["UNIT_PVP_NAME"] = {
+				"%s %s", -- [1]
+				"Welcome to the World of Warcraft!", -- [2]
 			},
-			["VSBLOCKOTHEROTHER"] = {
-				"%s attacks. %s blocks.", -- [1]
-				"maide attacks. Thermopolis blocks.", -- [2]
+			["ERR_LEARN_RECIPE_S"] = {
+				"You have learned how to create a new item: %s.", -- [1]
+				"You have learned how to create a new item: Brightcloth Pants.", -- [2]
 			},
-		},
-	},
-	["tooShort"] = {
-		["FOLLOW"] = "Follow",
-		["CLOSE"] = "Close",
-		["HOURS_ABBR_P1"] = "Hrs",
-		["ALL"] = "All",
-		["SPELL_TARGET_TYPE8_DESC"] = "pet",
-		["LOGOUT"] = "Logout",
-		["RAID_LEADER_TOKEN"] = "(L)",
-		["LFG_TYPE_ZONE"] = "Zone",
-		["SUBMIT"] = "Submit",
-		["PETS"] = "Pets",
-		["BOSS"] = "Boss",
-		["CHAT_MSG_YELL"] = "Yell",
-		["LAUGH_WORD7"] = "haha",
-		["XPBAR_LABEL"] = "XP Bar",
-		["LOOT"] = "Loot",
-		["CHAT_COMBAT_CREATURE_VS_CREATURE_MISSES_GET"] = "",
-		["CHAT_SPELL_DAMAGESHIELDS_ON_OTHERS_GET"] = "",
-		["NONE_CAPS"] = "NONE",
-		["LAUGH_WORD6"] = "haha",
-		["SPELL_SCHOOLALL"] = "all",
-		["YELL_MESSAGE"] = "Yell",
-		["MP"] = "MP",
-		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE_GET"] = "",
-		["SPELL_TARGET_CREATURE_TYPE1_DESC"] = "%s",
-		["LAUGH_WORD8"] = "haha",
-		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS_GET"] = "",
-		["XP"] = "XP",
-		["ENERGY"] = "Energy",
-		["ERR_NOAMMO_S"] = "%s",
-		["CHAT_SPELL_FRIENDLYPLAYER_DAMAGE_GET"] = "",
-		["PET_FOLLOW"] = "Follow",
-		["DAYS_ABBR"] = "Day",
-		["DAMAGE_SCHOOL5"] = "Frost",
-		["ATTACK_POWER_COLON"] = "Power:",
-		["WHO_TAG_CLASS"] = "c-",
-		["HP"] = "HP",
-		["FOCUS_POINTS"] = "Focus",
-		["SOCIAL_BUTTON"] = "Social",
-		["YELLOW_GEM"] = "Yellow",
-		["LOCKED"] = "Locked",
-		["SPELL_SCHOOL4_CAP"] = "Frost",
-		["INT_SPELL_DURATION_SEC"] = "%d sec",
-		["HONOR_TODAY"] = "Today",
-		["NOT_APPLICABLE"] = "N/A",
-		["SPELL_TARGET_TYPE0_DESC"] = "caster",
-		["SEND_LABEL"] = "Send",
-		["AUCTION_TIME_LEFT1"] = "Short",
-		["WHO_TAG_NAME"] = "n-",
-		["PET_HAPPINESS3"] = "Happy",
-		["NEXT"] = "Next",
-		["HOURS_P1"] = "Hours",
-		["CAMERA_LOCKED"] = "Locked",
-		["TASKS_COLON"] = "Tasks:",
-		["META_GEM"] = "Meta",
-		["COD"] = "C.O.D.",
-		["NEVER"] = "Never",
-		["PROC_EVENT1_DESC"] = "on hit",
-		["DEMOTE"] = "Demote",
-		["DUEL"] = "Duel",
-		["CHAT_SPELL_ITEM_ENCHANTMENTS_GET"] = "",
-		["GOLD"] = "Gold",
-		["WAISTSLOT"] = "Waist",
-		["ZONE"] = "Zone",
-		["CORPSE"] = "Corpse",
-		["HEALTH"] = "Health",
-		["HONOR_THIS_SESSION"] = "Today",
-		["SECOND_ONELETTER_ABBR"] = "%d s",
-		["LAUGH_WORD9"] = "rofl",
-		["TEAM"] = "Team",
-		["HERTZ"] = "Hz",
-		["CHAT_SPELL_AURA_GONE_PARTY_GET"] = "",
-		["DAMAGE"] = "Damage",
-		["CHAT_COMBAT_FRIENDLYPLAYER_HITS_GET"] = "",
-		["FOREIGN_SERVER_LABEL"] = " (*)",
-		["WHO_TAG_ZONE"] = "z-",
-		["PARTY"] = "Party",
-		["STARTUP_TEXT_LINE4"] = "",
-		["PASS"] = "Pass",
-		["SPELL_SCHOOL1_CAP"] = "Holy",
-		["ELITE"] = "Elite",
-		["BACKSLOT"] = "Back",
-		["English"] = "",
-		["CHAT_MSG_SYSTEM"] = "System",
-		["WHO_TAG_GUILD"] = "g-",
-		["CHAT_SPELL_PARTY_DAMAGE_GET"] = "",
-		["LOW"] = "Low",
-		["DEATHS"] = "Deaths",
-		["FEMALE"] = "Female",
-		["AUCTION_CREATOR"] = "Seller",
-		["PLAYED"] = "Played",
-		["CHAT_SPELL_PET_BUFF_GET"] = "",
-		["SPELL_SCHOOL3_CAP"] = "Nature",
-		["SECONDS_ABBR_P1"] = "Secs",
-		["BUYOUT"] = "Buyout",
-		["ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S"] = "%s",
-		["MOTD_COLON"] = "MOTD:",
-		["PARENS_TEMPLATE"] = "(%s)",
-		["HOURS"] = "Hour",
-		["PLAYERSTAT_RANGED_COMBAT"] = "Ranged",
-		["PET_ACTION_ATTACK"] = "Attack",
-		["CASH_ON_DELIVERY"] = "C.O.D.",
-		["DAMAGE_SCHOOL3"] = "Fire",
-		["CHAT_COMBAT_FRIENDLYPLAYER_MISSES_GET"] = "",
-		["LASTONLINE_DAYS"] = "%d day",
-		["CHAT_SPELL_HOSTILEPLAYER_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_CREATURE_VS_SELF_HITS_GET"] = "",
-		["GAMES"] = "Games",
-		["DELETE_ITEM_CONFIRM_STRING"] = "DELETE",
-		["RESIST"] = "Resist",
-		["CHAT_SPELL_PERIODIC_PARTY_BUFFS_GET"] = "",
-		["DUNGEON_DIFFICULTY3"] = "Epic",
-		["TRAIN"] = "Train",
-		["ARENA_RATED"] = "Battle",
-		["WIDESCREEN_TAG"] = "(Wide)",
-		["RANK_COLON"] = "Rank:",
-		["RAID_TARGET_1"] = "Star",
-		["HIDE"] = "Hide",
-		["MONEY"] = "Money",
-		["SOLO"] = "Solo",
-		["NOTE_COLON"] = "Note:",
-		["WHO"] = "Who",
-		["SPELL_TARGET_TYPE1_DESC"] = "any",
-		["GAMMA"] = "Gamma",
-		["CHAT_MSG_AFK"] = "AFK",
-		["CHAT_COMBAT_CREATURE_VS_PARTY_HITS_GET"] = "",
-		["MILLISECONDS_ABBR"] = "ms",
-		["RACE"] = "Race",
-		["ARMOR"] = "Armor",
-		["FINGER0SLOT"] = "Finger",
-		["LAUGH_WORD2"] = "rofl",
-		["HOURS_ABBR"] = "Hr",
-		["BACK"] = "Back",
-		["UNIT_PVP_NAME"] = "%s %s",
-		["DODGE"] = "Dodge",
-		["LAUGH_WORD5"] = "haha",
-		["TABARDVENDORCOST"] = "Cost:",
-		["CAMERA_ALWAYS"] = "Always",
-		["RANK"] = "Rank",
-		["BROWSE"] = "Browse",
-		["FILTER"] = "Filter",
-		["NONE"] = "None",
-		["YES"] = "Yes",
-		["CHAT_SPELL_HOSTILEPLAYER_BUFF_GET"] = "",
-		["BUFFER_DOUBLE"] = "Double",
-		["CHAT_SPELL_TRADESKILLS_GET"] = "",
-		["BIDS"] = "Bids",
-		["COLOR"] = "Color",
-		["LAUGH_WORD1"] = "lol",
-		["INPUT_JAPANESE"] = "JP",
-		["MAIL_RETURN"] = "Return",
-		["YOU"] = "You",
-		["EMBLEM_SYMBOL"] = "Icon",
-		["CHAT_MSG_COMBAT_LOG_MISC_INFO"] = "Misc",
-		["CHAT_SPELL_DAMAGESHIELDS_ON_SELF_GET"] = "",
-		["ENABLE"] = "Enable",
-		["MANA"] = "Mana",
-		["SPELL_TARGET_TYPE15_DESC"] = "master",
-		["MAIL_TO_LABEL"] = "To:",
-		["MANA_POINTS"] = "Mana",
-		["INPUT_CHINESE"] = "CH",
-		["MANA_COLON"] = "Mana:",
-		["LEVEL_ABBR"] = "Lvl",
-		["DAYS"] = "Day",
-		["SPELL_SCHOOL2_CAP"] = "Fire",
-		["NEW"] = "New",
-		["CHAT_SPELL_CREATURE_VS_CREATURE_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_HOSTILE_DEATH_GET"] = "",
-		["FOCUS"] = "Focus",
-		["HK"] = "HK",
-		["BASIC_LABEL"] = "Basic",
-		["DAY_ONELETTER_ABBR"] = "%d d",
-		["SPELL_TARGET_TYPE3_DESC"] = "enemy",
-		["FACTION_STANDING_LABEL1"] = "Hated",
-		["CHAT_SPELL_PERIODIC_CREATURE_BUFFS_GET"] = "",
-		["MINUTES_ABBR"] = "Min",
-		["CHAT_COMBAT_PET_MISSES_GET"] = "",
-		["CHAT_SPELL_AURA_GONE_OTHER_GET"] = "",
-		["PET"] = "Pet",
-		["FRFR"] = "French",
-		["FEETSLOT"] = "Feet",
-		["DK"] = "DK",
-		["PET_ACTION_FOLLOW"] = "Follow",
-		["PARRY"] = "Parry",
-		["COPPER"] = "Copper",
-		["SAVE"] = "Save",
-		["CHAT_YELL_SEND"] = "Yell: ",
-		["TRADE"] = "Trade",
-		["RAID_ASSISTANT_TOKEN"] = "(A)",
-		["STARTUP_TEXT_LINE3"] = "",
-		["SPELL_SCHOOL2_NAME"] = "fire",
-		["STARTUP_TEXT_LINE2"] = "",
-		["FROM"] = "From:",
-		["HONOR_CONTRIBUTION_POINTS"] = "Honor",
-		["IMMUNE"] = "Immune",
-		["CHAT_COMBAT_MISC_INFO_GET"] = "",
-		["CANCEL"] = "Cancel",
-		["NECKSLOT"] = "Neck",
-		["DELETE"] = "Delete",
-		["PET_RENAME"] = "Rename",
-		["CHAT_SPELL_PET_DAMAGE_GET"] = "",
-		["CHAT_MSG_GUILD"] = "Guild",
-		["DAMAGE_SCHOOL6"] = "Shadow",
-		["SPELL_STAT5_NAME"] = "Spirit",
-		["INPUT_KOREAN"] = "KO",
-		["CHAT_LABEL"] = "Chat",
-		["MAIL_REPLY_PREFIX"] = "RE:",
-		["WEAPON_SPEED"] = "Speed",
-		["SPELL_TARGET_CREATURE_TYPE8_DESC"] = "%s pet",
-		["EXIT"] = "Exit",
-		["SPEAKERMODE_STEREO"] = "Stereo",
-		["CHAT_SPELL_PERIODIC_CREATURE_DAMAGE_GET"] = "",
-		["OUTBID"] = "Outbid",
-		["PERCENT_SYMBOL"] = "%%",
-		["DUNGEON_DIFFICULTY2"] = "Heroic",
-		["CAMERA_NEVER"] = "Never",
-		["ENERGY_POINTS"] = "Energy",
-		["CHAT_COMBAT_CREATURE_VS_PARTY_MISSES_GET"] = "",
-		["CHAT_SAY_SEND"] = "Say: ",
-		["CHAT_MSG_SKILL"] = "Skill",
-		["HONOR"] = "Honor",
-		["NEED"] = "Need",
-		["PREV"] = "Prev",
-		["BAGSLOT"] = "Bag",
-		["OKAY"] = "Okay",
-		["RAID_TARGET_2"] = "Circle",
-		["RAID_TARGET_7"] = "Cross",
-		["ZONE_COLON"] = "Zone:",
-		["ERROR_CAPS"] = "ERROR",
-		["CHAT_SPELL_FRIENDLYPLAYER_BUFF_GET"] = "",
-		["RAID_TARGET_5"] = "Moon",
-		["SPELLS"] = "Spells",
-		["CHAT_COMBAT_CREATURE_VS_CREATURE_HITS_GET"] = "",
-		["RAID_MESSAGE"] = "Raid",
-		["COSTS_LABEL"] = "Cost:",
-		["MINUTES"] = "Minute",
-		["SPELL_SCHOOL5_NAME"] = "shadow",
-		["LOCK"] = "Lock",
-		["CHAT_COMBAT_ERROR_GET"] = "",
-		["REPLY_MESSAGE"] = "Reply",
-		["AUCTION_TIME_LEFT2"] = "Medium",
-		["WHO_TAG_RACE"] = "r-",
-		["CHAT_SPELL_PERIODIC_PARTY_DAMAGE_GET"] = "",
-		["DEDE"] = "German",
-		["INT_SPELL_DURATION_MIN"] = "%d min",
-		["CHAT_SPELL_SELF_DAMAGE_GET"] = "",
-		["PLAYERSTAT_SPELL_COMBAT"] = "Spell",
-		["CHAT_SPELL_PARTY_BUFF_GET"] = "",
-		["EMPTY"] = "Empty",
-		["PET_ATTACK"] = "Attack",
-		["RELICSLOT"] = "Relic",
-		["SECONDS_ABBR"] = "Sec",
-		["SERVER_MESSAGE_COLON"] = "Alert:",
-		["SPELL_TARGET_TYPE7_DESC"] = "object",
-		["DAMAGE_SCHOOL4"] = "Nature",
-		["CHAT_SPELL_CREATURE_VS_CREATURE_BUFF_GET"] = "",
-		["CHAT_MSG_COMBAT_LOG_ERROR"] = "Error",
-		["MISS"] = "Miss",
-		["SPELL_SCHOOL6_NAME"] = "arcane",
-		["ARMOR_COLON"] = "Armor:",
-		["HOUR_ONELETTER_ABBR"] = "%d h",
-		["CHESTSLOT"] = "Chest",
-		["SECONDS"] = "Second",
-		["USE"] = "Use",
-		["CLASS"] = "Class",
-		["SKILL"] = "Skill",
-		["CAMERA_LABEL"] = "Camera",
-		["SKILLS"] = "Skills",
-		["CHAT_SPELL_CREATURE_VS_SELF_BUFF_GET"] = "",
-		["UNITNAME_TITLE"] = "%s",
-		["DAMAGE_SCHOOL2"] = "Holy",
-		["LEVEL"] = "Level",
-		["INPUT_ROMAN"] = "A",
-		["DUNGEON_DIFFICULTY1"] = "Normal",
-		["RATING"] = "Rating",
-		["HIGH"] = "High",
-		["SEARCH"] = "Search",
-		["CHAT_SPELL_SELF_BUFF_GET"] = "",
-		["ACCEPT"] = "Accept",
-		["SPELL_SCHOOL4_NAME"] = "frost",
-		["CHAT_COMBAT_LOG_ERROR_GET"] = "",
-		["MERCHANT_STOCK"] = "(%d)",
-		["EVADE"] = "Evade",
-		["PLAYERSTAT_MELEE_COMBAT"] = "Melee",
-		["ADDON_BANNED"] = "Banned",
-		["AUCTION_TIME_LEFT3"] = "Long",
-		["CHAT_SPELL_AURA_GONE_SELF_GET"] = "",
-		["ALLIED"] = "Allied",
-		["RAID"] = "Raid",
-		["KILLS"] = "Kills",
-		["GROUP"] = "Group",
-		["LFG_TYPE_NONE"] = "None",
-		["QUIT"] = "Quit",
-		["CHAT_SPELL_CREATURE_VS_PARTY_BUFF_GET"] = "",
-		["CHAT_COMBAT_SELF_MISSES_GET"] = "",
-		["SILVER"] = "Silver",
-		["NAME"] = "Name",
-		["INT_SPELL_DURATION_HOURS_P1"] = "%d hrs",
-		["BUYOUT_COST"] = "Buyout",
-		["SPEED"] = "Speed",
-		["FLAG_COUNT_TEMPLATE"] = "x %d",
-		["AT_WAR"] = "At War",
-		["FACTION_STANDING_LABEL1_FEMALE"] = "Hated",
-		["CHAT_MSG_SAY"] = "Say",
-		["RAGE_POINTS"] = "Rage",
-		["TRADE_SKILL_TITLE"] = "%s",
-		["SPELL_TARGET_TYPE12_DESC"] = "all",
-		["RARITY"] = "Rarity",
-		["QUEST_HARD"] = "(Hard)",
-		["CHAT_SPELL_CREATURE_VS_PARTY_DAMAGE_GET"] = "",
-		["CHAT_COMBAT_PARTY_HITS_GET"] = "",
-		["CHAT_COMBAT_HOSTILEPLAYER_HITS_GET"] = "",
-		["DONE"] = "Done",
-		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS_GET"] = "",
-		["VICTORY_TEXT_ARENA_DRAW"] = "Draw",
-		["LAUGH_WORD3"] = "hehe",
-		["WRISTSLOT"] = "Wrist",
-		["CHAT_COMBAT_LOG_MISC_INFO_GET"] = "",
-		["FONT_SIZE_TEMPLATE"] = "%d pt",
-		["PET_ACTION_WAIT"] = "Stay",
-		["BLOCK"] = "Block",
-		["RAGE"] = "Rage",
-		["SPELL_SCHOOL3_NAME"] = "nature",
-		["SPELL_SCHOOL6_CAP"] = "Arcane",
-		["MINUTE_ONELETTER_ABBR"] = "%d m",
-		["ERR_SPELL_FAILED_S"] = "%s",
-		["MINUTES_ABBR_P1"] = "Mins",
-		["CHAT_MSG_DND"] = "DND",
-		["SPELL_TARGET_TYPE11_DESC"] = "party",
-		["SHIRTSLOT"] = "Shirt",
-		["TICKET_TYPE4"] = "Bug",
-		["CHAT_MSG_PARTY"] = "Party",
-		["IGNORE"] = "Ignore",
-		["STUN"] = "Stun",
-		["PET_WAIT"] = "Stay",
-		["DAYS_P1"] = "Days",
-		["BID"] = "Bid",
-		["FRAMERATE_LABEL"] = "FPS:",
-		["ID"] = "ID",
-		["SAY"] = "Say",
-		["KOKR"] = "Korean",
-		["TARGET"] = "Target",
-		["CHAT_SPELL_PERIODIC_SELF_BUFFS_GET"] = "",
-		["PET_TYPE_DEMON"] = "Demon",
-		["MACROS"] = "Macros",
-		["FAILED"] = "Failed",
-		["TICKET_TYPE3"] = "Stuck",
-		["LFG_TYPE_RAID"] = "Raid",
-		["MAIL_LABEL"] = "Mail",
-		["SPELL_TARGET_CREATURE_TYPE12_DESC"] = "all %s",
-		["DAYS_ABBR_P1"] = "Days",
-		["GROUPS"] = "Groups",
-		["BREATH_LABEL"] = "Breath",
-		["ABSORB"] = "Absorb",
-		["ERR_SPELL_FAILED_TOTEMS"] = "%s",
-		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE_GET"] = "",
-		["RAID_TARGET_8"] = "Skull",
-		["NONE_KEY"] = "None",
-		["DAMAGE_SCHOOL7"] = "Arcane",
-		["TYPE"] = "Type",
-		["MACRO"] = "Macro",
-		["FINGER1SLOT"] = "Finger",
-		["EMBLEM_BORDER"] = "Border",
-		["HOME"] = "Home",
-		["SPELL_SCHOOL1_NAME"] = "holy",
-		["ERR_SPELL_FAILED_SHAPESHIFT_FORM_S"] = "%s",
-		["RAID_TARGET_6"] = "Square",
-		["CHAT_COMBAT_SELF_HITS_GET"] = "",
-		["CREATE"] = "Create",
-		["TRAINER_LIST_SP"] = "%d SP",
-		["ITEMS"] = "Items",
-		["PARTY_INVITE"] = "Invite",
-		["SAY_MESSAGE"] = "Say",
-		["STUN_CAPS"] = "STUN",
-		["CHAT_SPELL_BREAK_AURA_GET"] = "",
-		["SPELL_TARGET_TYPE_DEAD1_DESC"] = "dead",
-		["RED_GEM"] = "Red",
-		["CHAT_SPELL_PERIODIC_SELF_DAMAGE_GET"] = "",
-		["SHIELDSLOT"] = "Shield",
-		["REMOVE"] = "Remove",
-		["ENCHANT_CONDITION_AND"] = " and ",
-		["CHAT_MSG_EMOTE"] = "Emote",
-		["INT_GENERAL_DURATION_DAYS"] = "%d day",
-		["ENCHSLOT_WEAPON"] = "Weapon",
-		["BLUE_GEM"] = "Blue",
-		["CHAT_COMBAT_PARTY_MISSES_GET"] = "",
-		["CHAT_COMBAT_PET_HITS_GET"] = "",
-		["ERR_TAME_FAILED"] = "%s.",
-		["SPELL_TARGET_TYPE5_DESC"] = "item",
-		["GREED"] = "Greed",
-		["RANGEDSLOT"] = "Ranged",
-		["CHAT_GUILD_DEMOTE_SEND"] = "Demote",
-		["PLAYER"] = "Player",
-		["TRAINER_LIST_TP"] = "%d TP",
-		["CHAT_COMBAT_HOSTILEPLAYER_MISSES_GET"] = "",
-		["STATS_LABEL"] = "Stats:",
-		["LABEL_NOTE"] = "Note",
-		["SPELL_SCHOOL5_CAP"] = "Shadow",
-		["CHAT_COMBAT_FRIENDLY_DEATH_GET"] = "",
-		["RESET"] = "Reset",
-		["CHAT_RAID_BOSS_EMOTE_GET"] = "",
-		["LEGSSLOT"] = "Legs",
-		["INBOX"] = "Inbox",
-		["DEAD"] = "Dead",
-		["SPELL_TARGET_CENTER_CASTER"] = "caster",
-		["HANDSSLOT"] = "Hands",
-		["CHAT_COMBAT_CREATURE_VS_SELF_MISSES_GET"] = "",
-		["ALWAYS"] = "Always",
-		["ERR_SPELL_FAILED_REAGENTS"] = "%s",
-		["CHAT_MSG_RAID"] = "Raid",
-		["CAMERA_SMART"] = "Smart",
-		["LAUGH_WORD4"] = "haha",
-		["JOIN"] = "Join",
-		["NO"] = "No",
-		["TABARDSLOT"] = "Tabard",
-		["AMMOSLOT"] = "Ammo",
-		["MALE"] = "Male",
-		["CHAT_SPELL_CREATURE_VS_SELF_DAMAGE_GET"] = "",
-		["PET_TYPE_PET"] = "Pet",
-		["CHAT_RAID_SEND"] = "Raid: ",
-		["HEADSLOT"] = "Head",
-		["ATTACK"] = "Attack",
-	},
-	["trailers"] = {
-		["COMBATHITCRITSCHOOLOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Firelord crits Cleatus for 1594 Fire damage. (295 resisted)", -- [2]
-				1, -- [3]
+			["DRUNK_MESSAGE_OTHER1"] = {
+				"%s seems to be sobering up.", -- [1]
+				"Akronius seems to be sobering up.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Firelord crits Dragonx for 1143 Fire damage. (322 resisted) (593 absorbed)", -- [2]
-				2, -- [3]
+			["ERR_GROUP_FULL"] = {
+				"Your party is full.", -- [1]
+				"Your party is full.", -- [2]
+			},
+			["ERR_BG_PLAYER_JOINED_SS"] = {
+				"|Hplayer:%s|h[%s]|h has joined the battle", -- [1]
+				"|Hplayer:Dangerousjoe|h[Dangerousjoe]|h has joined the battle", -- [2]
+			},
+			["RAID_INSTANCE_INFO_HDR"] = {
+				"Raid Instance Time Remaining:", -- [1]
+				"Raid Instance Time Remaining:", -- [2]
+			},
+			["ERR_NEW_LOOT_MASTER_S"] = {
+				"%s is now the loot master.", -- [1]
+				"Bollie is now the loot master.", -- [2]
+			},
+			["IDLE_MESSAGE"] = {
+				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [1]
+				"You have been inactive for some time and will be logged out of the game. If you wish to remain logged in, hit the cancel button.", -- [2]
+			},
+			["ERR_FRIEND_ALREADY_S"] = {
+				"%s is already your friend.", -- [1]
+				"Ruru is already your friend.", -- [2]
+				"2.0.8.6403", -- [3]
+			},
+			["ERR_SET_LOOT_NBG"] = {
+				"Looting set to need before greed.", -- [1]
+				"Looting set to need before greed.", -- [2]
+			},
+			["ERR_GUILD_LEAVE_S"] = {
+				"%s has left the guild.", -- [1]
+				"Styxson has left the guild.", -- [2]
+			},
+			["ERR_BAD_PLAYER_NAME_S"] = {
+				"Cannot find '%s'.", -- [1]
+				"Cannot find 'kenny'.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_CHAT_PLAYER_NOT_FOUND_S"] = {
+				"No player named '%s' is currently playing.", -- [1]
+				"No player named 'say' is currently playing.", -- [2]
+			},
+			["ERR_QUEST_PUSH_TOO_FAR_S"] = {
+				"%s is too far away to receive your quest", -- [1]
+				"Kruztique is too far away to receive your quest", -- [2]
+			},
+			["MARKED_DND"] = {
+				"You are now DND: %s.", -- [1]
+				"You are now DND: Do not Disturb.", -- [2]
+			},
+			["ERR_QUEST_REWARD_MONEY_S"] = {
+				"Received %s.", -- [1]
+				"Received 70 Silver.", -- [2]
+			},
+			["ERR_LEFT_GROUP_S"] = {
+				"%s leaves the party.[ERR_LEFT_GROUP_S]", -- [1]
+				"Kruztique leaves the party.[ERR_LEFT_GROUP_S]", -- [2]
+			},
+			["ERR_EXHAUSTION_RESTED"] = {
+				"You feel rested.", -- [1]
+				"You feel rested.", -- [2]
+			},
+			["ERR_INVITED_TO_GUILD_SS"] = {
+				"%s invites you to join %s.", -- [1]
+				"Styxson invites you to join Waldorm Inn.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["INSTANCE_RESET_SUCCESS"] = {
+				"%s has been reset.", -- [1]
+				"Scarlet Monastery has been reset.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_FRIEND_ONLINE_SS"] = {
+				"|Hplayer:%s|h[%s]|h has come online.", -- [1]
+				"|Hplayer:Inverno|h[Inverno]|h has come online.", -- [2]
+			},
+			["ERR_SPELL_UNLEARNED_S"] = {
+				"You have unlearned %s.", -- [1]
+				"You have unlearned Cold Snap.", -- [2]
+			},
+			["ERR_QUEST_PUSH_ALREADY_DONE_S"] = {
+				"%s has completed that quest", -- [1]
+				"Lunarjustice has completed that quest", -- [2]
+			},
+			["DRUNK_MESSAGE_OTHER2"] = {
+				"%s looks tipsy.", -- [1]
+				"Brownee looks tipsy.", -- [2]
+			},
+			["ERR_GUILD_DEMOTE_SSS"] = {
+				"%s has demoted %s to %s.", -- [1]
+				"Dragonx has demoted Minie to Noob.", -- [2]
+			},
+			["ERR_DUEL_REQUESTED"] = {
+				"You have requested a duel.", -- [1]
+				"You have requested a duel.", -- [2]
+			},
+			["ERR_NOT_IN_GROUP"] = {
+				"You aren't in a party.", -- [1]
+				"You aren't in a party.", -- [2]
+			},
+			["ERR_QUEST_FAILED_MISSING_ITEMS"] = {
+				"You don't have the required items with you.  Check storage.", -- [1]
+				"You don't have the required items with you.  Check storage.", -- [2]
+			},
+			["WHO_NUM_RESULTS_P1"] = {
+				"%d players total", -- [1]
+				"2 players total", -- [2]
+			},
+			["DRUNK_MESSAGE_OTHER3"] = {
+				"%s looks drunk.", -- [1]
+				"Akronius looks drunk.", -- [2]
+			},
+			["ERR_RAID_MEMBER_ADDED_S"] = {
+				"%s has joined the raid group", -- [1]
+				"Ssugarr has joined the raid group", -- [2]
+			},
+			["ERR_QUEST_COMPLETE_S"] = {
+				"%s completed.", -- [1]
+				"Divine Retribution completed.", -- [2]
+			},
+			["WHO_LIST_GUILD_FORMAT"] = {
+				"|Hplayer:%s|h[%s]|h: Level %d %s %s <%s> - %s", -- [1]
+				"|Hplayer:Mimicat|h[Mimicat]|h: Level 60 Human Warlock <D i v i n i t y> - Ironforge", -- [2]
+			},
+			["ERR_GUILD_REMOVE_SS"] = {
+				"%s has been kicked out of the guild by %s.", -- [1]
+				"Ganzo has been kicked out of the guild by Zay.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_RAID_YOU_JOINED"] = {
+				"You have joined a raid group", -- [1]
+				"You have joined a raid group", -- [2]
+			},
+			["DRUNK_MESSAGE_SELF4"] = {
+				"You feel completely smashed.", -- [1]
+				"You feel completely smashed.", -- [2]
+			},
+			["ERR_QUEST_PUSH_LOG_FULL_S"] = {
+				"%s's quest log is full", -- [1]
+				"Kruztique's quest log is full", -- [2]
+			},
+			["DUEL_WINNER_KNOCKOUT"] = {
+				"%1$s has defeated %2$s in a duel", -- [1]
+				"Powderpuff has defeated Pwnzoors in a duel", -- [2]
+			},
+			["ERR_IGNORE_NOT_FOUND"] = {
+				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [1]
+				"Player not found.[ERR_IGNORE_NOT_FOUND]", -- [2]
+			},
+			["ERR_MATCHMAKING_MEMBER_ADDED_S"] = {
+				"%s has been added to the group by the LFG matchmaking system.", -- [1]
+				"Meralog has been added to the group by the LFG matchmaking system.", -- [2]
+			},
+			["ERR_RAID_LEADER_READY_CHECK_START_S"] = {
+				"%s has initiated a ready check", -- [1]
+				"Zaroc has initiated a ready check", -- [2]
+			},
+			["ERR_IGNORE_ALREADY_S"] = {
+				"%s is already being ignored.", -- [1]
+				"Toppol is already being ignored.", -- [2]
+			},
+			["WHO_LIST_FORMAT"] = {
+				"|Hplayer:%s|h[%s]|h: Level %d %s %s - %s", -- [1]
+				"|Hplayer:Discoverer|h[Discoverer]|h: Level 1 Night Elf Warrior - Teldrassil", -- [2]
+			},
+			["ERR_SET_LOOT_THRESHOLD_S"] = {
+				"Loot threshold set to %s", -- [1]
+				"Loot threshold set to Rare", -- [2]
+			},
+			["RANDOM_ROLL_RESULT"] = {
+				"%s rolls %d (%d-%d)", -- [1]
+				"Afterthefall rolls 432 (1-1000)", -- [2]
+			},
+			["ERR_MEETING_STONE_LEFT_QUEUE_S"] = {
+				"You have left the queue to join a party for %s.", -- [1]
+				"You have left the queue to join a party for Hellfire Citadel - Hellfire Ramparts.", -- [2]
+			},
+			["ERR_JOINED_GROUP_S"] = {
+				"%s joins the party.[ERR_JOINED_GROUP_S]", -- [1]
+				"Kruztique joins the party.[ERR_JOINED_GROUP_S]", -- [2]
+			},
+			["FACTION_STANDING_CHANGED"] = {
+				"You are now %s with %s.", -- [1]
+				"You are now Friendly with The League of Arathor.", -- [2]
+			},
+			["ERR_GUILD_PLAYER_NOT_IN_GUILD"] = {
+				"You are not in a guild.", -- [1]
+				"You are not in a guild.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_GUILD_PROMOTE_SSS"] = {
+				"%s has promoted %s to %s.", -- [1]
+				"Zay has promoted Feel to Noob.", -- [2]
+			},
+			["ERR_RAID_MEMBER_REMOVED_S"] = {
+				"%s has left the raid group", -- [1]
+				"Sspicee has left the raid group", -- [2]
+			},
+			["RAID_INSTANCE_WELCOME"] = {
+				"Welcome to %s. This raid instance is scheduled to reset in %dd %dh %dm.", -- [1]
+				"Welcome to Onyxias Lair Instance. This raid instance is scheduled to reset in 4d 21h 56m.", -- [2]
+			},
+			["ERR_INVITE_PLAYER_S"] = {
+				"You have invited %s to join your group.", -- [1]
+				"You have invited Lunarjustice to join your group.", -- [2]
+			},
+			["ERR_SET_LOOT_MASTER"] = {
+				"Looting changed to master looter.", -- [1]
+				"Looting changed to master looter.", -- [2]
+			},
+			["ERR_AUCTION_WON_S"] = {
+				"You won an auction for %s", -- [1]
+				"You won an auction for Runed Blood Garnet", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["ERR_QUEST_PUSH_DECLINED_S"] = {
+				"%s has declined your quest", -- [1]
+				"Rannie has declined your quest", -- [2]
+			},
+			["DRUNK_MESSAGE_SELF2"] = {
+				"You feel tipsy.  Whee!", -- [1]
+				"You feel tipsy.  Whee!", -- [2]
+			},
+			["TRANSFER_ABORT_MAX_PLAYERS"] = {
+				"Transfer Aborted: instance is full", -- [1]
+				"Transfer Aborted: instance is full", -- [2]
+			},
+			["ERR_PLAYER_DIED_S"] = {
+				"%s has died.", -- [1]
+				"Ponnie has died.", -- [2]
+			},
+			["RAID_INSTANCE_WARNING_MIN_SOON"] = {
+				"WARNING! %s is scheduled to reset in %d minute. Please exit the zone or you will be returned to your bind location!", -- [1]
+				"WARNING! Coilfang: The Underbog is scheduled to reset in 1 minute. Please exit the zone or you will be returned to your bind location!", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_AUCTION_EXPIRED_S"] = {
+				"Your auction of %s has expired.", -- [1]
+				"Your auction of Runn Tum Tuber Surprise has expired.", -- [2]
+			},
+			["ERR_QUEST_REWARD_ITEM_S"] = {
+				"Received item: %s.", -- [1]
+				"Received item: |cff1eff00|Hitem:19125:0:0:0|h[Seared Mail Girdle]|h|r.", -- [2]
+			},
+			["ERR_TRADE_BLOCKED_S"] = {
+				"%s has requested to trade.  You have refused.", -- [1]
+				"Kruztique has requested to trade.  You have refused.", -- [2]
+				"2.0.6", -- [3]
+			},
+			["ERR_FRIEND_NOT_FOUND"] = {
+				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [1]
+				"Player not found.[ERR_FRIEND_NOT_FOUND]", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["RAID_INSTANCE_WARNING_HOURS"] = {
+				"WARNING! %s is scheduled to reset in %d hour.", -- [1]
+				"WARNING! Coilfang: The Underbog is scheduled to reset in 1 hour.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["RAID_INSTANCE_WARNING_MIN_SOON_P1"] = {
+				"WARNING! %s is scheduled to reset in %d minutes. Please exit the zone or you will be returned to your bind location!", -- [1]
+				"WARNING! Coilfang: The Underbog is scheduled to reset in 10 minutes. Please exit the zone or you will be returned to your bind location!", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["RAID_INSTANCE_WARNING_MIN_P1"] = {
+				"WARNING! %s is scheduled to reset in %d minutes!", -- [1]
+				"WARNING! Coilfang: The Underbog is scheduled to reset in 45 minutes!", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_EXHAUSTION_NORMAL"] = {
+				"You feel normal.", -- [1]
+				"You feel normal.", -- [2]
+			},
+			["INSTANCE_RESET_FAILED"] = {
+				"Cannot reset %s.  There are players still inside the instance.", -- [1]
+				"Cannot reset Scarlet Monastery.  There are players still inside the instance.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_INITIATE_TRADE_S"] = {
+				"You have requested to trade with %s.", -- [1]
+				"You have requested to trade with Ponnie.", -- [2]
+			},
+			["RAID_INSTANCE_WARNING_HOURS_P1"] = {
+				"WARNING! %s is scheduled to reset in %d hours.", -- [1]
+				"WARNING! Zul'gurub is scheduled to reset in 4 hours.", -- [2]
+			},
+			["ERR_DECLINE_GROUP_S"] = {
+				"%s declines your group invitation.", -- [1]
+				"Librabear declines your group invitation.", -- [2]
+			},
+			["DUEL_WINNER_RETREAT"] = {
+				"%2$s has fled from %1$s in a duel", -- [1]
+				"Chria has fled from Eru in a duel", -- [2]
+			},
+			["ERR_LEARN_SPELL_S"] = {
+				"You have learned a new spell: %s.", -- [1]
+				"You have learned a new spell: Corruption (Rank 7).", -- [2]
+			},
+			["DRUNK_MESSAGE_SELF1"] = {
+				"You feel sober again.", -- [1]
+				"You feel sober again.", -- [2]
+			},
+			["ERR_QUEST_FAILED_BAG_FULL_S"] = {
+				"%s failed: Inventory is full.", -- [1]
+				"Fiery Menace! failed: Inventory is full.", -- [2]
+			},
+			["TRANSFER_ABORT_TOO_MANY_INSTANCES"] = {
+				"You have entered too many instances recently.", -- [1]
+				"You have entered too many instances recently.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_QUEST_PUSH_ACCEPTED_S"] = {
+				"%s has accepted your quest", -- [1]
+				"Ponnie has accepted your quest", -- [2]
+			},
+			["ERR_AUCTION_BID_PLACED"] = {
+				"Bid accepted.", -- [1]
+				"Bid accepted.", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["ERR_IGNORE_ADDED_S"] = {
+				"%s is now being ignored.", -- [1]
+				"Toppol is now being ignored.", -- [2]
+			},
+			["ERR_RAID_YOU_LEFT"] = {
+				"You have left the raid group", -- [1]
+				"You have left the raid group", -- [2]
+			},
+			["ERR_DUNGEON_DIFFICULTY_CHANGED_S"] = {
+				"Dungeon difficulty set to %s (All saved instances have been reset)", -- [1]
+				"Dungeon difficulty set to Heroic (All saved instances have been reset)", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_INVITED_TO_GROUP_S"] = {
+				"%s has invited you to join a group.", -- [1]
+				"Iceangelz hat Euch in eine Gruppe eingeladen.", -- [2]
+			},
+			["ERR_QUEST_PUSH_BUSY_S"] = {
+				"%s is busy", -- [1]
+				"Rannie is busy", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["ERR_MATCHMAKING_IN_PROGRESS"] = {
+				"You are still seeking more members through the LFG matchmaking system.", -- [1]
+				"You are still seeking more members through the LFG matchmaking system.", -- [2]
+			},
+			["ERR_MATCHMAKING_MADE_LEADER"] = {
+				"You are the party leader!", -- [1]
+				"You are the party leader!", -- [2]
+				"2.0.10.6448", -- [3]
+			},
+			["ERR_FRIEND_ADDED_S"] = {
+				"%s added to friends.", -- [1]
+				"Agywen added to friends.", -- [2]
+			},
+			["ERR_FRIEND_REMOVED_S"] = {
+				"%s removed from friends list.", -- [1]
+				"Garohunter removed from friends list.", -- [2]
+			},
+			["ERR_QUEST_ALREADY_ON"] = {
+				"You are already on that quest", -- [1]
+				"You are already on that quest", -- [2]
+				"2.0.6", -- [3]
+			},
+			["ERR_QUEST_NEED_PREREQS"] = {
+				"You don't meet the requirements for that quest", -- [1]
+				"You don't meet the requirements for that quest", -- [2]
+			},
+			["ERR_SET_LOOT_ROUNDROBIN"] = {
+				"Looting changed to round robin.", -- [1]
+				"Looting changed to round robin.", -- [2]
+			},
+			["ERR_MATCHMAKING_OTHER_MEMBER_LEFT"] = {
+				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [1]
+				"Party member has left.  Looking for a new party in the LFG matchmaking system.", -- [2]
+				"2.0.6", -- [3]
+			},
+			["ERR_AUCTION_STARTED"] = {
+				"Auction created.", -- [1]
+				"Auction created.", -- [2]
+			},
+			["CLEARED_AFK"] = {
+				"You are no longer AFK.", -- [1]
+				"You are no longer AFK.", -- [2]
+			},
+			["ERR_FRIEND_OFFLINE_S"] = {
+				"%s has gone offline.", -- [1]
+				"Ponnie has gone offline.", -- [2]
+			},
+			["ERR_FRIEND_LIST_FULL"] = {
+				"You don't have room for any more friends.", -- [1]
+				"You don't have room for any more friends.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_GUILD_JOIN_S"] = {
+				"%s has joined the guild.", -- [1]
+				"Feel has joined the guild.", -- [2]
+			},
+			["CLEARED_DND"] = {
+				"You are no longer marked DND.", -- [1]
+				"You are no longer marked DND.", -- [2]
+			},
+			["ERR_SET_LOOT_GROUP"] = {
+				"Looting changed to group loot.", -- [1]
+				"Looting changed to group loot.", -- [2]
+			},
+			["DRUNK_MESSAGE_OTHER4"] = {
+				"%s looks completely smashed.", -- [1]
+				"Northstorm looks completely smashed.", -- [2]
+			},
+			["ERR_UNINVITE_YOU"] = {
+				"You have been removed from the group.", -- [1]
+				"You have been removed from the group.", -- [2]
+			},
+			["SERVER_MESSAGE_PREFIX"] = {
+				"[SERVER]", -- [1]
+				"[SERVER] All realms will be coming down for a scheduled maintenance.  For more information, please check our realm status page.  Thank you.", -- [2]
+				"2.0.12.6546", -- [3]
+			},
+			["ERR_NEW_LEADER_YOU"] = {
+				"You are now the group leader.", -- [1]
+				"You are now the group leader.", -- [2]
+			},
+			["ERR_QUEST_PUSH_INVALID_S"] = {
+				"%s is not eligible for that quest", -- [1]
+				"Sayune is not eligible for that quest", -- [2]
 			},
 		},
-		["COMBATHITCRITSELFOTHER"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You crit Elfenlied for 104. (26 absorbed)", -- [2]
-				1, -- [3]
+		["CHAT_MSG_SPELL_TRADESKILLS"] = {
+			["TRADESKILL_LOG_FIRSTPERSON"] = {
+				"You create %s.", -- [1]
+				"You create Blinding Powder.", -- [2]
+			},
+			["TRADESKILL_LOG_THIRDPERSON"] = {
+				"%s creates %s.", -- [1]
+				"Aradan creates Thorium Bar.", -- [2]
+			},
+			["FEEDPET_LOG_THIRDPERSON"] = {
+				"%s's pet begins eating a %s.", -- [1]
+				"Roidzz's pet begins eating a Moist Cornbread.", -- [2]
 			},
 		},
-		["SPELLLOGSCHOOLSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Warp Storm hits you for 109 Arcane damage.[SPELLLOGSCHOOLSELF] (136 resisted) (27 absorbed)", -- [2]
-				2, -- [3]
+		["CHAT_MSG_LOOT"] = {
+			["LOOT_ROLL_WON"] = {
+				"%s won: %s", -- [1]
+				"Kruztique won: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Frostbite hits you for 1782 Frost damage.[SPELLLOGSCHOOLSELF] (445 absorbed)", -- [2]
-				1, -- [3]
+			["LOOT_ITEM_SELF_MULTIPLE"] = {
+				"You receive loot: %sx%d.", -- [1]
+				"You receive loot: |cffffffff|Hitem:2589:0:0:0:0:0:0:0|h[Linen Cloth]|h|rx2.", -- [2]
 			},
-		},
-		["COMBATHITSCHOOLOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Searing Elemental hits you for 118 Fire damage.[COMBATHITSCHOOLOTHERSELF] (49 resisted) (30 absorbed)", -- [2]
-				2, -- [3]
+			["LOOT_ROLL_ROLLED_GREED"] = {
+				"Greed Roll - %d for %s by %s", -- [1]
+				"Greed Roll - 67 for |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r by Verytall", -- [2]
 			},
-			["CRUSHING_TRAILER"] = {
-				" (crushing)", -- [1]
-				"Sea Elemental hits you for 158 Frost damage. (crushing)", -- [2]
+			["LOOT_ITEM"] = {
+				"%s receives loot: %s.", -- [1]
+				"Clausvolka receives loot: |cffffffff|Hitem:8948:0:0:0:0:0:0:1389958314|h[Dried King Bolete]|h|r.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Hydrospawn hits you for 126 Frost damage. (163 resisted) (365 absorbed)", -- [2]
-				2, -- [3]
+			["LOOT_ROLL_PASSED_SELF"] = {
+				"You passed on: %s", -- [1]
+				"You passed on: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
 			},
-		},
-		["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Sabarr's Arcane Explosion crits Denerce for 73 Arcane damage. (207 resisted) (31 absorbed)", -- [2]
-				2, -- [3]
+			["CREATED_ITEM"] = {
+				"%s creates: %s.", -- [1]
+				"Dorwin creates: |cffffffff|Hitem:6265:0:0:0:0:0:0:1644796545|h[Soul Shard]|h|r.", -- [2]
 			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Kaysta's Arcane Shot crits Flamewaker Elite for 616 Arcane damage. (+47 vulnerability bonus)", -- [2]
-				1, -- [3]
+			["LOOT_ITEM_MULTIPLE"] = {
+				"%s receives loot: %sx%d.", -- [1]
+				"Cheeky receives loot: |cffffffff|Hitem:21038:0:0:0:0:0:0:1031883341|h[Hardpacked Snowball]|h|rx5.", -- [2]
 			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Kaysta's Arcane Shot crits Lava Annihilator for 118 Arcane damage. (92 resisted) (45 blocked)", -- [2]
-				1, -- [3]
+			["LOOT_ITEM_PUSHED_SELF"] = {
+				"You receive item: %s.", -- [1]
+				"You receive item: |cff0070dd|Hitem:19045:0:0:0:0:0:0:0|h[Stormpike Battle Standard]|h|r.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Kracc's Fire Blast crits Zacharias for 422 Fire damage. (351 resisted) (106 absorbed)", -- [2]
-				2, -- [3]
+			["LOOT_ROLL_PASSED"] = {
+				"%s passed on: %s", -- [1]
+				"Nedru passed on: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
 			},
-		},
-		["COMBATHITSCHOOLOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Greater Fire Elemental hits Boldman for 123 Fire damage.[COMBATHITSCHOOLOTHEROTHER] (51 resisted) (31 absorbed)", -- [2]
-				2, -- [3]
+			["LOOT_ROLL_ALL_PASSED"] = {
+				"Everyone passed on: %s", -- [1]
+				"Everyone passed on: |cff0070dd|Hitem:24384:0:0:0:0:0:0:1766089234|h[Diamond-Core Sledgemace]|h|r", -- [2]
 			},
-			["CRUSHING_TRAILER"] = {
-				" (crushing)", -- [1]
-				"Son of Flame hits Maevistia for 1049 Fire damage. (crushing) (699 resisted)", -- [2]
-				2, -- [3]
+			["LOOT_ROLL_GREED_SELF"] = {
+				"You have selected Greed for: %s", -- [1]
+				"You have selected Greed for: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
 			},
-			["GLANCING_TRAILER"] = {
-				" (glancing)", -- [1]
-				"Shadowfiend hits Coilfang Engineer for 128 Shadow damage.[COMBATHITSCHOOLOTHEROTHER] (glancing)", -- [2]
-				1, -- [3]
+			["LOOT_ITEM_CREATED_SELF"] = {
+				"You create: %s.", -- [1]
+				"You create: |cffffffff|Hitem:6265:0:0:0:0:0:0:993161637|h[Soul Shard]|h|r.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Son of Flame hits Maevistia for 1503 Fire damage. (crushing) (389 resisted) (249 absorbed)", -- [2]
-				3, -- [3]
+			["LOOT_ROLL_YOU_WON"] = {
+				"You won: %s", -- [1]
+				"You won: |cff1eff00|Hitem:25045:0:0:0:0:0:-32:-1863909355|h[Azurite Ring of Fire Protection]|h|r", -- [2]
 			},
-		},
-		["COMBATHITOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Mils hits you for 15. (6 resisted) (4 absorbed)", -- [2]
-				1, -- [3]
+			["LOOT_ROLL_ROLLED_NEED"] = {
+				"Need Roll - %d for %s by %s", -- [1]
+				"Need Roll - 78 for |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r by Kruztique", -- [2]
 			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Nightmare Whelp hits you for 33. (39 blocked)", -- [2]
-				1, -- [3]
+			["CREATED_ITEM_MULTIPLE"] = {
+				"%s creates: %sx%d.", -- [1]
+				"Songstress creates: |cffffffff|Hitem:8079:0:0:0:0:0:0:869506249|h[Conjured Crystal Water]|h|rx10.", -- [2]
 			},
-			["CRUSHING_TRAILER"] = {
-				" (crushing)", -- [1]
-				"Lava Reaver hits you for 2386. (crushing)", -- [2]
-				1, -- [3]
+			["LOOT_ROLL_NEED"] = {
+				"%s has selected Need for: %s", -- [1]
+				"Kruztique has selected Need for: |cff0070dd|Hitem:24024:0:0:0:0:0:0:1966834958|h[Pauldrons of Arcane Rage]|h|r", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Mils hits you for 15. (6 resisted) (4 absorbed)", -- [2]
-				2, -- [3]
+			["LOOT_ITEM_CREATED_SELF_MULTIPLE"] = {
+				"You create: %sx%d.", -- [1]
+				"You create: |cff1eff00|Hitem:20560:0:0:0:0:0:0:1719621430|h[Alterac Valley Mark of Honor]|h|rx3.", -- [2]
+			},
+			["LOOT_ROLL_GREED"] = {
+				"%s has selected Greed for: %s", -- [1]
+				"Nedru has selected Greed for: |cff1eff00|Hitem:24923:0:0:0:0:0:-18:475660325|h[Grimscale Legguards of Agility]|h|r", -- [2]
+			},
+			["LOOT_ITEM_SELF"] = {
+				"You receive loot: %s.", -- [1]
+				"You receive loot: |cffffffff|Hitem:17503:0:0:0:0:0:0:4289959|h[Frostwolf Lieutenant's Medal]|h|r.", -- [2]
+			},
+			["LOOT_ITEM_PUSHED_SELF_MULTIPLE"] = {
+				"You receive item: %sx%d.", -- [1]
+				"You receive item: |cffffffff|Hitem:19307:0:0:0:0:0:0:0|h[Alterac Heavy Runecloth Bandage]|h|rx20.", -- [2]
+			},
+			["LOOT_ROLL_NEED_SELF"] = {
+				"You have selected Need for: %s", -- [1]
+				"You have selected Need for: |cff0070dd|Hitem:27799:0:0:0:0:0:0:-1882943822|h[Vermillion Robes of the Dominant]|h|r", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 		},
-		["PERIODICAURADAMAGESELFSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"You suffer 181 Shadow damage from your Corruption. (75 resisted) (45 absorbed)", -- [2]
-				2, -- [3]
+		["CHAT_MSG_SPELL_BREAK_AURA"] = {
+			["AURADISPELSELF3"] = {
+				"Your %s is removed by %s's %s.", -- [1]
+				"Your Cone of Cold is removed by Ballis's Escape Artist.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You suffer 116 Shadow damage from your Curse of Agony. (48 resisted) (29 absorbed)", -- [2]
-				2, -- [3]
+			["AURASTOLENOTHEROTHER"] = {
+				"%s steals %s's %s.", -- [1]
+				"Kruztique steals Isra's Divine Spirit.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
-		},
-		["PERIODICAURADAMAGEOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Denerce suffers 24 Fire damage from Nakanu's Flame Shock. (33 resisted) (10 absorbed)", -- [2]
-				2, -- [3]
+			["AURADISPELSELF"] = {
+				"Your %s is removed.", -- [1]
+				"Your Stealth is removed.", -- [2]
 			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Firelord suffers 225 Frost damage from Afterthefall's Blizzard. (+41 vulnerability bonus)", -- [2]
-				1, -- [3]
+			["AURADISPELSELF2"] = {
+				"Your %s is removed by %s.", -- [1]
+				"Your Scatter Shot is removed by Ko.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Wildspawn Felsworn suffers 23 Shadow damage from Kruztique's Shadow Word: Pain. (111 resisted) (15 absorbed)", -- [2]
-				2, -- [3]
+			["AURADISPELOTHER3"] = {
+				"%s's %s is removed by %s's %s.", -- [1]
+				"Applebee's Scatter Shot is removed by Tondogger's Sinister Strike.", -- [2]
 			},
-		},
-		["COMBATHITCRITOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Mornordus crits Molten Giant for 282. (1 resisted)", -- [2]
-				1, -- [3]
+			["AURASTOLENOTHERSELF"] = {
+				"%s steals your %s.", -- [1]
+				"Unsunghero steals your Demon Armor.", -- [2]
+				"2.0.12.6546", -- [3]
 			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Mornordus crits Firelord for 333. (+1 vulnerability bonus)", -- [2]
-				1, -- [3]
+			["AURADISPELOTHER2"] = {
+				"%s's %s is removed by %s.", -- [1]
+				"Yukishiro's Scatter Shot is removed by Tondogger.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Eiladilia crits Everetteri for 242. (104 absorbed)", -- [2]
-				1, -- [3]
+			["AURADISPELOTHER"] = {
+				"%s's %s is removed.", -- [1]
+				"Seasoned Guardian's Sap is removed.", -- [2]
 			},
 		},
-		["SPELLLOGCRITSELFOTHER"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Overpower crits Threllhouse for 233. (353 absorbed)", -- [2]
-				1, -- [3]
+		["CHAT_MSG_SPELL_SELF_BUFF"] = {
+			["SIMPLEPERFORMSELFSELF"] = {
+				"You perform %s.[SIMPLEPERFORMSELFSELF]", -- [1]
+				"You perform Vanish.[SIMPLEPERFORMSELFSELF]", -- [2]
 			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Your Hemorrhage crits Wrekt Slave for 241. (45 blocked) (240 absorbed)", -- [2]
-				2, -- [3]
+			["SIMPLECASTSELFOTHER"] = {
+				"You cast %s on %s.[SIMPLECASTSELFOTHER]", -- [1]
+				"You cast Demonic Sacrifice on Yazlop.[SIMPLECASTSELFOTHER]", -- [2]
 			},
-		},
-		["SPELLLOGOTHERSELF"] = {
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Nightmare Wanderer's Strike hits you for 164. (40 blocked)", -- [2]
-				1, -- [3]
+			["POWERGAINSELFOTHER"] = {
+				"%s gains %d %s from %s.[POWERGAINSELFOTHER]", -- [1]
+				"Khuunam gains 247 Mana from Life Tap.[POWERGAINSELFOTHER]", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Discordant Surge's Mighty Blow hits you for 106. (45 absorbed)", -- [2]
-				1, -- [3]
+			["ITEMENCHANTMENTADDSELFSELF"] = {
+				"You cast %s on your %s.", -- [1]
+				"You cast Stamina +7 on your Felheart Bracers.", -- [2]
 			},
-		},
-		["SPELLLOGSCHOOLSELFSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Your Curse of Burning Shadows hits you for 122 Shadow damage. (152 resisted) (30 absorbed)", -- [2]
-				2, -- [3]
+			["HEALEDCRITSELFSELF"] = {
+				"Your %s critically heals you for %d.", -- [1]
+				"Your Healing Wave critically heals you for 113.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Shadow Bolt hits you for 214 Shadow damage. (802 resisted) (54 absorbed)", -- [2]
-				2, -- [3]
+			["DISPELFAILEDSELFSELF"] = {
+				"You fail to dispel your %s.", -- [1]
+				"You fail to dispel your Frost Nova.", -- [2]
 			},
-		},
-		["VSENVIRONMENTALDAMAGE_FIRE_SELF"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You suffer 11 points of fire damage. (4 absorbed)", -- [2]
-				1, -- [3]
+			["SPELLTERSEPERFORM_SELF"] = {
+				"You perform %s.[SPELLTERSEPERFORM_SELF]", -- [1]
+				"You perform Preparation.[SPELLTERSEPERFORM_SELF]", -- [2]
 			},
-		},
-		["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Kerinne loses 151 health for swimming in lava. (452 resisted)", -- [2]
-				1, -- [3]
+			["SPELLEXTRAATTACKSSELF_SINGULAR"] = {
+				"You gain %d extra attack through %s.", -- [1]
+				"You gain 1 extra attack through Thrash.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Cewek loses 388 health for swimming in lava. (151 resisted) (64 absorbed)", -- [2]
-				2, -- [3]
+			["SPELLEVADEDSELFOTHER"] = {
+				"Your %s was evaded by %s.", -- [1]
+				"Your Curse of Agony was evaded by Hive'Zara Hatchling.", -- [2]
 			},
-		},
-		["COMBATHITOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Mornordus hits Lava Reaver for 70. (glancing) (2 resisted)", -- [2]
-				2, -- [3]
+			["OPEN_LOCK_SELF"] = {
+				"You perform %s on %s.[OPEN_LOCK_SELF]", -- [1]
+				"You perform Pick Lock on Thorium Lockbox.[OPEN_LOCK_SELF]", -- [2]
 			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Warmaul Champion hits Iamvj for 791.[COMBATHITOTHEROTHER] (233 blocked) (336 absorbed)", -- [2]
-				2, -- [3]
+			["SPELLIMMUNESELFOTHER"] = {
+				"Your %s failed. %s is immune.", -- [1]
+				"Your Curse of Agony failed. Lava Annihilator is immune.", -- [2]
 			},
-			["CRUSHING_TRAILER"] = {
-				" (crushing)", -- [1]
-				"Expedition Warden hits Icebanana for 312.[COMBATHITOTHEROTHER] (crushing) (570 absorbed)", -- [2]
-				2, -- [3]
+			["SPELLSPLITDAMAGESELFOTHER"] = {
+				"Your %s causes %s %d damage.", -- [1]
+				"Your Blessing of Sacrifice causes Nino 55 damage.", -- [2]
 			},
-			["GLANCING_TRAILER"] = {
-				" (glancing)", -- [1]
-				"Rannie hits Wrekt Slave for 42.[COMBATHITOTHEROTHER] (glancing) (42 absorbed)", -- [2]
-				2, -- [3]
+			["SPELLTERSE_SELF"] = {
+				"You cast %s.[SPELLTERSE_SELF]", -- [1]
+				"You cast Life Tap.[SPELLTERSE_SELF]", -- [2]
 			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Mornordus hits Lava Spawn for 115. (glancing) (+1 vulnerability bonus)", -- [2]
-				2, -- [3]
+			["HEALEDSELFSELF"] = {
+				"Your %s heals you for %d.", -- [1]
+				"Your Healing Draught heals you for 536.", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Molten Giant hits Lionkingz for 208. (51 blocked) (406 absorbed)", -- [2]
-				2, -- [3]
+			["ITEMENCHANTMENTADDSELFOTHER"] = {
+				"You cast %s on %s's %s.", -- [1]
+				"You cast Minor Speed Increase on Kruztique's Faith Healer's Boots.", -- [2]
 			},
-		},
-		["SPELLLOGCRITSCHOOLOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Azif's Arcane Shot crits you for 870 Arcane damage. (156 resisted) (217 absorbed)", -- [2]
-				2, -- [3]
+			["POWERGAINSELFSELF"] = {
+				"You gain %d %s from %s.[POWERGAINSELFSELF]", -- [1]
+				"You gain 750 Mana from Life Tap.[POWERGAINSELFSELF]", -- [2]
 			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Lemper's Fire Blast crits you for 537 Fire damage. (170 resisted) (230 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["SPELLLOGSELFOTHER"] = {
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Your Whirlwind hits Ironfur Patriarch for 103. (31 blocked)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Hemorrhage hits Pembokat for 118. (61 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["SPELLLOGCRITOTHEROTHER"] = {
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Traya 's Multi-Shot crits Infinite Slayer for 821. (49 blocked) (465 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Sllypher's Auto Shot crits Drpepperz for 141. (426 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["SPELLLOGCRITOTHERSELF"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Rokugo's Hamstring crits you for 71. (31 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["SPELLLOGSCHOOLOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Razaani Nexus Stalker's Arcane Explosion hits you for 278 Arcane damage. (115 resisted) (69 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Flameguard's Fire Shield hits you for 87 Fire damage. (125 resisted) (38 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["PERIODICAURADAMAGESELFOTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Magosko suffers 47 Shadow damage from your Curse of Agony. (59 resisted) (12 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Regnier suffers 59 Shadow damage from your Corruption. (84 resisted) (26 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["COMBATHITSELFOTHER"] = {
-			["GLANCING_TRAILER"] = {
-				" (glancing)", -- [1]
-				"You hit Stonescythe Whelp for 144. (glancing) (52 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"You hit Arith for 39. (60 blocked)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You hit Threllhouse for 214. (95 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["SPELLLOGCRITSCHOOLSELFSELF"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Immolate crits you for 824 Fire damage. (206 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["COMBATHITCRITOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Mils crits you for 34. (7 resisted) (8 absorbed)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Mils crits you for 34. (7 resisted) (8 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["PERIODICAURADAMAGESELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"You suffer 54 Nature damage from Toxic Fumes. (23 resisted) (14 absorbed)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You suffer 54 Nature damage from Toxic Fumes. (23 resisted) (14 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["SPELLLOGSCHOOLOTHEROTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Blackhand Dreadweaver's Shadow Bolt hits Olire for 276 Shadow damage. (131 resisted) (116 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Lionkingz's Zulian Slice hits Flamewaker Elite for 71 Nature damage. (+38 vulnerability bonus) (44 blocked)", -- [2]
-				2, -- [3]
-			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Wolfwalker's Arcane Shot hits Tower Point Warmaster for 264 Arcane damage. (94 resisted) (43 blocked)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Flamewaker Priest's Dark Strike hits Librabear for 347 Shadow damage. (405 resisted) (50 blocked) (702 absorbed)", -- [2]
-				3, -- [3]
-			},
-		},
-		["PERIODICAURADAMAGEOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"You suffer 57 Fire damage from Firewing Warlock's Immolate. (23 resisted) (14 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You suffer 22 Nature damage from Rock Stalker's Poison. (10 resisted) (9 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["SPELLLOGOTHEROTHER"] = {
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Mutate Fleshlasher's Vicious Bite hits Beas for 931. (188 blocked) (138 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"High Priestess Jeklik's Swoop hits Woft for 490. (49 blocked) (342 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["SPELLLOGCRITSCHOOLSELFOTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Your Shadow Bolt crits Molten Destroyer for 931 Shadow damage. (188 resisted)", -- [2]
-				1, -- [3]
-			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Your Shadow Bolt crits Flamewaker Elite for 1508 Shadow damage. (+183 vulnerability bonus)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Shadow Bolt crits Maxermus for 419 Shadow damage. (399 resisted) (180 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["BLOCK_TRAILER"] = {
-				" (%d blocked)", -- [1]
-				"Your Envenom crits Bogstrok for 1725 Nature damage. (45 blocked)", -- [2]
-				1, -- [3]
-			},
-		},
-		["COMBATHITCRITSCHOOLOTHERSELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Raging Fire-Soul crits you for 445 Fire damage.[COMBATHITCRITSCHOOLOTHERSELF] (93 resisted) (111 absorbed)", -- [2]
-				2, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Azure Templar crits you for 162 Frost damage. (116 resisted) (70 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["PERIODICAURADAMAGEOTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Dreamcatcher suffers 128 Fire damage from Flame Wave. (127 resisted)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Kruztique suffers 81 Fire damage from Flame Wave. (138 resisted) (57 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["SPELLLOGSCHOOLOTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Spore Explosion hits Iamvj for 617 Nature damage.[SPELLLOGSCHOOLOTHER] (685 resisted)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Flame Wave hits Kruztique for 58 Fire damage.[SPELLLOGSCHOOLOTHER] (196 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["VSENVIRONMENTALDAMAGE_LAVA_SELF"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"You lose 316 health for swimming in lava. (151 resisted) (136 absorbed)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"You lose 316 health for swimming in lava. (151 resisted) (136 absorbed)", -- [2]
-				2, -- [3]
-			},
-		},
-		["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Ilyena suffers 721 points of fire damage. (31 absorbed)", -- [2]
-				1, -- [3]
-			},
-		},
-		["SPELLLOGSCHOOLSELFOTHER"] = {
-			["RESIST_TRAILER"] = {
-				" (%d resisted)", -- [1]
-				"Your Immolate hits Rage Talon Dragonspawn for 255 Fire damage. (85 resisted)", -- [2]
-				1, -- [3]
-			},
-			["VULNERABLE_TRAILER"] = {
-				" (+%d vulnerability bonus)", -- [1]
-				"Your Shadow Bolt hits Flamewaker Elite for 1020 Shadow damage. (+186 vulnerability bonus)", -- [2]
-				1, -- [3]
-			},
-			["ABSORB_TRAILER"] = {
-				" (%d absorbed)", -- [1]
-				"Your Shadow Bolt hits Wildspawn Felsworn for 109 Shadow damage. (182 resisted) (493 absorbed)", -- [2]
-				2, -- [3]
+			["SPELLMISSSELFOTHER"] = {
+				"Your %s missed %s.", -- [1]
+				"Your Steal Weapon missed Gan'arg Warp-Tinker.", -- [2]
+				"2.0.10.6448", -- [3]
 			},
 		},
 	},
-	["logTrailer"] = true,
 	["ambiguous"] = {
 		"SPELLLOGSELF", -- [1]
 		"COMBATHITOTHERSELF", -- [2]
@@ -4299,6 +3497,510 @@ CombatLogScribeDB = {
 		"ERR_FRIEND_NOT_FOUND", -- [54]
 		"YOU_LOOT_MONEY", -- [55]
 	},
+	["trailers"] = {
+		["COMBATHITCRITSCHOOLOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Firelord crits Cleatus for 1594 Fire damage. (295 resisted)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Firelord crits Dragonx for 1143 Fire damage. (322 resisted) (593 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITCRITSELFOTHER"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You crit Elfenlied for 104. (26 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Warp Storm hits you for 109 Arcane damage.[SPELLLOGSCHOOLSELF] (136 resisted) (27 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Frostbite hits you for 1782 Frost damage.[SPELLLOGSCHOOLSELF] (445 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["COMBATHITSCHOOLOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Searing Elemental hits you for 118 Fire damage.[COMBATHITSCHOOLOTHERSELF] (49 resisted) (30 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Hydrospawn hits you for 126 Frost damage. (163 resisted) (365 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["CRUSHING_TRAILER"] = {
+				" (crushing)", -- [1]
+				"Sea Elemental hits you for 158 Frost damage. (crushing)", -- [2]
+			},
+		},
+		["SPELLLOGCRITSCHOOLOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Sabarr's Arcane Explosion crits Denerce for 73 Arcane damage. (207 resisted) (31 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Kracc's Fire Blast crits Zacharias for 422 Fire damage. (351 resisted) (106 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Kaysta's Arcane Shot crits Lava Annihilator for 118 Arcane damage. (92 resisted) (45 blocked)", -- [2]
+				1, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Kaysta's Arcane Shot crits Flamewaker Elite for 616 Arcane damage. (+47 vulnerability bonus)", -- [2]
+				1, -- [3]
+			},
+		},
+		["COMBATHITSCHOOLOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Greater Fire Elemental hits Boldman for 123 Fire damage.[COMBATHITSCHOOLOTHEROTHER] (51 resisted) (31 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Son of Flame hits Maevistia for 1503 Fire damage. (crushing) (389 resisted) (249 absorbed)", -- [2]
+				3, -- [3]
+			},
+			["GLANCING_TRAILER"] = {
+				" (glancing)", -- [1]
+				"Shadowfiend hits Coilfang Engineer for 128 Shadow damage.[COMBATHITSCHOOLOTHEROTHER] (glancing)", -- [2]
+				1, -- [3]
+			},
+			["CRUSHING_TRAILER"] = {
+				" (crushing)", -- [1]
+				"Son of Flame hits Maevistia for 1049 Fire damage. (crushing) (699 resisted)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Mils hits you for 15. (6 resisted) (4 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Mils hits you for 15. (6 resisted) (4 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["CRUSHING_TRAILER"] = {
+				" (crushing)", -- [1]
+				"Lava Reaver hits you for 2386. (crushing)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Nightmare Whelp hits you for 33. (39 blocked)", -- [2]
+				1, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGESELFSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"You suffer 181 Shadow damage from your Corruption. (75 resisted) (45 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You suffer 116 Shadow damage from your Curse of Agony. (48 resisted) (29 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGEOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Denerce suffers 24 Fire damage from Nakanu's Flame Shock. (33 resisted) (10 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Wildspawn Felsworn suffers 23 Shadow damage from Kruztique's Shadow Word: Pain. (111 resisted) (15 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Firelord suffers 225 Frost damage from Afterthefall's Blizzard. (+41 vulnerability bonus)", -- [2]
+				1, -- [3]
+			},
+		},
+		["COMBATHITCRITOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Mornordus crits Molten Giant for 282. (1 resisted)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Eiladilia crits Everetteri for 242. (104 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Mornordus crits Firelord for 333. (+1 vulnerability bonus)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGCRITSELFOTHER"] = {
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Your Hemorrhage crits Wrekt Slave for 241. (45 blocked) (240 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Overpower crits Threllhouse for 233. (353 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGOTHERSELF"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Discordant Surge's Mighty Blow hits you for 106. (45 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Nightmare Wanderer's Strike hits you for 164. (40 blocked)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLSELFSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Your Curse of Burning Shadows hits you for 122 Shadow damage. (152 resisted) (30 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Shadow Bolt hits you for 214 Shadow damage. (802 resisted) (54 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["VSENVIRONMENTALDAMAGE_FIRE_SELF"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You suffer 11 points of fire damage. (4 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["VSENVIRONMENTALDAMAGE_LAVA_OTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Kerinne loses 151 health for swimming in lava. (452 resisted)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Cewek loses 388 health for swimming in lava. (151 resisted) (64 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Mornordus hits Lava Reaver for 70. (glancing) (2 resisted)", -- [2]
+				2, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Warmaul Champion hits Iamvj for 791.[COMBATHITOTHEROTHER] (233 blocked) (336 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Molten Giant hits Lionkingz for 208. (51 blocked) (406 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Mornordus hits Lava Spawn for 115. (glancing) (+1 vulnerability bonus)", -- [2]
+				2, -- [3]
+			},
+			["GLANCING_TRAILER"] = {
+				" (glancing)", -- [1]
+				"Rannie hits Wrekt Slave for 42.[COMBATHITOTHEROTHER] (glancing) (42 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["CRUSHING_TRAILER"] = {
+				" (crushing)", -- [1]
+				"Expedition Warden hits Icebanana for 312.[COMBATHITOTHEROTHER] (crushing) (570 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGCRITSCHOOLOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Azif's Arcane Shot crits you for 870 Arcane damage. (156 resisted) (217 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Lemper's Fire Blast crits you for 537 Fire damage. (170 resisted) (230 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGSELFOTHER"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Hemorrhage hits Pembokat for 118. (61 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Your Whirlwind hits Ironfur Patriarch for 103. (31 blocked)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGCRITOTHEROTHER"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Sllypher's Auto Shot crits Drpepperz for 141. (426 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Traya 's Multi-Shot crits Infinite Slayer for 821. (49 blocked) (465 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGCRITOTHERSELF"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Rokugo's Hamstring crits you for 71. (31 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Razaani Nexus Stalker's Arcane Explosion hits you for 278 Arcane damage. (115 resisted) (69 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Flameguard's Fire Shield hits you for 87 Fire damage. (125 resisted) (38 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGESELFOTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Magosko suffers 47 Shadow damage from your Curse of Agony. (59 resisted) (12 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Regnier suffers 59 Shadow damage from your Corruption. (84 resisted) (26 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITSELFOTHER"] = {
+			["GLANCING_TRAILER"] = {
+				" (glancing)", -- [1]
+				"You hit Stonescythe Whelp for 144. (glancing) (52 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You hit Threllhouse for 214. (95 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"You hit Wrekt Slave for 91. (45 blocked) (91 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGCRITSCHOOLSELFSELF"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Immolate crits you for 824 Fire damage. (206 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["VSENVIRONMENTALDAMAGE_FIRE_OTHER"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Ilyena suffers 721 points of fire damage. (31 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGESELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"You suffer 54 Nature damage from Toxic Fumes. (23 resisted) (14 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You suffer 54 Nature damage from Toxic Fumes. (23 resisted) (14 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLOTHEROTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Blackhand Dreadweaver's Shadow Bolt hits Olire for 276 Shadow damage. (131 resisted) (116 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Flamewaker Priest's Dark Strike hits Librabear for 347 Shadow damage. (405 resisted) (50 blocked) (702 absorbed)", -- [2]
+				3, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Wolfwalker's Arcane Shot hits Tower Point Warmaster for 264 Arcane damage. (94 resisted) (43 blocked)", -- [2]
+				2, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Lionkingz's Zulian Slice hits Flamewaker Elite for 71 Nature damage. (+38 vulnerability bonus) (44 blocked)", -- [2]
+				2, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGEOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"You suffer 57 Fire damage from Firewing Warlock's Immolate. (23 resisted) (14 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You suffer 22 Nature damage from Rock Stalker's Poison. (10 resisted) (9 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGOTHEROTHER"] = {
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"High Priestess Jeklik's Swoop hits Woft for 490. (49 blocked) (342 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Mutate Fleshlasher's Vicious Bite hits Beas for 931. (188 blocked) (138 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGCRITSCHOOLSELFOTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Your Shadow Bolt crits Molten Destroyer for 931 Shadow damage. (188 resisted)", -- [2]
+				1, -- [3]
+			},
+			["BLOCK_TRAILER"] = {
+				" (%d blocked)", -- [1]
+				"Your Envenom crits Bogstrok for 1725 Nature damage. (45 blocked)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Shadow Bolt crits Maxermus for 419 Shadow damage. (399 resisted) (180 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Your Shadow Bolt crits Flamewaker Elite for 1508 Shadow damage. (+183 vulnerability bonus)", -- [2]
+				1, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLOTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Spore Explosion hits Iamvj for 617 Nature damage.[SPELLLOGSCHOOLOTHER] (685 resisted)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Flame Wave hits Kruztique for 58 Fire damage.[SPELLLOGSCHOOLOTHER] (196 absorbed)", -- [2]
+				1, -- [3]
+			},
+		},
+		["PERIODICAURADAMAGEOTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Alanfoster suffers 142 Nature damage from Spore Explosion. (222 resisted) (524 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Kruztique suffers 81 Fire damage from Flame Wave. (138 resisted) (57 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITCRITSCHOOLOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Raging Fire-Soul crits you for 445 Fire damage.[COMBATHITCRITSCHOOLOTHERSELF] (93 resisted) (111 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Azure Templar crits you for 162 Frost damage. (116 resisted) (70 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["VSENVIRONMENTALDAMAGE_LAVA_SELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"You lose 316 health for swimming in lava. (151 resisted) (136 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"You lose 316 health for swimming in lava. (151 resisted) (136 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["COMBATHITCRITOTHERSELF"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Mils crits you for 34. (7 resisted) (8 absorbed)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Mils crits you for 34. (7 resisted) (8 absorbed)", -- [2]
+				2, -- [3]
+			},
+		},
+		["SPELLLOGSCHOOLSELFOTHER"] = {
+			["RESIST_TRAILER"] = {
+				" (%d resisted)", -- [1]
+				"Your Immolate hits Rage Talon Dragonspawn for 255 Fire damage. (85 resisted)", -- [2]
+				1, -- [3]
+			},
+			["ABSORB_TRAILER"] = {
+				" (%d absorbed)", -- [1]
+				"Your Shadow Bolt hits Wildspawn Felsworn for 109 Shadow damage. (182 resisted) (493 absorbed)", -- [2]
+				2, -- [3]
+			},
+			["VULNERABLE_TRAILER"] = {
+				" (+%d vulnerability bonus)", -- [1]
+				"Your Shadow Bolt hits Flamewaker Elite for 1020 Shadow damage. (+186 vulnerability bonus)", -- [2]
+				1, -- [3]
+			},
+		},
+	},
+	["logTrailer"] = true,
 	["ignored"] = {
 		["VOICEMACRO_20_Sc_6_FEMALE"] = "Ah, doornails.",
 		["TUTORIAL_TITLE7"] = "Looting",
@@ -7547,5 +7249,428 @@ CombatLogScribeDB = {
 		["EMOTE66_CMD1"] = "/mourn",
 		["OPTION_TOOLTIP_PET_SPELL_DAMAGE"] = "Show spell damage caused by your pet.",
 		["OPTION_TOOLTIP_TRILINEAR"] = "Enables high quality filtering of texture maps. Turn this feature off to increase performance.",
+	},
+	["tooShort"] = {
+		["FOLLOW"] = "Follow",
+		["CLOSE"] = "Close",
+		["HOURS_ABBR_P1"] = "Hrs",
+		["ALL"] = "All",
+		["SPELL_TARGET_TYPE8_DESC"] = "pet",
+		["LOGOUT"] = "Logout",
+		["RAID_LEADER_TOKEN"] = "(L)",
+		["LFG_TYPE_ZONE"] = "Zone",
+		["SUBMIT"] = "Submit",
+		["PETS"] = "Pets",
+		["BOSS"] = "Boss",
+		["CHAT_MSG_YELL"] = "Yell",
+		["LAUGH_WORD7"] = "haha",
+		["XPBAR_LABEL"] = "XP Bar",
+		["LOOT"] = "Loot",
+		["CHAT_COMBAT_CREATURE_VS_CREATURE_MISSES_GET"] = "",
+		["CHAT_SPELL_DAMAGESHIELDS_ON_OTHERS_GET"] = "",
+		["NONE_CAPS"] = "NONE",
+		["LAUGH_WORD6"] = "haha",
+		["SPELL_SCHOOLALL"] = "all",
+		["YELL_MESSAGE"] = "Yell",
+		["MP"] = "MP",
+		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE_GET"] = "",
+		["SPELL_TARGET_CREATURE_TYPE1_DESC"] = "%s",
+		["LAUGH_WORD8"] = "haha",
+		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_BUFFS_GET"] = "",
+		["XP"] = "XP",
+		["ENERGY"] = "Energy",
+		["ERR_NOAMMO_S"] = "%s",
+		["CHAT_SPELL_FRIENDLYPLAYER_DAMAGE_GET"] = "",
+		["PET_FOLLOW"] = "Follow",
+		["DAYS_ABBR"] = "Day",
+		["DAMAGE_SCHOOL5"] = "Frost",
+		["ATTACK_POWER_COLON"] = "Power:",
+		["WHO_TAG_CLASS"] = "c-",
+		["HP"] = "HP",
+		["FOCUS_POINTS"] = "Focus",
+		["SOCIAL_BUTTON"] = "Social",
+		["YELLOW_GEM"] = "Yellow",
+		["LOCKED"] = "Locked",
+		["SPELL_SCHOOL4_CAP"] = "Frost",
+		["INT_SPELL_DURATION_SEC"] = "%d sec",
+		["HONOR_TODAY"] = "Today",
+		["NOT_APPLICABLE"] = "N/A",
+		["SPELL_TARGET_TYPE0_DESC"] = "caster",
+		["SEND_LABEL"] = "Send",
+		["AUCTION_TIME_LEFT1"] = "Short",
+		["WHO_TAG_NAME"] = "n-",
+		["PET_HAPPINESS3"] = "Happy",
+		["NEXT"] = "Next",
+		["HOURS_P1"] = "Hours",
+		["CAMERA_LOCKED"] = "Locked",
+		["TASKS_COLON"] = "Tasks:",
+		["META_GEM"] = "Meta",
+		["COD"] = "C.O.D.",
+		["NEVER"] = "Never",
+		["PROC_EVENT1_DESC"] = "on hit",
+		["DEMOTE"] = "Demote",
+		["DUEL"] = "Duel",
+		["CHAT_SPELL_ITEM_ENCHANTMENTS_GET"] = "",
+		["GOLD"] = "Gold",
+		["WAISTSLOT"] = "Waist",
+		["ZONE"] = "Zone",
+		["CORPSE"] = "Corpse",
+		["HEALTH"] = "Health",
+		["HONOR_THIS_SESSION"] = "Today",
+		["SECOND_ONELETTER_ABBR"] = "%d s",
+		["LAUGH_WORD9"] = "rofl",
+		["TEAM"] = "Team",
+		["HERTZ"] = "Hz",
+		["CHAT_SPELL_AURA_GONE_PARTY_GET"] = "",
+		["DAMAGE"] = "Damage",
+		["CHAT_COMBAT_FRIENDLYPLAYER_HITS_GET"] = "",
+		["FOREIGN_SERVER_LABEL"] = " (*)",
+		["WHO_TAG_ZONE"] = "z-",
+		["PARTY"] = "Party",
+		["STARTUP_TEXT_LINE4"] = "",
+		["PASS"] = "Pass",
+		["SPELL_SCHOOL1_CAP"] = "Holy",
+		["ELITE"] = "Elite",
+		["BACKSLOT"] = "Back",
+		["English"] = "",
+		["CHAT_MSG_SYSTEM"] = "System",
+		["WHO_TAG_GUILD"] = "g-",
+		["CHAT_SPELL_PARTY_DAMAGE_GET"] = "",
+		["LOW"] = "Low",
+		["DEATHS"] = "Deaths",
+		["FEMALE"] = "Female",
+		["AUCTION_CREATOR"] = "Seller",
+		["PLAYED"] = "Played",
+		["CHAT_SPELL_PET_BUFF_GET"] = "",
+		["SPELL_SCHOOL3_CAP"] = "Nature",
+		["SECONDS_ABBR_P1"] = "Secs",
+		["BUYOUT"] = "Buyout",
+		["ERR_SPELL_FAILED_EQUIPPED_ITEM_CLASS_S"] = "%s",
+		["MOTD_COLON"] = "MOTD:",
+		["PARENS_TEMPLATE"] = "(%s)",
+		["HOURS"] = "Hour",
+		["PLAYERSTAT_RANGED_COMBAT"] = "Ranged",
+		["PET_ACTION_ATTACK"] = "Attack",
+		["CASH_ON_DELIVERY"] = "C.O.D.",
+		["DAMAGE_SCHOOL3"] = "Fire",
+		["CHAT_COMBAT_FRIENDLYPLAYER_MISSES_GET"] = "",
+		["LASTONLINE_DAYS"] = "%d day",
+		["CHAT_SPELL_HOSTILEPLAYER_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_CREATURE_VS_SELF_HITS_GET"] = "",
+		["GAMES"] = "Games",
+		["DELETE_ITEM_CONFIRM_STRING"] = "DELETE",
+		["RESIST"] = "Resist",
+		["CHAT_SPELL_PERIODIC_PARTY_BUFFS_GET"] = "",
+		["DUNGEON_DIFFICULTY3"] = "Epic",
+		["TRAIN"] = "Train",
+		["ARENA_RATED"] = "Battle",
+		["WIDESCREEN_TAG"] = "(Wide)",
+		["RANK_COLON"] = "Rank:",
+		["RAID_TARGET_1"] = "Star",
+		["HIDE"] = "Hide",
+		["MONEY"] = "Money",
+		["SOLO"] = "Solo",
+		["NOTE_COLON"] = "Note:",
+		["WHO"] = "Who",
+		["SPELL_TARGET_TYPE1_DESC"] = "any",
+		["GAMMA"] = "Gamma",
+		["CHAT_MSG_AFK"] = "AFK",
+		["CHAT_COMBAT_CREATURE_VS_PARTY_HITS_GET"] = "",
+		["MILLISECONDS_ABBR"] = "ms",
+		["RACE"] = "Race",
+		["ARMOR"] = "Armor",
+		["FINGER0SLOT"] = "Finger",
+		["LAUGH_WORD2"] = "rofl",
+		["HOURS_ABBR"] = "Hr",
+		["BACK"] = "Back",
+		["UNIT_PVP_NAME"] = "%s %s",
+		["DODGE"] = "Dodge",
+		["LAUGH_WORD5"] = "haha",
+		["TABARDVENDORCOST"] = "Cost:",
+		["CAMERA_ALWAYS"] = "Always",
+		["RANK"] = "Rank",
+		["BROWSE"] = "Browse",
+		["FILTER"] = "Filter",
+		["NONE"] = "None",
+		["YES"] = "Yes",
+		["CHAT_SPELL_HOSTILEPLAYER_BUFF_GET"] = "",
+		["BUFFER_DOUBLE"] = "Double",
+		["CHAT_SPELL_TRADESKILLS_GET"] = "",
+		["BIDS"] = "Bids",
+		["COLOR"] = "Color",
+		["LAUGH_WORD1"] = "lol",
+		["INPUT_JAPANESE"] = "JP",
+		["MAIL_RETURN"] = "Return",
+		["YOU"] = "You",
+		["EMBLEM_SYMBOL"] = "Icon",
+		["CHAT_MSG_COMBAT_LOG_MISC_INFO"] = "Misc",
+		["CHAT_SPELL_DAMAGESHIELDS_ON_SELF_GET"] = "",
+		["ENABLE"] = "Enable",
+		["MANA"] = "Mana",
+		["SPELL_TARGET_TYPE15_DESC"] = "master",
+		["MAIL_TO_LABEL"] = "To:",
+		["MANA_POINTS"] = "Mana",
+		["INPUT_CHINESE"] = "CH",
+		["MANA_COLON"] = "Mana:",
+		["LEVEL_ABBR"] = "Lvl",
+		["DAYS"] = "Day",
+		["SPELL_SCHOOL2_CAP"] = "Fire",
+		["NEW"] = "New",
+		["CHAT_SPELL_CREATURE_VS_CREATURE_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_HOSTILE_DEATH_GET"] = "",
+		["FOCUS"] = "Focus",
+		["HK"] = "HK",
+		["BASIC_LABEL"] = "Basic",
+		["DAY_ONELETTER_ABBR"] = "%d d",
+		["SPELL_TARGET_TYPE3_DESC"] = "enemy",
+		["FACTION_STANDING_LABEL1"] = "Hated",
+		["CHAT_SPELL_PERIODIC_CREATURE_BUFFS_GET"] = "",
+		["MINUTES_ABBR"] = "Min",
+		["CHAT_COMBAT_PET_MISSES_GET"] = "",
+		["CHAT_SPELL_AURA_GONE_OTHER_GET"] = "",
+		["PET"] = "Pet",
+		["FRFR"] = "French",
+		["FEETSLOT"] = "Feet",
+		["DK"] = "DK",
+		["PET_ACTION_FOLLOW"] = "Follow",
+		["PARRY"] = "Parry",
+		["COPPER"] = "Copper",
+		["SAVE"] = "Save",
+		["CHAT_YELL_SEND"] = "Yell: ",
+		["TRADE"] = "Trade",
+		["RAID_ASSISTANT_TOKEN"] = "(A)",
+		["STARTUP_TEXT_LINE3"] = "",
+		["SPELL_SCHOOL2_NAME"] = "fire",
+		["STARTUP_TEXT_LINE2"] = "",
+		["FROM"] = "From:",
+		["HONOR_CONTRIBUTION_POINTS"] = "Honor",
+		["IMMUNE"] = "Immune",
+		["CHAT_COMBAT_MISC_INFO_GET"] = "",
+		["CANCEL"] = "Cancel",
+		["NECKSLOT"] = "Neck",
+		["DELETE"] = "Delete",
+		["PET_RENAME"] = "Rename",
+		["CHAT_SPELL_PET_DAMAGE_GET"] = "",
+		["CHAT_MSG_GUILD"] = "Guild",
+		["DAMAGE_SCHOOL6"] = "Shadow",
+		["SPELL_STAT5_NAME"] = "Spirit",
+		["INPUT_KOREAN"] = "KO",
+		["CHAT_LABEL"] = "Chat",
+		["MAIL_REPLY_PREFIX"] = "RE:",
+		["WEAPON_SPEED"] = "Speed",
+		["SPELL_TARGET_CREATURE_TYPE8_DESC"] = "%s pet",
+		["EXIT"] = "Exit",
+		["SPEAKERMODE_STEREO"] = "Stereo",
+		["CHAT_SPELL_PERIODIC_CREATURE_DAMAGE_GET"] = "",
+		["OUTBID"] = "Outbid",
+		["PERCENT_SYMBOL"] = "%%",
+		["DUNGEON_DIFFICULTY2"] = "Heroic",
+		["CAMERA_NEVER"] = "Never",
+		["ENERGY_POINTS"] = "Energy",
+		["CHAT_COMBAT_CREATURE_VS_PARTY_MISSES_GET"] = "",
+		["CHAT_SAY_SEND"] = "Say: ",
+		["CHAT_MSG_SKILL"] = "Skill",
+		["HONOR"] = "Honor",
+		["NEED"] = "Need",
+		["PREV"] = "Prev",
+		["BAGSLOT"] = "Bag",
+		["OKAY"] = "Okay",
+		["RAID_TARGET_2"] = "Circle",
+		["RAID_TARGET_7"] = "Cross",
+		["ZONE_COLON"] = "Zone:",
+		["ERROR_CAPS"] = "ERROR",
+		["CHAT_SPELL_FRIENDLYPLAYER_BUFF_GET"] = "",
+		["RAID_TARGET_5"] = "Moon",
+		["SPELLS"] = "Spells",
+		["CHAT_COMBAT_CREATURE_VS_CREATURE_HITS_GET"] = "",
+		["RAID_MESSAGE"] = "Raid",
+		["COSTS_LABEL"] = "Cost:",
+		["MINUTES"] = "Minute",
+		["SPELL_SCHOOL5_NAME"] = "shadow",
+		["LOCK"] = "Lock",
+		["CHAT_COMBAT_ERROR_GET"] = "",
+		["REPLY_MESSAGE"] = "Reply",
+		["AUCTION_TIME_LEFT2"] = "Medium",
+		["WHO_TAG_RACE"] = "r-",
+		["CHAT_SPELL_PERIODIC_PARTY_DAMAGE_GET"] = "",
+		["DEDE"] = "German",
+		["INT_SPELL_DURATION_MIN"] = "%d min",
+		["CHAT_SPELL_SELF_DAMAGE_GET"] = "",
+		["PLAYERSTAT_SPELL_COMBAT"] = "Spell",
+		["CHAT_SPELL_PARTY_BUFF_GET"] = "",
+		["EMPTY"] = "Empty",
+		["PET_ATTACK"] = "Attack",
+		["RELICSLOT"] = "Relic",
+		["SECONDS_ABBR"] = "Sec",
+		["SERVER_MESSAGE_COLON"] = "Alert:",
+		["SPELL_TARGET_TYPE7_DESC"] = "object",
+		["DAMAGE_SCHOOL4"] = "Nature",
+		["CHAT_SPELL_CREATURE_VS_CREATURE_BUFF_GET"] = "",
+		["CHAT_MSG_COMBAT_LOG_ERROR"] = "Error",
+		["MISS"] = "Miss",
+		["SPELL_SCHOOL6_NAME"] = "arcane",
+		["ARMOR_COLON"] = "Armor:",
+		["HOUR_ONELETTER_ABBR"] = "%d h",
+		["CHESTSLOT"] = "Chest",
+		["SECONDS"] = "Second",
+		["USE"] = "Use",
+		["CLASS"] = "Class",
+		["SKILL"] = "Skill",
+		["CAMERA_LABEL"] = "Camera",
+		["SKILLS"] = "Skills",
+		["CHAT_SPELL_CREATURE_VS_SELF_BUFF_GET"] = "",
+		["UNITNAME_TITLE"] = "%s",
+		["DAMAGE_SCHOOL2"] = "Holy",
+		["LEVEL"] = "Level",
+		["INPUT_ROMAN"] = "A",
+		["DUNGEON_DIFFICULTY1"] = "Normal",
+		["RATING"] = "Rating",
+		["HIGH"] = "High",
+		["SEARCH"] = "Search",
+		["CHAT_SPELL_SELF_BUFF_GET"] = "",
+		["ACCEPT"] = "Accept",
+		["SPELL_SCHOOL4_NAME"] = "frost",
+		["CHAT_COMBAT_LOG_ERROR_GET"] = "",
+		["MERCHANT_STOCK"] = "(%d)",
+		["EVADE"] = "Evade",
+		["PLAYERSTAT_MELEE_COMBAT"] = "Melee",
+		["ADDON_BANNED"] = "Banned",
+		["AUCTION_TIME_LEFT3"] = "Long",
+		["CHAT_SPELL_AURA_GONE_SELF_GET"] = "",
+		["ALLIED"] = "Allied",
+		["RAID"] = "Raid",
+		["KILLS"] = "Kills",
+		["GROUP"] = "Group",
+		["LFG_TYPE_NONE"] = "None",
+		["QUIT"] = "Quit",
+		["CHAT_SPELL_CREATURE_VS_PARTY_BUFF_GET"] = "",
+		["CHAT_COMBAT_SELF_MISSES_GET"] = "",
+		["SILVER"] = "Silver",
+		["NAME"] = "Name",
+		["INT_SPELL_DURATION_HOURS_P1"] = "%d hrs",
+		["BUYOUT_COST"] = "Buyout",
+		["SPEED"] = "Speed",
+		["FLAG_COUNT_TEMPLATE"] = "x %d",
+		["AT_WAR"] = "At War",
+		["FACTION_STANDING_LABEL1_FEMALE"] = "Hated",
+		["CHAT_MSG_SAY"] = "Say",
+		["RAGE_POINTS"] = "Rage",
+		["TRADE_SKILL_TITLE"] = "%s",
+		["SPELL_TARGET_TYPE12_DESC"] = "all",
+		["RARITY"] = "Rarity",
+		["QUEST_HARD"] = "(Hard)",
+		["CHAT_SPELL_CREATURE_VS_PARTY_DAMAGE_GET"] = "",
+		["CHAT_COMBAT_PARTY_HITS_GET"] = "",
+		["CHAT_COMBAT_HOSTILEPLAYER_HITS_GET"] = "",
+		["DONE"] = "Done",
+		["CHAT_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS_GET"] = "",
+		["VICTORY_TEXT_ARENA_DRAW"] = "Draw",
+		["LAUGH_WORD3"] = "hehe",
+		["WRISTSLOT"] = "Wrist",
+		["CHAT_COMBAT_LOG_MISC_INFO_GET"] = "",
+		["FONT_SIZE_TEMPLATE"] = "%d pt",
+		["PET_ACTION_WAIT"] = "Stay",
+		["BLOCK"] = "Block",
+		["RAGE"] = "Rage",
+		["SPELL_SCHOOL3_NAME"] = "nature",
+		["SPELL_SCHOOL6_CAP"] = "Arcane",
+		["MINUTE_ONELETTER_ABBR"] = "%d m",
+		["ERR_SPELL_FAILED_S"] = "%s",
+		["MINUTES_ABBR_P1"] = "Mins",
+		["CHAT_MSG_DND"] = "DND",
+		["SPELL_TARGET_TYPE11_DESC"] = "party",
+		["SHIRTSLOT"] = "Shirt",
+		["TICKET_TYPE4"] = "Bug",
+		["CHAT_MSG_PARTY"] = "Party",
+		["IGNORE"] = "Ignore",
+		["STUN"] = "Stun",
+		["PET_WAIT"] = "Stay",
+		["DAYS_P1"] = "Days",
+		["BID"] = "Bid",
+		["FRAMERATE_LABEL"] = "FPS:",
+		["ID"] = "ID",
+		["SAY"] = "Say",
+		["KOKR"] = "Korean",
+		["TARGET"] = "Target",
+		["CHAT_SPELL_PERIODIC_SELF_BUFFS_GET"] = "",
+		["PET_TYPE_DEMON"] = "Demon",
+		["MACROS"] = "Macros",
+		["FAILED"] = "Failed",
+		["TICKET_TYPE3"] = "Stuck",
+		["LFG_TYPE_RAID"] = "Raid",
+		["MAIL_LABEL"] = "Mail",
+		["SPELL_TARGET_CREATURE_TYPE12_DESC"] = "all %s",
+		["DAYS_ABBR_P1"] = "Days",
+		["GROUPS"] = "Groups",
+		["BREATH_LABEL"] = "Breath",
+		["ABSORB"] = "Absorb",
+		["ERR_SPELL_FAILED_TOTEMS"] = "%s",
+		["CHAT_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE_GET"] = "",
+		["RAID_TARGET_8"] = "Skull",
+		["NONE_KEY"] = "None",
+		["DAMAGE_SCHOOL7"] = "Arcane",
+		["TYPE"] = "Type",
+		["MACRO"] = "Macro",
+		["FINGER1SLOT"] = "Finger",
+		["EMBLEM_BORDER"] = "Border",
+		["HOME"] = "Home",
+		["SPELL_SCHOOL1_NAME"] = "holy",
+		["ERR_SPELL_FAILED_SHAPESHIFT_FORM_S"] = "%s",
+		["RAID_TARGET_6"] = "Square",
+		["CHAT_COMBAT_SELF_HITS_GET"] = "",
+		["CREATE"] = "Create",
+		["TRAINER_LIST_SP"] = "%d SP",
+		["ITEMS"] = "Items",
+		["PARTY_INVITE"] = "Invite",
+		["SAY_MESSAGE"] = "Say",
+		["STUN_CAPS"] = "STUN",
+		["CHAT_SPELL_BREAK_AURA_GET"] = "",
+		["SPELL_TARGET_TYPE_DEAD1_DESC"] = "dead",
+		["RED_GEM"] = "Red",
+		["CHAT_SPELL_PERIODIC_SELF_DAMAGE_GET"] = "",
+		["SHIELDSLOT"] = "Shield",
+		["REMOVE"] = "Remove",
+		["ENCHANT_CONDITION_AND"] = " and ",
+		["CHAT_MSG_EMOTE"] = "Emote",
+		["INT_GENERAL_DURATION_DAYS"] = "%d day",
+		["ENCHSLOT_WEAPON"] = "Weapon",
+		["BLUE_GEM"] = "Blue",
+		["CHAT_COMBAT_PARTY_MISSES_GET"] = "",
+		["CHAT_COMBAT_PET_HITS_GET"] = "",
+		["ERR_TAME_FAILED"] = "%s.",
+		["SPELL_TARGET_TYPE5_DESC"] = "item",
+		["GREED"] = "Greed",
+		["RANGEDSLOT"] = "Ranged",
+		["CHAT_GUILD_DEMOTE_SEND"] = "Demote",
+		["PLAYER"] = "Player",
+		["TRAINER_LIST_TP"] = "%d TP",
+		["CHAT_COMBAT_HOSTILEPLAYER_MISSES_GET"] = "",
+		["STATS_LABEL"] = "Stats:",
+		["LABEL_NOTE"] = "Note",
+		["SPELL_SCHOOL5_CAP"] = "Shadow",
+		["CHAT_COMBAT_FRIENDLY_DEATH_GET"] = "",
+		["RESET"] = "Reset",
+		["CHAT_RAID_BOSS_EMOTE_GET"] = "",
+		["LEGSSLOT"] = "Legs",
+		["INBOX"] = "Inbox",
+		["DEAD"] = "Dead",
+		["SPELL_TARGET_CENTER_CASTER"] = "caster",
+		["HANDSSLOT"] = "Hands",
+		["CHAT_COMBAT_CREATURE_VS_SELF_MISSES_GET"] = "",
+		["ALWAYS"] = "Always",
+		["ERR_SPELL_FAILED_REAGENTS"] = "%s",
+		["CHAT_MSG_RAID"] = "Raid",
+		["CAMERA_SMART"] = "Smart",
+		["LAUGH_WORD4"] = "haha",
+		["JOIN"] = "Join",
+		["NO"] = "No",
+		["TABARDSLOT"] = "Tabard",
+		["AMMOSLOT"] = "Ammo",
+		["MALE"] = "Male",
+		["CHAT_SPELL_CREATURE_VS_SELF_DAMAGE_GET"] = "",
+		["PET_TYPE_PET"] = "Pet",
+		["CHAT_RAID_SEND"] = "Raid: ",
+		["HEADSLOT"] = "Head",
+		["ATTACK"] = "Attack",
 	},
 }
