@@ -233,18 +233,22 @@ function rMCP:OnLoad()
 		exclusive = 1,
 	}
 	
+	
+	local function OnRenameSet()
+		local text = getglobal(this:GetParent():GetName().."EditBox"):GetText()
+		if text == "" then
+			text = nil
+		end
+		self:RenameSet(self.renamingSet, text)
+		this:GetParent():Hide()
+	end
+		
 	StaticPopupDialogs["MCP_RENAMESET"] = {
 		text = L["Enter the new name for [%s]:"],
 		button1 = TEXT(YES),
 		button2 = TEXT(CANCEL),
-		EditBoxOnEnterPressed = function()
-			local text = getglobal(this:GetParent():GetName().."EditBox"):GetText()
-			if text == "" then
-				text = nil
-			end
-			self:RenameSet(self.renamingSet, text)
-			this:GetParent():Hide()
-		end,
+		OnAccept = OnRenameSet,
+		EditBoxOnEnterPressed = OnRenameSet,
 		EditBoxOnEscapePressed = function()
 			this:GetParent():Hide()
 		end,
