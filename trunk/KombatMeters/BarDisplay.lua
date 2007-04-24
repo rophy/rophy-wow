@@ -111,15 +111,17 @@ function BarDisplay:Refresh()
 	
 	local index = core:GetSortedDataIndexes(shownValue)
 	local data = core:GetDataTable(shownValue)
-	if #index == 0 then
-		return
+	local dataSize = #index
+	for i=dataSize+1, #bars do
+		bars[i]:Hide()
 	end
-	local maxValue = data[index[1]]
+	local frameHeight = dataSize * BAR_HEIGHT + 12
+	frame:SetHeight( ( frameHeight > 40 and frameHeight ) or 40 )
+	local maxValue = index[1] and data[index[1]]
 	for i, name in ipairs(index) do
 		local value = data[name]
 		if not bars[i] then
 			bars[i] = self:CreateBar()
-			frame:SetHeight( #bars * BAR_HEIGHT + 12 )
 		end
 		local bar = bars[i]
 		bar:SetMinMaxValues(0,maxValue)
@@ -128,9 +130,6 @@ function BarDisplay:Refresh()
 		bar:Show()
 		bar.name = name
 		bar.value = value
-	end
-	for i=#index+1, #bars do
-		bars[i]:Hide()
 	end
 end
 
@@ -163,7 +162,20 @@ end
 
 function StatusBar_OnEnter()
 	GameTooltip:SetOwner(this, "ANCHOR_CURSOR")
-	GameTooltip:AddDoubleLine(this.name or "None", this.value or 0, 1, 1, 1, 1, 1, 1)
+	GameTooltip:AddDoubleLine(this.name or "None", this.value or 0, 0, 1, 0, 1, 1, 0)
+	local valueType = core:GetShownValueType()
+	local skillData = core:GetSkillData(valueType, this.name)
+	local total = 0
+	if skillData then
+		for skill, value in pairs(skillData) do
+			GameTooltip:AddDoubleLine(skill,value, 0, 0, 1, 1, 1, 0)
+			total = total + value
+		end
+		if total ~= this.value then
+			local msg = string.format("Warning: skill total %d does not match expected value %d.", total, this.value)
+			GameTooltip:AddLine(msg)
+		end
+	end
 	GameTooltip:Show()
 end
 

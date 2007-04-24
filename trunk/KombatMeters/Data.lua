@@ -5,6 +5,7 @@ local parser = ParserLib:GetInstance("1.1")
 
 local dataIndexes = {}
 local data
+local skillData
 local settings
 
 -- Local Function Declarations --
@@ -12,6 +13,7 @@ local OnCombatEvent
 local ParseName
 local CombatEventHandlers = {}
 local AddValue
+local AddSkill
 local SortData
 
 function Data:Enable()
@@ -26,18 +28,22 @@ function Data:Enable()
 	self.db = settings
 	
 	if not KombatMetersDataPerChar then
-		KombatMetersDataPerChar = {}
+		KombatMetersDataPerChar = {
+			data = {},
+			skill = {}
+		}
 	end
-	data = KombatMetersDataPerChar
-	
+	data = KombatMetersDataPerChar.data
 	self.data = data
+	skillData = KombatMetersDataPerChar.skill
+	self.skillData = skillData
 	
 	
 	self.cmd = self:InitializeSlashCommand("KombatMeters Slash Command", "KOMBATMETERS", "kombatmeters", "km")
 	self.cmd:InjectDBCommands(settings, "copy", "delete", "list", "reset", "set")
 	self.cmd:RegisterSlashHandler("clear - Resets all data.", "clear", "ClearData")
 	self.cmd:RegisterSlashHandler("mergepet - Toggles merge pet data with owner.", "merge", "ToggleMergePet")
-	self.cmd:RegisterSlashHandler("raidonly - Toggles only show raid members.", "raidonly", "ToggleRaidOnly")
+	self.cmd:RegisterSlashHandler("onlyraid - Toggles only show raid members.", "raid", "ToggleOnlyRaid")
 	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -54,9 +60,9 @@ function Data:ToggleMergePet()
 
 end
 
-function Data:ToggleRaidOnly()
+function Data:ToggleOnlyRaid()
 	settings.profile.onlyRaid = not settings.profile.onlyRaid
-	self:Print("raidOnly is now set to ", settings.profile.onlyRaid)
+	self:Print("onlyRaid is now set to ", settings.profile.onlyRaid)
 end
 
 function Data:ClearData()
@@ -65,6 +71,9 @@ function Data:ClearData()
 	end
 	for k in pairs(dataIndexes) do
 		dataIndexes[k] = nil
+	end
+	for k in pairs(skillData) do
+		skillData[k] = nil
 	end
 	self:TriggerMessage("KombatMeters_Data_Cleared")
 	self:Print("All data cleared.")
@@ -93,6 +102,10 @@ function Data:GetDataTable(valueType)
 	end
 end
 
+function Data:GetSkillData(valueType, name)
+	return skillData[valueType][name]
+end
+
 -- Iterate data unordered.
 function Data:IterateData(valueType)
 	return next, data[valueType] or {}
@@ -113,46 +126,62 @@ end
 	2. if settings.profile.mergePet is true, change pet name to owner name.
 ]]
 function ParseName(name)
+	local isPet, unitid = nil
 	if name == ParserLib_SELF then
 		name = UnitName("player")
 	end
-	local unitid = RaidUnits:GetUnitID(name)
+	unitid = RaidUnits:GetUnitID(name)
 	if unitid and settings.profile.mergePet then
 		if unitid == "pet" then
 			name = UnitName("player")
+			isPet = true
 		elseif unitid:find("pet$") then
 			name = UnitName(unitid:sub(1,-4))
+			isPet = true
 		end
 	end
-	return name
+	return name, unitid, isPet
 end
 
 function OnCombatEvent(infoType, info, event)
 	-- Do some common processing first, then dispatch to each handler.
-	local source, victim
+	local source, victim, sourceUnitid, victimUnitid, sourceIsPet, victimIsPet
+	
 	if info.source and info.source ~= ParserLib_NONE then
-		source = ParseName(info.source)
-		if settings.profile.raidOnly and not RaidUnits:GetUnitID(source) then
+		source, sourceUnitid, sourceIsPet = ParseName(info.source)
+		if settings.profile.onlyRaid and not sourceUnitid then
 			source = nil
 		end
 	end
+	
 	if info.victim and info.victim ~= ParserLib_NONE then
-		victim = ParseName(info.victim)
-		if settings.profile.raidOnly and not RaidUnits:GetUnitID(victim) then
+		victim, victimUnitid, victimIsPet = ParseName(info.victim)
+		if settings.profile.onlyRaid and not victimUnitid then
 			victim = nil
 		end
 	end
-	CombatEventHandlers[infoType](event, info, source, victim)
+	
+	CombatEventHandlers[infoType](event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 end
 
-CombatEventHandlers["hit"] = function(event, info, source, victim)
+CombatEventHandlers["hit"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if info.amount then
+		local skill = info.skill
 		if source then
 			-- Ignore "split damage" on friendly units.
 			if info.isSplit and RaidUnits:GetUnitID(source) then
 				return
 			end
 			AddValue("DamageDone", source, info.amount)
+			if skill == ParserLib_MELEE then
+				skill = "[Melee]"
+			elseif skill == ParserLib_DAMAGESHIELD then
+				skill = "[Damage Shield]"
+			end
+			if sourceIsPet and settings.profile.mergePet then
+				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
+			end
+			AddSkill("DamageDone", source, skill, info.amount)
 		end
 		if victim then
 			AddValue("DamageTaken", victim, info.amount)
@@ -160,10 +189,14 @@ CombatEventHandlers["hit"] = function(event, info, source, victim)
 	end
 end
 
-CombatEventHandlers["heal"] = function(event, info, source, victim)
+CombatEventHandlers["heal"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if info.amount then
 		if source then
 			AddValue("HealDone", source, info.amount)
+			if sourceIsPet and settings.profile.mergePet then
+				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
+			end
+			AddSkill("HealDone", source, skill, info.amount)
 		end
 		if victim then
 			AddValue("HealTaken", victim, info.amount)
@@ -171,10 +204,14 @@ CombatEventHandlers["heal"] = function(event, info, source, victim)
 	end
 end
 
-CombatEventHandlers["dispel"] = function(event, info, source, victim)
+CombatEventHandlers["dispel"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if not info.isFailed then
 		if source then
 			AddValue("Cleansing", source, 1)
+			if sourceIsPet and settings.profile.mergePet then
+				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
+			end
+			AddSkill("Cleansing", source, skill, info.amount)
 		end
 	end
 end
@@ -223,6 +260,18 @@ function AddValue(valueType, name, amount)
 	Data:TriggerMessage("KombatMeters_Data_Updated", valueType, name, data[valueType][name])
 end
 
+function AddSkill(valueType, name, skill, amount)
+	if not skillData[valueType] then
+		skillData[valueType] = {}
+	end
+	if not skillData[valueType][name] then
+		skillData[valueType][name] = {}
+	end
+	if not skillData[valueType][name][skill] then
+		skillData[valueType][name][skill] = 0
+	end
+	skillData[valueType][name][skill] = skillData[valueType][name][skill] + amount
+end
 
 KombatMeters = Data
 
