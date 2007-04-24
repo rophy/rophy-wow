@@ -6,10 +6,10 @@
 ## SavedVariables: KombatStats_Skills
 ## OptionalDeps: Ace2, ParserLib, Tablet-2.0, Dewdrop-2.0
 
-Libs\AceLibrary\AceLibrary.lua
-Libs\Tablet-2.0\Tablet-2.0.lua
-Libs\Dewdrop-2.0\Dewdrop-2.0.lua
-Libs\ParserLib-1.1\ParserLib.lua
+# Libs\AceLibrary\AceLibrary.lua
+# Libs\Tablet-2.0\Tablet-2.0.lua
+# Libs\Dewdrop-2.0\Dewdrop-2.0.lua
+# Libs\ParserLib-1.1\ParserLib.lua
 
 KombatStats.lua
 localization.lua

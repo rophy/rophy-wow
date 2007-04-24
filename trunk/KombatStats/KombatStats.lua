@@ -282,7 +282,9 @@ function KombatStats.OnCombatEvent(event, info)
 		
 		if info.source == ParserLib_SELF then name = playerName else name = petName end
 		self:AddStats(name, category, info)
-		self:AddDPS(name, category, info.amount)
+		if not info.isSplit then
+			self:AddDPS(name, category, info.amount)
+		end
 
 	end
 	
@@ -293,7 +295,9 @@ function KombatStats.OnCombatEvent(event, info)
 			if info.victim == ParserLib_SELF then name = playerName else name = petName end
 			
 			self:AddStats(name, "defend", info)
-			self:AddDPS(name, "defend", info.amount)
+			if not info.isSplit then
+				self:AddDPS(name, "defend", info.amount)
+			end
 		end
 	end
 	
