@@ -225,8 +225,9 @@ local function assert(level,condition,message)
 end
 
 local function argcheck(value, num, ...)
-	assert(1, type(num) == "number",
-		string.format(L["BAD_ARGUMENT"], 2, "argcheck", "number", type(level)))
+	if type(num) ~= "number" then
+		error(L["BAD_ARGUMENT"]:format(2, "argcheck", "number", type(num)), 1)
+	end
 
 	for i=1,select("#", ...) do
 		if type(value) == select(i, ...) then return end
@@ -234,7 +235,7 @@ local function argcheck(value, num, ...)
 
 	local types = strjoin(", ", ...)
 	local name = string.match(debugstack(2,2,0), ": in function [`<](.-)['>]")
-	error(string.format(L["BAD_ARGUMENT"], num, name, types, type(value)), 3)
+	error(L["BAD_ARGUMENT"]:format(num, name, types, type(value)), 3)
 end
 
 local function safecall(func,...)

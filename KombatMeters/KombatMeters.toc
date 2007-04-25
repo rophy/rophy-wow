@@ -6,6 +6,7 @@
 
 ChatThrottleLib.lua
 Dongle.lua
+Libs\ParserLib\ParserLib.lua
 
 RaidUnits.lua
 Data.lua
