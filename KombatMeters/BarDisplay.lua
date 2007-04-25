@@ -78,12 +78,19 @@ end
 function BarDisplay:SetToNextShownValueType()
 	local dataTable = core:GetDataTable()
 	local shownValueType = core:GetShownValueType()
-	if dataTable and shownValueType then
-		local nextShownValueType = next(dataTable, shownValueType)
-		if not nextShownValueType then
-			nextShownValueType = next(dataTable)
-		end
-		core:SetShownValueType(nextShownValueType)
+	if not dataTable then
+		return
+	end
+	if not dataTable[shownValueType] then
+		shownValueType = next(dataTable)
+	else
+		shownValueType = next(dataTable, shownValueType)
+	end
+	if not shownValueType then
+		shownValueType = next(dataTable)
+	end
+	if shownValueType then
+		core:SetShownValueType(shownValueType)
 	end
 end
 
