@@ -103,7 +103,7 @@ function Data:GetDataTable(valueType)
 end
 
 function Data:GetSkillData(valueType, name)
-	return skillData[valueType][name]
+	return skillData[valueType] and skillData[valueType][name]
 end
 
 -- Iterate data unordered.

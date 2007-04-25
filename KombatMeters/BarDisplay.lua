@@ -10,6 +10,7 @@ BarDisplay = core:NewModule(moduleName)
 
 local StatusBar_OnEnter
 local StatusBar_OnLeave
+local Frame_OnMouseWheel
 
 function BarDisplay:Enable()
 	db = {
@@ -53,6 +54,7 @@ function BarDisplay:CreateFrame()
 	frame:SetPoint("CENTER", nil, "CENTER", 100, 0)
 	frame:SetBackdrop(backdrop)
 	frame:SetBackdropColor(unpack(bgColor))
+	frame:SetScript("OnMouseWheel", Frame_OnMouseWheel)
 	frame:Show()
 	
 	local titleFrame = CreateFrame("Button", nil, frame)
@@ -76,11 +78,13 @@ end
 function BarDisplay:SetToNextShownValueType()
 	local dataTable = core:GetDataTable()
 	local shownValueType = core:GetShownValueType()
-	local nextShownValueType = next(dataTable, shownValueType)
-	if not nextShownValueType then
-		nextShownValueType = next(dataTable)
+	if dataTable and shownValueType then
+		local nextShownValueType = next(dataTable, shownValueType)
+		if not nextShownValueType then
+			nextShownValueType = next(dataTable)
+		end
+		core:SetShownValueType(nextShownValueType)
 	end
-	core:SetShownValueType(nextShownValueType)
 end
 
 function BarDisplay:SetBarSize(size)
@@ -159,6 +163,15 @@ function BarDisplay:CreateBar()
 	
 	return bar
 end
+
+function Frame_OnMouseWheel(arg1)
+	if arg1 == 1 then
+		ChatFrame1:AddMessage("1!")
+	elseif arg == -1 then
+		ChatFrame1:AddMessage("-1!")
+	end
+end
+
 
 function StatusBar_OnEnter()
 	GameTooltip:SetOwner(this, "ANCHOR_CURSOR")
