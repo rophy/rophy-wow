@@ -191,6 +191,7 @@ end
 
 CombatEventHandlers["heal"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if info.amount then
+		local skill = info.skill
 		if source then
 			AddValue("HealDone", source, info.amount)
 			if sourceIsPet and settings.profile.mergePet then
@@ -207,11 +208,12 @@ end
 CombatEventHandlers["dispel"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if not info.isFailed then
 		if source then
+			local skill = info.skill
 			AddValue("Cleansing", source, 1)
 			if sourceIsPet and settings.profile.mergePet then
 				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
 			end
-			AddSkill("Cleansing", source, skill, info.amount)
+			AddSkill("Cleansing", source, skill, 1)
 		end
 	end
 end
