@@ -1,10 +1,12 @@
 local moduleName = "BarDisplay"
 local core = KombatMeters
 local bars = {}
-local db
 local BAR_WIDTH = 130
 local BAR_HEIGHT = 16
+local BAR_COUNT = 5
 local frame
+local barOffset = 0
+local db
 
 BarDisplay = core:NewModule(moduleName)
 
@@ -30,11 +32,16 @@ function BarDisplay:Enable()
 	self.bars = bars
 
 	self:RegisterMessage("KombatMeters_Data_Updated", "Refresh")
-	self:RegisterMessage("KombatMeters_Data_Cleared", "Refresh")
+	self:RegisterMessage("KombatMeters_Data_Cleared", "OnDataCleared")
 	self:RegisterMessage("KombatMeters_ShownValueType_Changed", "Refresh")
 	
 	self:Refresh()
 	
+end
+
+function BarDisplay:OnDataCleared()
+	barOffset = 0
+	self:Refresh()
 end
 
 function BarDisplay:CreateFrame()
@@ -49,11 +56,12 @@ function BarDisplay:CreateFrame()
 	}
 	frame = CreateFrame("Frame")
 	frame:SetWidth(BAR_WIDTH)
-	frame:SetHeight(BAR_HEIGHT+12)
+	frame:SetHeight( db.profile.barsize * BAR_HEIGHT + 12)
 	frame:SetMovable(true)
 	frame:SetPoint("CENTER", nil, "CENTER", 100, 0)
 	frame:SetBackdrop(backdrop)
 	frame:SetBackdropColor(unpack(bgColor))
+	frame:EnableMouseWheel(1)
 	frame:SetScript("OnMouseWheel", Frame_OnMouseWheel)
 	frame:Show()
 	
@@ -126,10 +134,14 @@ function BarDisplay:Refresh()
 	for i=dataSize+1, #bars do
 		bars[i]:Hide()
 	end
-	local frameHeight = dataSize * BAR_HEIGHT + 12
-	frame:SetHeight( ( frameHeight > 40 and frameHeight ) or 40 )
 	local maxValue = index[1] and data[index[1]]
-	for i, name in ipairs(index) do
+	
+	local count = db.profile.barsize
+	if #index < count then
+		count = #index
+	end
+	for i=1, count do
+		local name = index[i+barOffset]
 		local value = data[name]
 		if not bars[i] then
 			bars[i] = self:CreateBar()
@@ -171,12 +183,20 @@ function BarDisplay:CreateBar()
 	return bar
 end
 
-function Frame_OnMouseWheel(arg1)
-	if arg1 == 1 then
-		ChatFrame1:AddMessage("1!")
-	elseif arg == -1 then
-		ChatFrame1:AddMessage("-1!")
+
+
+function Frame_OnMouseWheel(frame,arg1)
+	local data = core:GetSortedDataIndexes(core:GetShownValueType())
+	if not data then return end
+	local size = #data
+	if size > db.profile.barsize then
+		if arg1 == 1 and barOffset > 0 then
+			barOffset = barOffset - 1
+		elseif arg1 == -1 and barOffset + db.profile.barsize < size then
+			barOffset = barOffset + 1
+		end
 	end
+	BarDisplay:Refresh()
 end
 
 
