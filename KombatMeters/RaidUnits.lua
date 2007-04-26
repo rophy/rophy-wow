@@ -84,33 +84,33 @@ function RaidUnits:Refresh()
 	for k in pairs(units) do
 		units[k] = nil
 	end
+	local name
 	local raidSize = GetNumRaidMembers()
 	for i=1, raidSize do
-		local name = UnitName("raid"..i)
+		name = UnitName("raid"..i)
 		if name then
 			units[name] = "raid"..i
 		end
 		name = UnitName("raid"..i.."pet")
-		if name then
+		if name and not units[name] then
 			units[name] = "raid"..i.."pet"
 		end
 	end
 	
 	local partySize = GetNumPartyMembers()
 	for i=1, partySize do
-		local name = UnitName("party"..i)
+		name = UnitName("party"..i)
 		if name then
 			units[name] = "party"..i
 		end
 		name = UnitName("party"..i.."pet")
-		if name then
+		if name and not units[name] then
 			units[name] = "party"..i.."pet"
 		end
 	end
-	name = UnitName("player")
-	units[name] = "player"
+	units[UnitName("player")] = "player"
 	name = UnitName("pet")
-	if name then
+	if name and not units[name] then
 		units[name] = "pet"
 	end
 	
