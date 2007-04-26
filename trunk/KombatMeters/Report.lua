@@ -7,7 +7,7 @@ local CT = ChatThrottleLib
 
 function Report:Enable()
 	local cmd = core.cmd
-	cmd:RegisterSlashHandler("report {s|p|r|g|h|w} [name|channel]", "report (.+) ?(.-)", function(chatType,channel) self:Report(chatType,channel) end)
+	cmd:RegisterSlashHandler("report {s|p|r|g|h|w} [name|channel]", "^report (%a+) ?(.-)$", function(chatType,channel) self:Report(chatType,channel) end)
 end
 
 function Report:Report(chatType,channel)
@@ -27,6 +27,10 @@ function Report:Report(chatType,channel)
 	if chatType == "s" then
 		chatType = "SAY"
 	elseif chatType == "h" then
+		if not channel or channel == "" then
+			self:Print("/km report h : missing channel name")
+			return
+		end
 		chatType = "CHANNEL"
 	elseif chatType == "g" then
 		chatType = "GUILD"
@@ -35,7 +39,14 @@ function Report:Report(chatType,channel)
 	elseif chatType == "r" then
 		chatType = "RAID"
 	elseif chatType == "w" then
+		if not channel or channel == "" then
+			self:Print("/km report w : missing player name")
+			return
+		end
 		chatType = "WHISPER"
+	else
+		-- unknown chatType
+		return
 	end
 	
 	
@@ -47,7 +58,7 @@ function Report:Report(chatType,channel)
 	local data = KombatMeters:GetDataTable(showType)
 	for i, name in ipairs(index) do
 		local value = data[name]
-		msg = string.format("#1: %s = %d", name, value)
+		msg = string.format("#%d: %s = %d", i, name, value)
 		total = total + value
 		CT:SendChatMessage("NORMAL", "KombatMeters_Report", msg, chatType, nil, channel)
 	end
