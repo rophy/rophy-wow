@@ -191,16 +191,33 @@ end
 
 CombatEventHandlers["heal"] = function(event, info, source, victim, sourceIsPet, victimIsPet, sourceUnitid, victimUnitid)
 	if info.amount then
+		local overHeal = 0
 		local skill = info.skill
 		if source then
-			AddValue("HealDone", source, info.amount)
 			if sourceIsPet and settings.profile.mergePet then
 				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
 			end
-			AddSkill("HealDone", source, skill, info.amount)
+			if victimUnitid then
+				local healthMissing = UnitHealthMax(victimUnitid) - UnitHealth(victimUnitid)
+				overHeal = info.amount - healthMissing
+				if overHeal > 0 then
+					AddValue("OverHealDone", source, overHeal)
+					AddSkill("OverHealDone", source, skill, overHeal)
+				end
+				AddValue("HealDone", source, info.amount - overHeal)
+				AddSkill("HealDone", source, skill, info.amount - overHeal)
+			else
+				AddValue("HealDone", source, info.amount)
+				AddSkill("HealDone", source, skill, info.amount)
+			end
 		end
 		if victim then
-			AddValue("HealTaken", victim, info.amount)
+			if overHeal > 0 then
+				AddValue("HealTaken", victim, info.amount - overHeal)
+				AddValue("OverHealTaken", victim, overHeal)
+			else
+				AddValue("HealTaken", victim, info.amount)
+			end
 		end
 	end
 end
