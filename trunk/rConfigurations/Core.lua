@@ -158,5 +158,18 @@ configurations["ItemRack"] = {
 	end
 }
 
+configurations["Epeen"] = {
+	func = function()
+		if EpeenTarget_KoSButton then 
+			EpeenTarget_KoSButton:ClearAllPoints()
+			EpeenTarget_FriendlyButton:ClearAllPoints()
+			EpeenTarget_KoSFriendlyFrame:ClearAllPoints()
+			EpeenTarget_KoSButton:SetPoint("TOPLEFT", "TargetFrame", "TOPLEFT")
+			EpeenTarget_FriendlyButton:SetPoint("TOPLEFT", EpeenTarget_KoSButton, "TOPRIGHT")
+			EpeenTarget_KoSFriendlyFrame:SetPoint("BOTTOMRIGHT", "TargetFrame", "TOPRIGHT", -55, -20)
+		end
+	end,
+ }
+
 
 OnLoad()
