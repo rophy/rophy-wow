@@ -17,7 +17,7 @@
 		
 -----------------------------------------------------------------------------]]
 
-local version = tonumber(string.match("$Revision: 87 $", "(%d+)") or 1)
+local version = tonumber(string.match("$Revision$", "(%d+)") or 1)
 
 local RaidUnits
 
