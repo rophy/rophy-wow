@@ -63,6 +63,7 @@ function OnLoad()
 	frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	RaidUnits.units = units
 	RaidUnits.frame = frame
+	RaidUnits.version = version
 	_G["RaidUnits"] = RaidUnits
 end
 
