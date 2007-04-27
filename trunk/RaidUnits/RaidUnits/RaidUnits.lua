@@ -24,6 +24,10 @@ local RaidUnits
 local frame
 local units
 local timeToRefresh
+local AddName
+local OnLoad
+local OnEvent
+local OnUpdate
 
 if _G.RaidUnits then
 	local oldLib = _G.RaidUnits
@@ -50,6 +54,7 @@ function OnLoad()
 	} )
 	
 	units = {}
+	
 	if not frame then
 		frame = CreateFrame("Frame")
 	end
@@ -75,9 +80,24 @@ end
 function OnUpdate(this,elapsed)
 	timeToRefresh = timeToRefresh + elapsed
 	if timeToRefresh > 0.2 then
+		frame:Hide()
 		RaidUnits:Refresh()
-		this:Hide()
+	end
+end
+
+function AddName(unit,overwrite)
+	local needCheckAgain = false
+	local name = UnitName(unit)
+	if name and ( overwrite or not units[name] ) then
+		if name == UNKNOWN then
+			needCheckAgain = true
+		else
+			units[name] = unit
+		end
+	end
+	if needCheckAgain then
 		timeToRefresh = 0
+		frame:Show()
 	end
 end
 
@@ -88,33 +108,17 @@ function RaidUnits:Refresh()
 	local name
 	local raidSize = GetNumRaidMembers()
 	for i=1, raidSize do
-		name = UnitName("raid"..i)
-		if name then
-			units[name] = "raid"..i
-		end
-		name = UnitName("raid"..i.."pet")
-		if name and not units[name] then
-			units[name] = "raid"..i.."pet"
-		end
+		AddName("raid"..i,true)
+		AddName("raid"..i.."pet")
 	end
 	
 	local partySize = GetNumPartyMembers()
 	for i=1, partySize do
-		name = UnitName("party"..i)
-		if name then
-			units[name] = "party"..i
-		end
-		name = UnitName("party"..i.."pet")
-		if name and not units[name] then
-			units[name] = "party"..i.."pet"
-		end
+		AddName("party"..i,true)
+		AddName("party"..i.."pet")
 	end
-	units[UnitName("player")] = "player"
-	name = UnitName("pet")
-	if name and not units[name] then
-		units[name] = "pet"
-	end
-	
+	AddName("player",true)
+	AddName("pet")
 end
 
 function RaidUnits:GetUnitID(name)
