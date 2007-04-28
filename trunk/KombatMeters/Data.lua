@@ -19,7 +19,6 @@ local SortData
 function Data:Enable()
 	settings = self:InitializeDB("KombatMetersData", {
 		profile = {
-			showType = "DamageDone",
 			onlyRaid = true,
 			mergePet = false,
 		}
@@ -110,16 +109,6 @@ end
 function Data:IterateData(valueType)
 	return next, data[valueType] or {}
 end
-
-function Data:GetShownValueType()
-	return settings.profile.showType
-end
-
-function Data:SetShownValueType(valueType)
-	settings.profile.showType = valueType
-	Data:TriggerMessage("KombatMeters_ShownValueType_Changed", valueType)
-end
-
 
 --[[
 	1. Change ParserLib_SELF to player name.

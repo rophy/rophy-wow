@@ -1,6 +1,6 @@
 ## Interface: 20003
 ## Title: KombatMeters
-## OptionalDependencies: Dongle, ParserLib, Ace2, TabletLib
+## OptionalDependencies: Dongle, ParserLib, Ace2, TabletLib, RaidUnits
 ## SavedVariables: KombatMetersData
 ## SavedVariablesPerCharacter: KombatMetersDataPerChar
 

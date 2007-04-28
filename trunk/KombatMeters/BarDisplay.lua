@@ -7,33 +7,30 @@ local BAR_COUNT = 5
 local frame
 local barOffset = 0
 local db
+local timeToNextUpdate = 0
 
 BarDisplay = core:NewModule(moduleName)
 
 local StatusBar_OnEnter
 local StatusBar_OnLeave
 local Frame_OnMouseWheel
+local Frame_OnUpdate
 
 function BarDisplay:Enable()
-	db = {
+	db = core.db:RegisterNamespace(moduleName)
+	
+	db:RegisterDefaults({
 		["profile"] = {
 			barsize = 5,
-		}
-	}
-	--[[
-	db = core.db:RegisterNamespace(moduleName, {
-		["profile"] = {
-			barsize = 5,
+			shown = 'DamageDone',
+			refresh = 5
 		}
 	} )
-	]]
 
 	self:CreateFrame()
 	self.bars = bars
 
-	self:RegisterMessage("KombatMeters_Data_Updated", "Refresh")
 	self:RegisterMessage("KombatMeters_Data_Cleared", "OnDataCleared")
-	self:RegisterMessage("KombatMeters_ShownValueType_Changed", "Refresh")
 	
 	self:Refresh()
 	
@@ -63,6 +60,7 @@ function BarDisplay:CreateFrame()
 	frame:SetBackdropColor(unpack(bgColor))
 	frame:EnableMouseWheel(1)
 	frame:SetScript("OnMouseWheel", Frame_OnMouseWheel)
+	frame:SetScript("OnUpdate", Frame_OnUpdate)
 	frame:Show()
 	
 	local titleFrame = CreateFrame("Button", nil, frame)
@@ -85,7 +83,7 @@ end
 
 function BarDisplay:SetToNextShownValueType()
 	local dataTable = core:GetDataTable()
-	local shownValueType = core:GetShownValueType()
+	local shownValueType = db.profile.shown
 	if not dataTable then
 		return
 	end
@@ -98,8 +96,9 @@ function BarDisplay:SetToNextShownValueType()
 		shownValueType = next(dataTable)
 	end
 	if shownValueType then
-		core:SetShownValueType(shownValueType)
+		db.profile.shown = shownValueType
 	end
+	self:Refresh()
 end
 
 function BarDisplay:SetBarSize(size)
@@ -121,7 +120,7 @@ function BarDisplay:GetBarSize()
 end
 
 function BarDisplay:Refresh()
-	local shownValue = core:GetShownValueType()
+	local shownValue = db.profile.shown
 	if not shownValue then
 		return
 	end
@@ -130,6 +129,10 @@ function BarDisplay:Refresh()
 	
 	local index = core:GetSortedDataIndexes(shownValue)
 	local data = core:GetDataTable(shownValue)
+	if not index or not data then
+		return 
+	end
+	
 	local dataSize = #index
 	for i=dataSize+1, #bars do
 		bars[i]:Hide()
@@ -183,10 +186,18 @@ function BarDisplay:CreateBar()
 	return bar
 end
 
+function Frame_OnUpdate(frame,eclapsed)
+	timeToNextUpdate = timeToNextUpdate + eclapsed
+	if timeToNextUpdate > db.profile.refresh then
+		timeToNextUpdate = 0
+		BarDisplay:Refresh()
+	end
+end
+
 
 
 function Frame_OnMouseWheel(frame,arg1)
-	local data = core:GetSortedDataIndexes(core:GetShownValueType())
+	local data = core:GetSortedDataIndexes(db.profile.shown)
 	if not data then return end
 	local size = #data
 	if size > db.profile.barsize then
@@ -203,7 +214,7 @@ end
 function StatusBar_OnEnter()
 	GameTooltip:SetOwner(this, "ANCHOR_CURSOR")
 	GameTooltip:AddDoubleLine(this.name or "None", this.value or 0, 0, 1, 0, 1, 1, 0)
-	local valueType = core:GetShownValueType()
+	local valueType = db.profile.shown
 	local skillData = core:GetSkillData(valueType, this.name)
 	local total = 0
 	if skillData then
