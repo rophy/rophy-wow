@@ -7,11 +7,11 @@ local CT = ChatThrottleLib
 
 function Report:Enable()
 	local cmd = core.cmd
-	cmd:RegisterSlashHandler("report {s|p|r|g|h|w} [name|channel]", "^report (%a+) ?(.-)$", function(chatType,channel) self:Report(chatType,channel) end)
+	cmd:RegisterSlashHandler("report valueType {s|p|r|g|h|w} [name|channel]", "^report (%a+) (%a+) ?(.-)$", function(valueType,chatType,channel) self:Report(valueType,chatType,channel) end)
 end
 
-function Report:Report(chatType,channel)
-	local showType = KombatMeters:GetShownValueType()
+function Report:Report(valueType,chatType,channel)
+	local showType = valueType
 	if not showType then
 		self:Print("Nothing to report.")
 		return
@@ -56,6 +56,10 @@ function Report:Report(chatType,channel)
 	CT:SendChatMessage("NORMAL", "KombatMeters_Report", msg, chatType, nil, channel)
 	local index = KombatMeters:GetSortedDataIndexes(showType)
 	local data = KombatMeters:GetDataTable(showType)
+	if not index or not data then
+		self:Print("Value type " .. tostring(valueType) .. " not found.")
+		return
+	end
 	for i, name in ipairs(index) do
 		local value = data[name]
 		msg = string.format("#%d: %s = %d", i, name, value)
