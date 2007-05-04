@@ -1,12 +1,11 @@
 ## Interface: 20003
-## LoadOnDemand: 1
 
 ## Title: rDynRep
 ## Notes: Rophy's Dynamic Reputation Bar.
 ## Author: Rophy
-## OptionalDeps: ParserLib
+## Dependencies: ParserLib
 
 ## X-Category: Interface Enhancements
 
-ParserLib\ParserLib.lua
+# ParserLib\ParserLib.lua
 rDynRep.lua

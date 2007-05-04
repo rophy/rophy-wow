@@ -22,5 +22,5 @@ function rDynRep.OnRepEvent(event, info)
 	end
 end
 
-parser:RegisterEvent(CHAT_MSG_COMBAT_FACTION_CHANGE, rDynRep.OnRepEvent)
+parser:RegisterEvent("rDynRep", "CHAT_MSG_COMBAT_FACTION_CHANGE", rDynRep.OnRepEvent)
 
