@@ -1046,6 +1046,8 @@ function rMCP:SetDropDown_Populate(level)
 		info.keepShownOnClick = 1
 		info.hasArrow = 1
 		info.notCheckable = 1
+		info.tooltipTitle = setName
+		info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
 		UIDropDownMenu_AddButton(info)
 		
 		-- Default set.
@@ -1055,6 +1057,8 @@ function rMCP:SetDropDown_Populate(level)
 		info.func = OnClickSet
 		info.notCheckable = 1
 		info.keepShownOnClick = 1
+		info.tooltipTitle = setName
+		info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
 		UIDropDownMenu_AddButton(info)
 	
 	elseif level == 2 then
