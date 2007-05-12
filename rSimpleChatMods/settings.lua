@@ -17,7 +17,7 @@ local scmSettings = {
 --		GUILD = 1,
 --		OFFICER = 1,
 --		RAID = 1,
---		RAID_WARNING = 1,
+		RAID_WARNING = 1,
 --		BATTLEGROUND = 1,
 		CHANNEL = 1,
 --		EMOTE = 0,	
@@ -50,7 +50,7 @@ function scmSettings:Enable()
 	-- Sticky.
 	
 	for channel, flag in pairs(self.sticky) do
-		ChatTypeInfo[channel].sticky = flag			
+		ChatTypeInfo[channel].sticky = flag
 	end
 	
 end
