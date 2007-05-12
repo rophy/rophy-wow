@@ -3,9 +3,9 @@
 ## Notes: Rophy's version of SimpleChatMods.
 ## X-Credits: Rabiit
 ## Author: Rophy
-## Version: 1.0.31
+## Version: 1.1.31
 
-buttons.lua
+#buttons.lua
 channelnames.lua
 chatlink.lua
 scroll.lua
