@@ -192,13 +192,12 @@ CombatEventHandlers["heal"] = function(event, info, source, victim, sourceIsPet,
 				if overHeal > 0 then
 					AddValue("OverHealDone", source, overHeal)
 					AddSkill("OverHealDone", source, skill, overHeal)
+				else
+					overHeal = 0
 				end
-				AddValue("HealDone", source, info.amount - overHeal)
-				AddSkill("HealDone", source, skill, info.amount - overHeal)
-			else
-				AddValue("HealDone", source, info.amount)
-				AddSkill("HealDone", source, skill, info.amount)
 			end
+			AddValue("HealDone", source, info.amount - overHeal)
+			AddSkill("HealDone", source, skill, info.amount - overHeal)
 		end
 		if victim then
 			if overHeal > 0 then
