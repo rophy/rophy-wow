@@ -1,0 +1,8 @@
+## Interface: 20100
+# Title: rOmniCC
+
+## Notes: Rophy modified OmniCC.
+
+## Author: Tuller
+
+basic.lua
