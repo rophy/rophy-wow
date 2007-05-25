@@ -145,6 +145,8 @@ local L = setmetatable({}, {
 local enabledList -- Used to prevent recursive loop in EnableAddon.
 local GetAddOnMemoryUsage = _G["GetAddOnMemoryUsage"]
 local GetAddOnCPUUsage = _G["GetAddOnCPUUsage"]
+local scriptProfile = GetAddOnCPUUsage and GetCVar("scriptProfile") == "1"
+
 
 local function ParseVersion(version)
 	if type(version) == "string" then
@@ -530,7 +532,7 @@ if GetAddOnMemoryUsage then
 	end
 end
 
-if GetAddOnCPUUsage then
+if scriptProfile then
 	addonListBuilders["CPU"] = function()
 		UpdateAddOnCPUUsage()
 		for k in pairs(masterAddonList) do
@@ -1153,37 +1155,41 @@ function rMCP:ShowTooltip(index)
 		 GameTooltip:AddLine(depLine)
 	end
 	
-	if GetAddOnMemoryUsage then
-		local mem = GetAddOnMemoryUsage(index)
-		if mem then
-			local unit
-			if mem > 1000 then
-				mem = mem / 1000
-				unit = "MB"
-			else
-				unit = "KB"
+	if enabled then
+		if GetAddOnMemoryUsage then
+			local mem = GetAddOnMemoryUsage(index)
+			if mem then
+				local unit
+				if mem > 1000 then
+					mem = mem / 1000
+					unit = "MB"
+				else
+					unit = "KB"
+				end
+				GameTooltip:AddLine(string.format(L["Memory: %.3f%s"], mem, unit), 1, 1, 0, 1)
 			end
-			GameTooltip:AddLine(string.format(L["Memory: %.3f%s"], mem, unit), 1, 1, 0, 1)
+		end
+		
+		if scriptProfile then
+			local cpu = GetAddOnCPUUsage(index)
+			if cpu then
+				local unit
+				if cpu > 3600000 then
+					cpu = cpu / 3600000
+					unit = "h"
+				elseif cpu > 60000 then
+					cpu = cpu / 60000
+					unit = "m"
+				elseif cpu > 1000 then
+					cpu = cpu / 1000
+					unit = "s"
+				else
+					unit = "ms"
+				end
+				GameTooltip:AddLine(string.format(L["CPU: %.3f%s"], cpu, unit), 1, 1, 0, 1)
+			end
 		end
 	end
-	
-	if GetAddOnCPUUsage then
-		local cpu = GetAddOnCPUUsage(index)
-		if cpu then
-			local unit
-			if cpu > 3600 then
-				cpu = cpu / 3600
-				unit = "h"
-			elseif cpu > 60 then
-				cpu = cpu / 60
-				unit = "m"
-			else
-				unit = "s"
-			end
-			GameTooltip:AddLine(string.format(L["CPU: %.3f%s"], cpu, unit), 1, 1, 0, 1)
-		end
-	end
-	
 	GameTooltip:Show()
 
 end
