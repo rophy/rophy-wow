@@ -1,4 +1,6 @@
 local VERSION = "$Revision$"
+
+
 local statusBar
 local valueText
 
@@ -23,7 +25,7 @@ local function OnUpdate(frame, elapsed)
 end
 
 -- StatusBar.
-statusBar = CreateFrame("StatusBar", nil, nil)
+statusBar = CreateFrame("StatusBar", "rEnergyWatchStatusBar", nil)
 statusBar:SetMovable(true)
 statusBar:EnableMouse(true)
 statusBar:SetScript("OnMouseDown", function(this, arg1)
