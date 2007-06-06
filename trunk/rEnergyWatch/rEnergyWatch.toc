@@ -2,7 +2,6 @@
 ## Title: rEnergyWatch
 ## Notes: Rophy's modification of EnergyWatch v2.
 ## Author: Rophy
-## Version: 2.0
 ## X-Category: Combat
 
 ## SavedVariables: EnergyWatch_Save
