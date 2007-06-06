@@ -1,44 +1,56 @@
-local frame
+local VERSION = "$Revision$"
 local statusBar
 local valueText
 
-local GetTime = GetTime
 local UnitMana = UnitMana
 
 local textFormat = "%.1f"
-local prevEnergy = 0
 local duration = 2
-local nextTick = 0
 
+local remain = duration
+local prevEnergy = 0
 
-local function OnUpdate()
-
+local function OnUpdate(frame, elapsed)
+	remain = remain - elapsed
 	local currEnergy = UnitMana("player")
-	local timer = GetTime()
-	local remain
-	
-	
-	if currEnergy > prevEnergy or timer >= nextTick then
+	if currEnergy > prevEnergy or remain < 0 then
 		remain = duration
 		prevEnergy = currEnergy
-		nextTick = timer + duration
-	else
-		if prevEnergy ~= currEnergy then
-			prevEnergy = currEnergy
-		end
-		remain = nextTick - timer
 	end
-	
+	prevEnergy = currEnergy
 	statusBar:SetValue(duration-remain)
 	valueText:SetText(textFormat:format(remain))
-	
 end
 
-function rEnergyWatch_OnLoad()
-	frame = EnergyWatchBar
-	statusBar = EnergyWatchFrameStatusBar
-	valueText = EnergyWatchText
-	
-	statusBar:SetMinMaxValues(0, 2)
-	frame:SetScript("OnUpdate", OnUpdate)
-end
+-- StatusBar.
+statusBar = CreateFrame("StatusBar", nil, nil)
+statusBar:SetMovable(true)
+statusBar:EnableMouse(true)
+statusBar:SetScript("OnMouseDown", function(this, arg1)
+	if( arg1 == "RightButton" and IsAltKeyDown() ) then
+		this:StartMoving();
+	end
+end )
+statusBar:SetScript("OnMouseUp", function(this, arg1)
+	if( arg1 == "RightButton" ) then
+		this:StopMovingOrSizing();
+	end
+end )
+statusBar:SetMinMaxValues(0, duration)
+statusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
+statusBar:SetStatusBarColor(1, 1, 0)
+statusBar:SetWidth(90)
+statusBar:SetHeight(8)
+statusBar:SetPoint("CENTER")
+-- Timer FontString.
+valueText = statusBar:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+valueText:SetWidth(30)
+valueText:SetHeight(8)
+valueText:SetPoint("TOPLEFT", statusBar, "TOPRIGHT", 2, 0)
+-- Border Texture.
+local texture = statusBar:CreateTexture(nil, "OVERLAY")
+texture:SetWidth(120)
+texture:SetHeight(30)
+texture:SetPoint("CENTER")
+texture:SetTexture("Interface\\CastingBar\\UI-CastingBar-Border")
+statusBar:SetScript("OnUpdate", OnUpdate)
