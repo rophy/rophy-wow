@@ -1,3 +1,5 @@
+local dewdrop = AceLibrary("Dewdrop-2.0")
+
 
 -- Mini-Compost --
 local cache = setmetatable({}, {__mode='k'})
@@ -19,10 +21,12 @@ local function recycle(t)
 	return t
 end
 
-local UPDATE_DELAY = 2
 
+local UPDATE_DELAY = 2
+local ITEM_LIST_FIELD_SIZE = 4
 
 SimpleBankState = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceConsole-2.0")
+
 
 -- SimpleBankState.debug = true;
 
@@ -36,34 +40,169 @@ local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
 
 
+local tab
+local searchFrame
+local itemIndexMap = {}
+local itemList = {}
+SimpleBankState.itemList = itemList
 function SimpleBankState:OnInitialize()
 	
-	if not SBS_Data then 	
-		SBS_Data = {
-			version = self.version		
-		}		
-	end
+	-- Create the main frame.
+	searchFrame = CreateFrame("Frame")
+	searchFrame:SetWidth(485)
+	searchFrame:SetHeight(485)
+	searchFrame:SetPoint("CENTER")
+	searchFrame:SetBackdrop({
+		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+		edgeFile="Interface/DialogFrame/UI-DialogBox-Border",
+		tile=true,
+		tileSize=32,
+		edgeSize=32,
+		insets = { left=11, right=12, top=12, bottom=11 },
+	})
 	
-	self.data = SBS_Data;
+	local frame, fontString, texture
+	-- Header frame.
+	frame = CreateFrame("Frame", nil, searchFrame, "OptionFrameBoxTemplate")
+	searchFrame.headerFrame = frame
+	frame:SetWidth(365)
+	frame:SetHeight(30)
+	frame:SetPoint("BOTTOM", searchFrame, "TOP", 0, -5)
+	frame:SetBackdropColor(0.4, 0.4, 0.4)
+	fontString = frame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
+	fontString:SetPoint("CENTER")
+	fontString:SetText("SimpleBankState")
 	
-	if not self.data[realm]  then
-		self.data[realm] = {};
-	end
+	-- Close Button.
+	frame = CreateFrame("Button", nil, searchFrame, "UIPanelCloseButton")
+	searchFrame.closeButton = frame
+	--frame:SetTopLevel(true)
+	frame:SetPoint("CENTER", searchFrame.headerFrame, "RIGHT", -17, 0)
 	
-	if not self.data[realm][me]  then
-		self.data[realm][me] = {};
-	end
+	-- Rarity Header.
+	frame = CreateFrame("Button", nil, searchFrame)
+	frame:SetWidth(50)
+	frame:SetHeight(20)
+	frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 90, -12)
+	frame:SetTextFontObject("GameFontNormal")
+	frame:SetText("Rarity")
+	dewdrop:Register(frame, 
+		'children',  SimpleBankState.RarityDropDown,
+		'point', "TOPLEFT",
+		'relativePoint', "BOTTOMLEFT"
+	)
+
+
 	
-	if self.data.version ~= self.version then
-		self:UpdateVersion();
+	-- Search Box.
+	frame = CreateFrame("EditBox", nil, searchFrame)
+	searchFrame.editBox = frame
+	frame:SetFontObject("ChatFontNormal")
+	frame:SetAutoFocus(false)
+	frame:ClearFocus()
+	frame:SetMaxLetters(256)
+	frame:SetWidth(180)
+	frame:SetHeight(20)
+	frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 90, 14)
+	frame:SetScript("OnEscapePressed", function(this) this:ClearFocus() end )
+	frame:SetScript("OnEnterPressed", function(this) SimpleBankState:SearchItem2() end )
+	texture = frame:CreateTexture(nil, "BACKGROUND")
+	frame.textureLeft = texture
+	texture:SetTexture("Interface\\Common\\Common-Input-Border")
+	texture:SetWidth(8)
+	texture:SetHeight(20)
+	texture:SetPoint("TOPLEFT", frame, "TOPLEFT", -11, 2)
+	texture:SetTexCoord(0, 0.0625, 0, 0.625)
+	texture = frame:CreateTexture(nil, "BACKGROUND")
+	frame.textureMiddle = texture
+	texture:SetTexture("Interface\\Common\\Common-Input-Border")
+	texture:SetWidth(195)
+	texture:SetHeight(20)
+	texture:SetPoint("LEFT", frame.textureLeft, "RIGHT")
+	texture:SetTexCoord(0.0625, 0.9375, 0, 0.625)
+	texture = frame:CreateTexture(nil, "BACKGROUND")
+	frame.textureRight = texture
+	texture:SetTexture("Interface\\Common\\Common-Input-Border")
+	texture:SetWidth(8)
+	texture:SetHeight(20)
+	texture:SetPoint("LEFT", frame.textureMiddle, "RIGHT")
+	texture:SetTexCoord(0.0625, 0.9375, 0, 0.625)
+	
+	tab = DongleStub("Tabulous-1.0"):Create(
+	'rows', 15,
+	'columns', 7,
+	'header1text', "Item",
+	'header2text', "Count",
+	'header3text', "Owner",
+	'header4text', "BagID",
+	'header5text', "Type",
+	'header6text', "SubType",
+	'header7text', "EquipLoc",
+	'columnWidth1', 200,
+	'onClickRow', self.OnClickRow,
+	'onEnterRow', self.OnMouseOver,
+	'onLeaveRow', self.OnLeaveRow,
+	'onInitHeader', function(column, button, fontString)
+		if column == 3 then
+			dewdrop:Register(button, 
+				'children',  SimpleBankState.PlayerDropDown,
+				'point', "TOPLEFT",
+				'relativePoint', "BOTTOMLEFT"
+			)
+		elseif column == 4 then
+			dewdrop:Register(button, 
+				'children',  SimpleBankState.BagTypeDropDown,
+				'point', "TOPLEFT",
+				'relativePoint', "BOTTOMLEFT"
+			)
+		end
+
+		button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+		button:SetScript("OnClick", function(button, arg1)
+			if arg1 == "LeftButton" then
+				self:OnLeftClickHeaderButton(column)
+			elseif arg1 == "RightButton" then
+--				self:OnRightClickHeaderButton(column)
+			end
+		end)
+	end,
+	'onInitRow', function(frame)
+		frame:SetHighlightTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
+		frame:GetHighlightTexture():SetTexCoord(0,1.0,0,0.578125)
 	end
 
-	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
-	self:RegisterEvent("BAG_UPDATE")
-	self:RegisterEvent("BANKFRAME_CLOSED")
-	self:RegisterEvent("BANKFRAME_OPENED")
-	self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
-	self:RegisterEvent("MAIL_INBOX_UPDATE")
+
+
+	--[[
+	,'backdrop', {
+		bgFile="Interface\\Tooltips\\UI-Tooltip-Background",
+		edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
+		tile=true,
+		tileSize=16,
+		edgeSize=16,
+		insets = { left=5, right=4, top=5, bottom=5 },
+	},
+	'backdropColorR', 0.3,
+	'backdropColorG', 0.3,
+	'backdropColorB', 0.3
+	]]
+	)
+
+
+	tab:SetValueChangeFunction( function(offset) SimpleBankState:OnValueChange(offset) end )
+	
+	frame = tab:GetFrame()
+	
+	searchFrame:SetHeight(frame:GetHeight()+ 30 + searchFrame.editBox:GetHeight())
+	searchFrame:SetWidth(frame:GetWidth()+ 24 )
+	frame:SetParent(searchFrame)
+	frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 12, -12)
+	frame:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 42 )
+	frame:Show()
+
+	self.tab = tab
+
+
 	
 	self.filter = {} 
 	
@@ -87,75 +226,50 @@ function SimpleBankState:OnInitialize()
 	end
 	
 	table.insert(UISpecialFrames, "SBS_Frame")
-	
-	self:ScheduleRepeatingEvent(self.OnUpdate, UPDATE_DELAY, self)
 
-	self.pendingBags = {}
+	
 	
 
 end
 
-function SimpleBankState:UNIT_INVENTORY_CHANGED(unitid)
-	self:Debug("UNIT_INVENTORY_CHANGED")
-	if unitid == 'player' then
-		self.scanEquip = true
-	end
-end
-
-function SimpleBankState:BAG_UPDATE(bagID)
-	self:Debug("BAG_UPDATE")
-	self.scanBag = bagID
-	self.pendingBags[bagID] = true
-end
-
-function SimpleBankState:BANKFRAME_OPENED()
-	self:Debug("BANKFRAME_OPENED")
-	self.atBank = true
-	self.scanBank = true
-end
-
-function SimpleBankState:BANKFRAME_CLOSED()
-	self:Debug("BANKFRAME_CLOSED")
-	self.atBank = false
-end
-
-function SimpleBankState:PLAYERBANKSLOTS_CHANGED()
-	self:Debug("PLAYERBANKSLOTS_CHANGED")
-	self.scanBag = BANK_CONTAINER
-end
-
-function SimpleBankState:MAIL_INBOX_UPDATE()
-	self:Debug("MAIL_INBOX_UPDATE")
-	self.scanMail = true
-end
-
-
-function SimpleBankState:OnUpdate()
-
-	if self.scanMail then
-		self:SaveMailboxData()
-		self.scanMail = false
-	end
+function SimpleBankState:OnShowMenu() 
+	local cat = tablet:AddCategory(
+		'columns', 4,
+		'text', "Item",
+		'text2', "Count",
+		'text3', "Owner",
+		'text4', "BagID"
+	)
 	
-	if self.scanBag then
-		for bagID in pairs(self.pendingBags) do
-			self:SaveBagData(bagID)
-			self.pendingBags[bagID] = nil
+	if self.itemListSize then
+		for i=0, 20, 1 do
+			local idx = i * ITEM_LIST_FIELD_SIZE + 1
+			local itemLink = self.itemList[idx]
+			local itemCount = self.itemList[idx+1]
+			local playerName = self.itemList[idx+2]
+			local bagID = self.itemList[idx+3]
+			cat:AddLine(
+				'text', itemLink,
+				'text2', itemCount,
+				'text3', playerName,
+				'text4', bagID
+			)
 		end
-		self.scanBag = false
 	end
-	
-	if self.scanEquip then
-		self:SaveEquipmentData()
-		self.scanEquip = false
-	end
-	
-	if self.scanBank then
-		self:SaveBankData()
-		self.scanBank = false
-	end
-	
+
 end
+
+function SimpleBankState:OnLeftClickHeaderButton(column)
+	ChatFrame1:AddMessage(column)
+end
+
+function SimpleBankState:OnRightClickHeaderButton(column)
+	local newWidth = self.tab:HideColumn(column)
+	searchFrame:SetWidth(newWidth+24)
+end
+
+
+
 
 
 
@@ -169,192 +283,12 @@ end
 --------------------------
 
 
---save all bank data about the current player
-function SimpleBankState:SaveBankData()
-	self:Debug("Scanning bank...")
-	
-	self:SaveBagData(BANK_CONTAINER)
-	local bagID;
-	for bagID = 5, 10, 1 do
-		self:SaveBagData(bagID)
-	end
-end
-
---saves all the data about the current player's bag
-function SimpleBankState:SaveBagData(bagID)
-
-	--don't save bank data unless you're at the bank
-	if( self:IsBankBag(bagID) and not self.atBank ) then
-		return;
-	end
-
-	self:Debug("Scanning bag", bagID, "...")
-	
-	local size;
-	if(bagID == KEYRING_CONTAINER) then
-		size = GetKeyRingSize();
-	else
-		size = GetContainerNumSlots(bagID);
-	end
-	
-	if(size > 0) then
-		local itemID, count;
-		
-		if self.data[realm][me][bagID] then
-			self.data[realm][me][bagID] = recycle(self.data[realm][me][bagID]);
-		else
-			self.data[realm][me][bagID] = acquire();
-		end
-
-		--save all item info
-		for slot = 1, size, 1 do
-			itemID = self:ToID( GetContainerItemLink(bagID, slot) );
-			if itemID then
-				_, count = GetContainerItemInfo(bagID, slot);
-				table.insert(self.data[realm][me][bagID], itemID);
-				table.insert(self.data[realm][me][bagID], count);			
-			end
-		end
-		
-	else
-		if self.data[realm][me][bagID] then
-			reclaim(self.data[realm][me][bagID])
-		end
-		self.data[realm][me][bagID] = nil;		
-	end
-end
-
-function SimpleBankState:SaveMailboxData()
-	self:Debug("Scanning mailbox...")
-	
-	local size = GetInboxNumItems();
-	if size > 0 then
-		if self.data[realm][me][MAIL_ID] then
-			self.data[realm][me][MAIL_ID] = recycle(self.data[realm][me][MAIL_ID]);
-		else
-			self.data[realm][me][MAIL_ID] = acquire();
-		end
-		
-		for i=1, size, 1 do
-			local link = GetInboxItemLink(i)
-			if link then
-				local name, _, quantity, quality = GetInboxItem(i);
-				link = self:ToID(link)
-				table.insert(self.data[realm][me][MAIL_ID], link);
-				table.insert(self.data[realm][me][MAIL_ID], quantity);
-			end
-		end
-	else
-		
-		if self.data[realm][me][MAIL_ID] then
-			recycle(self.data[realm][me][MAIL_ID])
-		end
-		
-		self.data[realm][me][MAIL_ID] = nil
-		
-	end
-	
-end
-
-function SimpleBankState:SaveEquipmentData()
-
-	self:Debug("Scanning equipments...")
-	
-	if not self.equipmentSlots then
-		local inventorySlotNames = {
-			"HeadSlot",
-			"NeckSlot" ,
-			"ShoulderSlot" ,
-			"BackSlot" ,
-			"ChestSlot" ,
-			"ShirtSlot" ,
-			"TabardSlot" ,
-			"WristSlot" ,
-			"HandsSlot" ,
-			"WaistSlot" ,
-			"LegsSlot" ,
-			"FeetSlot" ,
-			"Finger0Slot" ,
-			"Finger1Slot" ,
-			"Trinket0Slot" ,
-			"Trinket1Slot" ,
-			"MainHandSlot" ,
-			"SecondaryHandSlot" ,
-			"RangedSlot" ,
-			"AmmoSlot" ,
-		}
-		
-		local invSlotID;
-		local slots = {};
-		
-		for i, inventorySlotName in pairs(inventorySlotNames) do
-			invSlotID = GetInventorySlotInfo(inventorySlotName);
-			table.insert(slots, invSlotID);
-		end
-		
-		self.equipmentSlots = slots
-	end
-
-	local itemID, count;	
-	
-	if self.data[realm][me][EQUIP_ID] then
-		self.data[realm][me][EQUIP_ID] = recycle(self.data[realm][me][EQUIP_ID]);
-	else
-		self.data[realm][me][EQUIP_ID] = acquire();
-	end
-	
-	for i, invSlot in pairs(self.equipmentSlots) do
-		itemID = self:ToID( GetInventoryItemLink("player", invSlot) );
-		if itemID then
-			count = GetInventoryItemCount("player", invSlot);
-			table.insert(self.data[realm][me][EQUIP_ID], itemID);
-			table.insert(self.data[realm][me][EQUIP_ID], count);
-		end
-	end
-
-end
-
-
-
-
-
-function SimpleBankState:IsBankBag(bagID)
-	if bagID == BANK_CONTAINER or ( bagID >= 5 and bagID <= 10 ) then
-		return true
-	end
-end
-
-function SimpleBankState:GetBagType(bagID)
-	if bagID == EQUIP_ID then
-		return "EQUIPMENT";
-	elseif bagID == MAIL_ID then
-		return "MAIL";
-	elseif self:IsBankBag(bagID) then
-		return "BANK";
-	else
-		return "BAG";
-	end
-end
-
---takes a hyperlink (what you see in chat) and converts it to a shortened item link.
---a shortened item link is either the item:w:x:y:z form without the 'item:' part, or just the item's ID (the 'w' part)
-function SimpleBankState:ToID(hyperLink)
-	if hyperLink then
-		local from,to,id,b,c,d,e,f,g,h = hyperLink:find("item:(%d+):(%d+):(%d+):(%d+):(%d+):(%d+):(%-?%d+):(%-?%d+)")
-		assert(from)
-		if tonumber(b) == 0 and tonumber(c) == 0 and tonumber(d) == 0 and tonumber(e) == 0 and
-			tonumber(f) == 0 and tonumber(g) == 0 and tonumber(h) == 0 then
-			return id
-		end
-		return hyperLink:sub(from,to)
-	end
-end
 
 SimpleBankState.ItemCompareAsc = function(a, b)
 	if SimpleBankState.actualSortKey == 6 and SimpleBankState:GetBagType(a[6]) ~= SimpleBankState:GetBagType(b[6]) then
 		return SimpleBankState:GetBagType(a[6]) < SimpleBankState:GetBagType(b[6])
 	end
-	return a[SimpleBankState.actualSortKey] < b[SimpleBankState.actualSortKey]	
+	return itemList[a[SimpleBankState.actualSortKey]] < b[SimpleBankState.actualSortKey]
 end
 
 SimpleBankState.ItemCompareDesc = function(a, b)
@@ -366,6 +300,10 @@ end
 
 -- sortKey: 1=itemName, 2=itemLink, 3=itemCount, 4=itemQuality, 5=charName, 6=bagType.
 function SimpleBankState:SortItems(sortKey)
+
+	if 1 then
+		return true
+	end
 	if sortKey then
 		if sortKey == self.sortKey then
 			self.sortKey = -sortKey
@@ -378,12 +316,14 @@ function SimpleBankState:SortItems(sortKey)
 	
 	if self.sortKey > 0 then 
 		self.actualSortKey = self.sortKey
-		table.sort(self.itemList, self.ItemCompareAsc)
+		table.sort(itemIndexMap, self.ItemCompareAsc)
 	else
 		self.actualSortKey = - self.sortKey
-		table.sort(self.itemList, self.ItemCompareDesc)
+		table.sort(itemIndexMap, self.ItemCompareDesc)
 	end
+	table.sort(itemIndexMap, self.sorter[self.sortKey])
 end
+
 
 
 function SimpleBankState:BuildIndex()
@@ -396,16 +336,14 @@ function SimpleBankState:BuildIndex()
 	
 	local listSize = 0;
 	
-	if not self.itemList then
-		self.itemList = {}
-	end
 	
 	local itemList = self.itemList
-	for i, itemInfo in ipairs(itemList) do
-		reclaim(itemInfo)
-		itemList[i] = nil
+	for k in pairs(itemList) do
+		itemList[k] = nil
 	end
-	
+	for k in pairs(itemIndexMap) do
+		itemIndexMap[k] = nil
+	end
 	
 -- 	itemMemSum = 0; -- debug
 	for name in pairs(self.data[realm]) do	
@@ -436,14 +374,11 @@ function SimpleBankState:BuildIndex()
 						
 							-- Keyword filter.
 							if itemName and ( not self.itemKeyword or string.find(string.lower(itemName), string.lower(self.itemKeyword)) )then
-								itemInfo = acquire()
-								itemInfo[1] = itemName
-								itemInfo[2] = itemLink
-								itemInfo[3] = itemCount
-								itemInfo[4] = itemQuality
-								itemInfo[5] = name
-								itemInfo[6] = bagID
-								table.insert(itemList, itemInfo);
+								table.insert(itemList,itemLink)
+								table.insert(itemIndexMap, #itemList)
+								table.insert(itemList,itemCount)
+								table.insert(itemList,name)
+								table.insert(itemList,bagID)
 								listSize = listSize + 1;
 							end
 								
@@ -474,7 +409,6 @@ end
 -- Graphical Interface
 ---------------------------------
 
-local dewdrop = AceLibrary("Dewdrop-2.0")
 -- local dewdrop = DewdropLib:GetInstance("o1o.0");
 
 
@@ -485,9 +419,10 @@ function SimpleBankState:InitGUI()
 	SBS_SortRarity:SetText(self.loc.RARITY);
 	SBS_SortQuantity:SetText(self.loc.QUANTITY);
 	SBS_SortPlayer:SetText(self.loc.PLAYER);
-	SBS_SortBagType:SetText(self.loc.BAG_TYPE);
+	SBS_SortBagType:SetText("Loc");
 	SBS_SearchBoxText:SetText(self.loc.KEYWORD);
 	SBS_RefreshButton:SetText(self.loc.REFRESH);
+	SBS_SortItemType:SetText("Type")
 
 	dewdrop:Register(SBS_SortRarity, 
 		'children',  SimpleBankState.RarityDropDown,
@@ -543,21 +478,30 @@ function SimpleBankState:UpdateScrollFrame()
 			button.amountText = getglobal(button:GetName().."Amount")
 			button.characterText = getglobal(button:GetName().."Character")
 			button.bagType = getglobal(button:GetName().."BagType")
+			button.itemType = getglobal(button:GetName().."ItemType")
+			button.itemSubType = getglobal(button:GetName().."ItemSubType")
 		end
 
 		--if it's still within boundaries then procezz
 		if( itemIndex <= self.itemListSize ) then
+		
+			local idx = itemIndex * ITEM_LIST_FIELD_SIZE + 1
+			local itemLink = self.itemList[idx]
+			local itemCount = self.itemList[idx+1]
+			local playerName = self.itemList[idx+2]
+			local bagID = self.itemList[idx+3]
 
-			--make sure the item is even in the array and that it has an sID
-			if self.itemList[itemIndex]  then
-
-				button.itemText:SetText(self.itemList[itemIndex][1]);
-				button.itemLink = self.itemList[itemIndex][2];
-				button.amountText:SetText( self.itemList[itemIndex][3] );
+			if itemLink and bagID then
+				
+				local itemName, _, itemRarity, itemLevel, _, itemType, itemSubType = GetItemInfo(itemLink)
+				
+				button.itemText:SetText(itemName);
+				button.itemLink = itemLink
+				button.amountText:SetText(itemCount);
 				--set color
 				local color;
-				if self.itemList[itemIndex][4] then
-					color = ITEM_QUALITY_COLORS[tonumber(self.itemList[itemIndex][4])];
+				if itemRarity then
+					color = ITEM_QUALITY_COLORS[tonumber(itemRarity)];
 					if color then
 						button.itemText:SetTextColor(color.r, color.g, color.b);
 						button.itemText.r = color.r;
@@ -570,17 +514,20 @@ function SimpleBankState:UpdateScrollFrame()
 					button.itemText.b = 0;
 				end
 				
-				button.characterText:SetText( self.itemList[itemIndex][5] );
+				button.characterText:SetText( playerName );
 				
-				local bagType = self:GetBagType(self.itemList[itemIndex][6]);
+				local bagType = self:GetBagType(bagID);
 				local text;
 				if bagType == "EQUIPMENT" or bagType == "MAIL" then
 					text = self.loc[bagType];
 				else
-					text = string.format("%s(%d)", self.loc[bagType], self.itemList[itemIndex][6])
+					text = string.format("%s(%d)", self.loc[bagType], bagID)
 				end
 				
 				button.bagType:SetText(text)
+				
+				button.itemType:SetText(itemType)
+				button.itemSubType:SetText(itemSubType)
 				
 			
 				--show the item
@@ -613,14 +560,26 @@ end
 function SimpleBankState:Refresh_OnClick()
 	self:BuildIndex();
 	self:UpdateScrollFrame();
+	tab:SetDataSize(self.itemListSize or 0)
+end
+
+function SimpleBankState:SearchItem2()
+	local text = this:GetText()
+	if not text then return end
+	
+	self.itemKeyword = text
+	self:BuildIndex()
+	tab:SetDataSize(self.itemListSize or 0)
+	self:OnValueChange(0)
+	this:ClearFocus();
 end
 
 function SimpleBankState:SearchItem()
-	local text = this:GetText();
+	local text = this:GetText()
 	if not text then return end
 	
-	self.itemKeyword = text;
-	self:BuildIndex();
+	self.itemKeyword = text
+	self:BuildIndex()
 	self:UpdateScrollFrame();
 	this:ClearFocus();
 end
@@ -739,4 +698,44 @@ function SimpleBankState:SBSFrame_OnHide()
 		dewdrop:Close()
 	end
 end
+
+function SimpleBankState:OnValueChange(offset)
+	if self.itemList then
+		for i=1, 15 do
+			local idx = offset + i
+			local rowFrame = tab:GetRowFrame(i)
+			local itemLink = self.itemList[itemIndexMap[idx]]
+			local itemCount = self.itemList[itemIndexMap[idx]+1]
+			local playerName = self.itemList[itemIndexMap[idx]+2]
+			local bagID = self.itemList[itemIndexMap[idx]+3]
+			local _, _, _, _, _, itemType, itemSubType, _, itemEquipLoc = GetItemInfo(itemLink)
+			if itemLink then
+				tab:FillRowData(i, itemLink, itemCount, playerName, bagID, itemType, itemSubType, itemEquipLoc)
+				rowFrame.itemLink = itemLink
+			else
+				tab:HideRow(i)
+			end
+		end
+	end
+end
+
+function SimpleBankState.OnMouseOver(frame)
+	if frame.itemLink then
+		GameTooltip:SetOwner(frame, "ANCHOR_RIGHT");
+		GameTooltip:SetHyperlink(frame.itemLink);
+	end
+end
+
+function SimpleBankState.OnLeaveRow(frame)
+	if(GameTooltip:IsVisible()) then GameTooltip:Hide(); end 
+end
+
+function SimpleBankState.OnClickRow(frame)
+	if frame.itemLink then
+		ChatEdit_InsertLink(frame.itemLink)
+	end
+end
+
+
+
 

@@ -22,7 +22,7 @@
 	
 	<Button name="SBS_BrowseButtonTemplate" hidden="true" virtual="true">
 		<Size>
-			<AbsDimension x="385"  y="27"/>
+			<AbsDimension x="555"  y="27"/>
 		</Size>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -70,6 +70,30 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
+				<FontString name="$parentItemType" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="80"   y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentBagType" relativePoint="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="10" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentItemSubType" inherits="GameFontHighlightSmall" justifyH="RIGHT">
+					<Size>
+						<AbsDimension x="80"   y="22"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parentItemType" relativePoint="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="10" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Scripts>
@@ -88,7 +112,7 @@
 	
 	<Frame name="SBS_Frame"  toplevel="true" frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true" parent="UIParent" clampedToScreen="true">
 			<Size>
-				<AbsDimension x="435" y="485"/>
+				<AbsDimension x="600" y="485"/>
 			</Size>
 			<Anchors>
 				<Anchor point="CENTER">
@@ -201,6 +225,24 @@
 						<Anchor point="TOPLEFT">
 							<Offset>
 								<AbsDimension x="350" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Button>
+				<Button name="SBS_SortItemType" inherits="SBS_BrowseTitleTemplate" id="7">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="440" y="-15"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Button>
+				<Button name="SBS_SortItemSubType" inherits="SBS_BrowseTitleTemplate" id="7" text="SubType">
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="500" y="-15"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -407,9 +449,6 @@
 						<OnEnterPressed>
 							SimpleBankState:SearchItem();
 						</OnEnterPressed>
-						<OnClick>
-							this:SetFocus();
-						</OnClick>
 					</Scripts>
 					<FontString inherits="ChatFontNormal"/>
 				</EditBox>
@@ -436,9 +475,9 @@
 						<AbsDimension x="16" y="405"/>
 					</Size>
 					<Anchors>
-						<Anchor point="TOPLEFT" relativeTo="SBS_BrowseButton1" relativePoint="TOPRIGHT">
+						<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
 							<Offset>
-								<AbsDimension x="-18" y="0"/>
+								<AbsDimension x="-50" y="-25"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
