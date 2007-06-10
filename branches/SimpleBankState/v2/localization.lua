@@ -1,3 +1,4 @@
+if not SimpleBankState then return end
 
 SimpleBankState.loc = {
 
