@@ -212,9 +212,7 @@ function rMCP:OnLoad()
 		text = L["Reload your User Interface?"],
 		button1 = TEXT(ACCEPT),
 		button2 = TEXT(CANCEL),
-		OnAccept = function()
-			ReloadUI()
-		end,
+		OnAccept = ReloadUI,
 		timeout = 0,
 		hideOnEscape = 1,
 		exclusive = 1,
@@ -305,11 +303,9 @@ function rMCP:OnEvent(event)
 		rMCP:ReloadAddonList()
 			
 		for i = 1, GetNumAddOns() do
-			if IsAddOnLoaded(i) then
-				local name = GetAddOnInfo(i)
-				if name ~= MCP_ADDON_NAME then
-					table.insert(MCP_DefaultSet, name)
-				end
+			local name, title, _, enabled = GetAddOnInfo(i)
+			if enabled and name ~= MCP_ADDON_NAME then
+				table.insert(MCP_DefaultSet, name)
 			end
 		end
 		
@@ -720,7 +716,7 @@ function rMCP:LoadSet(set)
 	
 	enabledList = acquire()
 	local name
-	for i = 1, GetNumAddOns() do		
+	for i = 1, GetNumAddOns() do
 		name = GetAddOnInfo(i)
 		if rMCP:FindAddon( list, name ) then
 			self:EnableAddon(name)
@@ -992,15 +988,15 @@ function rMCP:SetButton_OnClick()
 		UIDropDownMenu_Initialize(frame, function(level) self:SetDropDown_Populate(level) end, "MENU")
 		self.dropDownFrame = frame
 	end
-	ToggleDropDownMenu(1, nil, self.dropDownFrame, this, 0, 0)
+	ToggleDropDownMenu(1, nil, self.dropDownFrame, this, 0, this:GetHeight())
 end
 
 -- func handlers of UIDropDownMenu.
-local function OnClickSet()
+local function OnClickSet(set)
 	if IsShiftKeyDown() then
-		rMCP:LoadSet(UIDROPDOWNMENU_MENU_VALUE)
+		rMCP:LoadSet(set)
 	elseif IsAltKeyDown() then
-		rMCP:UnloadSet(UIDROPDOWNMENU_MENU_VALUE)
+		rMCP:UnloadSet(set)
 	end
 end
 
@@ -1017,7 +1013,7 @@ function rMCP:SetDropDown_Populate(level)
 			info = UIDropDownMenu_CreateInfo()
 			if savedVar.AddonSet and savedVar.AddonSet[i] then
 				count = table.getn(savedVar.AddonSet[i])
-			else		
+			else
 				count = 0
 			end
 			
@@ -1027,24 +1023,26 @@ function rMCP:SetDropDown_Populate(level)
 			info.text = string.format("%s (%d)", setName, count)
 			info.value = i
 			info.func = OnClickSet
+			info.arg1 = i
 			info.keepShownOnClick = 1
 			info.hasArrow = 1
 			info.notCheckable = 1
 			info.tooltipTitle = setName
 			info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
 			UIDropDownMenu_AddButton(info)
-		end	
+		end
 		
 		-- Class set.
 		if savedVar.AddonSet and savedVar.AddonSet[playerClass] then
 			count = table.getn(savedVar.AddonSet[playerClass])
 		else
 			count = 0
-		end	
+		end
 		info = UIDropDownMenu_CreateInfo()
 		info.text = string.format("%s (%d)", L[playerClass] or playerClass, count)
 		info.value = playerClass
 		info.func = OnClickSet
+		info.arg1 = playerClass
 		info.keepShownOnClick = 1
 		info.hasArrow = 1
 		info.notCheckable = 1
@@ -1057,15 +1055,18 @@ function rMCP:SetDropDown_Populate(level)
 		info.text = string.format("%s (%d)", L["Default"], table.getn(MCP_DefaultSet))
 		info.value = MCP_DEFAULT_SET
 		info.func = OnClickSet
+		info.arg1 = MCP_DEFAULT_SET
 		info.notCheckable = 1
 		info.keepShownOnClick = 1
+		info.hasArrow = 1
 		info.tooltipTitle = setName
 		info.tooltipText = L["You may Shift-Click to load the set, Alt-Click to unload the set."]
 		UIDropDownMenu_AddButton(info)
 	
 	elseif level == 2 then
-	
-		setName = self:GetSetName(UIDROPDOWNMENU_MENU_VALUE)
+		
+		local set = UIDROPDOWNMENU_MENU_VALUE
+		setName = self:GetSetName(set)
 		info = UIDropDownMenu_CreateInfo()
 		info.text = setName
 		info.isTitle = 1
@@ -1073,11 +1074,11 @@ function rMCP:SetDropDown_Populate(level)
 		UIDropDownMenu_AddButton(info, level)
 		
 		
-		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET then
+		if set ~= MCP_DEFAULT_SET then
 			info = UIDropDownMenu_CreateInfo()
 			info.text = "Save"
 			info.func = function()
-				self.savingSet = UIDROPDOWNMENU_MENU_VALUE
+				self.savingSet = set
 				StaticPopup_Show("MCP_SAVESET", setName)
 			end
 			info.notCheckable = 1
@@ -1086,36 +1087,31 @@ function rMCP:SetDropDown_Populate(level)
 
 		info = UIDropDownMenu_CreateInfo()
 		info.text = "Load"
-		info.func = function() self:LoadSet(UIDROPDOWNMENU_MENU_VALUE) end
+		info.func = function() self:LoadSet(set) end
 		info.notCheckable = 1
 		UIDropDownMenu_AddButton(info, level)
 		
 		
 		info = UIDropDownMenu_CreateInfo()
 		info.text = "Unload"
-		info.func = function() self:UnloadSet(UIDROPDOWNMENU_MENU_VALUE) end
+		info.func = function() self:UnloadSet(set) end
 		info.notCheckable = 1
 		UIDropDownMenu_AddButton(info, level)
 		
-		if UIDROPDOWNMENU_MENU_VALUE ~= MCP_DEFAULT_SET and UIDROPDOWNMENU_MENU_VALUE ~= playerClass then
+		if set ~= MCP_DEFAULT_SET and set ~= playerClass then
 			info = UIDropDownMenu_CreateInfo()
 			info.text = "Rename"
 			info.func = function()
-				self.renamingSet = UIDROPDOWNMENU_MENU_VALUE
+				self.renamingSet = set
 				StaticPopup_Show("MCP_RENAMESET", setName)
 				CloseDropDownMenus(1)
 			end
---			self:RenameSet(UIDROPDOWNMENU_MENU_VALUE) end
 			info.notCheckable = 1
 			UIDropDownMenu_AddButton(info, level)
 		end
 		
 	
 	end
-	
-
-		
-
 	
 end
 
