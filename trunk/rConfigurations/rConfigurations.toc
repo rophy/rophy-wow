@@ -2,5 +2,6 @@
 ## Title: rConfigurations
 ## Notes: Some personal configurations at start up.
 ## Author: Rophy
+## SavedVariables: rConfigurationsData
 
 Core.lua
