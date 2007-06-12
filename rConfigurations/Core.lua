@@ -1,3 +1,20 @@
+--[[
+	rConfigurationsData = {
+		initScripts = {
+			[50] = {	-- Order of execution.
+				addon = "ItemRack",
+				script = "ChatFrame1:AddMessage('Hello! World!')",
+			},
+		},
+		confScripts = {
+		}
+	}
+
+
+
+]]
+
+
 local OnInitialize
 local OnEvent
 local OnUpdate
@@ -5,6 +22,7 @@ local frame
 local timer
 local initializations = {}
 local configurations = {}
+local indexes = {}
 local DELAY_TIME = 2
 
 function OnLoad()
@@ -14,7 +32,31 @@ function OnLoad()
 end
 
 function OnEvent(frame, event)
-	frame:UnregisterAllEvents()	
+	frame:UnregisterAllEvents()
+	if rConfigurationsData then
+		if rConfigurationsData.initScripts then
+			for k, data in pairs(rConfigurationsData.initScripts) do
+				initializations[k] = {}
+				for m, v in pairs(data) do
+					if m == "func" then
+						v = loadstring(v)
+					end
+					initializations[k][m] = v
+				end
+			end
+		end
+		if rConfigurationsData.confScripts then
+			for k, data in pairs(rConfigurationsData.confScripts) do
+				configurations[k] = {}
+				for m, v in pairs(data) do
+					if m == "func" then
+						v = loadstring(v)
+					end
+					configurations[k][m] = v
+				end
+			end
+		end
+	end
 	frame:SetScript("OnUpdate", OnUpdate)
 	frame:Show()
 end
@@ -34,62 +76,42 @@ end
 
 -- When this function is called, all related addons should have already been initialized.
 function OnInitialize()
-	
-	local indexes = {}
-	for addon in pairs(initializations) do
-		table.insert(indexes, addon)
+	for k in pairs(indexes) do
+		indexes[k] = nil
 	end
-	
-	table.sort(indexes, function(a,b)
-		if not a.order then
-			return false
-		elseif not b.order then
-			return true
-		else
-			return a.order < b.order
-		end
+	for k,t in pairs(initializations) do
+		table.insert(indexes, k)
+	end
+	table.sort(indexes, function(a,b) 
+		return (initializations[a].order or 1000) < (initializations[b].order or 1000)
 	end )
-	
-	for i, addon in ipairs(indexes) do
-		local init = initializations[addon].func
-		init()
+	for i, index in ipairs(indexes) do
+		if initializations[index].func then
+			initializations[index].func()
+		end
 	end
 	initializations = nil
-	
 	rConfigure()
-	
-	
-
-
-
 end
 
 function rConfigure()
-
-	local indexes = {}
-	for addon in pairs(configurations) do
-		table.insert(indexes, addon)
+	for k in pairs(indexes) do
+		indexes[k] = nil
 	end
-	
-	table.sort(indexes, function(a,b)
-		if not a.order then
-			return false
-		elseif not b.order then
-			return true
-		else
-			return a.order < b.order
-		end
+	for k,t in pairs(configurations) do
+		table.insert(indexes, k)
+	end
+	table.sort(indexes, function(a,b) 
+		return (configurations[a].order or 1000) < (configurations[b].order or 1000)
 	end )
-	
-	for i, addon in ipairs(indexes) do
-		local config = configurations[addon].func
-		config()
+	for i, index in ipairs(indexes) do
+		if configurations[index].func then
+			configurations[index].func()
+		end
 	end
-
 end
 
 initializations["MenuBar"] = {
-	order = 50,
 	func = function()
 		MainMenuBarLeftEndCap:Hide()
 		MainMenuBarRightEndCap:Hide()
@@ -110,9 +132,10 @@ initializations["MenuBar"] = {
 }
 
 initializations["AutoBar"] = {
-	order = 100,
+	addon = "AutoBar",
 	func = function()
 		if AutoBarFrame then
+			AutoBar.LayoutUpdate = 
 			hooksecurefunc(AutoBar, "LayoutUpdate", configurations.AutoBar.func )
 		end
 	end
@@ -120,6 +143,7 @@ initializations["AutoBar"] = {
 
 configurations["AutoRack"] = {
 	order = 90,
+	addon = "AutoRack",
 	func = function()
 		if AutoRackSlots then
 			AutoRackSlots:ClearAllPoints()
@@ -133,6 +157,7 @@ configurations["AutoRack"] = {
 
 configurations["AutoBar"] = {
 	order = 100,
+	addon = "AutoBar",
 	func = function()
 		if AutoBarFrame then
 			AutoBarFrame:ClearAllPoints()
@@ -149,6 +174,7 @@ configurations["AutoBar"] = {
 }
 
 configurations["ItemRack"] = {
+	addon = "ItemRack",
 	func = function()
 		if ItemRack_InvFrame then
 			ItemRack_InvFrame:SetFrameStrata("HIGH")
@@ -159,6 +185,7 @@ configurations["ItemRack"] = {
 }
 
 configurations["Epeen"] = {
+	addon = "Epeen",
 	func = function()
 		if EpeenTarget_KoSButton then 
 			EpeenTarget_KoSButton:ClearAllPoints()
@@ -168,8 +195,12 @@ configurations["Epeen"] = {
 			EpeenTarget_FriendlyButton:SetPoint("TOPLEFT", EpeenTarget_KoSButton, "TOPRIGHT")
 			EpeenTarget_KoSFriendlyFrame:SetPoint("BOTTOMRIGHT", "TargetFrame", "TOPRIGHT", -55, -20)
 		end
+		if EpeenWarnWindowFrame then
+			EpeenWarnWindowFrame:ClearAllPoints()
+			EpeenWarnWindowFrame:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", 1,1)
+		end
 	end,
- }
+}
 
 
 OnLoad()
