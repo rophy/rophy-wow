@@ -6,4 +6,5 @@
 ## SavedVariables: WarlockCC_DB
 ## SavedVariablesPerCharacter: WarlockCC_DBPerChar
 
+Dongle.lua
 Core.lua

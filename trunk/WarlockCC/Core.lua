@@ -14,7 +14,7 @@ local addonName = "WarlockCC"
 local enslaveCandy = addonName.."_EnslaveDemon"
 
 
-local lockCC = DongleStub("Dongle-Beta1"):New(addonName)
+local lockCC = DongleStub("Dongle-1.0"):New(addonName)
 
 function lockCC:Enable()
 	self:RegisterEvent("UNIT_AURA")
