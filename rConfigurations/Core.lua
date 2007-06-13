@@ -111,35 +111,6 @@ function rConfigure()
 	end
 end
 
-initializations["MenuBar"] = {
-	func = function()
-		MainMenuBarLeftEndCap:Hide()
-		MainMenuBarRightEndCap:Hide()
-		MainMenuBar:SetToplevel(false)
-		SpellbookMicroButton:Hide()
-		TalentMicroButton:Hide()
-		QuestLogMicroButton:Hide()
-		SocialsMicroButton:Hide()
-		LFGMicroButton:Hide()
-		MainMenuMicroButton:Hide()
-		HelpMicroButton:Hide()
-		CharacterBag3Slot:Hide()
-		CharacterBag2Slot:Hide()
-		CharacterBag1Slot:Hide()
-		CharacterBag0Slot:Hide()
-		MainMenuBarBackpackButton:Hide()
-	end
-}
-
-initializations["AutoBar"] = {
-	addon = "AutoBar",
-	func = function()
-		if AutoBarFrame then
-			AutoBar.LayoutUpdate = 
-			hooksecurefunc(AutoBar, "LayoutUpdate", configurations.AutoBar.func )
-		end
-	end
-}
 
 configurations["AutoRack"] = {
 	order = 90,
@@ -200,6 +171,36 @@ configurations["Epeen"] = {
 			EpeenWarnWindowFrame:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", 1,1)
 		end
 	end,
+}
+
+
+initializations["MenuBar"] = {
+	func = function()
+		MainMenuBarLeftEndCap:Hide()
+		MainMenuBarRightEndCap:Hide()
+		MainMenuBar:SetToplevel(false)
+		SpellbookMicroButton:Hide()
+		TalentMicroButton:Hide()
+		QuestLogMicroButton:Hide()
+		SocialsMicroButton:Hide()
+		LFGMicroButton:Hide()
+		MainMenuMicroButton:Hide()
+		HelpMicroButton:Hide()
+		CharacterBag3Slot:Hide()
+		CharacterBag2Slot:Hide()
+		CharacterBag1Slot:Hide()
+		CharacterBag0Slot:Hide()
+		MainMenuBarBackpackButton:Hide()
+	end
+}
+
+initializations["AutoBar"] = {
+	addon = "AutoBar",
+	func = function()
+		if AutoBarFrame then
+			AutoBar.LayoutUpdate = configurations.AutoBar.func
+		end
+	end
 }
 
 
