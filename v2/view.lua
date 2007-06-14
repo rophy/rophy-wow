@@ -55,13 +55,17 @@ function SimpleBankState:Enable()
 	frame:SetWidth(50)
 	frame:SetHeight(20)
 	frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 90, -12)
-	frame:SetTextFontObject("GameFontNormal")
-	frame:SetText("Rarity")
-	dewdrop:Register(frame, 
-		'children',  SimpleBankState.RarityDropDown,
-		'point', "TOPLEFT",
-		'relativePoint', "BOTTOMLEFT"
-	)
+	frame.text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	frame.text:SetPoint("CENTER")
+	frame.text:SetText("Rarity")
+	frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+	frame:SetScript("OnClick", function(button, arg1)
+		if arg1 == "LeftButton" then
+			controllers.onClickHeaderButton(this,0)
+		elseif arg1 == "RightButton" then
+			controllers.onRightClickHeaderButton(this,0)
+		end
+	end)
 
 	-- Column List Button
 	frame = CreateFrame("Button", nil, searchFrame, "UIPanelButtonTemplate")
@@ -72,9 +76,8 @@ function SimpleBankState:Enable()
 	frame:SetScript("OnClick", controllers.onClickColumnSelect)
 	
 	-- Search Box.
-	frame = CreateFrame("EditBox", nil, searchFrame)
+	frame = CreateFrame("EditBox", nil, searchFrame, "InputBoxTemplate")
 	searchFrame.editBox = frame
-	frame:SetFontObject("ChatFontNormal")
 	frame:SetAutoFocus(false)
 	frame:ClearFocus()
 	frame:SetMaxLetters(256)
@@ -83,31 +86,20 @@ function SimpleBankState:Enable()
 	frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 90, 14)
 	frame:SetScript("OnEscapePressed", function(this) this:ClearFocus() end )
 	frame:SetScript("OnEnterPressed", function(this) SimpleBankState:SearchItem2() end )
-	texture = frame:CreateTexture(nil, "BACKGROUND")
-	frame.textureLeft = texture
-	texture:SetTexture("Interface\\Common\\Common-Input-Border")
-	texture:SetWidth(8)
-	texture:SetHeight(20)
-	texture:SetPoint("TOPLEFT", frame, "TOPLEFT", -11, 2)
-	texture:SetTexCoord(0, 0.0625, 0, 0.625)
-	texture = frame:CreateTexture(nil, "BACKGROUND")
-	frame.textureMiddle = texture
-	texture:SetTexture("Interface\\Common\\Common-Input-Border")
-	texture:SetWidth(195)
-	texture:SetHeight(20)
-	texture:SetPoint("LEFT", frame.textureLeft, "RIGHT")
-	texture:SetTexCoord(0.0625, 0.9375, 0, 0.625)
-	texture = frame:CreateTexture(nil, "BACKGROUND")
-	frame.textureRight = texture
-	texture:SetTexture("Interface\\Common\\Common-Input-Border")
-	texture:SetWidth(8)
-	texture:SetHeight(20)
-	texture:SetPoint("LEFT", frame.textureMiddle, "RIGHT")
-	texture:SetTexCoord(0.0625, 0.9375, 0, 0.625)
 	
+	-- Slider
+	local slider = CreateFrame('Slider', nil, searchFrame, 'UIPanelScrollBarTemplate')
+	frame.slider = slider
+	slider:SetPoint("TOPRIGHT", searchFrame, "TOPRIGHT", -12, -28)
+	slider:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 26)
+	slider:SetValue(1)
+	slider:SetValueStep(1)
+	slider:SetMinMaxValues(1,1)
+		
 	tab = DongleStub("Tabulous-1.0"):Create(
 	'rows', 15,
 	'columns', 7,
+	'slider', slider,
 	'header1text', "Item",
 	'header2text', "Count",
 	'header3text', "Owner",
@@ -176,9 +168,6 @@ function SimpleBankState:Enable()
 end
 
 
-function SimpleBankState:OnLeftClickHeaderButton(column)
-	ChatFrame1:AddMessage(column)
-end
 
 function SimpleBankState:OnRightClickHeaderButton(column)
 	local newWidth = self.tab:HideColumn(column)
@@ -256,8 +245,13 @@ do
 		[4] = function(a,b) -- BagID
 			return ItemList[a+3] < ItemList[b+3]
 		end,
+		[5] = function(a,b) -- Rarity
+			local _,_,ra = GetItemInfo(ItemList[a])
+			local _,_,rb = GetItemInfo(ItemList[b])
+			return ra < rb
+		end,
 		[-1] = function(a,b) -- Name
-			return GetItemInfo(a) > GetItemInfo(b)
+			return GetItemInfo(ItemList[a]) > GetItemInfo(ItemList[b])
 		end,
 		[-2] = function(a,b) -- Count
 			return ItemList[a+1] > ItemList[b+1]
@@ -267,6 +261,11 @@ do
 		end,
 		[-4] = function(a,b) -- BagID
 			return ItemList[a+3] > ItemList[b+3]
+		end,
+		[-5] = function(a,b) -- Rarity
+			local _,_,ra = GetItemInfo(ItemList[a])
+			local _,_,rb = GetItemInfo(ItemList[b])
+			return ra > rb
 		end,
 	}
 	function ItemList:GetSize()
@@ -291,7 +290,6 @@ do
 		table.insert(self,bagID or "ERROR")
 	end
 	function ItemList:Get(index)
-		ChatFrame1:AddMessage(index)
 		return self[indexMap[index]], self[indexMap[index]+1], self[indexMap[index]+2], self[indexMap[index]+3]
 	end
 end
@@ -567,12 +565,28 @@ function SimpleBankState.OnClickRow(frame)
 	end
 end
 
-
+-- A map from search frame header column index to sorter index.
+local columnToSortMap = {
+	[0] = 5,
+	[1] = 1,
+	[2] = 2,
+	[3] = 3,
+	[4] = 4,
+}
+local currentSortKey
 function controllers.onClickColumnSelect(frame)
 	ChatFrame1:AddMessage("Under construction.")
 end
 function controllers.onClickHeaderButton(frame,column)
-	ChatFrame1:AddMessage("left clicked " .. tostring(column))
+	local sortKey = columnToSortMap[column]
+	if sortKey then
+		if sortKey == currentSortKey then
+			sortKey = -sortKey
+		end
+		currentSortKey = sortKey
+		ItemList:Sort(sortKey)
+		SimpleBankState:OnValueChange(0)
+	end
 end
 function controllers.onRightClickHeaderButton(frame,column)
 	ChatFrame1:AddMessage("right clicked " .. tostring(column))
