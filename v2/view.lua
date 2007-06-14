@@ -8,6 +8,7 @@ SimpleBankState = DongleStub("Dongle-1.1"):New("SimpleUnitFramesView")
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
 local MAIL_ID = 101
 
+local SCROLL_LIST_SIZE = 20
 --local globals
 local me = UnitName("player"); --the name of the current player that's logged on
 local realm = GetRealmName(); --what realm we're on
@@ -18,149 +19,9 @@ local controllers = {}
 function SimpleBankState:Enable()
 	
 	self.data = SBS_Data
-	-- Create the main frame.
-	searchFrame = CreateFrame("Frame", "SimpleBankStateSearchFrame")
-	searchFrame:SetWidth(485)
-	searchFrame:SetHeight(485)
-	searchFrame:SetPoint("CENTER")
-	searchFrame:SetBackdrop({
-		bgFile="Interface/DialogFrame/UI-DialogBox-Background",
-		edgeFile="Interface/DialogFrame/UI-DialogBox-Border",
-		tile=true,
-		tileSize=32,
-		edgeSize=32,
-		insets = { left=11, right=12, top=12, bottom=11 },
-	})
-	
-	local frame, fontString, texture
-	-- Header frame.
-	frame = CreateFrame("Frame", nil, searchFrame, "OptionFrameBoxTemplate")
-	searchFrame.headerFrame = frame
-	frame:SetWidth(365)
-	frame:SetHeight(30)
-	frame:SetPoint("BOTTOM", searchFrame, "TOP", 0, -5)
-	frame:SetBackdropColor(0.4, 0.4, 0.4)
-	fontString = frame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
-	fontString:SetPoint("CENTER")
-	fontString:SetText("SimpleBankState")
-	
-	-- Close Button.
-	frame = CreateFrame("Button", nil, searchFrame, "UIPanelCloseButton")
-	searchFrame.closeButton = frame
-	--frame:SetTopLevel(true)
-	frame:SetPoint("CENTER", searchFrame.headerFrame, "RIGHT", -17, 0)
-	
-	-- Rarity Header.
-	frame = CreateFrame("Button", nil, searchFrame)
-	frame:SetWidth(50)
-	frame:SetHeight(20)
-	frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 90, -12)
-	frame.text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-	frame.text:SetPoint("CENTER")
-	frame.text:SetText("Rarity")
-	frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-	frame:SetScript("OnClick", function(button, arg1)
-		if arg1 == "LeftButton" then
-			controllers.onClickHeaderButton(this,0)
-		elseif arg1 == "RightButton" then
-			controllers.onRightClickHeaderButton(this,0)
-		end
-	end)
 
-	-- Column List Button
-	frame = CreateFrame("Button", nil, searchFrame, "UIPanelButtonTemplate")
-	frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 14, 13)
-	frame:SetWidth(50)
-	frame:SetHeight(24)
-	frame:SetText("Show")
-	frame:SetScript("OnClick", controllers.onClickColumnSelect)
-	
-	-- Search Box.
-	frame = CreateFrame("EditBox", nil, searchFrame, "InputBoxTemplate")
-	searchFrame.editBox = frame
-	frame:SetAutoFocus(false)
-	frame:ClearFocus()
-	frame:SetMaxLetters(256)
-	frame:SetWidth(180)
-	frame:SetHeight(20)
-	frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 90, 14)
-	frame:SetScript("OnEscapePressed", function(this) this:ClearFocus() end )
-	frame:SetScript("OnEnterPressed", function(this) SimpleBankState:SearchItem2() end )
-	
-	-- Slider
-	local slider = CreateFrame('Slider', nil, searchFrame, 'UIPanelScrollBarTemplate')
-	frame.slider = slider
-	slider:SetPoint("TOPRIGHT", searchFrame, "TOPRIGHT", -12, -28)
-	slider:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 26)
-	slider:SetValue(1)
-	slider:SetValueStep(1)
-	slider:SetMinMaxValues(1,1)
-		
-	tab = DongleStub("Tabulous-1.0"):Create(
-	'rows', 15,
-	'columns', 7,
-	'slider', slider,
-	'header1text', "Item",
-	'header2text', "Count",
-	'header3text', "Owner",
-	'header4text', "BagID",
-	'header5text', "Type",
-	'header6text', "SubType",
-	'header7text', "EquipLoc",
-	'columnWidth1', 200,
-	'onClickRow', self.OnClickRow,
-	'onEnterRow', self.OnMouseOver,
-	'onLeaveRow', self.OnLeaveRow,
-	'onInitHeader', function(column, button, fontString)
-		button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-		button:SetScript("OnClick", function(button, arg1)
-			if arg1 == "LeftButton" then
-				controllers.onClickHeaderButton(this,column)
-			elseif arg1 == "RightButton" then
-				controllers.onRightClickHeaderButton(this,column)
-			end
-		end)
-	end,
-	'onInitRow', function(frame)
-		frame:SetHighlightTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
-		frame:GetHighlightTexture():SetTexCoord(0,1.0,0,0.578125)
-	end
-
-
-
-	--[[
-	,'backdrop', {
-		bgFile="Interface\\Tooltips\\UI-Tooltip-Background",
-		edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
-		tile=true,
-		tileSize=16,
-		edgeSize=16,
-		insets = { left=5, right=4, top=5, bottom=5 },
-	},
-	'backdropColorR', 0.3,
-	'backdropColorG', 0.3,
-	'backdropColorB', 0.3
-	]]
-	)
-
-
-	tab:SetValueChangeFunction( function(offset) SimpleBankState:OnValueChange(offset) end )
-	
-	frame = tab:GetFrame()
-	
-	searchFrame:SetHeight(frame:GetHeight()+ 30 + searchFrame.editBox:GetHeight())
-	searchFrame:SetWidth(frame:GetWidth()+ 24 )
-	frame:SetParent(searchFrame)
-	frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 12, -12)
-	frame:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 42 )
-	frame:Show()
-
-	self.tab = tab
-
-	
 	self.filter = {} 
 
-	table.insert(UISpecialFrames, "SimpleBankStateSearchFrame")
 
 	
 	
@@ -168,6 +29,148 @@ function SimpleBankState:Enable()
 end
 
 
+function SimpleBankState:CreateSearchFrame()
+	if not searchFrame then
+		-- Create the main frame.
+		searchFrame = CreateFrame("Frame", "SimpleBankStateSearchFrame")
+		searchFrame:SetWidth(485)
+		searchFrame:SetHeight(485)
+		searchFrame:SetPoint("CENTER")
+		searchFrame:SetBackdrop({
+			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
+			edgeFile="Interface/DialogFrame/UI-DialogBox-Border",
+			tile=true,
+			tileSize=32,
+			edgeSize=32,
+			insets = { left=11, right=12, top=12, bottom=11 },
+		})
+		
+		local frame, fontString, texture
+		-- Header frame.
+		frame = CreateFrame("Frame", nil, searchFrame, "OptionFrameBoxTemplate")
+		searchFrame.headerFrame = frame
+		frame:SetWidth(365)
+		frame:SetHeight(30)
+		frame:SetPoint("BOTTOM", searchFrame, "TOP", 0, -5)
+		frame:SetBackdropColor(0.4, 0.4, 0.4)
+		fontString = frame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
+		fontString:SetPoint("CENTER")
+		fontString:SetText("SimpleBankState")
+		
+		-- Close Button.
+		frame = CreateFrame("Button", nil, searchFrame, "UIPanelCloseButton")
+		searchFrame.closeButton = frame
+		--frame:SetTopLevel(true)
+		frame:SetPoint("CENTER", searchFrame.headerFrame, "RIGHT", -17, 0)
+		
+		-- Column List Button
+		frame = CreateFrame("Button", nil, searchFrame, "UIPanelButtonTemplate")
+		frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 14, 13)
+		frame:SetWidth(50)
+		frame:SetHeight(24)
+		frame:SetText("Show")
+		frame:SetScript("OnClick", controllers.onClickColumnSelect)
+		
+		-- Search Box.
+		frame = CreateFrame("EditBox", nil, searchFrame, "InputBoxTemplate")
+		searchFrame.editBox = frame
+		frame:SetAutoFocus(false)
+		frame:ClearFocus()
+		frame:SetMaxLetters(256)
+		frame:SetWidth(180)
+		frame:SetHeight(20)
+		frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 90, 14)
+		frame:SetScript("OnEscapePressed", function(this) this:ClearFocus() end )
+		frame:SetScript("OnEnterPressed", function(this) SimpleBankState:SearchItem2() end )
+		
+		-- Slider
+		local slider = CreateFrame('Slider', nil, searchFrame, 'UIPanelScrollBarTemplate')
+		frame.slider = slider
+		slider:SetPoint("TOPRIGHT", searchFrame, "TOPRIGHT", -12, -28)
+		slider:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 26)
+		slider:SetValue(1)
+		slider:SetValueStep(1)
+		slider:SetMinMaxValues(1,1)
+			
+		tab = DongleStub("Tabulous-0"):Create(
+		'rows', SCROLL_LIST_SIZE,
+		'columns', 7,
+		'slider', slider,
+		'header1text', "Item",
+		'header2text', "Count",
+		'header3text', "Owner",
+		'header4text', "BagID",
+		'header5text', "Type",
+		'header6text', "SubType",
+		'header7text', "EquipLoc",
+		'columnWidth1', 200,
+		'onClickRow', self.OnClickRow,
+		'onEnterRow', self.OnMouseOver,
+		'onLeaveRow', self.OnLeaveRow,
+		'onInitHeader', function(column, button, fontString)
+			button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+			button:SetScript("OnClick", function(button, arg1)
+				if arg1 == "LeftButton" then
+					controllers.onClickHeaderButton(this,column)
+				elseif arg1 == "RightButton" then
+					controllers.onRightClickHeaderButton(this,column)
+				end
+			end)
+		end,
+		'onInitRow', function(frame)
+			frame:SetHighlightTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
+			frame:GetHighlightTexture():SetTexCoord(0,1.0,0,0.578125)
+		end
+
+		--[[
+		,'backdrop', {
+			bgFile="Interface\\Tooltips\\UI-Tooltip-Background",
+			edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
+			tile=true,
+			tileSize=16,
+			edgeSize=16,
+			insets = { left=5, right=4, top=5, bottom=5 },
+		},
+		'backdropColorR', 0.3,
+		'backdropColorG', 0.3,
+		'backdropColorB', 0.3
+		]]
+		)
+
+		tab:SetValueChangeFunction( function(offset) SimpleBankState:OnValueChange(offset) end )
+		
+
+		-- Rarity Header.
+		frame = CreateFrame("Button", nil, tab:GetHeaderButton(1))
+		frame:SetWidth(50)
+		frame:SetHeight(20)
+		frame:SetPoint("TOPLEFT", tab:GetHeaderButton(1), "TOPLEFT", 40, 0)
+		frame.text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		frame.text:SetPoint("CENTER")
+		frame.text:SetText("Rarity")
+		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+		frame:SetScript("OnClick", function(button, arg1)
+			if arg1 == "LeftButton" then
+				controllers.onClickHeaderButton(this,0)
+			elseif arg1 == "RightButton" then
+				controllers.onRightClickHeaderButton(this,0)
+			end
+		end)
+		
+		frame = tab:GetFrame()
+		searchFrame:SetHeight(frame:GetHeight()+ 30 + searchFrame.editBox:GetHeight())
+		searchFrame:SetWidth(frame:GetWidth()+ 24 )
+		frame:SetParent(searchFrame)
+		frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 12, -12)
+		frame:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 42 )
+		frame:Show()
+
+		self.tab = tab
+
+		table.insert(UISpecialFrames, "SimpleBankStateSearchFrame")
+	end
+	return searchFrame
+end
 
 function SimpleBankState:OnRightClickHeaderButton(column)
 	local newWidth = self.tab:HideColumn(column)
@@ -375,11 +378,26 @@ end
 
 
 function SimpleBankState:ToggleFrame()
-	if searchFrame:IsShown() then
+	if not searchFrame then
+		self:CreateSearchFrame():Show()
+	elseif searchFrame:IsShown() then
 		searchFrame:Hide()
 	else
 		searchFrame:Show()
 	end
+end
+
+function SimpleBankState:ToggleColumn(column)
+	local newWidth
+	if tab:IsColumnShown(column) then
+		newWidth = tab:HideColumn(column) + 24
+	else
+		newWidth = tab:ShowColumn(column) + 24
+	end
+	if newWidth < 400 then
+		newWidth = 400
+	end
+	searchFrame:SetWidth(newWidth)
 end
 
 function SimpleBankState:ItemEnter()
@@ -517,22 +535,9 @@ function SimpleBankState:UpdateFrameTitle()
 
 end
 
-function SimpleBankState:TitleButton_OnClick(button)
-	local id = this:GetID()
-	if button == "LeftButton" then
-		SimpleBankState:SortItems(id)
-		SimpleBankState:UpdateScrollFrame()
-	end
-end
-
-function SimpleBankState:SBSFrame_OnHide()
-	if dewdrop:IsOpen(SBS_SortRarity) or dewdrop:IsOpen(SBS_SortPlayer) or dewdrop:IsOpen(SBS_SortBagType) then
-		dewdrop:Close()
-	end
-end
 
 function SimpleBankState:OnValueChange(offset)
-	for i=1, 15 do
+	for i=1, SCROLL_LIST_SIZE do
 		local idx = offset + i
 		local rowFrame = tab:GetRowFrame(i)
 		if idx <= ItemList:GetSize() then
@@ -565,6 +570,43 @@ function SimpleBankState.OnClickRow(frame)
 	end
 end
 
+local columnIndexMap = {
+	"Item Link",
+	"Count",
+	"Owner",
+	"BagID",
+	"Type",
+	"SubType",
+	"EquipLoc",
+}
+function SimpleBankState:PopulateColumnSelection(level)
+	local info
+	if level == 1 then
+		for i, columnName in ipairs(columnIndexMap) do
+			local isShown = tab:IsColumnShown(i)
+			info = UIDropDownMenu_CreateInfo()
+			info.text = columnName
+			info.func = self.ToggleColumn
+			info.arg1 = self
+			info.arg2 = i
+			info.keepShownOnClick = 1
+			info.checked = isShown
+			UIDropDownMenu_AddButton(info)
+		end
+	end
+end
+
+
+function controllers.onClickColumnSelect(frame)
+	if not frame.dropdown then
+		frame.dropdown = CreateFrame("Frame", "SimpleUnitFramesDropDown", nil, "UIDropDownMenuTemplate")
+		UIDropDownMenu_Initialize(frame.dropdown, function(level) SimpleBankState:PopulateColumnSelection(level) end, "MENU")
+		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "BOTTOMLEFT", frame, "TOPLEFT")
+	end
+	ToggleDropDownMenu(1, nil, frame.dropdown)
+end
+
+
 -- A map from search frame header column index to sorter index.
 local columnToSortMap = {
 	[0] = 5,
@@ -574,9 +616,6 @@ local columnToSortMap = {
 	[4] = 4,
 }
 local currentSortKey
-function controllers.onClickColumnSelect(frame)
-	ChatFrame1:AddMessage("Under construction.")
-end
 function controllers.onClickHeaderButton(frame,column)
 	local sortKey = columnToSortMap[column]
 	if sortKey then

@@ -21,7 +21,8 @@
 # Libs\AceDebug-2.0\AceDebug-2.0.lua
 # Libs\AceConsole-2.0\AceConsole-2.0.lua
 # Libs\Dewdrop-2.0\Dewdrop-2.0.lua
-Libs\Tabulous-1.0\Tabulous-1.0.lua
+
+Tabulous-0\Tabulous-0.lua
 
 data.lua
 view.lua
