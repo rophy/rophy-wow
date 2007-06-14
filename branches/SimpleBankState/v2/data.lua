@@ -1,10 +1,8 @@
 
 local moduleName = "SimpleUnitFrameData"
-
 local data = DongleStub("Dongle-1.1"):New(moduleName)
 
 local UPDATE_DELAY = 2
-
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
 local MAIL_ID = 101
 
@@ -12,6 +10,32 @@ local MAIL_ID = 101
 local me = UnitName("player"); --the name of the current player that's logged on
 local realm = GetRealmName(); --what realm we're on
 local atBank; --is the current player at the bank or not
+
+--------------------
+-- Mini-Compost --
+--------------------
+local cache = setmetatable({}, {__mode='k'})
+local function acquire()
+	local t = next(cache)
+	if t then cache[t] = nil else t = {} end
+	return t
+end
+local function reclaim(t, depth)
+	for k, v in pairs(t) do
+		if depth and depth > 1 and type(v) == 'table' then
+			reclaim(v, depth-1)
+		end
+		t[k] = nil	
+	end
+	cache[t] = true
+end
+local function recycle(t)
+	for k in pairs(t) do
+		t[k] = nil
+	end
+	return t
+end
+
 
 function data:Initialize()
 
