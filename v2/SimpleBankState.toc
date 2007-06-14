@@ -11,7 +11,7 @@
 
 
 ## SavedVariables: SBS_Data
-## OptionalDeps: Ace2, DewdropLib, Tabulous
+## OptionalDeps: Ace2, DewdropLib, Dongle
 
 
 # Libs\AceLibrary\AceLibrary.lua
@@ -21,8 +21,10 @@
 # Libs\AceDebug-2.0\AceDebug-2.0.lua
 # Libs\AceConsole-2.0\AceConsole-2.0.lua
 # Libs\Dewdrop-2.0\Dewdrop-2.0.lua
+Libs\Tabulous-1.0\Tabulous-1.0.lua
 
-SimpleBankState.lua
-localization.lua
-SimpleBankState.xml
+data.lua
+view.lua
+# localization.lua
+# SimpleBankState.xml
 

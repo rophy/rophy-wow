@@ -1,13 +1,19 @@
 
+local moduleName = "SimpleUnitFrameData"
 
-local data = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0")
+local data = DongleStub("Dongle-1.1"):New(moduleName)
+
+local UPDATE_DELAY = 2
 
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
 local MAIL_ID = 101
 
+--local globals
+local me = UnitName("player"); --the name of the current player that's logged on
+local realm = GetRealmName(); --what realm we're on
+local atBank; --is the current player at the bank or not
 
-
-function data:OnEnable()
+function data:Initialize()
 
 	if not SBS_Data then
 		SBS_Data = {
@@ -25,12 +31,8 @@ function data:OnEnable()
 		self.data[realm][me] = {};
 	end
 	
-	if self.data.version ~= self.version then
-		self:UpdateVersion();
-	end
 	
-	
-	self:ScheduleRepeatingEvent(self.OnUpdate, UPDATE_DELAY, self)
+	self:ScheduleRepeatingTimer(moduleName, function() self:OnUpdate() end, UPDATE_DELAY)
 
 	self.pendingBags = {}
 	
@@ -46,6 +48,8 @@ end
 
 function data:OnUpdate()
 
+	self:Debug(2, "Checking for bag changes.")
+	
 	if self.scanMail then
 		self:SaveMailboxData()
 		self.scanMail = false
@@ -72,36 +76,36 @@ function data:OnUpdate()
 end
 
 function data:UNIT_INVENTORY_CHANGED(unitid)
-	self:Debug("UNIT_INVENTORY_CHANGED")
+	self:Debug(2, "UNIT_INVENTORY_CHANGED")
 	if unitid == 'player' then
 		self.scanEquip = true
 	end
 end
 
 function data:BAG_UPDATE(bagID)
-	self:Debug("BAG_UPDATE")
+	self:Debug(2, "BAG_UPDATE")
 	self.scanBag = bagID
 	self.pendingBags[bagID] = true
 end
 
 function data:BANKFRAME_OPENED()
-	self:Debug("BANKFRAME_OPENED")
+	self:Debug(2, "BANKFRAME_OPENED")
 	self.atBank = true
 	self.scanBank = true
 end
 
 function data:BANKFRAME_CLOSED()
-	self:Debug("BANKFRAME_CLOSED")
+	self:Debug(2, "BANKFRAME_CLOSED")
 	self.atBank = false
 end
 
 function data:PLAYERBANKSLOTS_CHANGED()
-	self:Debug("PLAYERBANKSLOTS_CHANGED")
+	self:Debug(2, "PLAYERBANKSLOTS_CHANGED")
 	self.scanBag = BANK_CONTAINER
 end
 
 function data:MAIL_INBOX_UPDATE()
-	self:Debug("MAIL_INBOX_UPDATE")
+	self:Debug(2, "MAIL_INBOX_UPDATE")
 	self.scanMail = true
 end
 
@@ -109,7 +113,7 @@ end
 
 --save all bank data about the current player
 function data:SaveBankData()
-	self:Debug("Scanning bank...")
+	self:Debug(2, "Scanning bank...")
 	
 	self:SaveBagData(BANK_CONTAINER)
 	local bagID;
@@ -126,7 +130,7 @@ function data:SaveBagData(bagID)
 		return;
 	end
 
-	self:Debug("Scanning bag", bagID, "...")
+	self:Debug(2, "Scanning bag", bagID, "...")
 	
 	local size;
 	if(bagID == KEYRING_CONTAINER) then
@@ -163,7 +167,7 @@ function data:SaveBagData(bagID)
 end
 
 function data:SaveMailboxData()
-	self:Debug("Scanning mailbox...")
+	self:Debug(2, "Scanning mailbox...")
 	
 	local size = GetInboxNumItems();
 	if size > 0 then
@@ -196,7 +200,7 @@ end
 
 function data:SaveEquipmentData()
 
-	self:Debug("Scanning equipments...")
+	self:Debug(2, "Scanning equipments...")
 	
 	if not self.equipmentSlots then
 		local inventorySlotNames = {
@@ -262,17 +266,6 @@ function data:IsBankBag(bagID)
 	end
 end
 
-function data:GetBagType(bagID)
-	if bagID == EQUIP_ID then
-		return "EQUIPMENT";
-	elseif bagID == MAIL_ID then
-		return "MAIL";
-	elseif self:IsBankBag(bagID) then
-		return "BANK";
-	else
-		return "BAG";
-	end
-end
 
 --takes a hyperlink (what you see in chat) and converts it to a shortened item link.
 --a shortened item link is either the item:w:x:y:z form without the 'item:' part, or just the item's ID (the 'w' part)
