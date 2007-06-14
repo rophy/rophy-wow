@@ -1,4 +1,4 @@
-local dewdrop = AceLibrary("Dewdrop-2.0")
+--local dewdrop = AceLibrary("Dewdrop-2.0")
 
 
 SimpleBankState = DongleStub("Dongle-1.1"):New("SimpleUnitFramesView")
@@ -16,15 +16,16 @@ local realm = GetRealmName(); --what realm we're on
 local tab
 local searchFrame
 local controllers = {}
+local rarityTexts
+
+
+local function Colorize(text, hex)
+	return "|cff"..hex..text.."|r"
+end
+
 function SimpleBankState:Enable()
 	
 	self.data = SBS_Data
-
-	self.filter = {} 
-
-
-	
-	
 
 end
 
@@ -156,6 +157,7 @@ function SimpleBankState:CreateSearchFrame()
 				controllers.onRightClickHeaderButton(this,0)
 			end
 		end)
+		searchFrame.rarityText = frame.text
 		
 		frame = tab:GetFrame()
 		searchFrame:SetHeight(frame:GetHeight()+ 30 + searchFrame.editBox:GetHeight())
@@ -297,6 +299,21 @@ do
 	end
 end
 
+local filters = {}
+local function SetFilter(filter,value)
+	
+	if filters[filter] == value then
+		filters[filter] = nil
+	else
+		filters[filter] = value
+	end
+	
+	SimpleBankState:RefreshHeaderTitles()
+	SimpleBankState:BuildIndex()
+	SimpleBankState:OnValueChange(0)
+	
+end
+
 function SimpleBankState:BuildIndex()
 
 -- 	local itemMem, itemMemSum -- debug
@@ -313,13 +330,13 @@ function SimpleBankState:BuildIndex()
 	for name in pairs(self.data[realm]) do
 		
 		-- Player filter.
-		if not self.filter.player or self.filter.player == name then
+		if not filters.owner or filters.owner == name then
 		
 			for bagID in pairs(self.data[realm][name]) do
 				local bagType = self:GetBagType(bagID);
 				
 				-- BagType filter.
-				if not self.filter.bagType or self.filter.bagType == bagType then
+				if not filters.bagType or filters.bagType == bagType then
 
 					local n = table.getn(self.data[realm][name][bagID]);
 				
@@ -334,7 +351,7 @@ function SimpleBankState:BuildIndex()
 -- 							itemMemSum = gcinfo() - itemMem + itemMemSum -- debug
 							
 						-- Rarity filter.
-						if not self.filter.rarity or self.filter.rarity == itemQuality then
+						if not filters.rarity or filters.rarity == itemQuality then
 						
 							-- Keyword filter.
 							if itemName and ( not self.itemKeyword or string.find(string.lower(itemName), string.lower(self.itemKeyword)) )then
@@ -434,30 +451,6 @@ function SimpleBankState:SearchItem()
 	this:ClearFocus();
 end
 
-function SimpleBankState.RarityDropDown()
-	local self = SimpleBankState
-	
-	if not self.rarityTexts then
-		local t = {}
-		for i, rarity in ipairs({"POOR","NORMAL","GOOD","RARE","EPIC","LEGENDARY","ARTIFACT"}) do
-			t[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. self.loc[rarity] .. "|r"
-		end
-		self.rarityTexts = t
-	end
-	
-	for i=0, 6, 1 do
-		local text = self.rarityTexts[i]
-		dewdrop:AddLine(
-			'text', text,
-			'func', self.SetFilter,
-			'arg1', self,
-			'arg2', 'rarity',
-			'arg3', i,
-			'closeWhenClicked', true
-		)
-	end
-	
-end
 
 function SimpleBankState.PlayerDropDown()
 	local self = SimpleBankState
@@ -497,10 +490,10 @@ end
 
 function SimpleBankState:SetFilter(field, value)
 
-	if self.filter[field] == value then 
-		self.filter[field] = nil
+	if filters[field] == value then 
+		filters[field] = nil
 	else
-		self.filter[field] = value;
+		filters[field] = value;
 	end
 
 	self:UpdateFrameTitle();
@@ -513,24 +506,23 @@ function SimpleBankState:SetFilter(field, value)
 	
 end
 
-function SimpleBankState:UpdateFrameTitle()
 
-	if self.filter.player then
-		tab:SetHeaderText(3,self.filter.player)
+
+function SimpleBankState:RefreshHeaderTitles()
+
+	if filters.owner then
+		tab:SetHeaderText(3,Colorize(filters.owner, "FFFFFF"))
 	else
-		tab:SetHeaderText(self.loc.PLAYER)
+		tab:SetHeaderText(3,"Owner")
 	end
 	
-	if self.filter.bagType then
-		SBS_SortBagType:SetText(self.loc[self.filter.bagType]);
-	else
-		SBS_SortBagType:SetText(self.loc.BAG_TYPE);
+	if filters.bagType then
 	end
 	
-	if self.filter.rarity then
-		SBS_SortRarity:SetText( self.rarityTexts[self.filter.rarity] );
-	else		
-		SBS_SortRarity:SetText(self.loc.RARITY);
+	if filters.rarity then
+		searchFrame.rarityText:SetText(rarityTexts[filters.rarity])
+	else
+		searchFrame.rarityText:SetText("Rarity")
 	end
 
 end
@@ -596,6 +588,44 @@ function SimpleBankState:PopulateColumnSelection(level)
 	end
 end
 
+SimpleBankState.dropdownfunc = setmetatable({}, { __index = function(t,k) return function() end end })
+
+
+SimpleBankState.dropdownfunc[0] = function(self,level)
+	local info
+
+	if not rarityTexts then
+		rarityTexts = {}
+		for i, rarity in ipairs({"POOR","NORMAL","GOOD","RARE","EPIC","LEGENDARY","ARTIFACT"}) do
+			rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. rarity .. "|r"
+		end
+	end
+	
+	for i=0, 6, 1 do
+		local text = rarityTexts[i]
+		info = UIDropDownMenu_CreateInfo()
+		info.text = text
+		info.func = SetFilter
+		info.arg1 = 'rarity'
+		info.arg2 = i
+		info.notCheckable = 1
+		UIDropDownMenu_AddButton(info)
+	end
+	
+end
+
+SimpleBankState.dropdownfunc[3] = function(self,level)
+	local info
+	for name in pairs(self.data[realm]) do
+		info = UIDropDownMenu_CreateInfo()
+		info.text = name
+		info.func = SetFilter
+		info.arg1 = 'owner'
+		info.arg2 = name
+		info.notCheckable = 1
+		UIDropDownMenu_AddButton(info)
+	end
+end
 
 function controllers.onClickColumnSelect(frame)
 	if not frame.dropdown then
@@ -628,7 +658,16 @@ function controllers.onClickHeaderButton(frame,column)
 	end
 end
 function controllers.onRightClickHeaderButton(frame,column)
-	ChatFrame1:AddMessage("right clicked " .. tostring(column))
+	if not frame.dropdown then
+		frame.dropdown = CreateFrame("Frame", "SimpleUnitFramesDropDown", nil, "UIDropDownMenuTemplate")
+		UIDropDownMenu_Initialize(frame.dropdown, function(level)
+			if level == 1 then
+				SimpleBankState.dropdownfunc[column](SimpleBankState,level)
+			end
+		end, "MENU")
+		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
+	end
+	ToggleDropDownMenu(1, nil, frame.dropdown)
 end
 
 

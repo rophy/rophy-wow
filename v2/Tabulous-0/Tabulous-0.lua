@@ -362,13 +362,11 @@ function TabulousObject.GetFrame(self)
 end
 
 function TabulousObject.SetHeaderText(self, column, text)
-	local header = self:GetHeaderButton(column)
-	if header then header:SetText(text) end
+	self:GetHeaderButton(column).fontString:SetText(text)
 end
 
 function TabulousObject.GetHeaderText(self, column, text)
-	local header = self:GetHeaderButton(column)
-	if header then header:GetText(text) end
+	self:GetHeaderButton(column).fontString:GetText(text)
 end
 
 function TabulousObject.GetHeaderButton(self, column)
