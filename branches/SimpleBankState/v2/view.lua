@@ -115,6 +115,9 @@ function view:Initialize()
 	}
 	db = self:InitializeDB("SimpleBankStateViewData", defaults)
 	
+	local cmd = view:InitializeSlashCommand("SimpleBankState Slash Command", "SIMPLEBANKSTATE", "sbs")
+	cmd:RegisterSlashHandler("Toggle the search frame.", "^$", "ToggleFrame")
+	
 	for name in pairs(self.data[realm]) do
 		filters.owner[name] = true
 	end
