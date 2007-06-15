@@ -166,21 +166,20 @@ function data:SaveBagData(bagID)
 	end
 	
 	if(size > 0) then
-		local itemID, count;
 		
 		if self.data[realm][me][bagID] then
-			self.data[realm][me][bagID] = recycle(self.data[realm][me][bagID]);
+			self.data[realm][me][bagID] = recycle(self.data[realm][me][bagID])
 		else
 			self.data[realm][me][bagID] = acquire();
 		end
 
 		--save all item info
 		for slot = 1, size, 1 do
-			itemID = self:ToID( GetContainerItemLink(bagID, slot) );
+			local itemID = self:ToID( GetContainerItemLink(bagID, slot) )
 			if itemID then
-				_, count = GetContainerItemInfo(bagID, slot);
-				table.insert(self.data[realm][me][bagID], itemID);
-				table.insert(self.data[realm][me][bagID], count);
+				local _, count = GetContainerItemInfo(bagID, slot)
+				table.insert(self.data[realm][me][bagID], itemID)
+				table.insert(self.data[realm][me][bagID], count)
 			end
 		end
 		

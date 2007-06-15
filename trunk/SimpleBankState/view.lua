@@ -536,10 +536,10 @@ function view:BuildIndex()
 					while index < n  do
 					--for idx = 1, n, 2 do
 					
-						itemCount = self.data[realm][name][bagID][index+1];
-						itemID = self.data[realm][name][bagID][index];
+						local itemCount = self.data[realm][name][bagID][index+1];
+						local itemID = self.data[realm][name][bagID][index];
 -- 							itemMem = gcinfo() -- debug
-						iName, iLink, iQuality, _, _, iType, sType, _, eqLoc, _ = GetItemInfo(itemID);
+						local iName, iLink, iQuality, _, _, iType, sType, _, eqLoc, _ = GetItemInfo(itemID);
 						
 						if not iName then
 							self:DebugF(2, "GetItemInfo() returned nil for %s in %s, %s", itemID, name, bagID)
