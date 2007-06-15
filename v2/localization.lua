@@ -8,7 +8,6 @@ if SimpleBankState then
 		["Owner"] = true,
 		["Location"] = true,
 		["Type"] = true,
-		["Sub Type"] = true,
 		["Equip Loc"] = true,
 		
 		-- Rarities.
@@ -21,10 +20,10 @@ if SimpleBankState then
 		["Artifact"] = true,
 		
 		-- Locations
-		["Bag"] = true,
-		["Bank"] = true,
-		["Mail"] = true,
-		["Wearing"] = true,
+		["BAG"] = "Bag",
+		["BANK"] = "Bank",
+		["MAIL"] = "Mailbox",
+		["INVENTORY"] = "Wearing",
 		
 		-- Equip Locations.
 		[""] = "",
@@ -34,7 +33,7 @@ if SimpleBankState then
 		["INVTYPE_SHOULDER"] = "Shoulder",
 		["INVTYPE_BODY"] = "Shirt",
 		["INVTYPE_CHEST"] = "Chest",
-		["INVTYPE_ROBE"] = "Chest",
+		["INVTYPE_ROBE"] = "Robe",
 		["INVTYPE_WAIST"] = "Waist",
 		["INVTYPE_LEGS"] = "Legs",
 		["INVTYPE_FEET"] = "Feet",
