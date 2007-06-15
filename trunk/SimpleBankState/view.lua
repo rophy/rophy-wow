@@ -96,10 +96,6 @@ local filters = {
 }
 
 
-local function Colorize(text, hex)
-	return "|cff"..hex..text.."|r"
-end
-
 local function GetReturn(index, ...)
 	return select(index, ...)
 end
@@ -741,13 +737,18 @@ function view:OnValueChange(offset)
 		local rowFrame = tab:GetRowFrame(i)
 		if idx <= ItemList:GetSize() then
 			local itemLink,itemCount,playerName,bagID = ItemList:Get(idx)
-			local _, _, _, _, _, itemType, itemSubType, _, itemEquipLoc, itemTexture = GetItemInfo(itemLink)
+			local itemName, _, itemRarity, _, _, itemType, itemSubType, _, itemEquipLoc, itemTexture = GetItemInfo(itemLink)
 			if itemLink then
-				local locationText = L[self:GetBagType(bagID)]
-				local typeText = string.format("%s - %s", itemType, itemSubType)
-				tab:FillRowData(i, itemLink, itemCount, playerName, locationText, typeText, itemSubType, L[itemEquipLoc])
-				rowFrame.itemLink = itemLink
 				self.itemIcons[i]:SetTexture(itemTexture)
+				rowFrame.itemLink = itemLink
+				if itemName then
+					itemName = ITEM_QUALITY_COLORS[itemRarity].hex .. itemName .. "|r"
+					local locationText = L[self:GetBagType(bagID)]
+					local typeText = string.format("%s - %s", itemType, itemSubType)
+				else
+					itemName = itemLink
+				end
+				tab:FillRowData(i, itemName, itemCount, playerName, locationText, typeText, itemSubType, L[itemEquipLoc])
 			end
 		else
 			tab:HideRow(i)
