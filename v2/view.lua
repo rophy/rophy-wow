@@ -12,11 +12,10 @@ end
 
 local SCROLL_LIST_SIZE = 20
 local ITEM_LINK_WIDTH = 200
-local ITEM_COUNT_WIDTH = 30
+local ITEM_COUNT_WIDTH = 60
 local ITEM_OWNER_WIDTH = 100
 local ITEM_BAG_ID_WIDTH = 60
-local ITEM_TYPE_WIDTH = 200
-local ITEM_SUBTYPE_WIDTH = 10
+local ITEM_TYPE_WIDTH = 170
 local ITEM_EQUIP_LOC_WIDTH = 100
 local ROW_HEIGHT = 20
 
@@ -41,8 +40,65 @@ local tab
 local searchFrame
 local controllers = {}
 local rarityTexts
-local L = setmetatable({}, {__index = function(t,k) return k end})
+local L = setmetatable({}, {
+	__index = function(t,k) 
+		--return k end	-- Use this when I still haven't externalize the strings.
+		error(string.format("Locale '%s' does not exist", tostring(k))) -- Use this after.
+	end 
+})
 local itemTypes = {}
+
+local filters = {
+	owner = {},
+	type = {},
+	subType = {},
+	location = {
+		["BAG"] = true,
+		["BANK"] = true,
+		["MAIL"] = true,
+		["INVENTORY"] = true,
+	},
+	rarity = {
+		[0] = true,
+		[1] = true,
+		[2] = true,
+		[3] = true,
+		[4] = true,
+		[5] = true,
+		[6] = true,
+	},
+	equipLoc = {
+		[""] = true,
+		["INVTYPE_AMMO"] = true,
+		["INVTYPE_HEAD"] = true,
+		["INVTYPE_NECK"] = true,
+		["INVTYPE_SHOULDER"] = true,
+		["INVTYPE_BODY"] = true,
+		["INVTYPE_CHEST"] = true,
+		["INVTYPE_ROBE"] = true,
+		["INVTYPE_WAIST"] = true,
+		["INVTYPE_LEGS"] = true,
+		["INVTYPE_FEET"] = true,
+		["INVTYPE_WRIST"] = true,
+		["INVTYPE_HAND"] = true,
+		["INVTYPE_FINGER"] = true,
+		["INVTYPE_TRINKET"] = true,
+		["INVTYPE_CLOAK"] = true,
+		["INVTYPE_WEAPON"] = true,
+		["INVTYPE_SHIELD"] = true,
+		["INVTYPE_2HWEAPON"] = true,
+		["INVTYPE_WEAPONMAINHAND"] = true,
+		["INVTYPE_WEAPONOFFHAND"] = true,
+		["INVTYPE_HOLDABLE"] = true,
+		["INVTYPE_RANGED"] = true,
+		["INVTYPE_THROWN"] = true,
+		["INVTYPE_RANGEDRIGHT"] = true,
+		["INVTYPE_RELIC"] = true,
+		["INVTYPE_TABARD"] = true,
+		["INVTYPE_BAG"] = true,
+	}
+
+}
 
 
 local function Colorize(text, hex)
@@ -58,10 +114,17 @@ function SimpleBankState:Enable()
 	
 	self.data = SBS_Data
 	
-
+	for name in pairs(self.data[realm]) do
+		filters.owner[name] = true
+	end
 
 end
 
+local function HideTooltip(frame)
+	if GameTooltip:IsVisible() then
+		GameTooltip:Hide()
+	end
+end
 
 function SimpleBankState:CreateSearchFrame()
 	if not searchFrame then
@@ -103,11 +166,16 @@ function SimpleBankState:CreateSearchFrame()
 		
 		-- Column List Button
 		frame = CreateFrame("Button", nil, searchFrame, "UIPanelButtonTemplate")
-		frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 14, 13)
-		frame:SetWidth(50)
+		frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 14, -12)
+		frame:SetWidth(24)
 		frame:SetHeight(24)
-		frame:SetText("Show")
+		frame:SetText("S")
 		frame:SetScript("OnClick", controllers.onClickColumnSelect)
+		frame:SetScript("OnEnter", function(this)
+			GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
+			GameTooltip:SetText(L["Left click to select what columns to show."])
+		end)
+		frame:SetScript("OnLeave", HideTooltip)
 		
 		-- Search Box.
 		frame = CreateFrame("EditBox", nil, searchFrame, "InputBoxTemplate")
@@ -150,6 +218,26 @@ function SimpleBankState:CreateSearchFrame()
 		'onEnterRow', self.OnMouseOver,
 		'onLeaveRow', self.OnLeaveRow,
 		'onInitHeader', function(column, button, fontString)
+			button:SetScript("OnEnter", function(this)
+				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
+				if column == HEADER_ITEM or column == HEADER_QUANTITY then
+					GameTooltip:SetText(L["Left click to sort."])
+				else
+					GameTooltip:SetText(L["Left click to sort, right click to filter."])
+				end
+			end)
+			button:SetScript("OnLeave", HideTooltip)
+			--[[
+			if column == HEADER_ITEM then
+				-- Since there is a rarity button placed 'inside' item header's position, I don't want the whole item header to be clickable.
+				-- Create a smaller button which is invisible for clicking.
+				local frame = CreateFrame("Button", nil, button)
+				frame:SetPoint("TOPLEFT", button, "TOPLEFT")
+				frame:SetHeight(button:GetHeight())
+				frame:SetWidth(button.fontString:GetStringWidth())
+				button = frame
+			end
+			]]
 			button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 			button:SetScript("OnClick", function(button, arg1)
 				if arg1 == "LeftButton" then
@@ -203,6 +291,11 @@ function SimpleBankState:CreateSearchFrame()
 				controllers.onRightClickHeaderButton(this,0)
 			end
 		end)
+		frame:SetScript("OnEnter", function(this)
+			GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
+			GameTooltip:SetText(L["Left click to sort, right click to filter."])
+		end)
+		frame:SetScript("OnLeave", HideTooltip)
 		searchFrame.rarityText = frame.text
 		
 		frame = tab:GetFrame()
@@ -357,58 +450,6 @@ do
 	end
 end
 
--- filter is a white list.
-local filters = {
-	owner = {},
-	type = {},
-	subType = {},
-	location = {
-		["BAG"] = true,
-		["BANK"] = true,
-		["MAIL"] = true,
-		["INVENTORY"] = true,
-	},
-	rarity = {
-		[0] = true,
-		[1] = true,
-		[2] = true,
-		[3] = true,
-		[4] = true,
-		[5] = true,
-		[6] = true,
-	},
-	equipLoc = {
-		[""] = true,
-		["INVTYPE_AMMO"] = true,
-		["INVTYPE_HEAD"] = true,
-		["INVTYPE_NECK"] = true,
-		["INVTYPE_SHOULDER"] = true,
-		["INVTYPE_BODY"] = true,
-		["INVTYPE_CHEST"] = true,
-		["INVTYPE_ROBE"] = true,
-		["INVTYPE_WAIST"] = true,
-		["INVTYPE_LEGS"] = true,
-		["INVTYPE_FEET"] = true,
-		["INVTYPE_WRIST"] = true,
-		["INVTYPE_HAND"] = true,
-		["INVTYPE_FINGER"] = true,
-		["INVTYPE_TRINKET"] = true,
-		["INVTYPE_CLOAK"] = true,
-		["INVTYPE_WEAPON"] = true,
-		["INVTYPE_SHIELD"] = true,
-		["INVTYPE_2HWEAPON"] = true,
-		["INVTYPE_WEAPONMAINHAND"] = true,
-		["INVTYPE_WEAPONOFFHAND"] = true,
-		["INVTYPE_HOLDABLE"] = true,
-		["INVTYPE_RANGED"] = true,
-		["INVTYPE_THROWN"] = true,
-		["INVTYPE_RANGEDRIGHT"] = true,
-		["INVTYPE_RELIC"] = true,
-		["INVTYPE_TABARD"] = true,
-		["INVTYPE_BAG"] = true,
-	}
-
-}
 
 local filterToColumn = {
 	rarity = HEADER_RARITY,
@@ -439,10 +480,6 @@ function SimpleBankState:BuildIndex()
 	ItemList:Clear()
 -- 	itemMemSum = 0; -- debug
 	for name in pairs(self.data[realm]) do
-		
-		if filters.owner[name] == nil then
-			filters.owner[name] = true
-		end
 		
 		-- Player filter.
 		if filters.owner[name] then
@@ -705,8 +742,8 @@ dropdownfunc[HEADER_RARITY] = function(self,level)
 		local info
 		if not rarityTexts then
 			rarityTexts = {}
-			for i, rarity in ipairs({"POOR","NORMAL","GOOD","RARE","EPIC","LEGENDARY","ARTIFACT"}) do
-				rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. rarity .. "|r"
+			for i, text in ipairs({"Poor","Normal","Good","Rare","Epic","Legendary","Artifact"}) do
+				rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. L[text] .. "|r"
 			end
 		end
 		
@@ -759,7 +796,6 @@ end
 
 dropdownfunc[HEADER_TYPE] = function(self,level)
 	local info, checked
-	self:Print(tostring(level))
 	if level == 1 then
 		if not next(itemTypes) then
 				info = UIDropDownMenu_CreateInfo()
@@ -819,7 +855,7 @@ function controllers.onClickColumnSelect(frame)
 	if not frame.dropdown then
 		frame.dropdown = CreateFrame("Frame", "SimpleBankStatesDropDown", nil, "UIDropDownMenuTemplate")
 		UIDropDownMenu_Initialize(frame.dropdown, function(level) SimpleBankState:PopulateColumnSelection(level) end, "MENU")
-		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "BOTTOMLEFT", frame, "TOPLEFT")
+		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
 	end
 	ToggleDropDownMenu(1, nil, frame.dropdown)
 end

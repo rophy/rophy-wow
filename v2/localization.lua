@@ -54,6 +54,11 @@ if SimpleBankState then
 		["INVTYPE_RELIC"] = "Relics",
 		["INVTYPE_TABARD"] = "Tabard",
 		["INVTYPE_BAG"] = "Containers",
+		
+		-- Tooltips.
+		["Left click to select what columns to show."] = true,
+		["Left click to sort."] = true,
+		["Left click to sort, right click to filter."] = true,
 
 		
 	})
