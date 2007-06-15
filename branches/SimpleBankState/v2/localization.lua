@@ -4,11 +4,11 @@ if SimpleBankState then
 		-- Column Headers
 		["Item Name"] = true,
 		["Rarity"] = true,
-		["Quantity"] = true,
+		["Quantity"] = "Count",
 		["Owner"] = true,
-		["Location"] = true,
+		["Location"] = "Loc",
 		["Type"] = true,
-		["Equip Loc"] = true,
+		["Equip Loc"] = "InvSlot",
 		
 		-- Rarities.
 		["Poor"] = true,
@@ -55,10 +55,16 @@ if SimpleBankState then
 		["INVTYPE_TABARD"] = "Tabard",
 		["INVTYPE_BAG"] = "Containers",
 		
-		-- Tooltips.
+		-- SearchFrame Texts.
+		["Search:"] = true,
+		["No Type Available"] = true,
+		["Refresh"] = true,
+		
+		-- SearchFrame Tooltips.
 		["Left click to select what columns to show."] = true,
 		["Left click to sort."] = true,
 		["Left click to sort, right click to filter."] = true,
+		["The item type list will be built after you do an initial search."] = true,
 
 		
 	})

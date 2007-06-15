@@ -1,20 +1,15 @@
---local dewdrop = AceLibrary("Dewdrop-2.0")
+local core = SimpleBankState
+if not core then return end
 
+local moduleName = "SimpleBankStateView"
+local view = core:HasModule("SimpleBankStateData"):NewModule(moduleName) or core:NewModule(moduleName)
 
-SimpleBankState = DongleStub("Dongle-1.1"):New("SimpleUnitFramesView")
-
-local function recycle(t)
-	for k in pairs(t) do
-		t[k] = nil
-	end
-	return t
-end
-
+-- Basic settings.
 local SCROLL_LIST_SIZE = 20
-local ITEM_LINK_WIDTH = 200
+local ITEM_LINK_WIDTH = 180
 local ITEM_COUNT_WIDTH = 60
 local ITEM_OWNER_WIDTH = 100
-local ITEM_BAG_ID_WIDTH = 60
+local ITEM_BAG_ID_WIDTH = 90
 local ITEM_TYPE_WIDTH = 170
 local ITEM_EQUIP_LOC_WIDTH = 100
 local ROW_HEIGHT = 20
@@ -40,13 +35,10 @@ local tab
 local searchFrame
 local controllers = {}
 local rarityTexts
-local L = setmetatable({}, {
-	__index = function(t,k) 
-		--return k end	-- Use this when I still haven't externalize the strings.
-		error(string.format("Locale '%s' does not exist", tostring(k))) -- Use this after.
-	end 
-})
 local itemTypes = {}
+local L = core:GetLocale()
+
+local db
 
 local filters = {
 	owner = {},
@@ -110,14 +102,23 @@ local function GetReturn(index, ...)
 end
 
 
-function SimpleBankState:Enable()
+function view:Initialize()
 	
 	self.data = SBS_Data
+	
+	local defaults = {
+		profile = {
+			hideColumns = {}
+		}
+	}
+	db = self:InitializeDB("SimpleBankStateViewData", defaults)
 	
 	for name in pairs(self.data[realm]) do
 		filters.owner[name] = true
 	end
-
+	
+	self:CreateSearchFrame():Hide()
+	
 end
 
 local function HideTooltip(frame)
@@ -126,17 +127,18 @@ local function HideTooltip(frame)
 	end
 end
 
-function SimpleBankState:CreateSearchFrame()
+function view:CreateSearchFrame()
 	if not searchFrame then
 		
 		self.itemIcons = {}
 		self.itemEquipLoc = {}
 		
 		-- Create the main frame.
-		searchFrame = CreateFrame("Frame", "SimpleBankStateSearchFrame")
+		searchFrame = CreateFrame("Frame", 'SimpleBankStateSearchFrame')
 		searchFrame:SetWidth(485)
 		searchFrame:SetHeight(485)
 		searchFrame:SetPoint("CENTER")
+		searchFrame:SetClampedToScreen(true)
 		searchFrame:SetBackdrop({
 			bgFile="Interface/DialogFrame/UI-DialogBox-Background",
 			edgeFile="Interface/DialogFrame/UI-DialogBox-Border",
@@ -145,8 +147,10 @@ function SimpleBankState:CreateSearchFrame()
 			edgeSize=32,
 			insets = { left=11, right=12, top=12, bottom=11 },
 		})
+		searchFrame:SetMovable(true)
 		
 		local frame, fontString, texture
+		
 		-- Header frame.
 		frame = CreateFrame("Frame", nil, searchFrame, "OptionFrameBoxTemplate")
 		searchFrame.headerFrame = frame
@@ -154,14 +158,20 @@ function SimpleBankState:CreateSearchFrame()
 		frame:SetHeight(30)
 		frame:SetPoint("BOTTOM", searchFrame, "TOP", 0, -5)
 		frame:SetBackdropColor(0.4, 0.4, 0.4)
+		frame:SetToplevel(false)
+		frame:EnableMouse(true)
+		frame:RegisterForDrag("LeftButton")
+		frame:SetScript("OnDragStart", function(this) searchFrame:StartMoving() end)
+		frame:SetScript("OnDragStop", function(this) searchFrame:StopMovingOrSizing() end)
 		fontString = frame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
 		fontString:SetPoint("CENTER")
-		fontString:SetText("SimpleBankState")
+		local title = string.format("SimpleBankState %s", GetAddOnMetadata('SimpleBankState', 'Version'))
+		fontString:SetText(title)
 		
 		-- Close Button.
 		frame = CreateFrame("Button", nil, searchFrame, "UIPanelCloseButton")
+		frame:SetFrameLevel(searchFrame.headerFrame:GetFrameLevel()+2)
 		searchFrame.closeButton = frame
-		--frame:SetTopLevel(true)
 		frame:SetPoint("CENTER", searchFrame.headerFrame, "RIGHT", -17, 0)
 		
 		-- Column List Button
@@ -177,6 +187,13 @@ function SimpleBankState:CreateSearchFrame()
 		end)
 		frame:SetScript("OnLeave", HideTooltip)
 		
+		-- "Search:" text.
+		fontString = searchFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		fontString:SetWidth(fontString:GetStringWidth())
+		fontString:SetHeight(20)
+		fontString:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 14, 14)
+		fontString:SetText(L["Search:"])
+		
 		-- Search Box.
 		frame = CreateFrame("EditBox", nil, searchFrame, "InputBoxTemplate")
 		searchFrame.editBox = frame
@@ -185,9 +202,19 @@ function SimpleBankState:CreateSearchFrame()
 		frame:SetMaxLetters(256)
 		frame:SetWidth(180)
 		frame:SetHeight(20)
-		frame:SetPoint("BOTTOMLEFT", searchFrame, "BOTTOMLEFT", 90, 14)
+		frame:SetPoint("TOPLEFT", fontString, "TOPRIGHT", 10, 0)
 		frame:SetScript("OnEscapePressed", function(this) this:ClearFocus() end )
-		frame:SetScript("OnEnterPressed", function(this) SimpleBankState:SearchItem2() end )
+		frame:SetScript("OnEnterPressed", function(this) view:SearchItem2() end )
+		
+		-- Refresh Button.
+		frame = CreateFrame("Button", nil, searchFrame, "UIPanelButtonTemplate")
+		frame:SetWidth(60)
+		frame:SetHeight(20)
+		frame:SetPoint("TOPLEFT", searchFrame.editBox, "TOPRIGHT", 10, 0)
+		frame:SetText(L["Refresh"])
+		frame:SetScript("OnClick", function(this)
+			view:RefreshItemList()
+		end)
 		
 		-- Slider
 		local slider = CreateFrame('Slider', nil, searchFrame, 'UIPanelScrollBarTemplate')
@@ -256,32 +283,18 @@ function SimpleBankState:CreateSearchFrame()
 			frame:SetHighlightTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
 			frame:GetHighlightTexture():SetTexCoord(0,1.0,0,0.578125)
 		end
-
-		--[[
-		,'backdrop', {
-			bgFile="Interface\\Tooltips\\UI-Tooltip-Background",
-			edgeFile="Interface\\Tooltips\\UI-Tooltip-Border",
-			tile=true,
-			tileSize=16,
-			edgeSize=16,
-			insets = { left=5, right=4, top=5, bottom=5 },
-		},
-		'backdropColorR', 0.3,
-		'backdropColorG', 0.3,
-		'backdropColorB', 0.3
-		]]
 		)
-
-		tab:SetValueChangeFunction( function(offset) SimpleBankState:OnValueChange(offset) end )
+		tab:SetValueChangeFunction( function(offset) view:OnValueChange(offset) end )
 		
-
 		-- Rarity Header.
-		frame = CreateFrame("Button", nil, tab:GetHeaderButton(1))
-		frame:SetWidth(50)
+		local parent = tab:GetHeaderButton(1)
+		frame = CreateFrame("Button", nil, parent)
+		frame:SetWidth(80)
 		frame:SetHeight(20)
-		frame:SetPoint("TOPLEFT", tab:GetHeaderButton(1), "TOPLEFT", 120, 0)
+		frame:SetPoint("TOPLEFT", parent, 'TOPRIGHT', 10, 0)
 		frame.text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		frame.text:SetPoint("CENTER")
+		frame.text:SetJustifyH("LEFT")
+		frame.text:SetAllPoints()
 		frame.text:SetText(L["Rarity"])
 		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		frame:SetScript("OnClick", function(button, arg1)
@@ -304,8 +317,18 @@ function SimpleBankState:CreateSearchFrame()
 		frame:SetParent(searchFrame)
 		frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 18 + ROW_HEIGHT, -12)
 		frame:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 42 )
-		frame:Show()
 
+		local newWidth = searchFrame:GetWidth()
+		for column, hide in pairs(db.profile.hideColumns) do
+			if hide then
+				newWidth = tab:HideColumn(column) + 24
+			end
+		end
+		if newWidth < 400 then
+			newWidth = 400
+		end
+		searchFrame:SetWidth(newWidth)
+	
 		self.tab = tab
 
 		table.insert(UISpecialFrames, "SimpleBankStateSearchFrame")
@@ -313,7 +336,7 @@ function SimpleBankState:CreateSearchFrame()
 	return searchFrame
 end
 
-function SimpleBankState:OnRightClickHeaderButton(column)
+function view:OnRightClickHeaderButton(column)
 	local newWidth = self.tab:HideColumn(column)
 	searchFrame:SetWidth(newWidth+24)
 end
@@ -323,7 +346,7 @@ end
 
 
 
-function SimpleBankState:UpdateVersion()
+function view:UpdateVersion()
 	self.data.version = self.version;
 end
 
@@ -335,14 +358,14 @@ end
 
 
 
-function SimpleBankState:IsBankBag(bagID)
+function view:IsBankBag(bagID)
 	if bagID == BANK_CONTAINER or ( bagID >= 5 and bagID <= 10 ) then
 		return true
 	end
 end
 
 
-function SimpleBankState:GetBagType(bagID)
+function view:GetBagType(bagID)
 	if bagID == EQUIP_ID then
 		return "INVENTORY";
 	elseif bagID == MAIL_ID then
@@ -461,12 +484,12 @@ local filterToColumn = {
 }
 local function ToggleFilter(filter,value)
 	filters[filter][value] = not filters[filter][value]
-	SimpleBankState:RefreshHeaderTitles(filterToColumn[filter])
-	SimpleBankState:RefreshItemList()
+	view:RefreshHeaderTitles(filterToColumn[filter])
+	view:RefreshItemList()
 end
-SimpleBankState.filters = filters
+view.filters = filters
 
-function SimpleBankState:BuildIndex()
+function view:BuildIndex()
 
 -- 	local itemMem, itemMemSum -- debug
 -- 	local mem = gcinfo() -- debug
@@ -564,19 +587,29 @@ end
 ---------------------------------
 
 
-function SimpleBankState:ToggleFrame()
-	if not searchFrame then
-		self:CreateSearchFrame():Show()
-	elseif searchFrame:IsShown() then
-		searchFrame:Hide()
+function view:ToggleFrame()
+	if not self.data then
+		self:Print("Data table not found.")
 	else
-		searchFrame:Show()
+		if not searchFrame then
+			self:CreateSearchFrame():Show()
+		elseif searchFrame:IsShown() then
+			searchFrame:Hide()
+		else
+			searchFrame:Show()
+		end
 	end
 end
 
-function SimpleBankState:ToggleColumn(column)
+-- Inject ToggleFrame() method to core.
+function core:ToggleFrame()
+	view:ToggleFrame()
+end
+
+function view:ToggleColumn(column)
 	local newWidth
-	if tab:IsColumnShown(column) then
+	db.profile.hideColumns[column] = not db.profile.hideColumns[column]
+	if db.profile.hideColumns[column] then
 		newWidth = tab:HideColumn(column) + 24
 	else
 		newWidth = tab:ShowColumn(column) + 24
@@ -587,7 +620,7 @@ function SimpleBankState:ToggleColumn(column)
 	searchFrame:SetWidth(newWidth)
 end
 
-function SimpleBankState:ItemEnter()
+function view:ItemEnter()
 	if this.itemLink then
 		GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
 		GameTooltip:SetHyperlink(this.itemLink);
@@ -595,7 +628,7 @@ function SimpleBankState:ItemEnter()
 end
 
 
-function SimpleBankState:SearchItem2()
+function view:SearchItem2()
 	local text = this:GetText()
 	if not text then return end
 	
@@ -605,19 +638,8 @@ function SimpleBankState:SearchItem2()
 end
 
 
-function SimpleBankState:UpdateLocales(loc)
-	for k, v in pairs(loc) do
-		if v == true then
-			L[k] = k
-		else
-			L[k] = v
-		end
-	end
-end
 
-
-
-function SimpleBankState:RefreshHeaderTitles(column)
+function view:RefreshHeaderTitles(column)
 	local textTable, filterTable, title
 	local count,total = 0,0
 	if column == HEADER_OWNER then
@@ -627,15 +649,25 @@ function SimpleBankState:RefreshHeaderTitles(column)
 				count = count + 1
 			end
 		end
-		tab:SetHeaderText(HEADER_OWNER,string.format("%s (%d/%d)", L["Owner"], count, total))
+		if count < total then
+			title = string.format("%s (%d/%d)", L["Owner"], count, total)
+		else
+			title = L["Owner"]
+		end
+		tab:SetHeaderText(HEADER_OWNER,title)
 	elseif column == HEADER_RARITY then
-		total = 6
+		total = 7
 		for i=0,6 do
 			if filters.rarity[i] then
 				count = count + 1
 			end
 		end
-		searchFrame.rarityText:SetText(string.format("%s (%d/%d)", L["Rarity"], count, total))
+		if count < total then
+			title = string.format("%s (%d/%d)", L["Rarity"], count, total)
+		else
+			title = L["Rarity"]
+		end
+		searchFrame.rarityText:SetText(title)
 	elseif column == HEADER_LOCATION then
 		for key, checked in pairs(filters.location) do
 			total = total + 1
@@ -643,7 +675,12 @@ function SimpleBankState:RefreshHeaderTitles(column)
 				count = count + 1
 			end
 		end
-		tab:SetHeaderText(HEADER_LOCATION,string.format("%s (%d/%d)", L["Location"], count, total))
+		if count < total then
+			title = string.format("%s (%d/%d)", L["Location"], count, total)
+		else
+			title = L["Location"]
+		end
+		tab:SetHeaderText(HEADER_LOCATION,title)
 	elseif column == HEADER_TYPE then
 		local subCount, subTotal = 0, 0
 		for type, checked in pairs(filters.type) do
@@ -658,12 +695,30 @@ function SimpleBankState:RefreshHeaderTitles(column)
 				subCount = subCount + 1
 			end
 		end
-		tab:SetHeaderText(HEADER_TYPE,string.format("%s (%d/%d - %d/%d)", L["Type"], count, total, subCount, subTotal))
+		if count < total or subCount < subTotal then
+			title = string.format("%s (%d/%d - %d/%d)", L["Type"], count, total, subCount, subTotal)
+		else
+			title = L["Type"]
+		end
+		tab:SetHeaderText(HEADER_TYPE,title)
+	elseif column == HEADER_EQUIPLOC then
+		for type, checked in pairs(filters.equipLoc) do
+			total = total + 1
+			if checked then
+				count = count + 1
+			end
+		end
+		if count < total then
+			title = string.format("%s (%d/%d)", L["Equip Loc"], count, total)
+		else
+			title = L["Equip Loc"]
+		end
+		tab:SetHeaderText(HEADER_EQUIPLOC,title)
 	end
 
 end
 
-function SimpleBankState:RefreshItemList(nobuild)
+function view:RefreshItemList(nobuild)
 	if not nobuild then
 		self:BuildIndex()
 	end
@@ -671,7 +726,7 @@ function SimpleBankState:RefreshItemList(nobuild)
 	self:OnValueChange(0)
 end
 
-function SimpleBankState:OnValueChange(offset)
+function view:OnValueChange(offset)
 	for i=1, SCROLL_LIST_SIZE do
 		local idx = offset + i
 		local rowFrame = tab:GetRowFrame(i)
@@ -691,18 +746,18 @@ function SimpleBankState:OnValueChange(offset)
 	end
 end
 
-function SimpleBankState.OnMouseOver(frame)
+function view.OnMouseOver(frame)
 	if frame.itemLink then
 		GameTooltip:SetOwner(frame, "ANCHOR_RIGHT");
 		GameTooltip:SetHyperlink(frame.itemLink);
 	end
 end
 
-function SimpleBankState.OnLeaveRow(frame)
+function view.OnLeaveRow(frame)
 	if(GameTooltip:IsVisible()) then GameTooltip:Hide(); end 
 end
 
-function SimpleBankState.OnClickRow(frame)
+function view.OnClickRow(frame)
 	if frame.itemLink then
 		ChatEdit_InsertLink(frame.itemLink)
 	end
@@ -716,7 +771,7 @@ local columnIndexMap = {
 	"Type",
 	"Equip Loc",
 }
-function SimpleBankState:PopulateColumnSelection(level)
+function view:PopulateColumnSelection(level)
 	local info
 	if level == 1 then
 		for i, columnName in ipairs(columnIndexMap) do
@@ -799,7 +854,7 @@ dropdownfunc[HEADER_TYPE] = function(self,level)
 	if level == 1 then
 		if not next(itemTypes) then
 				info = UIDropDownMenu_CreateInfo()
-				info.text = L["No Types Available"]
+				info.text = L["No Type Available"]
 				info.tooltipTitle = L["No Type Available"]
 				info.tooltipText = L["The item type list will be built after you do an initial search."]
 				info.notCheckable = 1
@@ -853,8 +908,8 @@ end
 
 function controllers.onClickColumnSelect(frame)
 	if not frame.dropdown then
-		frame.dropdown = CreateFrame("Frame", "SimpleBankStatesDropDown", nil, "UIDropDownMenuTemplate")
-		UIDropDownMenu_Initialize(frame.dropdown, function(level) SimpleBankState:PopulateColumnSelection(level) end, "MENU")
+		frame.dropdown = CreateFrame("Frame", "SimpleBankStateDropDown", nil, "UIDropDownMenuTemplate")
+		UIDropDownMenu_Initialize(frame.dropdown, function(level) view:PopulateColumnSelection(level) end, "MENU")
 		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
 	end
 	ToggleDropDownMenu(1, nil, frame.dropdown)
@@ -874,20 +929,20 @@ local columnToSortMap = {
 function controllers.onClickHeaderButton(frame,column)
 	local sortKey = columnToSortMap[column]
 	if sortKey then
-		if sortKey == SimpleBankState.currentSortKey then
+		if sortKey == view.currentSortKey then
 			sortKey = -sortKey
 		end
-		SimpleBankState.currentSortKey = sortKey
+		view.currentSortKey = sortKey
 		ItemList:Sort(sortKey)
-		SimpleBankState:RefreshItemList(true)
+		view:RefreshItemList(true)
 	end
 end
 
 function controllers.onRightClickHeaderButton(frame,column)
 	if not frame.dropdown then
-		frame.dropdown = CreateFrame("Frame", "SimpleBankStatesDropDown"..column, nil, "UIDropDownMenuTemplate")
+		frame.dropdown = CreateFrame("Frame", "SimpleBankStateDropDown"..column, nil, "UIDropDownMenuTemplate")
 		UIDropDownMenu_Initialize(frame.dropdown, function(level)
-				dropdownfunc[column](SimpleBankState,level)
+				dropdownfunc[column](view,level)
 		end, "MENU")
 		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
 	end
