@@ -3,12 +3,27 @@
 
 SimpleBankState = DongleStub("Dongle-1.1"):New("SimpleUnitFramesView")
 
+local function recycle(t)
+	for k in pairs(t) do
+		t[k] = nil
+	end
+	return t
+end
+--
+local SCROLL_LIST_SIZE = 20
+local ITEM_LINK_WIDTH = 200
+local ITEM_COUNT_WIDTH = 30
+local ITEM_OWNER_WIDTH = 100
+local ITEM_BAG_ID_WIDTH = 60
+local ITEM_TYPE_WIDTH = 100
+local ITEM_SUBTYPE_WIDTH = 100
+local ITEM_EQUIP_LOC_WIDTH = 100
+local ROW_HEIGHT = 20
 
 -- Constants
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
 local MAIL_ID = 101
 
-local SCROLL_LIST_SIZE = 20
 --local globals
 local me = UnitName("player"); --the name of the current player that's logged on
 local realm = GetRealmName(); --what realm we're on
@@ -17,11 +32,18 @@ local tab
 local searchFrame
 local controllers = {}
 local rarityTexts
+local L = {}
+local itemTypes = {}
 
 
 local function Colorize(text, hex)
 	return "|cff"..hex..text.."|r"
 end
+
+local function GetReturn(index, ...)
+	return select(index, ...)
+end
+
 
 function SimpleBankState:Enable()
 	
@@ -32,6 +54,10 @@ end
 
 function SimpleBankState:CreateSearchFrame()
 	if not searchFrame then
+		
+		self.itemIcons = {}
+		self.itemEquipLoc = {}
+		
 		-- Create the main frame.
 		searchFrame = CreateFrame("Frame", "SimpleBankStateSearchFrame")
 		searchFrame:SetWidth(485)
@@ -92,19 +118,25 @@ function SimpleBankState:CreateSearchFrame()
 		slider:SetValue(1)
 		slider:SetValueStep(1)
 		slider:SetMinMaxValues(1,1)
-			
 		tab = DongleStub("Tabulous-0"):Create(
 		'rows', SCROLL_LIST_SIZE,
 		'columns', 7,
 		'slider', slider,
-		'header1text', "Item",
-		'header2text', "Count",
-		'header3text', "Owner",
-		'header4text', "BagID",
-		'header5text', "Type",
-		'header6text', "SubType",
-		'header7text', "EquipLoc",
-		'columnWidth1', 200,
+		'header1text', L["Item Name"],
+		'header2text', L["Quantity"],
+		'header3text', L["Owner"],
+		'header4text', L["Location"],
+		'header5text', L["Type"],
+		'header6text', L["Sub Type"],
+		'header7text', L["Equip Loc"],
+		'columnWidth1', ITEM_LINK_WIDTH,
+		'columnWidth2', ITEM_COUNT_WIDTH,
+		'columnWidth3', ITEM_OWNER_WIDTH,
+		'columnWidth4', ITEM_BAG_ID_WIDTH,
+		'columnWidth5', ITEM_TYPE_WIDTH,
+		'columnWidth6', ITEM_SUBTYPE_WIDTH,
+		'columnWidth7', ITEM_EQUIP_LOC_WIDTH,
+		'rowHeight', ROW_HEIGHT,
 		'onClickRow', self.OnClickRow,
 		'onEnterRow', self.OnMouseOver,
 		'onLeaveRow', self.OnLeaveRow,
@@ -118,7 +150,12 @@ function SimpleBankState:CreateSearchFrame()
 				end
 			end)
 		end,
-		'onInitRow', function(frame)
+		'onInitRow', function(row,frame)
+			local texture = frame:CreateTexture()
+			texture:SetWidth(ROW_HEIGHT)
+			texture:SetHeight(ROW_HEIGHT)
+			texture:SetPoint("TOPRIGHT", frame, "TOPLEFT", -2, 0)
+			self.itemIcons[row] = texture
 			frame:SetHighlightTexture("Interface\\HelpFrame\\HelpFrameButton-Highlight")
 			frame:GetHighlightTexture():SetTexCoord(0,1.0,0,0.578125)
 		end
@@ -145,10 +182,10 @@ function SimpleBankState:CreateSearchFrame()
 		frame = CreateFrame("Button", nil, tab:GetHeaderButton(1))
 		frame:SetWidth(50)
 		frame:SetHeight(20)
-		frame:SetPoint("TOPLEFT", tab:GetHeaderButton(1), "TOPLEFT", 40, 0)
+		frame:SetPoint("TOPLEFT", tab:GetHeaderButton(1), "TOPLEFT", 120, 0)
 		frame.text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 		frame.text:SetPoint("CENTER")
-		frame.text:SetText("Rarity")
+		frame.text:SetText(L["Rarity"])
 		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		frame:SetScript("OnClick", function(button, arg1)
 			if arg1 == "LeftButton" then
@@ -161,9 +198,9 @@ function SimpleBankState:CreateSearchFrame()
 		
 		frame = tab:GetFrame()
 		searchFrame:SetHeight(frame:GetHeight()+ 30 + searchFrame.editBox:GetHeight())
-		searchFrame:SetWidth(frame:GetWidth()+ 24 )
+		searchFrame:SetWidth(frame:GetWidth()+ 30 + ROW_HEIGHT )
 		frame:SetParent(searchFrame)
-		frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 12, -12)
+		frame:SetPoint("TOPLEFT", searchFrame, "TOPLEFT", 18 + ROW_HEIGHT, -12)
 		frame:SetPoint("BOTTOMRIGHT", searchFrame, "BOTTOMRIGHT", -12, 42 )
 		frame:Show()
 
@@ -237,41 +274,35 @@ end
 local ItemList = {}
 do
 	local indexMap = {}
+	local returnIndex
+	local sorting = function(a,b)
+			
+	end
+--[[
+	[1] = Name
+	[2] = Quantity
+	[3] = Owner
+	[4] = BagID
+	[5] = Rarity
+	position = asc, negative = desc
+]]
 	local sorter = {
-		[1] = function(a,b) -- Name
-			return GetItemInfo(ItemList[a]) < GetItemInfo(ItemList[b])
-		end,
-		[2] = function(a,b) -- Count
-			return ItemList[a+1] < ItemList[b+1]
-		end,
-		[3] = function(a,b) -- Owner
-			return ItemList[a+2] < ItemList[b+2]
-		end,
-		[4] = function(a,b) -- BagID
-			return ItemList[a+3] < ItemList[b+3]
-		end,
-		[5] = function(a,b) -- Rarity
-			local _,_,ra = GetItemInfo(ItemList[a])
-			local _,_,rb = GetItemInfo(ItemList[b])
-			return ra < rb
-		end,
-		[-1] = function(a,b) -- Name
-			return GetItemInfo(ItemList[a]) > GetItemInfo(ItemList[b])
-		end,
-		[-2] = function(a,b) -- Count
-			return ItemList[a+1] > ItemList[b+1]
-		end,
-		[-3] = function(a,b) -- Owner
-			return ItemList[a+2] > ItemList[b+2]
-		end,
-		[-4] = function(a,b) -- BagID
-			return ItemList[a+3] > ItemList[b+3]
-		end,
-		[-5] = function(a,b) -- Rarity
-			local _,_,ra = GetItemInfo(ItemList[a])
-			local _,_,rb = GetItemInfo(ItemList[b])
-			return ra > rb
-		end,
+		[1] = function(a,b) return GetItemInfo(ItemList[a]) < GetItemInfo(ItemList[b]) end,
+		[2] = function(a,b) return ItemList[a+1] < ItemList[b+1] end,
+		[3] = function(a,b) return ItemList[a+2] < ItemList[b+2] end,
+		[4] = function(a,b) return ItemList[a+3] < ItemList[b+3] end,
+		[5] = function(a,b) return GetReturn(3, GetItemInfo(ItemList[a])) < GetReturn(3, GetItemInfo(ItemList[b])) end,
+		[6] = function(a,b) return GetReturn(6, GetItemInfo(ItemList[a])) < GetReturn(6, GetItemInfo(ItemList[b])) end,
+		[7] = function(a,b) return GetReturn(7, GetItemInfo(ItemList[a])) < GetReturn(7, GetItemInfo(ItemList[b])) end,
+		[8] = function(a,b) return GetReturn(9, GetItemInfo(ItemList[a])) < GetReturn(9, GetItemInfo(ItemList[b])) end,
+		[-1] = function(a,b) return GetItemInfo(ItemList[a]) > GetItemInfo(ItemList[b]) end,
+		[-2] = function(a,b) return ItemList[a+1] > ItemList[b+1] end,
+		[-3] = function(a,b) return ItemList[a+2] > ItemList[b+2] end,
+		[-4] = function(a,b) return ItemList[a+3] > ItemList[b+3] end,
+		[-5] = function(a,b) return GetReturn(3, GetItemInfo(ItemList[a])) > GetReturn(3, GetItemInfo(ItemList[b])) end,
+		[-6] = function(a,b) return GetReturn(6, GetItemInfo(ItemList[a])) > GetReturn(6, GetItemInfo(ItemList[b])) end,
+		[-7] = function(a,b) return GetReturn(7, GetItemInfo(ItemList[a])) > GetReturn(7, GetItemInfo(ItemList[b])) end,
+		[-8] = function(a,b) return GetReturn(9, GetItemInfo(ItemList[a])) > GetReturn(9, GetItemInfo(ItemList[b])) end,
 	}
 	function ItemList:GetSize()
 		return #indexMap
@@ -347,19 +378,36 @@ function SimpleBankState:BuildIndex()
 						itemCount = self.data[realm][name][bagID][index+1];
 						itemID = self.data[realm][name][bagID][index];
 -- 							itemMem = gcinfo() -- debug
-						itemName, itemLink, itemQuality = GetItemInfo(itemID);
+						iName, iLink, iQuality, _, _, iType, sType, _, eqLoc, _ = GetItemInfo(itemID);
+						
+						if not iName then
+							self:PrintF("GetItemInfo() returned nil for %s in %s, %s", itemID, name, bagID)
+						else
+							if not itemTypes[iType] then
+								itemTypes[iType] = {}
+							end
+							itemTypes[iType][sType] = true
+							self.itemEquipLoc[eqLoc] = true
+							
+							if not filters.rarity or filters.rarity == iQuality then
+								if not filters.itemType or filters.itemType == iType then
+									if not filters.itemSubType or filters.itemSubType == sType then
+										if not filters.itemEquipLoc or filters.itemEquipLoc == eqLoc then
+							
+											-- Keyword filter.
+											if not self.itemKeyword or iName:lower():find(self.itemKeyword:lower()) then
+												ItemList:Add(iLink,itemCount,name,bagID)
+												listSize = listSize + 1;
+											end
+										end
+									end
+								end
+							end
+						end
+						
 -- 							itemMemSum = gcinfo() - itemMem + itemMemSum -- debug
 							
 						-- Rarity filter.
-						if not filters.rarity or filters.rarity == itemQuality then
-						
-							-- Keyword filter.
-							if itemName and ( not self.itemKeyword or string.find(string.lower(itemName), string.lower(self.itemKeyword)) )then
-								ItemList:Add(itemLink,itemCount,name,bagID)
-								listSize = listSize + 1;
-							end
-								
-						end
 						
 						index = index + 2;
 						
@@ -372,7 +420,7 @@ function SimpleBankState:BuildIndex()
 	end
 
 	
-	self:SortItems();
+	ItemList:Sort(self.currentSortKey)
 	
 
 	self.itemListSize = listSize;
@@ -466,6 +514,16 @@ function SimpleBankState.PlayerDropDown()
 	end
 end
 
+function SimpleBankState:UpdateLocales(loc)
+	for k, v in pairs(loc) do
+		if v == true then
+			L[k] = k
+		else
+			L[k] = v
+		end
+	end
+end
+
 function SimpleBankState.BagTypeDropDown()
 	local self = SimpleBankState
 	if not self.bagTypes then
@@ -534,10 +592,11 @@ function SimpleBankState:OnValueChange(offset)
 		local rowFrame = tab:GetRowFrame(i)
 		if idx <= ItemList:GetSize() then
 			local itemLink,itemCount,playerName,bagID = ItemList:Get(idx)
-			local _, _, _, _, _, itemType, itemSubType, _, itemEquipLoc = GetItemInfo(itemLink)
+			local _, _, _, _, _, itemType, itemSubType, _, itemEquipLoc, itemTexture = GetItemInfo(itemLink)
 			if itemLink then
-				tab:FillRowData(i, itemLink, itemCount, playerName, bagID, itemType, itemSubType, itemEquipLoc)
+				tab:FillRowData(i, itemLink, itemCount, playerName, bagID, itemType, itemSubType, L[itemEquipLoc])
 				rowFrame.itemLink = itemLink
+				self.itemIcons[i]:SetTexture(itemTexture)
 			end
 		else
 			tab:HideRow(i)
@@ -627,6 +686,49 @@ SimpleBankState.dropdownfunc[3] = function(self,level)
 	end
 end
 
+SimpleBankState.dropdownfunc[5] = function(self,level)
+	local info
+	for itemType in pairs(itemTypes) do
+		info = UIDropDownMenu_CreateInfo()
+		info.text = itemType
+		info.func = SetFilter
+		info.arg1 = 'itemType'
+		info.arg2 = itemType
+		info.notCheckable = 1
+		UIDropDownMenu_AddButton(info)
+	end
+end
+
+SimpleBankState.dropdownfunc[6] = function(self,level)
+	if not filters.itemType then 
+		self:Print("Select a main type first.")
+	else
+		local info
+		for itemSubType in pairs(itemTypes[filters.itemType]) do
+			info = UIDropDownMenu_CreateInfo()
+			info.text = itemSubType
+			info.func = SetFilter
+			info.arg1 = 'itemSubType'
+			info.arg2 = itemSubType
+			info.notCheckable = 1
+			UIDropDownMenu_AddButton(info)
+		end
+	end
+end
+
+SimpleBankState.dropdownfunc[7] = function(self,level)
+	local info
+	for itemEquipLoc in pairs(self.itemEquipLoc) do
+		info = UIDropDownMenu_CreateInfo()
+		info.text = L[itemEquipLoc]
+		info.func = SetFilter
+		info.arg1 = 'itemEquipLoc'
+		info.arg2 = itemEquipLoc
+		info.notCheckable = 1
+		UIDropDownMenu_AddButton(info)
+	end
+end
+
 function controllers.onClickColumnSelect(frame)
 	if not frame.dropdown then
 		frame.dropdown = CreateFrame("Frame", "SimpleUnitFramesDropDown", nil, "UIDropDownMenuTemplate")
@@ -644,15 +746,17 @@ local columnToSortMap = {
 	[2] = 2,
 	[3] = 3,
 	[4] = 4,
+	[5] = 6,
+	[6] = 7,
+	[7] = 8,
 }
-local currentSortKey
 function controllers.onClickHeaderButton(frame,column)
 	local sortKey = columnToSortMap[column]
 	if sortKey then
-		if sortKey == currentSortKey then
+		if sortKey == SimpleBankState.currentSortKey then
 			sortKey = -sortKey
 		end
-		currentSortKey = sortKey
+		SimpleBankState.currentSortKey = sortKey
 		ItemList:Sort(sortKey)
 		SimpleBankState:OnValueChange(0)
 	end

@@ -26,6 +26,6 @@ Tabulous-0\Tabulous-0.lua
 
 data.lua
 view.lua
-# localization.lua
+localization.lua
 # SimpleBankState.xml
 
