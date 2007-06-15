@@ -1,6 +1,0 @@
-## Interface: 20003
-## Title: MemBench
-## Notes: Shows memory usage.
-## Author: Rophy
-## Version: 2.0.3.16
-MemBench.xml
