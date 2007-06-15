@@ -13,6 +13,8 @@
 ## SavedVariables: SBS_Data, SimpleBankStateViewData
 ## OptionalDeps: Dongle
 
+Dongle.lua
+
 Tabulous-0\Tabulous-0.lua
 
 core.lua
