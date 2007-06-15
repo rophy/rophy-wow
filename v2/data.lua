@@ -99,14 +99,14 @@ function data:OnUpdate()
 	
 end
 
-function data:UNIT_INVENTORY_CHANGED(unitid)
+function data:UNIT_INVENTORY_CHANGED(event,unitid)
 	self:Debug(2, "UNIT_INVENTORY_CHANGED")
 	if unitid == 'player' then
 		self.scanEquip = true
 	end
 end
 
-function data:BAG_UPDATE(bagID)
+function data:BAG_UPDATE(event, bagID)
 	self:Debug(2, "BAG_UPDATE")
 	self.scanBag = bagID
 	self.pendingBags[bagID] = true
@@ -248,6 +248,10 @@ function data:SaveEquipmentData()
 			"SecondaryHandSlot" ,
 			"RangedSlot" ,
 			"AmmoSlot" ,
+			"Bag0Slot" ,
+			"Bag1Slot" ,
+			"Bag2Slot" ,
+			"Bag3Slot" ,
 		}
 		
 		local invSlotID;
