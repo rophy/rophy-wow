@@ -110,7 +110,10 @@ function view:Initialize()
 	
 	local defaults = {
 		profile = {
-			hideColumns = {}
+			hideColumns = {
+				[HEADER_EQUIPLOC] = true,
+				[HEADER_TYPE] = true
+			}
 		}
 	}
 	db = self:InitializeDB("SimpleBankStateViewData", defaults)
@@ -326,7 +329,7 @@ function view:CreateSearchFrame()
 		local newWidth = searchFrame:GetWidth()
 		for column, hide in pairs(db.profile.hideColumns) do
 			if hide then
-				newWidth = tab:HideColumn(column) + 24
+				newWidth = tab:HideColumn(column) + 30
 			end
 		end
 		if newWidth < 400 then
@@ -615,9 +618,9 @@ function view:ToggleColumn(column)
 	local newWidth
 	db.profile.hideColumns[column] = not db.profile.hideColumns[column]
 	if db.profile.hideColumns[column] then
-		newWidth = tab:HideColumn(column) + 24
+		newWidth = tab:HideColumn(column) + 30
 	else
-		newWidth = tab:ShowColumn(column) + 24
+		newWidth = tab:ShowColumn(column) + 30
 	end
 	if newWidth < 400 then
 		newWidth = 400
