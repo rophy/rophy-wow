@@ -1,6 +1,6 @@
 ## Interface: 20100
 ## Title: SimpleBankState
-## Notes: Search all your characters for item by item name.
+## Notes: Simple character item search mod.
 ## Author: Rophy
 
 ## Version: $Revision$
