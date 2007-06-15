@@ -1,6 +1,8 @@
+local core = SimpleBankState
+if not core then return end
 
-local moduleName = "SimpleUnitFrameData"
-local data = DongleStub("Dongle-1.1"):New(moduleName)
+local moduleName = "SimpleBankStateData"
+local data = core:NewModule(moduleName)
 
 local UPDATE_DELAY = 2
 local EQUIP_ID = 100 -- Index of equipment in saved variables.
@@ -308,6 +310,5 @@ function data:ToID(hyperLink)
 		return hyperLink:sub(from,to)
 	end
 end
-
 
 

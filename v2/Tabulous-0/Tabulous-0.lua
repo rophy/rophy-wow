@@ -348,7 +348,6 @@ function Tabulous:Create(...)
 	
 	frame:SetWidth(frameWidth + slider:GetWidth() + 20)
 	frame:SetHeight(frameHeight)
-	frame:Hide()
 	
 	if opts.onInitFrame then
 		opts.onInitFrame(frame)
