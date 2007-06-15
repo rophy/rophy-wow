@@ -2,7 +2,8 @@ local core = SimpleBankState
 if not core then return end
 
 local moduleName = "SimpleBankStateView"
-local view = core:HasModule("SimpleBankStateData"):NewModule(moduleName) or core:NewModule(moduleName)
+local parent = core:HasModule("SimpleBankStateData") or core
+local view = parent:NewModule(moduleName)
 
 -- Basic settings.
 local SCROLL_LIST_SIZE = 20
