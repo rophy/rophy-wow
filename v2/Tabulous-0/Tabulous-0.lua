@@ -316,7 +316,7 @@ function Tabulous:Create(...)
 		
 		-- call back for more customization of the rowFrame.
 		if opts.onInitRow then
-			opts.onInitRow(rowFrame)
+			opts.onInitRow(i,rowFrame)
 		end
 	end
 	local slider = opts.slider
