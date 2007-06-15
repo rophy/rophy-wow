@@ -301,7 +301,6 @@ function Tabulous:Create(...)
 			frameWidth = frameWidth + fontWidth
 			local fontHeight = opts.rowHeight
 			fontString:SetHeight(fontHeight)
-			fontString:SetText(i.."-"..j)
 			if j == 1 then
 				fontString:SetPoint("TOPLEFT", rowFrame, "TOPLEFT")
 			else
