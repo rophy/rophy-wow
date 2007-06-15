@@ -26,6 +26,8 @@ local HEADER_LOCATION = 4
 local HEADER_TYPE = 5
 local HEADER_EQUIPLOC = 6
 
+local VERSION = tonumber(GetAddOnMetadata('SimpleBankState', 'Version').match("(%d+)") or 1)
+
 
 --local globals
 local me = UnitName("player"); --the name of the current player that's logged on
@@ -165,7 +167,7 @@ function view:CreateSearchFrame()
 		frame:SetScript("OnDragStop", function(this) searchFrame:StopMovingOrSizing() end)
 		fontString = frame:CreateFontString(nil, "BACKGROUND", "GameFontNormal")
 		fontString:SetPoint("CENTER")
-		local title = string.format("SimpleBankState %s", GetAddOnMetadata('SimpleBankState', 'Version'))
+		local title = string.format("SimpleBankState %s", VERSION)
 		fontString:SetText(title)
 		
 		-- Close Button.
