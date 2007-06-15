@@ -167,6 +167,7 @@ local defaultOptions = {
 	["rows"] = 20,
 	['columnWidth'] = 60,
 	['rowHeight'] = 20,
+	['headerHeight'] = 24,
 	['fontSize'] = 10,
 	['justifyH'] = 'LEFT',
 	['justifyV'] = 'CENTER',
@@ -217,7 +218,7 @@ function Tabulous:Create(...)
 		frame:SetBackdropColor(opts.backdropColorR, opts.backdropColorG, opts.backdropColorB)
 	end
 	
-	local frameHeight = tabObj.inset.top + tabObj.inset.bottom + ( opts.rows + 1 ) * opts.rowHeight
+	local frameHeight = tabObj.inset.top + tabObj.inset.bottom + ( opts.rows ) * opts.rowHeight + opts.headerHeight
 	local frameWidth = tabObj.inset.left + tabObj.inset.right
 	tabObj.rowFrames = {}
 	tabObj.headerButtons = {}
@@ -225,12 +226,10 @@ function Tabulous:Create(...)
 	-- Create the header buttons.
 	for i=1, opts.columns do
 		local header = CreateFrame("Button", nil, frame)
-		header:SetWidth(opts['columnWidth'..i] or opts.columnWidth)
-		header:SetHeight(opts.rowHeight)
 		if i == 1 then
 			header:SetPoint("TOPLEFT", frame, "TOPLEFT", tabObj.inset.left, -tabObj.inset.top)
 		else
-			header:SetPoint("TOPLEFT", tabObj.headerButtons[i-1], "TOPRIGHT")
+			header:SetPoint("TOPLEFT", tabObj.headerButtons[i-1].fontString, "TOPRIGHT")
 		end
 		if opts.onClickHeader then
 			header:SetScript("OnClick", opts.onClickHeader)
@@ -249,11 +248,14 @@ function Tabulous:Create(...)
 		end
 		fontString:SetJustifyH(opts['justifyH'..i] or opts.justifyH)
 		fontString:SetJustifyV(opts['justifyV'..i] or opts.justifyV)
-		fontString:SetAllPoints(header)
-		--header:SetFontString(fontString)
+		fontString:SetWidth(opts['columnWidth'..i] or opts.columnWidth)
+		fontString:SetHeight(opts.rowHeight)
+		fontString:SetPoint("TOPLEFT", header, "TOPLEFT")
 		if opts['header'..i..'text'] then
 			fontString:SetText(opts['header'..i..'text'])
 		end
+		header:SetWidth(fontString:GetStringWidth())
+		header:SetHeight(opts.headerHeight)
 		header.fontString = fontString
 
 		tabObj.headerButtons[i] = header
@@ -402,8 +404,8 @@ function TabulousObject.ReadjustFrames(self)
 	for i, header in ipairs(self.headerButtons) do
 		if header:IsShown() then
 			header:SetPoint(point, relativeTo, relativePoint, xOffset, yOffset)
-			point,relativeTo,relativePoint,xOffset,yOffset = "TOPLEFT",header,"TOPRIGHT",0,0
-			width = width + header:GetWidth()
+			point,relativeTo,relativePoint,xOffset,yOffset = "TOPLEFT",header.fontString,"TOPRIGHT",0,0
+			width = width + header.fontString:GetWidth()
 		end
 	end
 	for i, rowFrame in ipairs(self.rowFrames) do
