@@ -1,28 +1,23 @@
-## Interface: 20003
+## Interface: 20100
 ## Title: SimpleBankState
 ## Notes: Search all your characters for item by item name.
 ## Author: Rophy
 
-## Version: 1.2.32
+## Version: $Revision$
 ## X-ReleaseDate: $Date$
 ## X-Category: Inventory
 ## X-eMail: rophy123@gmail.com
 ## X-Website: http://www.wowinterface.com/downloads/info5128-SimpleBankState.html
 
 
-## SavedVariables: SBS_Data
-## OptionalDeps: Ace2, DewdropLib
+## SavedVariables: SBS_Data, SimpleBankStateViewData
+## OptionalDeps: Dongle
 
+Tabulous-0\Tabulous-0.lua
 
-Libs\AceLibrary\AceLibrary.lua
-Libs\AceOO-2.0\AceOO-2.0.lua
-Libs\AceAddon-2.0\AceAddon-2.0.lua
-Libs\AceEvent-2.0\AceEvent-2.0.lua
-Libs\AceDebug-2.0\AceDebug-2.0.lua
-Libs\AceConsole-2.0\AceConsole-2.0.lua
-Libs\Dewdrop-2.0\Dewdrop-2.0.lua
-
-SimpleBankState.lua
+core.lua
+data.lua
+view.lua
 localization.lua
-SimpleBankState.xml
+
 
