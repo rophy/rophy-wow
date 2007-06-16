@@ -487,10 +487,24 @@ local filterToColumn = {
 	subType = HEADER_TYPE,
 	location = HEADER_LOCATION,
 }
-local function ToggleFilter(filter,value)
-	filters[filter][value] = not filters[filter][value]
+local ToggleFilter 
+function ToggleFilter(filter,value,flag,exclusive)
+	if flag ~= nil then
+		filters[filter][value] = flag
+	else
+		filters[filter][value] = not filters[filter][value]
+	end
+	flag = filters[filter][value]
+	if exclusive then
+		for k,v in pairs(filters[filter]) do
+			if k ~= value then
+				filters[filter][k] = not flag
+			end
+		end
+	end
 	view:RefreshHeaderTitles(filterToColumn[filter])
 	view:RefreshItemList()
+	
 end
 view.filters = filters
 
@@ -652,9 +666,12 @@ function view:RefreshHeaderTitles(column)
 			total = total + 1
 			if filters.owner[name] then
 				count = count + 1
+				title = name
 			end
 		end
-		if count < total then
+		if count == 1 then
+			title = "|cffffffff"..title.."|r"
+		elseif count < total then
 			title = string.format("%s (%d/%d)", L["Owner"], count, total)
 		else
 			title = L["Owner"]
@@ -665,9 +682,12 @@ function view:RefreshHeaderTitles(column)
 		for i=0,6 do
 			if filters.rarity[i] then
 				count = count + 1
+				title = rarityTexts[i]
 			end
 		end
-		if count < total then
+		if count == 1 then
+			-- title is already colored.
+		elseif count < total then
 			title = string.format("%s (%d/%d)", L["Rarity"], count, total)
 		else
 			title = L["Rarity"]
@@ -678,9 +698,12 @@ function view:RefreshHeaderTitles(column)
 			total = total + 1
 			if checked then
 				count = count + 1
+				title = key
 			end
 		end
-		if count < total then
+		if count == 1 then
+			title = "|cffffffff"..L[title].."|r"
+		elseif count < total then
 			title = string.format("%s (%d/%d)", L["Location"], count, total)
 		else
 			title = L["Location"]
@@ -711,9 +734,12 @@ function view:RefreshHeaderTitles(column)
 			total = total + 1
 			if checked then
 				count = count + 1
+				title = type
 			end
 		end
-		if count < total then
+		if count == 1 then
+			title = "|cffffffff"..L[title].."|r"
+		elseif count < total then
 			title = string.format("%s (%d/%d)", L["Equip Loc"], count, total)
 		else
 			title = L["Equip Loc"]
@@ -800,9 +826,18 @@ end
 
 local dropdownfunc = setmetatable({}, { __index = function(t,k) return function() end end })
 
+local DropDownFunc
+function DropDownFunc(filter,value)
+	if IsAltKeyDown() then
+		ToggleFilter(filter,value,true,true)
+		CloseDropDownMenus()
+	else
+		ToggleFilter(filter,value)
+	end
+end
 
 dropdownfunc[HEADER_RARITY] = function(self,level)
-
+	self:Print(tostring(level))
 	if level ==1  then
 		local info
 		if not rarityTexts then
@@ -816,10 +851,12 @@ dropdownfunc[HEADER_RARITY] = function(self,level)
 			local text = rarityTexts[i]
 			info = UIDropDownMenu_CreateInfo()
 			info.text = text
-			info.func = ToggleFilter
+			info.func = DropDownFunc
 			info.arg1 = 'rarity'
 			info.arg2 = i
 			info.checked = filters.rarity[i]
+			info.tooltipTitle = L["Rarity"]
+			info.tooltipText = L["Alt-Click to select only that item."]
 			info.keepShownOnClick = 1
 			UIDropDownMenu_AddButton(info)
 		end
@@ -833,10 +870,12 @@ dropdownfunc[HEADER_OWNER] = function(self,level)
 		for name in pairs(self.data[realm]) do
 			info = UIDropDownMenu_CreateInfo()
 			info.text = name
-			info.func = ToggleFilter
+			info.func = DropDownFunc
 			info.arg1 = 'owner'
 			info.arg2 = name
 			info.checked = filters.owner[name]
+			info.tooltipTitle = L["Owner"]
+			info.tooltipText = L["Alt-Click to select only that item."]
 			info.keepShownOnClick = 1
 			UIDropDownMenu_AddButton(info)
 		end
@@ -849,10 +888,12 @@ dropdownfunc[HEADER_LOCATION] = function(self,level)
 		for bagType in pairs(filters.location) do
 			info = UIDropDownMenu_CreateInfo()
 			info.text = L[bagType]
-			info.func = ToggleFilter
+			info.func = DropDownFunc
 			info.arg1 = 'location'
 			info.arg2 = bagType
 			info.checked = filters.location[bagType]
+			info.tooltipTitle = L["Location"]
+			info.tooltipText = L["Alt-Click to select only that item."]
 			info.keepShownOnClick = 1
 			UIDropDownMenu_AddButton(info)
 		end
@@ -874,10 +915,12 @@ dropdownfunc[HEADER_TYPE] = function(self,level)
 				checked = filters.type[itemType]
 				info = UIDropDownMenu_CreateInfo()
 				info.text = itemType
-				info.func = ToggleFilter
+				info.func = DropDownFunc
 				info.arg1 = 'type'
 				info.arg2 = itemType
 				info.checked = checked
+				info.tooltipTitle = L["Type"]
+				info.tooltipText = L["Alt-Click to select only that item."]
 				info.keepShownOnClick = 1
 				info.hasArrow = true
 				info.value = itemType
@@ -890,10 +933,12 @@ dropdownfunc[HEADER_TYPE] = function(self,level)
 			checked = filters.subType[itemSubType]
 			info = UIDropDownMenu_CreateInfo()
 			info.text = itemSubType
-			info.func = ToggleFilter
+			info.func = DropDownFunc
 			info.arg1 = 'subType'
 			info.arg2 = itemSubType
 			info.checked = checked
+				info.tooltipTitle = L["Sub Type"]
+				info.tooltipText = L["Alt-Click to select only that item."]
 			info.keepShownOnClick = 1
 			UIDropDownMenu_AddButton(info,level)
 		end
@@ -906,10 +951,12 @@ dropdownfunc[HEADER_EQUIPLOC] = function(self,level)
 		for itemEquipLoc in pairs(filters.equipLoc) do
 			info = UIDropDownMenu_CreateInfo()
 			info.text = L[itemEquipLoc]
-			info.func = ToggleFilter
+			info.func = DropDownFunc
 			info.arg1 = 'equipLoc'
 			info.arg2 = itemEquipLoc
 			info.checked = filters.equipLoc[itemEquipLoc]
+			info.tooltipTitle = L["Equip Loc"]
+			info.tooltipText = L["Alt-Click to select only that item."]
 			info.keepShownOnClick = 1
 			UIDropDownMenu_AddButton(info)
 		end

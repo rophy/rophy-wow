@@ -8,6 +8,7 @@ if SimpleBankState then
 		["Owner"] = true,
 		["Location"] = "Loc",
 		["Type"] = true,
+		["Sub Type"] = true,
 		["Equip Loc"] = "InvSlot",
 		
 		-- Rarities.
@@ -65,6 +66,7 @@ if SimpleBankState then
 		["Left click to sort."] = true,
 		["Left click to sort, right click to filter."] = true,
 		["The item type list will be built after you do an initial search."] = true,
+		["Alt-Click to select only that item."] = true,
 
 		
 	})
