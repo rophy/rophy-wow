@@ -765,16 +765,18 @@ function view:OnValueChange(offset)
 			local itemLink,itemCount,playerName,bagID = ItemList:Get(idx)
 			local itemName, _, itemRarity, _, _, itemType, itemSubType, _, itemEquipLoc, itemTexture = GetItemInfo(itemLink)
 			if itemLink then
-				self.itemIcons[i]:SetTexture(itemTexture)
 				rowFrame.itemLink = itemLink
+				local locationText = L[self:GetBagType(bagID)]
+				local typeText
+				self.itemIcons[i]:SetTexture(itemTexture)
 				if itemName then
 					itemName = ITEM_QUALITY_COLORS[itemRarity].hex .. itemName .. "|r"
-					local locationText = L[self:GetBagType(bagID)]
-					local typeText = string.format("%s - %s", itemType, itemSubType)
+					typeText = string.format("%s - %s", itemType, itemSubType)
 				else
 					itemName = itemLink
+					textText = ""
 				end
-				tab:FillRowData(i, itemName, itemCount, playerName, locationText, typeText, itemSubType, L[itemEquipLoc])
+				tab:FillRowData(i, itemName, itemCount, playerName, locationText, typeText, L[itemEquipLoc])
 			end
 		else
 			tab:HideRow(i)
