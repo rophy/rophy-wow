@@ -23,4 +23,27 @@ function core:GetLocale()
 	return L
 end
 
+function core:Enable()
+	self:StartDebugging()
+end
+
+function core:StartDebugging(level)
+	if not level then
+		level = 2 
+	end
+	for name, obj in self:IterateModules() do
+		core.StartDebugging(obj,level)
+	end
+	self:Print("Started debugging")
+	self:EnableDebug(level)
+end
+
+function core:StopDebugging()
+	for name, obj in self:IterateModules() do
+		core.StopDebugging(obj)
+	end
+	self:Print("Stopped debugging")
+	self:EnableDebug(-1)
+end
+
 _G["SimpleBankState"] = core

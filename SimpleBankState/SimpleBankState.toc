@@ -11,7 +11,7 @@
 
 
 ## SavedVariables: SBS_Data, SimpleBankStateViewData
-## OptionalDeps: Dongle
+## OptionalDeps: Dongle, DewdropLib
 
 Dongle.lua
 
