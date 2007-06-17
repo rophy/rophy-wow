@@ -57,25 +57,28 @@ function data:Initialize()
 		self.data[realm][me] = {};
 	end
 	
-	
-	self:ScheduleRepeatingTimer(moduleName, function() self:OnUpdate() end, UPDATE_DELAY)
-
 	self.pendingBags = {}
 	
+	self:StartRecording()
+end
+
+function data:StartRecording()
+	self:ScheduleRepeatingTimer(moduleName, function() self:OnUpdate() end, UPDATE_DELAY)
 	self:RegisterEvent("UNIT_INVENTORY_CHANGED")
 	self:RegisterEvent("BAG_UPDATE")
 	self:RegisterEvent("BANKFRAME_CLOSED")
 	self:RegisterEvent("BANKFRAME_OPENED")
 	self:RegisterEvent("PLAYERBANKSLOTS_CHANGED")
 	self:RegisterEvent("MAIL_INBOX_UPDATE")
+end
 
-	
+function data:StopRecording()
+	self:CancelTimer(moduleName)
+	self:UnregisterAllEvents()
 end
 
 function data:OnUpdate()
 
-	self:Debug(2, "Checking for bag changes.")
-	
 	if self.scanMail then
 		self:SaveMailboxData()
 		self.scanMail = false

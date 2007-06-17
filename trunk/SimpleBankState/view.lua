@@ -4,6 +4,7 @@ if not core then return end
 local moduleName = "SimpleBankStateView"
 local parent = core:HasModule("SimpleBankStateData") or core
 local view = parent:NewModule(moduleName)
+local dewdrop = AceLibrary and AceLibrary:HasInstance('Dewdrop-2.0') and AceLibrary('Dewdrop-2.0')
 
 -- Basic settings.
 local SCROLL_LIST_SIZE = 20
@@ -185,10 +186,11 @@ function view:CreateSearchFrame()
 		frame:SetWidth(24)
 		frame:SetHeight(24)
 		frame:SetText("S")
+		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		frame:SetScript("OnClick", controllers.onClickColumnSelect)
 		frame:SetScript("OnEnter", function(this)
 			GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
-			GameTooltip:SetText(L["Left click to select what columns to show."])
+			GameTooltip:SetText(L["Left-Click to select what columns to show, Alt-Right-Click to reset all filters."])
 		end)
 		frame:SetScript("OnLeave", HideTooltip)
 		
@@ -246,30 +248,19 @@ function view:CreateSearchFrame()
 		'columnWidth5', ITEM_TYPE_WIDTH,
 		'columnWidth6', ITEM_EQUIP_LOC_WIDTH,
 		'rowHeight', ROW_HEIGHT,
-		'onClickRow', self.OnClickRow,
-		'onEnterRow', self.OnMouseOver,
-		'onLeaveRow', self.OnLeaveRow,
+		'onClickRow', controllers.OnClickRow,
+		'onEnterRow', controllers.OnEnterRow,
+		'onLeaveRow', controllers.OnLeaveRow,
 		'onInitHeader', function(column, button, fontString)
 			button:SetScript("OnEnter", function(this)
 				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
 				if column == HEADER_ITEM or column == HEADER_QUANTITY then
-					GameTooltip:SetText(L["Left click to sort."])
+					GameTooltip:SetText(L["Left-Click to sort."])
 				else
-					GameTooltip:SetText(L["Left click to sort, right click to filter."])
+					GameTooltip:SetText(L["Left-Click to sort, Right-Click to filter."])
 				end
 			end)
 			button:SetScript("OnLeave", HideTooltip)
-			--[[
-			if column == HEADER_ITEM then
-				-- Since there is a rarity button placed 'inside' item header's position, I don't want the whole item header to be clickable.
-				-- Create a smaller button which is invisible for clicking.
-				local frame = CreateFrame("Button", nil, button)
-				frame:SetPoint("TOPLEFT", button, "TOPLEFT")
-				frame:SetHeight(button:GetHeight())
-				frame:SetWidth(button.fontString:GetStringWidth())
-				button = frame
-			end
-			]]
 			button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 			button:SetScript("OnClick", function(button, arg1)
 				if arg1 == "LeftButton" then
@@ -311,7 +302,7 @@ function view:CreateSearchFrame()
 		end)
 		frame:SetScript("OnEnter", function(this)
 			GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT")
-			GameTooltip:SetText(L["Left click to sort, right click to filter."])
+			GameTooltip:SetText(L["Left-Click to sort, Right-Click to filter."])
 		end)
 		frame:SetScript("OnLeave", HideTooltip)
 		searchFrame.rarityText = frame.text
@@ -456,6 +447,7 @@ do
 		return #indexMap
 	end
 	function ItemList:Sort(key)
+		view:Debug(2, "Sorting...")
 		table.sort(indexMap,sorter[key])
 	end
 	function ItemList:Clear()
@@ -502,18 +494,24 @@ function ToggleFilter(filter,value,flag,exclusive)
 			end
 		end
 	end
-	view:RefreshHeaderTitles(filterToColumn[filter])
+	view:RefreshHeaderTitle(filterToColumn[filter])
 	view:RefreshItemList()
 	
+end
+local ResetFilters
+function ResetFilters()
+	for filter, values in pairs(filters) do
+		for value in pairs(values) do
+			values[value] = true
+		end
+	end
 end
 view.filters = filters
 
 function view:BuildIndex()
 
--- 	local itemMem, itemMemSum -- debug
--- 	local mem = gcinfo() -- debug
--- 	local timer = GetTime() -- debug
-		
+	self:Debug(2, "Rebuilding item list")
+	
 	local itemInfo, itemName, itemLink, itemQuality, itemCount;
 	
 	local listSize = 0;
@@ -526,8 +524,6 @@ function view:BuildIndex()
 		-- Player filter.
 		if filters.owner[name] then
 			
-			self:Debug(2, "filter", "owner", name)
-		
 			for bagID in pairs(self.data[realm][name]) do
 				local bagType = self:GetBagType(bagID)
 				
@@ -538,8 +534,6 @@ function view:BuildIndex()
 				-- BagType filter.
 				if filters.location[bagType] then
 					
-					self:Debug(2, "filter", "location", bagType)
-
 					local n = table.getn(self.data[realm][name][bagID]);
 				
 					local index = 1;
@@ -567,8 +561,6 @@ function view:BuildIndex()
 							
 							if filters.rarity[iQuality] and filters.type[iType] and filters.subType[sType] and filters.equipLoc[eqLoc] then
 							
-								self:Debug(2, "filter", "type", iType, sType, eqLoc, iQuality)
-								
 								-- Keyword filter.
 								if not self.itemKeyword or iName:lower():find(self.itemKeyword:lower()) then
 									ItemList:Add(iLink,itemCount,name,bagID)
@@ -639,13 +631,6 @@ function view:ToggleColumn(column)
 	searchFrame:SetWidth(newWidth)
 end
 
-function view:ItemEnter()
-	if this.itemLink then
-		GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-		GameTooltip:SetHyperlink(this.itemLink);
-	end
-end
-
 
 function view:SearchItem2()
 	local text = this:GetText()
@@ -658,7 +643,7 @@ end
 
 
 
-function view:RefreshHeaderTitles(column)
+function view:RefreshHeaderTitle(column)
 	local textTable, filterTable, title
 	local count,total = 0,0
 	if column == HEADER_OWNER then
@@ -745,6 +730,12 @@ function view:RefreshHeaderTitles(column)
 			title = L["Equip Loc"]
 		end
 		tab:SetHeaderText(HEADER_EQUIPLOC,title)
+	elseif not column then
+		tab:SetHeaderText(HEADER_OWNER,L["Owner"])
+		searchFrame.rarityText:SetText(L["Rarity"])
+		tab:SetHeaderText(HEADER_LOCATION,L["Location"])
+		tab:SetHeaderText(HEADER_TYPE,L["Type"])
+		tab:SetHeaderText(HEADER_EQUIPLOC,L["Equip Loc"])
 	end
 
 end
@@ -784,18 +775,18 @@ function view:OnValueChange(offset)
 	end
 end
 
-function view.OnMouseOver(frame)
+function controllers.OnEnterRow(frame)
 	if frame.itemLink then
 		GameTooltip:SetOwner(frame, "ANCHOR_RIGHT");
 		GameTooltip:SetHyperlink(frame.itemLink);
 	end
 end
 
-function view.OnLeaveRow(frame)
+function controllers.OnLeaveRow(frame)
 	if(GameTooltip:IsVisible()) then GameTooltip:Hide(); end 
 end
 
-function view.OnClickRow(frame)
+function controllers.OnClickRow(frame)
 	if frame.itemLink then
 		ChatEdit_InsertLink(frame.itemLink)
 	end
@@ -809,171 +800,19 @@ local columnIndexMap = {
 	"Type",
 	"Equip Loc",
 }
-function view:PopulateColumnSelection(level)
-	local info
-	if level == 1 then
-		for i, columnName in ipairs(columnIndexMap) do
-			local isShown = tab:IsColumnShown(i)
-			info = UIDropDownMenu_CreateInfo()
-			info.text = L[columnName]
-			info.func = self.ToggleColumn
-			info.arg1 = self
-			info.arg2 = i
-			info.keepShownOnClick = 1
-			info.checked = isShown
-			UIDropDownMenu_AddButton(info)
-		end
+function controllers.onClickColumnSelect(frame,arg1)
+	if arg1 == "LeftButton" then
+		controllers.onLeftClickColumnSelect(frame)
+	elseif arg1 == "RightButton" then
+		controllers.onRightClickColumnSelect(frame)
 	end
 end
 
-local dropdownfunc = setmetatable({}, { __index = function(t,k) return function() end end })
-
-local DropDownFunc
-function DropDownFunc(filter,value)
-	if IsAltKeyDown() then
-		ToggleFilter(filter,value,true,true)
-		CloseDropDownMenus()
-	else
-		ToggleFilter(filter,value)
-	end
+function controllers.onRightClickColumnSelect(frame)
+	ResetFilters()
+	view:RefreshHeaderTitle()
+	view:RefreshItemList()
 end
-
-dropdownfunc[HEADER_RARITY] = function(self,level)
-	self:Print(tostring(level))
-	if level ==1  then
-		local info
-		if not rarityTexts then
-			rarityTexts = {}
-			for i, text in ipairs({"Poor","Normal","Good","Rare","Epic","Legendary","Artifact"}) do
-				rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. L[text] .. "|r"
-			end
-		end
-		
-		for i=0, 6, 1 do
-			local text = rarityTexts[i]
-			info = UIDropDownMenu_CreateInfo()
-			info.text = text
-			info.func = DropDownFunc
-			info.arg1 = 'rarity'
-			info.arg2 = i
-			info.checked = filters.rarity[i]
-			info.tooltipTitle = L["Rarity"]
-			info.tooltipText = L["Alt-Click to select only that item."]
-			info.keepShownOnClick = 1
-			UIDropDownMenu_AddButton(info)
-		end
-	end
-	
-end
-
-dropdownfunc[HEADER_OWNER] = function(self,level)
-	if level == 1 then
-		local info
-		for name in pairs(self.data[realm]) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = name
-			info.func = DropDownFunc
-			info.arg1 = 'owner'
-			info.arg2 = name
-			info.checked = filters.owner[name]
-			info.tooltipTitle = L["Owner"]
-			info.tooltipText = L["Alt-Click to select only that item."]
-			info.keepShownOnClick = 1
-			UIDropDownMenu_AddButton(info)
-		end
-	end
-end
-
-dropdownfunc[HEADER_LOCATION] = function(self,level)
-	if level == 1 then
-		local info
-		for bagType in pairs(filters.location) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = L[bagType]
-			info.func = DropDownFunc
-			info.arg1 = 'location'
-			info.arg2 = bagType
-			info.checked = filters.location[bagType]
-			info.tooltipTitle = L["Location"]
-			info.tooltipText = L["Alt-Click to select only that item."]
-			info.keepShownOnClick = 1
-			UIDropDownMenu_AddButton(info)
-		end
-	end
-end
-
-dropdownfunc[HEADER_TYPE] = function(self,level)
-	local info, checked
-	if level == 1 then
-		if not next(itemTypes) then
-				info = UIDropDownMenu_CreateInfo()
-				info.text = L["No Type Available"]
-				info.tooltipTitle = L["No Type Available"]
-				info.tooltipText = L["The item type list will be built after you do an initial search."]
-				info.notCheckable = 1
-				UIDropDownMenu_AddButton(info,level)
-		else
-			for itemType in pairs(itemTypes) do
-				checked = filters.type[itemType]
-				info = UIDropDownMenu_CreateInfo()
-				info.text = itemType
-				info.func = DropDownFunc
-				info.arg1 = 'type'
-				info.arg2 = itemType
-				info.checked = checked
-				info.tooltipTitle = L["Type"]
-				info.tooltipText = L["Alt-Click to select only that item."]
-				info.keepShownOnClick = 1
-				info.hasArrow = true
-				info.value = itemType
-				UIDropDownMenu_AddButton(info,level)
-			end
-		end
-	elseif level == 2 then
-		local itemType = UIDROPDOWNMENU_MENU_VALUE
-		for itemSubType in pairs(itemTypes[itemType]) do
-			checked = filters.subType[itemSubType]
-			info = UIDropDownMenu_CreateInfo()
-			info.text = itemSubType
-			info.func = DropDownFunc
-			info.arg1 = 'subType'
-			info.arg2 = itemSubType
-			info.checked = checked
-				info.tooltipTitle = L["Sub Type"]
-				info.tooltipText = L["Alt-Click to select only that item."]
-			info.keepShownOnClick = 1
-			UIDropDownMenu_AddButton(info,level)
-		end
-	end
-end
-
-dropdownfunc[HEADER_EQUIPLOC] = function(self,level)
-	if level == 1 then
-		local info
-		for itemEquipLoc in pairs(filters.equipLoc) do
-			info = UIDropDownMenu_CreateInfo()
-			info.text = L[itemEquipLoc]
-			info.func = DropDownFunc
-			info.arg1 = 'equipLoc'
-			info.arg2 = itemEquipLoc
-			info.checked = filters.equipLoc[itemEquipLoc]
-			info.tooltipTitle = L["Equip Loc"]
-			info.tooltipText = L["Alt-Click to select only that item."]
-			info.keepShownOnClick = 1
-			UIDropDownMenu_AddButton(info)
-		end
-	end
-end
-
-function controllers.onClickColumnSelect(frame)
-	if not frame.dropdown then
-		frame.dropdown = CreateFrame("Frame", "SimpleBankStateDropDown", nil, "UIDropDownMenuTemplate")
-		UIDropDownMenu_Initialize(frame.dropdown, function(level) view:PopulateColumnSelection(level) end, "MENU")
-		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
-	end
-	ToggleDropDownMenu(1, nil, frame.dropdown)
-end
-
 
 -- A map from search frame header column index to sorter index.
 local columnToSortMap = {
@@ -997,15 +836,354 @@ function controllers.onClickHeaderButton(frame,column)
 	end
 end
 
-function controllers.onRightClickHeaderButton(frame,column)
-	if not frame.dropdown then
-		frame.dropdown = CreateFrame("Frame", "SimpleBankStateDropDown"..column, nil, "UIDropDownMenuTemplate")
-		UIDropDownMenu_Initialize(frame.dropdown, function(level)
-				dropdownfunc[column](view,level)
-		end, "MENU")
-		UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
+---------------------------
+-- Drop Down Menu 
+---------------------------
+
+local DropDownFunc
+local dropdownfunc = {}
+
+if dewdrop then
+
+	DropDownFunc = function(filter,value)
+		if IsAltKeyDown() then
+			ToggleFilter(filter,value,true,true)
+		else
+			ToggleFilter(filter,value)
+		end
 	end
-	ToggleDropDownMenu(1, nil, frame.dropdown)
+	
+	controllers.onRightClickHeaderButton = function(frame,column)
+		if dropdownfunc[column] then
+			if dewdrop:IsOpen(frame) then
+				dewdrop:Close()
+			else
+				dewdrop:Open(frame,
+					'children', dropdownfunc[column],
+					'point', 'TOPLEFT',
+					'relativePoint', 'BOTTOMLEFT'
+				)
+			end
+		end
+	end
+
+	controllers.onLeftClickColumnSelect = function(frame)
+		if dewdrop:IsOpen(frame) then
+			dewdrop:Close()
+		else
+			dewdrop:Open(frame,
+				'children', dropdownfunc.columnSelection,
+				'point', 'TOPLEFT',
+				'relativePoint', 'BOTTOMLEFT'
+			)
+		end
+	end
+	
+	dropdownfunc[HEADER_RARITY] = function(level)
+		if level ==1  then
+			if not rarityTexts then
+				rarityTexts = {}
+				for i, text in ipairs({"Poor","Normal","Good","Rare","Epic","Legendary","Artifact"}) do
+					rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. L[text] .. "|r"
+				end
+			end
+			
+			for i=0, 6, 1 do
+				local text = rarityTexts[i]
+				dewdrop:AddLine(
+					'text', text,
+					'func', DropDownFunc,
+					'arg1', 'rarity',
+					'arg2', i,
+					'checked', filters.rarity[i],
+					'tooltipTitle', L["Rarity"],
+					'tooltipText', L["Alt-Left-Click to select only that item."]
+				)
+			end
+		end
+		
+	end
+	
+	dropdownfunc[HEADER_OWNER] = function(level)
+		if level == 1 then
+			local info
+			for name in pairs(view.data[realm]) do
+				dewdrop:AddLine(
+					'text', name,
+					'func', DropDownFunc,
+					'arg1', 'owner',
+					'arg2', name,
+					'checked', filters.owner[name],
+					'tooltipTitle', L["Rarity"],
+					'tooltipText', L["Alt-Left-Click to select only that item."]
+				)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_LOCATION] = function(level)
+		if level == 1 then
+			for bagType in pairs(filters.location) do
+				dewdrop:AddLine(
+					'text', L[bagType],
+					'func', DropDownFunc,
+					'arg1', 'location',
+					'arg2', bagType,
+					'checked', filters.location[bagType],
+					'tooltipTitle', L["Location"],
+					'tooltipText', L["Alt-Left-Click to select only that item."]
+				)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_TYPE] = function(level,value)
+		if level == 1 then
+			if not next(itemTypes) then
+				dewdrop:AddLine(
+					'text', L["No Type Available"],
+					'tooltipTitle', L["No Type Available"],
+					'tooltipText', L["The item type list will be built after you do an initial search."],
+					'notCheckable', true
+				)
+			else
+				for itemType in pairs(itemTypes) do
+					local checked = filters.type[itemType]
+					dewdrop:AddLine(
+						'text', itemType,
+						'func', DropDownFunc,
+						'arg1', 'type',
+						'arg2', itemType,
+						'checked', checked,
+						'tooltipTitle', L["Type"],
+						'tooltipText', L["Alt-Left-Click to select only that item."],
+						'hasArrow', checked,
+						'value', itemType
+					)
+				end
+			end
+		elseif level == 2 then
+			local itemType = value
+			for itemSubType in pairs(itemTypes[itemType]) do
+				local checked = filters.subType[itemSubType]
+				dewdrop:AddLine(
+					'text', itemSubType,
+					'func', DropDownFunc,
+					'arg1', 'subType',
+					'arg2', itemSubType,
+					'checked', checked,
+					'tooltipTitle', L["Sub Type"],
+					'tooltipText', L["Alt-Left-Click to select only that item."]
+				)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_EQUIPLOC] = function(level)
+		if level == 1 then
+			for itemEquipLoc in pairs(filters.equipLoc) do
+				dewdrop:AddLine(
+					'text', L[itemEquipLoc],
+					'func', DropDownFunc,
+					'arg1', 'equipLoc',
+					'arg2', itemEquipLoc,
+					'checked', filters.equipLoc[itemEquipLoc],
+					'tooltipTitle', L["Equip Loc"],
+					'tooltipText', L["Alt-Left-Click to select only that item."]
+				)
+			end
+		end
+	end
+
+	dropdownfunc.columnSelection = function(level)
+		if level == 1 then
+			for i, columnName in ipairs(columnIndexMap) do
+				local isShown = tab:IsColumnShown(i)
+				dewdrop:AddLine(
+					'text', L[columnName],
+					'func', view.ToggleColumn,
+					'arg1', view,
+					'arg2', i,
+					'checked', isShown
+				)
+			end
+		end
+	end
+	
+else
+
+	DropDownFunc = function(filter,value)
+		if IsAltKeyDown() then
+			ToggleFilter(filter,value,true,true)
+			CloseDropDownMenus()
+		else
+			ToggleFilter(filter,value)
+		end
+	end
+
+	controllers.onRightClickHeaderButton = function(frame,column)
+		if dropdownfunc[column] then
+			if not frame.dropdown then
+				frame.dropdown = CreateFrame("Frame", "SimpleBankStateDropDown"..column, nil, "UIDropDownMenuTemplate")
+				UIDropDownMenu_Initialize(frame.dropdown, dropdownfunc[column], "MENU")
+				UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
+			end
+			ToggleDropDownMenu(1, nil, frame.dropdown)
+		end
+	end
+	
+	controllers.onLeftClickColumnSelect = function(frame)
+		if not frame.dropdown then
+			frame.dropdown = CreateFrame("Frame", "SimpleBankStateColumnDropDown", nil, "UIDropDownMenuTemplate")
+			UIDropDownMenu_Initialize(frame.dropdown, dropdownfunc.columnSelection, "MENU")
+			UIDropDownMenu_SetAnchor(0, 0, frame.dropdown, "TOPLEFT", frame, "BOTTOMLEFT")
+		end
+		ToggleDropDownMenu(1, nil, frame.dropdown)
+	end
+
+	dropdownfunc[HEADER_RARITY] = function(level)
+		if level ==1  then
+			local info
+			if not rarityTexts then
+				rarityTexts = {}
+				for i, text in ipairs({"Poor","Normal","Good","Rare","Epic","Legendary","Artifact"}) do
+					rarityTexts[i-1] = ITEM_QUALITY_COLORS[i-1].hex .. L[text] .. "|r"
+				end
+			end
+			
+			for i=0, 6, 1 do
+				local text = rarityTexts[i]
+				info = UIDropDownMenu_CreateInfo()
+				info.text = text
+				info.func = DropDownFunc
+				info.arg1 = 'rarity'
+				info.arg2 = i
+				info.checked = filters.rarity[i]
+				info.tooltipTitle = L["Rarity"]
+				info.tooltipText = L["Alt-Left-Click to select only that item."]
+				info.keepShownOnClick = 1
+				UIDropDownMenu_AddButton(info)
+			end
+		end
+		
+	end
+
+	dropdownfunc[HEADER_OWNER] = function(level)
+		if level == 1 then
+			local info
+			for name in pairs(view.data[realm]) do
+				info = UIDropDownMenu_CreateInfo()
+				info.text = name
+				info.func = DropDownFunc
+				info.arg1 = 'owner'
+				info.arg2 = name
+				info.checked = filters.owner[name]
+				info.tooltipTitle = L["Owner"]
+				info.tooltipText = L["Alt-Left-Click to select only that item."]
+				info.keepShownOnClick = 1
+				UIDropDownMenu_AddButton(info)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_LOCATION] = function(level)
+		if level == 1 then
+			local info
+			for bagType in pairs(filters.location) do
+				info = UIDropDownMenu_CreateInfo()
+				info.text = L[bagType]
+				info.func = DropDownFunc
+				info.arg1 = 'location'
+				info.arg2 = bagType
+				info.checked = filters.location[bagType]
+				info.tooltipTitle = L["Location"]
+				info.tooltipText = L["Alt-Left-Click to select only that item."]
+				info.keepShownOnClick = 1
+				UIDropDownMenu_AddButton(info)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_TYPE] = function(level)
+		local info, checked
+		if level == 1 then
+			if not next(itemTypes) then
+					info = UIDropDownMenu_CreateInfo()
+					info.text = L["No Type Available"]
+					info.tooltipTitle = L["No Type Available"]
+					info.tooltipText = L["The item type list will be built after you do an initial search."]
+					info.notCheckable = 1
+					UIDropDownMenu_AddButton(info,level)
+			else
+				for itemType in pairs(itemTypes) do
+					checked = filters.type[itemType]
+					info = UIDropDownMenu_CreateInfo()
+					info.text = itemType
+					info.func = DropDownFunc
+					info.arg1 = 'type'
+					info.arg2 = itemType
+					info.checked = checked
+					info.tooltipTitle = L["Type"]
+					info.tooltipText = L["Alt-Left-Click to select only that item."]
+					info.keepShownOnClick = 1
+					info.hasArrow = true
+					info.value = itemType
+					UIDropDownMenu_AddButton(info,level)
+				end
+			end
+		elseif level == 2 then
+			local itemType = UIDROPDOWNMENU_MENU_VALUE
+			for itemSubType in pairs(itemTypes[itemType]) do
+				checked = filters.subType[itemSubType]
+				info = UIDropDownMenu_CreateInfo()
+				info.text = itemSubType
+				info.func = DropDownFunc
+				info.arg1 = 'subType'
+				info.arg2 = itemSubType
+				info.checked = checked
+					info.tooltipTitle = L["Sub Type"]
+					info.tooltipText = L["Alt-Left-Click to select only that item."]
+				info.keepShownOnClick = 1
+				UIDropDownMenu_AddButton(info,level)
+			end
+		end
+	end
+
+	dropdownfunc[HEADER_EQUIPLOC] = function(level)
+		if level == 1 then
+			local info
+			for itemEquipLoc in pairs(filters.equipLoc) do
+				info = UIDropDownMenu_CreateInfo()
+				info.text = L[itemEquipLoc]
+				info.func = DropDownFunc
+				info.arg1 = 'equipLoc'
+				info.arg2 = itemEquipLoc
+				info.checked = filters.equipLoc[itemEquipLoc]
+				info.tooltipTitle = L["Equip Loc"]
+				info.tooltipText = L["Alt-Left-Click to select only that item."]
+				info.keepShownOnClick = 1
+				UIDropDownMenu_AddButton(info)
+			end
+		end
+	end
+
+	dropdownfunc.columnSelection = function(level)
+		local info
+		if level == 1 then
+			for i, columnName in ipairs(columnIndexMap) do
+				local isShown = tab:IsColumnShown(i)
+				info = UIDropDownMenu_CreateInfo()
+				info.text = L[columnName]
+				info.func = view.ToggleColumn
+				info.arg1 = view
+				info.arg2 = i
+				info.keepShownOnClick = 1
+				info.checked = isShown
+				UIDropDownMenu_AddButton(info)
+			end
+		end
+	end
+
 end
 
 

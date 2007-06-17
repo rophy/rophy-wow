@@ -62,11 +62,11 @@ if SimpleBankState then
 		["Refresh"] = true,
 		
 		-- SearchFrame Tooltips.
-		["Left click to select what columns to show."] = true,
-		["Left click to sort."] = true,
-		["Left click to sort, right click to filter."] = true,
+		["Left-Click to select what columns to show, Alt-Right-Click to reset all filters."] = true,
+		["Left-Click to sort."] = true,
+		["Left-Click to sort, Right-Click to filter."] = true,
 		["The item type list will be built after you do an initial search."] = true,
-		["Alt-Click to select only that item."] = true,
+		["Alt-Left-Click to select only that item."] = true,
 
 		
 	})
