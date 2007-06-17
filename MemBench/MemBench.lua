@@ -83,8 +83,9 @@ local function sorter(a,b)
 end
 local addonInfos = {}
 function ShowTooltip()
-	GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+	GameTooltip:SetOwner(this, "ANCHOR_BOTTOMRIGHT", - frame:GetWidth(), 0)
 	
+	UpdateAddOnMemoryUsage()
 	local numAddons = GetNumAddOns()
 	for i=1, numAddons do
 		local info = addonInfos[i] or {}
