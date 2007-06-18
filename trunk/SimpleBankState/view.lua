@@ -816,9 +816,11 @@ function controllers.onClickColumnSelect(frame,arg1)
 end
 
 function controllers.onRightClickColumnSelect(frame)
-	ResetFilters()
-	view:RefreshHeaderTitle()
-	view:RefreshItemList()
+	if IsAltKeyDown() then
+		ResetFilters()
+		view:RefreshHeaderTitle()
+		view:RefreshItemList()
+	end
 end
 
 -- A map from search frame header column index to sorter index.
