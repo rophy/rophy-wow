@@ -23,10 +23,6 @@ function core:GetLocale()
 	return L
 end
 
-function core:Enable()
-	self:StartDebugging()
-end
-
 function core:StartDebugging(level)
 	if not level then
 		level = 2 
