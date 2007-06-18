@@ -21,4 +21,3 @@ core.lua
 data.lua
 view.lua
 localization.lua
-
