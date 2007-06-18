@@ -405,6 +405,9 @@ do
 	[3] = Owner
 	[4] = BagID
 	[5] = Rarity
+	[6] = Item Type and Sub Type
+	[7] = Item Sub Type (currently not used)
+	[8] = Inventroy Slot
 	position = asc, negative = desc
 ]]
 	local sorter = {
@@ -788,7 +791,11 @@ end
 
 function controllers.OnClickRow(frame)
 	if frame.itemLink then
-		ChatEdit_InsertLink(frame.itemLink)
+		if IsShiftKeyDown() then
+			ChatEdit_InsertLink(frame.itemLink)
+		elseif IsControlKeyDown() then
+			DressUpItemLink(frame.itemLink)
+		end
 	end
 end
 
