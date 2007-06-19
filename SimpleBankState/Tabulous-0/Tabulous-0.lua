@@ -1,7 +1,30 @@
---[[ Tabulous ]]--
+--[[-------------------------------------------------------------------------
+	Tabulous : An utility to create a tabular view frame.
+	
+	Description : 
+	
+		Tabulous is a low level utility to create a tabular view frame.
+	By 'low level' it means the frame created will only have the core
+	functionalities required in a tabular view, and is not ready to be
+	used as a stand-alone frame. The frame created should be polished
+	and embedded in the main frame which your UI have created. It
+	will provide the API to hide/show rows and columns, but authors
+	should design their own interface to use those API, such as clicking
+	header to sort the column etc.
+	
+		The frame created by Tabulous will provides:
+			- each row as a Button.
+			- each column in a row as a FontString.
+			- each column header as a Button and a FontString inside it.
+	
+	which means, you'll be able to click column headers and rows,
+	but not cells in a row. This might change in the future, but
+	currently it works well enough for me.
+
+---------------------------------------------------------------------------]]
 
 local vmajor = "Tabulous-0"
-local vminor = 1
+local vminor = tonumber(string.match("$Revision$", "(%d+)") or 1)
 
 -- The library object.
 local Tabulous = {}
