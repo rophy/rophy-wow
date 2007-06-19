@@ -1,0 +1,14 @@
+## Interface: 20100
+## Title: GlobalScan
+## Notes: Scans for global pollution.
+## Author: Rophy
+
+## Version: $Revision: 138 $
+## X-ReleaseDate: $Date: 2007-06-15 15:16:21 +0800 (Fri, 15 Jun 2007) $
+## X-Category: Development
+## X-eMail: rophy123@gmail.com
+
+
+## SavedVariables: GlobalScanData
+
+GlobalScan.lua
