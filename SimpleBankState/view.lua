@@ -97,11 +97,6 @@ local filters = {
 }
 
 
-local function GetReturn(index, ...)
-	return select(index, ...)
-end
-
-
 function view:Initialize()
 	
 	self.data = SBS_Data
@@ -415,7 +410,7 @@ do
 		[2] = function(a,b) return ItemList[a+1] < ItemList[b+1] end,
 		[3] = function(a,b) return ItemList[a+2] < ItemList[b+2] end,
 		[4] = function(a,b) return ItemList[a+3] < ItemList[b+3] end,
-		[5] = function(a,b) return GetReturn(3, GetItemInfo(ItemList[a])) < GetReturn(3, GetItemInfo(ItemList[b])) end,
+		[5] = function(a,b) return select(3, GetItemInfo(ItemList[a])) < select(3, GetItemInfo(ItemList[b])) end,
 		[6] = function(a,b) 
 			local idA, idB = ItemList[a], ItemList[b]
 			local _, _, _, _, _, iTypeA, iSubTypeA = GetItemInfo(idA)
@@ -426,13 +421,13 @@ do
 				return iTypeA < iTypeB
 			end
 		end,
-		[7] = function(a,b) return GetReturn(7, GetItemInfo(ItemList[a])) < GetReturn(7, GetItemInfo(ItemList[b])) end,
-		[8] = function(a,b) return GetReturn(9, GetItemInfo(ItemList[a])) < GetReturn(9, GetItemInfo(ItemList[b])) end,
+		[7] = function(a,b) return select(7, GetItemInfo(ItemList[a])) < select(7, GetItemInfo(ItemList[b])) end,
+		[8] = function(a,b) return select(9, GetItemInfo(ItemList[a])) < select(9, GetItemInfo(ItemList[b])) end,
 		[-1] = function(a,b) return GetItemInfo(ItemList[a]) > GetItemInfo(ItemList[b]) end,
 		[-2] = function(a,b) return ItemList[a+1] > ItemList[b+1] end,
 		[-3] = function(a,b) return ItemList[a+2] > ItemList[b+2] end,
 		[-4] = function(a,b) return ItemList[a+3] > ItemList[b+3] end,
-		[-5] = function(a,b) return GetReturn(3, GetItemInfo(ItemList[a])) > GetReturn(3, GetItemInfo(ItemList[b])) end,
+		[-5] = function(a,b) return select(3, GetItemInfo(ItemList[a])) > select(3, GetItemInfo(ItemList[b])) end,
 		[-6] = function(a,b)
 			local idA, idB = ItemList[a], ItemList[b]
 			local _, _, _, _, _, iTypeA, iSubTypeA = GetItemInfo(idA)
@@ -443,8 +438,8 @@ do
 				return iTypeA > iTypeB
 			end
 		end,
-		[-7] = function(a,b) return GetReturn(7, GetItemInfo(ItemList[a])) > GetReturn(7, GetItemInfo(ItemList[b])) end,
-		[-8] = function(a,b) return GetReturn(9, GetItemInfo(ItemList[a])) > GetReturn(9, GetItemInfo(ItemList[b])) end,
+		[-7] = function(a,b) return select(7, GetItemInfo(ItemList[a])) > select(7, GetItemInfo(ItemList[b])) end,
+		[-8] = function(a,b) return select(9, GetItemInfo(ItemList[a])) > select(9, GetItemInfo(ItemList[b])) end,
 	}
 	function ItemList:GetSize()
 		return #indexMap
