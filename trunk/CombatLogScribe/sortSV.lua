@@ -1,47 +1,96 @@
-function Include(path)	
+local function Include(path)
 	local module = assert(loadfile(path))
 	module()
+end
+
+local typeValue = {
+	["boolean"] = 0,
+	["number"] = 1,
+	["string"] = 2,
+}
+
+local function sorter(a,b)
+	local ta, tb = typeValue[type(a)], typeValue[type(b)]
+	if ta == 0 then
+		return false
+	elseif tb == 0 then
+		return true
+	elseif ta ~= tb then
+		return ta < tb
+	else
+		return a < b
+	end
 end
 
 function Sort(t, tab)
 	local tmp = {}
 	for k, v in pairs(t) do
+		if type(k) == "table" then
+			error("Cannot have a table as key")
+		end
 		table.insert(tmp, k)
 	end
-	table.sort(tmp, function(a,b) 
-		if type(a) == "number" then
-			if type(b) ~= "number" then
-				return true
-			else
-				return a < b
-			end
-		else
-			if type(b) == "number" then
-				return false
-			else
-				return tostring(a) < tostring(b)
-			end
-		end
-	end)
+	table.sort(tmp, sorter)
 	if not tab then tab = "" end
-	print(tab .. "{" )
 	tab = tab .. "\t"
 	for i, k in ipairs(tmp) do
-		if type(t[k]) == "table" then
-			print(tab.. tostring(k) .. "=" )
-			Sort(t[k], tab)
+		local key = k
+		local value = t[k]
+		if type(key) == "string" then
+			key = key:gsub("\\", "\\\\")
+			key = key:gsub('\"', '\\"')
+			key = key:gsub("\n", "\\n")
+			key = key:gsub("\t", "\\t")
+			key = '"'..key..'"'
+		end
+		if type(value) == "string" then
+			value = value:gsub("\\", "\\\\")
+			value = value:gsub('\"', '\\"')
+			value = value:gsub("\n", "\\n")
+			value = value:gsub("\t", "\\t")
+			value = '"'..value..'"'
+		end
+		if type(value) == "table" then
+			print(tab.."["..tostring(key).."] = {")
+			Sort(value, tab)
+			print(tab.."},")
 		else
-			print(tab .. tostring(k) .. "=" .. tostring(t[k]) .. "," )
+			print(tab.."["..tostring(key).."] = "..tostring(value)..",")
 		end
 	end
-	print(tab .. "},")
 end
-
 
 if not arg or not arg[1] then
 	os.exit()
 end
 
+
+-- Record what globals we have.
+local g = {}
+for k in pairs(_G) do
+	g[k] = true
+end
+
+-- Now load the file.
 Include(arg[1])
 
-Sort(CombatLogScribeDB)
+-- Record what new variables are in the file.
+local newKeys = {}
+for k,v in pairs(_G) do
+	if not g[k] then
+		table.insert(newKeys, k)
+	end
+end
+
+table.sort(newKeys, sorter)
+
+for i, k in ipairs(newKeys) do
+	local v = _G[k]
+	if type(v) ~= 'table' then
+		print(string.format("%s = %s", tostring(k), tostring(v)))
+	else
+		print(string.format("%s = {", tostring(k)))
+		Sort(v)
+		print("}")
+	end
+end
