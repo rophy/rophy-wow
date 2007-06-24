@@ -1,0 +1,8 @@
+## Interface: 20100
+## Title: rAccountant
+## OptionalDeps: Dongle
+## SavedVariables: rAccountantData
+## SavedVariablesPerCharacter: rAccountantDataPerChar
+
+transaction.lua
+
