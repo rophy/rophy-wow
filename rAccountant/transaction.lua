@@ -1,6 +1,9 @@
 --[[
 	transaction.lua : tracks money change transactions.
 	
+	TODO: 
+		- purge data : merge all transactions (per character) into one 'opening' transaction.
+		- the ability to manually add, delete, edit transaction especially those in category 'reconcile'.
 	
 	saved variable format:
 	["Tichronius - Alliance"] = {
