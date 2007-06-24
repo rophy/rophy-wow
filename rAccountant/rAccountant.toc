@@ -1,8 +1,13 @@
 ## Interface: 20100
 ## Title: rAccountant
+## Notes: Completely records your cash flow.
+## Author: Rophy
+
 ## OptionalDeps: Dongle
 ## SavedVariables: rAccountantData
 ## SavedVariablesPerCharacter: rAccountantDataPerChar
+
+## X-Category: Inventory
 
 transaction.lua
 

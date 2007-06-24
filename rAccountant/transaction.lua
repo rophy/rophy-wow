@@ -5,10 +5,11 @@
 	saved variable format:
 	["Tichronius - Alliance"] = {
 		["Ballis"] = {
-			"tmodenum,timestamp,amount",
-			"tmodenum,timestamp,amount",
-			"tmodenum,timestamp,amount",
-			...
+			"category,timestamp,amount",
+			"category,timestamp,amount",
+			"category,timestamp,amount",
+			...,
+			["cash"] = 12345
 		}
 	}
 ]]
@@ -16,14 +17,14 @@
 Transaction = DongleStub("Dongle-1.1"):New("rAccountant_Transaction")
 
 local globalDB, playerDB
-local playerName
-local serverName
+local playerName, serverName
 local currCategory = ""
 local prevMoney = 0
 local timeOffset = 1182593000
 
 local L = setmetatable({}, {__index = function(t,k) return k end})
 
+--[[ Currently not used
 local categoryMap = {
 	reconcile = 1,
 	other = 2,
@@ -39,25 +40,18 @@ local categoryMap = {
 	ah = 12,
 	repairs = 13,
 }
+for k,v in pairs(categoryMap) do
+	categoryMap[v] = k
+end
+]]
 
 function Transaction:Initialize()
 	self.hooks = {}
-	for k,v in pairs(categoryMap) do
-		categoryMap[v] = k
-	end
 	self:EnableDebug(2)
 end
 
 function Transaction:Enable()
 
-	-- Repair Hooks
---	self:SecureHook("RepairAllItems")
---	self:SecureHook("CursorHasItem")
-	
-	
-
---	self:Reconcile()
-	
 	playerName = UnitName('player')
 	serverName = GetRealmName() .. ' - ' .. UnitFactionGroup('player')
 	
@@ -70,16 +64,33 @@ function Transaction:Enable()
 		globalDB[serverName] = {}
 	end
 	if not globalDB[serverName][playerName] then
-		globalDB[serverName][playerName] = {
-			cash = 0,
-		}
+		globalDB[serverName][playerName] = {}
+		playerDB = globalDB[serverName][playerName]
+		self:AddData(GetMoney(), "opening", GetMoney())
+	else
+		playerDB = globalDB[serverName][playerName]
 	end
-	playerDB = globalDB[serverName][playerName]
 	
 	self:Reconcile()
 	
-	self:RegisterEvents()
-	
+	self:Toggle(true)
+end
+
+function Transaction:Toggle(enable)
+	if enable == nil then
+		self.enabled = not self.enabled
+	else
+		self.enabled = enable
+	end
+	if self.enabled then
+		self:RegisterEvents()
+		self:RegisterHooks()
+		self:Debug(2, "Enabled")
+	else
+		self:UnregisterEvents()
+		self:UnregisterHooks()
+		self:Debug(2, "Disabled")
+	end
 end
 
 function Transaction:RegisterEvents()
@@ -109,9 +120,9 @@ function Transaction:RegisterHooks()
 	if not self.hooks.InboxFrame_OnClick then
 		-- AH Mail Hook
 		self.hooks.InboxFrame_OnClick = InboxFrame_OnClick
-		InboxFrame_OnClick = function(index,...)
-			self:InboxFrame_OnClick(index,...)
-			return self.hooks.InboxFrame_OnClick(mailIndex,...)
+		InboxFrame_OnClick = function(...)
+			self:InboxFrame_OnClick(...)
+			return self.hooks.InboxFrame_OnClick(...)
 		end
 	end
 end
@@ -130,65 +141,100 @@ function Transaction:Reconcile()
 	currCategory = ""
 end
 
+--[[ Event Handlers ]]--
 function Transaction:MERCHANT_SHOW()
+	self:Debug(2, "MERCHANT_SHOW")
 	if CanMerchantRepair() then self:AutoRepairPlease() end
 	currCategory = "merch"
 end
 
 function Transaction:CONFIRM_TALENT_WIPE()
+	self:Debug(2, "CONFIRM_TALENT_WIPE")
 	currCategory = "train"
 end
 
 function Transaction:MERCHANT_CLOSED()
+	self:Debug(2, "MERCHANT_CLOSED")
 	--currCategory = ""
 end
 
 function Transaction:QUEST_COMPLETE()
+	self:Debug(2, "QUEST_COMPLETE")
 	currCategory = "quest"
 end
 
 function Transaction:LOOT_OPENED()
+	self:Debug(2, "LOOT_OPENED")
 	currCategory = "loot"
 end
 
 function Transaction:TAXIMAP_OPENED()
+	self:Debug(2, "TAXIMAP_OPENED")
 	currCategory = "taxi"
 end
 
 function Transaction:TRADE_SHOW()
+	self:Debug(2, "TRADE_SHOW")
 	currCategory = "trade"
 end
 
 function Transaction:TRADE_CLOSE()
+	self:Debug(2, "TRADE_CLOSE")
 	--currCategory = ""
 end
 
 function Transaction:MAIL_SHOW()
+	self:Debug(2, "MAIL_SHOW")
 	currCategory = "mail"
 end
 
 function Transaction:MAIL_CLOSED()
+	self:Debug(2, "MAIL_CLOSED")
 	--currCategory = ""
 end
 
 function Transaction:TRAINER_SHOW()
+	self:Debug(2, "TRAINER_SHOW")
 	currCategory = "train"
 end
 
 function Transaction:TRAINER_CLOSED()
+	self:Debug(2, "TRAINER_CLOSED")
 	--currCategory = ""
 end
 
 function Transaction:AUCTION_HOUSE_SHOW()
+	self:Debug(2, "AUCTION_HOUSE_SHOW")
 	currCategory = "ah"
 end
 
 function Transaction:AUCTION_HOUSE_CLOSED()
+	self:Debug(2, "AUCTION_HOUSE_CLOSED")
 	--currCategory = ""
 end
 
--- AH Mail hooking functions
+function Transaction:CHAT_MSG_MONEY(event, arg1)
+	self:Debug(2, "CHAT_MSG_MONEY")
+
+	-- Parse the message for money gained. 
+	local gold = arg1:match("(%d+) " .. GOLD)
+	local silver = arg1:match("(%d+) " .. SILVER)
+	local copper = arg1:match("(%d+) " .. COPPER)
+	
+	gold = (gold and tonumber(gold)) or 0
+	silver = (silver and tonumber(silver)) or 0
+	copper = (copper and tonumber(copper)) or 0
+	
+	local money = copper + silver * 100 + gold * 10000
+
+	-- This will suppress the incoming PLAYER_MONEY event. 
+	self:AddData(money, "loot", GetMoney()+money)
+	
+end
+
+--[[ Hook Functions ]]--
 function Transaction:InboxFrame_OnClick(mailIndex,...)
+	self:Debug(2, "InboxFrame_OnClick")	
 	local _, _, sender, subject, money, CODAmount, _, hasItem, _, _, _, _= GetInboxHeaderInfo(mailIndex)
 	if sender ~= nil then
 		if sender:find(L["Auction House"]) then
@@ -201,13 +247,16 @@ function Transaction:InboxFrame_OnClick(mailIndex,...)
 	end
 end
 
+--[[ Data Manipulation ]]--
 function Transaction:CheckMoney()
+	self:Debug(2, "CheckMoney")
+	
 	local currMoney = GetMoney()
 	
 	local diffMoney = currMoney - prevMoney
 	
 	if diffMoney == 0 then
-		self:Debug(2, "CheckMoney(): money didn't change.")
+		self:Debug(2, "CheckMoney: money didn't change.")
 		return
 	end
 
@@ -234,7 +283,7 @@ function Transaction:AddData(amount, category, currMoney)
 		local timestamp = time() - timeOffset
 		local transaction = string.format("%s,%d,%d", category, timestamp, amount)
 		-- local transaction = string.format("%d,%d,%d", categoryMap[category], timestamp, amount)
-		self:Debug(2, category, timestamp, amount)
+		self:Debug(2, "AddData", category, date(), amount)
 		table.insert(playerDB, transaction)
 		playerDB.cash = currMoney
 		prevMoney = currMoney
@@ -254,25 +303,7 @@ function Transaction:GetData(index, player, server)
 	end
 end
 
-function Transaction:CHAT_MSG_MONEY(event, arg1) 
-
-	-- Parse the message for money gained. 
-	local gold = arg1:match("(%d+) " .. GOLD)
-	local silver = arg1:match("(%d+) " .. SILVER)
-	local copper = arg1:match("(%d+) " .. COPPER)
-	
-	gold = (gold and tonumber(gold)) or 0
-	silver = (silver and tonumber(silver)) or 0
-	copper = (copper and tonumber(copper)) or 0
-	
-	local money = copper + silver * 100 + gold * 10000
-
-	-- This will suppress the incoming PLAYER_MONEY event. 
-	self:AddData(money, "loot", GetMoney()+money)
-	
-end
-
--- Auto Repair 'cos otherwise it just always picks it up wrong. Bloat? Dunno. I don't think so.
+-- Code stolen from FuBar_AuditorFu by Alarisha.
 function Transaction:AutoRepairPlease()
 	local repairCost = GetRepairAllCost()
 	local currMoney = GetMoney()
