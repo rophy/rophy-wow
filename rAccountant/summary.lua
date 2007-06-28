@@ -33,17 +33,17 @@ local players = {}
 local categories = {}
 local server = transaction:GetCurrentServerName()
 
+-- Sample player report, date ranges from now to 2 days ago.
 function Summary:PlayerReport()
 	beginTime, endTime = time()-60*60*24*2, time()
 	
-	local income, expense = 0, 0
 	for player in transaction:IteratePlayers(server) do
 		if not players[player] then	-- player filter.
+			local income, expense = 0, 0
 			local from, to = transaction:SearchByTime(beginTime, endTime, player, server)
 			if from then
 				for i=from, to do
-					local cat,_,amount = transaction:GetData(i)
-					
+					local cat,_,amount = transaction:GetData(i,player,server)
 					if not categories[cat] then	-- category filter.
 						if amount > 0 then
 							income = income + amount
