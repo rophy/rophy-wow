@@ -6,17 +6,23 @@
 		
 	Optimization:
 		- separate timestamp to another list for faster time range search, a big trade off between time and space.
-		- transaction list records the beginning timestamp, and each transaction's timestamp substracts it to reduce size.
-		- maps categories to integers in the saved variables.
+		- (DONE) transaction list records the beginning timestamp, and each transaction's timestamp substracts it to reduce size.
+		- (DONE) maps categories to integers in the saved variables.
 	
 	saved variable format:
-	["Tichronius - Alliance"] = {
-		["Ballis"] = {
-			"category,timestamp,amount",
-			"category,timestamp,amount",
-			"category,timestamp,amount",
-			...,
-			["cash"] = 12345
+	rAccountantData = {
+		version = DATA_FORMAT_VERSION,
+		transactions = {
+			["Tichronius - Alliance"] = {
+				["Ballis"] = {
+					"timeOffset,category,amount",
+					"timeOffset,category,amount",
+					"timeOffset,category,amount",
+					...,
+					["timestamp"] = 12313213123,
+					["cash"] = 12345
+				}
+			}
 		}
 	}
 ]]
@@ -25,16 +31,16 @@ Transaction = DongleStub("Dongle-1.1"):New("rAccountant_Transaction")
 
 local globalDB, playerDB
 local playerName, serverName = UnitName('player'), GetRealmName() .. ' - ' .. UnitFactionGroup('player')
-local currCategory = ""
+local currCategory,prevCategory
 local prevMoney = 0
-local timeOffset = 1182593000
+local DATA_FORMAT_VERSION = 1
 
 local L = setmetatable({}, {__index = function(t,k) return k end})
 
---[[ Currently not used
 local categoryMap = {
+	opening = 0,
 	reconcile = 1,
-	other = 2,
+	unknown = 2,
 	error = 3,
 	merch = 4,
 	train = 5,
@@ -50,35 +56,64 @@ local categoryMap = {
 for k,v in pairs(categoryMap) do
 	categoryMap[v] = k
 end
-]]
+setmetatable(categoryMap, {
+	__index = function(t,k)
+		error(string.format("trying to access non-exist entry '%s' in categoryMap.", k))
+	end
+})
+
+local function SetCurrCategory(category)
+	prevCategory = currCategory
+	currCategory = category
+end
+
+
 
 function Transaction:Initialize()
 	self.hooks = {}
 	self:EnableDebug(2)
+	self.categoryMap = categoryMap
 end
 
 function Transaction:Enable()
 
+	self:InitialDB()
+
+	self:Reconcile()
+	
+	self:Toggle(true)
+end
+
+function Transaction:InitialDB()
 	
 	if not rAccountantData then
-		rAccountantData = {}
+		rAccountantData = {
+			version = DATA_FORMAT_VERSION,
+			transactions = {},
+		}
 	end
-	globalDB = rAccountantData
+	
+	local dataVersion = rAccountantData and rAccountantData.version
+	
+	-- Begin of DB upgrade procedure.
+	
+	-- End of DB upgrade procedure.
+	
+	globalDB = rAccountantData.transactions
+	
 	
 	if not globalDB[serverName] then
 		globalDB[serverName] = {}
 	end
 	if not globalDB[serverName][playerName] then
-		globalDB[serverName][playerName] = {}
+		globalDB[serverName][playerName] = {
+			timestamp = time()
+		}
 		playerDB = globalDB[serverName][playerName]
 		self:AddData(GetMoney(), "opening", GetMoney())
 	else
 		playerDB = globalDB[serverName][playerName]
 	end
-	
-	self:Reconcile()
-	
-	self:Toggle(true)
 end
 
 function Transaction:Toggle(enable)
@@ -141,81 +176,81 @@ end
 
 function Transaction:Reconcile()
 	prevMoney = playerDB.cash
-	currCategory = "reconcile"
+	currCategory = categoryMap["reconcile"]
 	self:CheckMoney()
-	currCategory = ""
+	currCategory = categoryMap["unknown"]
 end
 
 --[[ Event Handlers ]]--
 function Transaction:MERCHANT_SHOW()
 	self:Debug(2, "MERCHANT_SHOW")
 	if CanMerchantRepair() then self:AutoRepairPlease() end
-	currCategory = "merch"
+	SetCurrCategory(categoryMap["merch"])
 end
 
 function Transaction:CONFIRM_TALENT_WIPE()
 	self:Debug(2, "CONFIRM_TALENT_WIPE")
-	currCategory = "train"
+	SetCurrCategory(categoryMap["train"])
 end
 
 function Transaction:MERCHANT_CLOSED()
 	self:Debug(2, "MERCHANT_CLOSED")
-	--currCategory = ""
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:QUEST_COMPLETE()
 	self:Debug(2, "QUEST_COMPLETE")
-	currCategory = "quest"
+	SetCurrCategory(categoryMap["quest"])
 end
 
 function Transaction:LOOT_OPENED()
 	self:Debug(2, "LOOT_OPENED")
-	currCategory = "loot"
+	SetCurrCategory(categoryMap["loot"])
 end
 
 function Transaction:TAXIMAP_OPENED()
 	self:Debug(2, "TAXIMAP_OPENED")
-	currCategory = "taxi"
+	SetCurrCategory(categoryMap["taxi"])
 end
 
 function Transaction:TRADE_SHOW()
 	self:Debug(2, "TRADE_SHOW")
-	currCategory = "trade"
+	SetCurrCategory(categoryMap["trade"])
 end
 
 function Transaction:TRADE_CLOSE()
 	self:Debug(2, "TRADE_CLOSE")
-	--currCategory = ""
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:MAIL_SHOW()
 	self:Debug(2, "MAIL_SHOW")
-	currCategory = "mail"
+	SetCurrCategory(categoryMap["mail"])
 end
 
 function Transaction:MAIL_CLOSED()
 	self:Debug(2, "MAIL_CLOSED")
-	--currCategory = ""
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:TRAINER_SHOW()
 	self:Debug(2, "TRAINER_SHOW")
-	currCategory = "train"
+	SetCurrCategory(categoryMap["train"])
 end
 
 function Transaction:TRAINER_CLOSED()
 	self:Debug(2, "TRAINER_CLOSED")
-	--currCategory = ""
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:AUCTION_HOUSE_SHOW()
 	self:Debug(2, "AUCTION_HOUSE_SHOW")
-	currCategory = "ah"
+	SetCurrCategory(categoryMap["ah"])
 end
 
 function Transaction:AUCTION_HOUSE_CLOSED()
 	self:Debug(2, "AUCTION_HOUSE_CLOSED")
-	--currCategory = ""
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:CHAT_MSG_MONEY(event, arg1)
@@ -233,7 +268,7 @@ function Transaction:CHAT_MSG_MONEY(event, arg1)
 	local money = copper + silver * 100 + gold * 10000
 
 	-- This will suppress the incoming PLAYER_MONEY event. 
-	self:AddData(money, "loot", GetMoney()+money)
+	self:AddData(money, categoryMap["loot"], GetMoney()+money)
 	
 end
 
@@ -245,12 +280,12 @@ function Transaction:InboxFrame_OnClick(mailIndex,...)
 	local _, _, sender, subject, money, CODAmount, _, hasItem, _, _, _, _= GetInboxHeaderInfo(mailIndex)
 	if sender ~= nil then
 		if sender:find(L["Auction House"]) then
-			currCategory = "ah"
+			currCategory = categoryMap["ah"]
 		else
-			currCategory = "mail"
+			currCategory = categoryMap["mail"]
 		end
 	else
-		currCategory = "mail"
+		currCategory = categoryMap["mail"]
 	end
 end
 
@@ -269,14 +304,17 @@ function Transaction:CheckMoney()
 		return
 	end
 
-	-- Deals with random cash from an obfuscated source. Good word, eh?
-	if currCategory == "" then
-		self:Print("Error: unknown transaction",diffMoney)
-		currCategory = "error"
+	if currCategory == categoryMap["unknown"] then
+		if prevCategory and prevCategory ~= categoryMap["unknown"] then
+			self:Print(L["Unknown transaction, treating it as '%s'."]:format(categoryMap[prevCategory]))
+			self:AddMoney(diffMoney, prevCategory, currMoney)
+		else
+			self:Print(L["Unknown transaction '%s'."]:format(categoryMap[prevCategory]))
+			self:AddData(diffMoney, currCategory, currMoney)
+		end
+	else
+		self:AddData(diffMoney, currCategory, currMoney)
 	end
-	
-	
-	self:AddData(diffMoney, currCategory, currMoney)
 	
 	
 end
@@ -304,8 +342,8 @@ function Transaction:AddData(amount, category, currMoney)
 		
 		-- a transaction records the currCategory, timestamp and amount.
 		-- timestamp substracts a constant offset to reduce the size.
-		local timestamp = time() - timeOffset
-		local transaction = string.format("%s,%d,%d", category, timestamp, amount)
+		local timestamp = time() - playerDB.timestamp
+		local transaction = string.format("%d,%d,%d", timestamp, category, amount)
 		-- local transaction = string.format("%d,%d,%d", categoryMap[category], timestamp, amount)
 		self:Debug(2, "AddData", category, date(), amount)
 		table.insert(playerDB, transaction)
@@ -328,14 +366,13 @@ end
 		Return: category, timestamp, amount
 ]]
 function Transaction:GetData(index, player, server)
-	if not player then player = playerName end
-	if not server then server = serverName end
-	local transaction = globalDB[server][player][index]
-	if transaction then
-		local category, timestamp, amount = string.split(',', transaction)
-		return category, tonumber(timestamp)+timeOffset, tonumber(amount)
---		local tmodeNumber, timestamp, amount = string.split(',', transaction)
---		return categoryMap[tonumber(tmodeNumber)], tonumber(timestamp)+timeOffset, tonumber(amount)
+	local transactions = globalDB[server] and globalDB[server][player]
+	if transactions then
+		local transaction = transactions[index]
+		if transaction then
+			local timestamp, category, amount = string.split(',', transaction)
+			return category, tonumber(timestamp)+transactions.timestamp, tonumber(amount)
+		end
 	end
 end
 
@@ -434,7 +471,7 @@ function Transaction:AutoRepairPlease()
 	elseif repairCost > 0 then
 		if repairCost > 0 then
 			-- This will suppress the incoming PLAYER_MONEY event. 
-			self:AddData(repairCost, "repairs", currMoney-repairCost)
+			self:AddData(repairCost, categoryMap["repairs"], currMoney-repairCost)
 			RepairAllItems()
 			self:Print("Auto-Repair Successful: " .. repairCost)
 		end
