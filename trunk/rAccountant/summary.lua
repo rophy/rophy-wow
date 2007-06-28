@@ -43,7 +43,7 @@ function Summary:PlayerReport()
 			local from, to = transaction:SearchByTime(beginTime, endTime, player, server)
 			if from then
 				for i=from, to do
-					local cat,_,amount = transaction:GetData(i,player,server)
+					local _, amount, cat = transaction:GetData(i,player,server)
 					if not categories[cat] then	-- category filter.
 						if amount > 0 then
 							income = income + amount
