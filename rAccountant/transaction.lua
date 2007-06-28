@@ -363,7 +363,7 @@ end
 			- player : name of the player.
 			- server : name of the server obtained by IterateServers().
 			
-		Return: category, timestamp, amount
+		Return:  timestamp, amount, category
 ]]
 function Transaction:GetData(index, player, server)
 	local transactions = globalDB[server] and globalDB[server][player]
@@ -371,7 +371,7 @@ function Transaction:GetData(index, player, server)
 		local transaction = transactions[index]
 		if transaction then
 			local timestamp, category, amount = string.split(',', transaction)
-			return category, tonumber(timestamp)+transactions.timestamp, tonumber(amount)
+			return tonumber(timestamp)+transactions.timestamp, tonumber(amount), tonumber(category)
 		end
 	end
 end
@@ -431,7 +431,7 @@ function Transaction:SearchByTime(startTime, endTime, player, server)
 	local function binarySearch(target,low,high)
 		if low < high then
 				local mid = floor((low + high)/2)
-				local val = select(2, self:GetData(mid,player,server))
+				local val = self:GetData(mid,player,server)
 				if val == target then
 						return mid, val
 				elseif val > target then
@@ -440,7 +440,7 @@ function Transaction:SearchByTime(startTime, endTime, player, server)
 						return binarySearch(target,mid+1,high)
 				end
 		else
-				return low, select(2, self:GetData(low,player,server))
+				return low, self:GetData(low,player,server)
 		end
 	end
 
@@ -458,6 +458,8 @@ function Transaction:SearchByTime(startTime, endTime, player, server)
 	end
 	if closestLowValue and closestHighValue and closestLowValue >= startTime and closestHighValue <= endTime then
 		return closestLow,closestHigh
+	else
+		return false
 	end
 end
 
@@ -467,13 +469,13 @@ function Transaction:AutoRepairPlease()
 	local repairCost = GetRepairAllCost()
 	local currMoney = GetMoney()
 	if currMoney < repairCost then
-		self:Print("Insufficient funds are available to perform an Auto-Repair.")
+		self:Print(L["Insufficient funds are available to perform an Auto-Repair."])
 	elseif repairCost > 0 then
 		if repairCost > 0 then
 			-- This will suppress the incoming PLAYER_MONEY event. 
 			self:AddData(repairCost, categoryMap["repairs"], currMoney-repairCost)
 			RepairAllItems()
-			self:Print("Auto-Repair Successful: " .. repairCost)
+			self:Print(L["Auto-Repair Successful: "] .. repairCost)
 		end
 	end
 end
