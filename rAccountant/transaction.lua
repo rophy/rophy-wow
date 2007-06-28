@@ -3,7 +3,11 @@
 	
 	TODO: 
 		- purge data : merge all transactions (per character) into one 'opening' transaction.
-		- the ability to manually add, delete, edit transaction especially those in category 'reconcile'.
+		
+	Optimization:
+		- separate timestamp to another list for faster time range search, a big trade off between time and space.
+		- transaction list records the beginning timestamp, and each transaction's timestamp substracts it to reduce size.
+		- maps categories to integers in the saved variables.
 	
 	saved variable format:
 	["Tichronius - Alliance"] = {
@@ -234,6 +238,8 @@ function Transaction:CHAT_MSG_MONEY(event, arg1)
 end
 
 --[[ Hook Functions ]]--
+
+
 function Transaction:InboxFrame_OnClick(mailIndex,...)
 	self:Debug(2, "InboxFrame_OnClick")	
 	local _, _, sender, subject, money, CODAmount, _, hasItem, _, _, _, _= GetInboxHeaderInfo(mailIndex)
@@ -249,6 +255,8 @@ function Transaction:InboxFrame_OnClick(mailIndex,...)
 end
 
 --[[ Data Manipulation ]]--
+
+
 function Transaction:CheckMoney()
 	self:Debug(2, "CheckMoney")
 	
@@ -273,6 +281,21 @@ function Transaction:CheckMoney()
 	
 end
 
+--[[
+	AddData
+		
+		Inserts a transaction to the current playerDB, which will have the timestamp set to now.
+		
+		Inputs:
+			- amount : amount of the transaction, positive for income, negative for expense.
+			- category (optional): category of the transaction, defaults to currCategory.
+			- currMoney (optional): the DB needs to record the current amount of gold for reconsilation,
+				defaults to GetMoney() if not provided. This input exists because sometimes you
+				want to add a transaction before the actual PLAYER_MONEY event occurs, in that case
+				you'll provide a value other than GetMoney().
+			
+		Return: none
+]]
 function Transaction:AddData(amount, category, currMoney)
 	if amount then
 		-- default values
@@ -291,6 +314,19 @@ function Transaction:AddData(amount, category, currMoney)
 	end
 end
 
+
+--[[
+	GetData
+		
+		Obtains a transaction record.
+		
+		Inputs:
+			- index : index of the transaction.
+			- player : name of the player.
+			- server : name of the server obtained by IterateServers().
+			
+		Return: category, timestamp, amount
+]]
 function Transaction:GetData(index, player, server)
 	if not player then player = playerName end
 	if not server then server = serverName end
@@ -303,43 +339,57 @@ function Transaction:GetData(index, player, server)
 	end
 end
 
+
+-- Get the current server name.
 function Transaction:GetCurrentServerName()
 	return serverName
 end
 
+-- Iterate through the servers names.
 function Transaction:IterateServers()
 	return pairs(globalDB)
 end
 
+-- Iterate through the player names.
 function Transaction:IteratePlayers(server)
 	return pairs(globalDB[server])
 end
 
+--[[
+	GetSize
+		
+		Return the transaction size.
+		
+		Inputs
+			- player : name of the player.
+			- server : name of the server obtained by IterateServers().
+			
+		Returns
+			- transactionSize
+]]
 function Transaction:GetSize(player,server)
 	return (globalDB[server] and globalDB[server][player] and #globalDB[server][player]) or 0
 end
 
-function Transaction:ConvertData()
-	for server, tServer in pairs(globalDB) do
-		for player, tPlayer in pairs(tServer) do
-			local size = #tPlayer
-			local t = {
-				data = {},
-				timestamp = {}
-			}
-			for i=1, size do
-				local category, timestamp, amount = self:GetData(i,player,server)
-				table.insert(t.data, category..","..amount)
-				table.insert(t.timestamp, timestamp)
-			end
-			tServer[player] = t
-		end
-	end
-end
-
+--[[
+	SearchByTime
+		
+		Given a time range, search the player transactions where the timestamp is within the time range.
+		Currently uses binary search for O(log(n)) speed, thanks Tem for helping out!
+		
+		Inputs
+			- startTime : timestamp must >= this.
+			- endTime : timestamp must <= this.
+			- player : name of the player.
+			- server : name of the server obtained by IterateServers().
+			
+		Return: false or startIndex, endIndex
+			- false : when there is transactions matching the time range.
+			- startIndex, endIndex : the index bounds matching the time range.
+		
+]]
 function Transaction:SearchByTime(startTime, endTime, player, server)
-	if not player then player = playerName end
-	if not server then server = serverName end
+	if not globalDB[server] or not globalDB[server][player] then return false end
 	
 	local function binarySearch(target,low,high)
 		if low < high then
@@ -357,9 +407,8 @@ function Transaction:SearchByTime(startTime, endTime, player, server)
 		end
 	end
 
-	local transactions = globalDB[server][player]
 	-- Binary search for the start and end index.
-	local maxIndex = #transactions
+	local maxIndex = #globalDB[server][player]
 	local closestLow, closestLowValue = binarySearch(startTime,1,maxIndex)
 	local closestHigh, closestHighValue = binarySearch(endTime,1,maxIndex)
 	if closestLowValue < startTime then
