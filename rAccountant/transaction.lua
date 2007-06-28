@@ -20,7 +20,7 @@
 Transaction = DongleStub("Dongle-1.1"):New("rAccountant_Transaction")
 
 local globalDB, playerDB
-local playerName, serverName
+local playerName, serverName = UnitName('player'), GetRealmName() .. ' - ' .. UnitFactionGroup('player')
 local currCategory = ""
 local prevMoney = 0
 local timeOffset = 1182593000
@@ -55,8 +55,6 @@ end
 
 function Transaction:Enable()
 
-	playerName = UnitName('player')
-	serverName = GetRealmName() .. ' - ' .. UnitFactionGroup('player')
 	
 	if not rAccountantData then
 		rAccountantData = {}
@@ -296,7 +294,6 @@ end
 function Transaction:GetData(index, player, server)
 	if not player then player = playerName end
 	if not server then server = serverName end
-	
 	local transaction = globalDB[server][player][index]
 	if transaction then
 		local category, timestamp, amount = string.split(',', transaction)
@@ -305,6 +302,79 @@ function Transaction:GetData(index, player, server)
 --		return categoryMap[tonumber(tmodeNumber)], tonumber(timestamp)+timeOffset, tonumber(amount)
 	end
 end
+
+function Transaction:GetCurrentServerName()
+	return serverName
+end
+
+function Transaction:IterateServers()
+	return pairs(globalDB)
+end
+
+function Transaction:IteratePlayers(server)
+	return pairs(globalDB[server])
+end
+
+function Transaction:GetSize(player,server)
+	return (globalDB[server] and globalDB[server][player] and #globalDB[server][player]) or 0
+end
+
+function Transaction:ConvertData()
+	for server, tServer in pairs(globalDB) do
+		for player, tPlayer in pairs(tServer) do
+			local size = #tPlayer
+			local t = {
+				data = {},
+				timestamp = {}
+			}
+			for i=1, size do
+				local category, timestamp, amount = self:GetData(i,player,server)
+				table.insert(t.data, category..","..amount)
+				table.insert(t.timestamp, timestamp)
+			end
+			tServer[player] = t
+		end
+	end
+end
+
+function Transaction:SearchByTime(startTime, endTime, player, server)
+	if not player then player = playerName end
+	if not server then server = serverName end
+	
+	local function binarySearch(target,low,high)
+		if low < high then
+				local mid = floor((low + high)/2)
+				local val = select(2, self:GetData(mid,player,server))
+				if val == target then
+						return mid, val
+				elseif val > target then
+						return binarySearch(target,low,mid-1)
+				else
+						return binarySearch(target,mid+1,high)
+				end
+		else
+				return low, select(2, self:GetData(low,player,server))
+		end
+	end
+
+	local transactions = globalDB[server][player]
+	-- Binary search for the start and end index.
+	local maxIndex = #transactions
+	local closestLow, closestLowValue = binarySearch(startTime,1,maxIndex)
+	local closestHigh, closestHighValue = binarySearch(endTime,1,maxIndex)
+	if closestLowValue < startTime then
+		closestLow = closestLow + 1
+		closestLowValue = self:GetData(closestLow,player,server)
+	end
+	if closestHighValue > endTime then
+		closestHigh = closestHigh - 1
+		closestHighValue = self:GetData(closestHigh,player,server)
+	end
+	if closestLowValue and closestHighValue and closestLowValue >= startTime and closestHighValue <= endTime then
+		return closestLow,closestHigh
+	end
+end
+
 
 -- Code stolen from FuBar_AuditorFu by Alarisha.
 function Transaction:AutoRepairPlease()
