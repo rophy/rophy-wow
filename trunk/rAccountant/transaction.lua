@@ -53,8 +53,15 @@ local categoryMap = {
 	ah = 12,
 	repairs = 13,
 }
-for k,v in pairs(categoryMap) do
-	categoryMap[v] = k
+do
+	local cache = {}
+	for k,v in pairs(categoryMap) do
+		cache[v] = k
+	end
+	for v,k in pairs(cache) do
+		categoryMap[v] = k
+	end
+	cache = nil
 end
 setmetatable(categoryMap, {
 	__index = function(t,k)

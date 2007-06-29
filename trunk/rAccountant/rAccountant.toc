@@ -3,6 +3,7 @@
 ## Notes: Completely records your cash flow.
 ## Author: Rophy
 
+## Dependencies: TabletLib
 ## OptionalDeps: Dongle
 ## SavedVariables: rAccountantData
 ## SavedVariablesPerCharacter: rAccountantDataPerChar
