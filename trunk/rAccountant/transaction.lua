@@ -202,7 +202,10 @@ end
 
 function Transaction:MERCHANT_CLOSED()
 	self:Debug(2, "MERCHANT_CLOSED")
-	SetCurrCategory(categoryMap["unknown"])
+	-- MERCHANT_CLOSED seems to fire twice on leaving a merchant, so add a check here.
+	if currCategory == categoryMap["merch"] then
+		SetCurrCategory(categoryMap["unknown"])
+	end
 end
 
 function Transaction:QUEST_COMPLETE()
@@ -310,19 +313,19 @@ function Transaction:CheckMoney()
 		self:Debug(2, "CheckMoney: money didn't change.")
 		return
 	end
-
-	if currCategory == categoryMap["unknown"] then
-		if prevCategory and prevCategory ~= categoryMap["unknown"] then
-			self:Print(L["Unknown transaction, treating it as '%s'."]:format(categoryMap[prevCategory]))
-			self:AddMoney(diffMoney, prevCategory, currMoney)
+	
+	local category = currCategory
+	
+	if category == categoryMap["unknown"] then
+		if category ~= prevCategory then
+			self:Print(L["Unknown transaction, treating it as previous category '%s'."]:format(categoryMap[prevCategory]))
+			category = prevCategory
 		else
-			self:Print(L["Unknown transaction '%s'."]:format(categoryMap[prevCategory]))
-			self:AddData(diffMoney, currCategory, currMoney)
+			self:Print(L["Unknown transaction, amount: %d."]:format(diffMoney))
 		end
-	else
-		self:AddData(diffMoney, currCategory, currMoney)
 	end
 	
+	self:AddData(diffMoney, category, currMoney)
 	
 end
 
@@ -348,11 +351,9 @@ function Transaction:AddData(amount, category, currMoney)
 		if not currMoney then currMoney = GetMoney() end
 		
 		-- a transaction records the currCategory, timestamp and amount.
-		-- timestamp substracts a constant offset to reduce the size.
 		local timestamp = time() - playerDB.timestamp
 		local transaction = string.format("%d,%d,%d", timestamp, category, amount)
-		-- local transaction = string.format("%d,%d,%d", categoryMap[category], timestamp, amount)
-		self:Debug(2, "AddData", category, date(), amount)
+		self:Debug(2, "AddData", categoryMap[category], date(), amount)
 		table.insert(playerDB, transaction)
 		playerDB.cash = currMoney
 		prevMoney = currMoney

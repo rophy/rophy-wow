@@ -35,7 +35,9 @@ local categories = {}
 local server = transaction:GetCurrentServerName()
 
 function Summary:Enable()
+--[[
 	local catFrame = CreateFrame("Frame")
+	
 	tablet:Register(catFrame,
 		'children', function() self:ShowMenu() end,
 		'dontHook', true,
@@ -52,7 +54,7 @@ function Summary:Enable()
 	)
 	
 	tablet:Open(playerFrame)
-	
+]]
 end
 
 local reportIndex = { "Total" }
