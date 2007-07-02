@@ -1,20 +1,16 @@
-local parser = ParserLib:GetInstance("1.1")
-
 local rDynRep = {}
 _G["rDynRep"] = rDynRep
 
 -- Configurations
 rDynRep.ignoreDecrease = true
 
-function rDynRep.OnRepEvent(event, info)
-	if info.type == "reputation" and info.faction then
-		if rDynRep.ignoreDecrease and info.isNegative then return end
-		local faction = info.faction
-		local oldName = GetWatchedFactionInfo()
-		if faction ~= oldName then
+function rDynRep:OnRepEvent(infoType, info, event)
+	if info.faction then
+		if self.ignoreDecrease and info.isNegative then return end
+		local infoFaction, currFaction = info.faction, GetWatchedFactionInfo()
+		if infoFaction ~= currFaction then
 			for i=1, GetNumFactions() do
-				local name = GetFactionInfo(i)
-				if name == faction and not IsFactionInactive(i) then
+				if GetFactionInfo(i) == faction and not IsFactionInactive(i) then
 					SetWatchedFactionIndex(i)
 				end
 			end
@@ -22,5 +18,5 @@ function rDynRep.OnRepEvent(event, info)
 	end
 end
 
-parser:RegisterEvent("rDynRep", "CHAT_MSG_COMBAT_FACTION_CHANGE", rDynRep.OnRepEvent)
+ParserLib:GetInstance("1.1"):RegisterInfoType(self, "reputation", "OnRepEvent")
 
