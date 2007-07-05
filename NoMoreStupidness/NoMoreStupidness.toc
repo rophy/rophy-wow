@@ -1,0 +1,8 @@
+## Interface: 20100
+# Title: No More Stupidness
+
+## Notes: Try to prevent you from doing stupid things.
+
+## Author: Rophy
+
+arena_vendor.lua
