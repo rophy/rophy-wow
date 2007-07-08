@@ -65,13 +65,16 @@ do
 end
 setmetatable(categoryMap, {
 	__index = function(t,k)
-		error(string.format("trying to access non-exist entry '%s' in categoryMap.", k))
+		error(string.format("trying to access non-exist entry '%s' in categoryMap.", tostring(k)))
 	end
 })
 
 local function SetCurrCategory(category)
-	prevCategory = currCategory
-	currCategory = category
+	-- This check mainly attempts to prevent two 'unknown' events in a row.
+	if category ~= currCategory then
+		prevCategory = currCategory
+		currCategory = category
+	end
 end
 
 
@@ -202,10 +205,7 @@ end
 
 function Transaction:MERCHANT_CLOSED()
 	self:Debug(2, "MERCHANT_CLOSED")
-	-- MERCHANT_CLOSED seems to fire twice on leaving a merchant, so add a check here.
-	if currCategory == categoryMap["merch"] then
-		SetCurrCategory(categoryMap["unknown"])
-	end
+	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:QUEST_COMPLETE()
