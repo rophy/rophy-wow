@@ -1,0 +1,8 @@
+## Interface: 20100
+## Title: TinyQueue
+## Notes: Tiny StinyQueue-compatible AV group queue addon.
+## Author: Rophy
+## X-Creditos: Funkydude, Jerbal
+
+TinyQueue.lua
+
