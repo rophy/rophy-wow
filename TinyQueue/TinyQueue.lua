@@ -1,10 +1,10 @@
 --[[
-	TinyQueue : LightQueue made Tiny.
+	TinyQueue : Tiny StinyQueue-compatible AV group queue addon, based on LightQueue by Funkydude.
 ]]
 
 local L = {
-	["Recieved StinkyQueue message from %s, Joining..."] = true,
-	["Sending StinkyQueue message to Raid."] = true,
+	["Recieved StinkyQueue message from %s, Joining..."] = "Recieved StinkyQueue message from %s, Joining...",
+	["Sending StinkyQueue message to Raid."] = "Sending StinkyQueue message to Raid.",
 }
 
 --[[ Initialization ]]--
@@ -22,14 +22,7 @@ frame:RegisterEvent("CHAT_MSG_ADDON")
 -- Send Message.
 _G["SlashCmdList"]["TINYQUEUE"] = function(msg)
 	SendAddonMessage("StinkyQ", "Queue", "RAID")
-	SendAddonMessage("StinkyQ", "Queue", "WHISPER", UnitName("player"))
 	ChatFrame1:AddMessage(L["Sending StinkyQueue message to Raid."],0,1,0)
 end
 _G["SLASH_TINYQUEUE1"] = "/q"
 
--- Locales
-for k,v in pairs(L) do
-	if v == true then
-		L[k] = k
-	end
-end
