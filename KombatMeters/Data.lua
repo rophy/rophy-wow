@@ -161,15 +161,17 @@ CombatEventHandlers["hit"] = function(event, info, source, victim, sourceIsPet, 
 			if info.isSplit and RaidUnits:GetUnitID(source) then
 				return
 			end
-			AddValue("DamageDone", source, info.amount)
 			if skill == ParserLib_MELEE then
 				skill = "[Melee]"
 			elseif skill == ParserLib_DAMAGESHIELD then
 				skill = "[Damage Shield]"
 			end
 			if sourceIsPet and settings.profile.mergePet then
-				skill = string.format("(%s)%s",UnitName(sourceUnitId),tostring(skill))
+				skill = string.format("(%s)%s",UnitName(sourceUnitid),tostring(skill))
+				sourceUnitid = (sourceUnitid == 'pet' and 'player') or sourceUnitid:match("(.+)pet")
+				source = UnitName(sourceUnitid)
 			end
+			AddValue("DamageDone", source, info.amount)
 			AddSkill("DamageDone", source, skill, info.amount)
 		end
 		if victim then
