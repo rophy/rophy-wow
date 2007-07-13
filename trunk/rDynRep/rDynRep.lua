@@ -1,8 +1,16 @@
 local rDynRep = {}
 _G["rDynRep"] = rDynRep
 
--- Configurations
+-- Configuration
 rDynRep.ignoreDecrease = true
+
+function rDynRep:Enable()
+	ParserLib:GetInstance("1.1"):RegisterInfoType(rDynRep, "reputation", "OnRepEvent")
+end
+
+function rDynRep:Disable()
+	ParserLib:GetInstance("1.1"):UnregisterAllInfoTypes(rDynRep)
+end
 
 function rDynRep:OnRepEvent(infoType, info, event)
 	if info.faction then
@@ -10,13 +18,13 @@ function rDynRep:OnRepEvent(infoType, info, event)
 		local infoFaction, currFaction = info.faction, GetWatchedFactionInfo()
 		if infoFaction ~= currFaction then
 			for i=1, GetNumFactions() do
-				if GetFactionInfo(i) == faction and not IsFactionInactive(i) then
+				if GetFactionInfo(i) == infoFaction and not IsFactionInactive(i) then
 					SetWatchedFactionIndex(i)
+					break
 				end
 			end
 		end
 	end
 end
 
-ParserLib:GetInstance("1.1"):RegisterInfoType(self, "reputation", "OnRepEvent")
-
+rDynRep:Enable()
