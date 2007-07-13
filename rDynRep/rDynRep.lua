@@ -19,6 +19,7 @@ function rDynRep:OnRepEvent(infoType, info, event)
 		if infoFaction ~= currFaction then
 			for i=1, GetNumFactions() do
 				if GetFactionInfo(i) == infoFaction and not IsFactionInactive(i) then
+					ChatFrame1:AddMessage(string.format("|cffffff78rDynRep|r: Setting <%s> as the watched faction.", infoFaction))
 					SetWatchedFactionIndex(i)
 					break
 				end
