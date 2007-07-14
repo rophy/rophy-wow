@@ -120,7 +120,7 @@ function Transaction:InitialDB()
 			timestamp = time()
 		}
 		playerDB = globalDB[serverName][playerName]
-		self:AddData(GetMoney(), "opening", GetMoney())
+		self:AddData(GetMoney(), categoryMap["opening"], GetMoney())
 	else
 		playerDB = globalDB[serverName][playerName]
 	end
@@ -184,87 +184,80 @@ function Transaction:UnregisterHooks()
 	end
 end
 
-function Transaction:Reconcile()
-	prevMoney = playerDB.cash
-	currCategory = categoryMap["reconcile"]
-	self:CheckMoney()
-	currCategory = categoryMap["unknown"]
-end
-
 --[[ Event Handlers ]]--
 function Transaction:MERCHANT_SHOW()
-	self:Debug(2, "MERCHANT_SHOW")
+	self:Debug(3, "MERCHANT_SHOW")
 	if CanMerchantRepair() then self:AutoRepairPlease() end
 	SetCurrCategory(categoryMap["merch"])
 end
 
 function Transaction:CONFIRM_TALENT_WIPE()
-	self:Debug(2, "CONFIRM_TALENT_WIPE")
+	self:Debug(3, "CONFIRM_TALENT_WIPE")
 	SetCurrCategory(categoryMap["train"])
 end
 
 function Transaction:MERCHANT_CLOSED()
-	self:Debug(2, "MERCHANT_CLOSED")
+	self:Debug(3, "MERCHANT_CLOSED")
 	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:QUEST_COMPLETE()
-	self:Debug(2, "QUEST_COMPLETE")
+	self:Debug(3, "QUEST_COMPLETE")
 	SetCurrCategory(categoryMap["quest"])
 end
 
 function Transaction:LOOT_OPENED()
-	self:Debug(2, "LOOT_OPENED")
+	self:Debug(3, "LOOT_OPENED")
 	SetCurrCategory(categoryMap["loot"])
 end
 
 function Transaction:TAXIMAP_OPENED()
-	self:Debug(2, "TAXIMAP_OPENED")
+	self:Debug(3, "TAXIMAP_OPENED")
 	SetCurrCategory(categoryMap["taxi"])
 end
 
 function Transaction:TRADE_SHOW()
-	self:Debug(2, "TRADE_SHOW")
+	self:Debug(3, "TRADE_SHOW")
 	SetCurrCategory(categoryMap["trade"])
 end
 
 function Transaction:TRADE_CLOSE()
-	self:Debug(2, "TRADE_CLOSE")
+	self:Debug(3, "TRADE_CLOSE")
 	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:MAIL_SHOW()
-	self:Debug(2, "MAIL_SHOW")
+	self:Debug(3, "MAIL_SHOW")
 	SetCurrCategory(categoryMap["mail"])
 end
 
 function Transaction:MAIL_CLOSED()
-	self:Debug(2, "MAIL_CLOSED")
+	self:Debug(3, "MAIL_CLOSED")
 	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:TRAINER_SHOW()
-	self:Debug(2, "TRAINER_SHOW")
+	self:Debug(3, "TRAINER_SHOW")
 	SetCurrCategory(categoryMap["train"])
 end
 
 function Transaction:TRAINER_CLOSED()
-	self:Debug(2, "TRAINER_CLOSED")
+	self:Debug(3, "TRAINER_CLOSED")
 	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:AUCTION_HOUSE_SHOW()
-	self:Debug(2, "AUCTION_HOUSE_SHOW")
+	self:Debug(3, "AUCTION_HOUSE_SHOW")
 	SetCurrCategory(categoryMap["ah"])
 end
 
 function Transaction:AUCTION_HOUSE_CLOSED()
-	self:Debug(2, "AUCTION_HOUSE_CLOSED")
+	self:Debug(3, "AUCTION_HOUSE_CLOSED")
 	SetCurrCategory(categoryMap["unknown"])
 end
 
 function Transaction:CHAT_MSG_MONEY(event, arg1)
-	self:Debug(2, "CHAT_MSG_MONEY")
+	self:Debug(3, "CHAT_MSG_MONEY")
 
 	-- Parse the message for money gained. 
 	local gold = arg1:match("(%d+) " .. GOLD)
@@ -286,7 +279,7 @@ end
 
 
 function Transaction:InboxFrame_OnClick(mailIndex,...)
-	self:Debug(2, "InboxFrame_OnClick")	
+	self:Debug(3, "InboxFrame_OnClick")	
 	local _, _, sender, subject, money, CODAmount, _, hasItem, _, _, _, _= GetInboxHeaderInfo(mailIndex)
 	if sender ~= nil then
 		if sender:find(L["Auction House"]) then
@@ -301,10 +294,7 @@ end
 
 --[[ Data Manipulation ]]--
 
-
 function Transaction:CheckMoney()
-	self:Debug(2, "CheckMoney")
-	
 	local currMoney = GetMoney()
 	
 	local diffMoney = currMoney - prevMoney
@@ -328,6 +318,30 @@ function Transaction:CheckMoney()
 	self:AddData(diffMoney, category, currMoney)
 	
 end
+
+
+-- Synchronize gold between playerDB.cash and current cash.
+function Transaction:Reconcile()
+	prevMoney = playerDB.cash
+	currCategory = categoryMap["reconcile"]
+	self:CheckMoney()
+	currCategory = categoryMap["unknown"]
+end
+
+-- Synchronize gold between transaction total and current cash.
+function Transaction:Synchronize()
+	local size = self:GetSize(playerName,serverName)
+	local total = 0
+	for i=1, size do
+		local _, amount = self:GetData(i, playerName, serverName)
+		total = total + amount
+	end
+	prevMoney = total - GetMoney()
+	SetCurrCategory(categoryMap["reconcile"])
+	self:CheckMoney()
+	SetCurrCategory(categoryMap["unknown"])
+end
+
 
 --[[
 	AddData
@@ -383,7 +397,6 @@ function Transaction:GetData(index, player, server)
 		end
 	end
 end
-
 
 -- Get the current server name.
 function Transaction:GetCurrentServerName()
@@ -471,7 +484,6 @@ function Transaction:SearchByTime(startTime, endTime, player, server)
 	end
 end
 
-
 -- Code stolen from FuBar_AuditorFu by Alarisha.
 function Transaction:AutoRepairPlease()
 	local repairCost = GetRepairAllCost()
@@ -479,12 +491,10 @@ function Transaction:AutoRepairPlease()
 	if currMoney < repairCost then
 		self:Print(L["Insufficient funds are available to perform an Auto-Repair."])
 	elseif repairCost > 0 then
-		if repairCost > 0 then
-			-- This will suppress the incoming PLAYER_MONEY event. 
-			self:AddData(repairCost, categoryMap["repairs"], currMoney-repairCost)
-			RepairAllItems()
-			self:Print(L["Auto-Repair Successful: "] .. repairCost)
-		end
+		-- This will suppress the incoming PLAYER_MONEY event. 
+		self:AddData(-repairCost, categoryMap["repairs"], currMoney-repairCost)
+		RepairAllItems()
+		self:Print(L["Auto-Repair Successful: "] .. -repairCost)
 	end
 end
 
