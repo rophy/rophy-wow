@@ -164,7 +164,7 @@ function View:CreateViewFrame()
 		frame:SetPoint("TOPLEFT", viewFrame, "TOPLEFT", 14, -12)
 		frame:SetWidth(24)
 		frame:SetHeight(24)
-		frame:SetText("S")
+		frame:SetText("F")
 		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 		self.filterButton = frame
 		
@@ -174,7 +174,7 @@ function View:CreateViewFrame()
 		frame = CreateFrame("Button", nil, viewFrame, "UIPanelButtonTemplate")
 		frame:SetWidth(60)
 		frame:SetHeight(20)
-		frame:SetPoint("BOTTOMLEFT", viewFrame, "BOTTOMLEFT", 10, 10)
+		frame:SetPoint("BOTTOMLEFT", viewFrame, "BOTTOMLEFT", 20, 20)
 		frame:SetText(L["Refresh"])
 		self.refreshButton = frame
 
@@ -235,7 +235,7 @@ end
 --[[ Model ]]--
 local PlayerModel = {
 	data = {},
-	filter = {}
+	filters = {}
 }
 function PlayerModel:GetSize()
 	return #self.data
@@ -246,8 +246,10 @@ function PlayerModel:GetData(index)
 	end
 end
 function PlayerModel:ResetFilter()
-	for player in transaction:IteratePlayers(server) do
-		self.filter[player] = false
+	for k,v in pairs(transaction.categoryMap) do
+		if type(k) == 'string' then
+			self.filters[k] = false
+		end
 	end
 end
 function PlayerModel:SetSorter(which)
@@ -280,9 +282,10 @@ function PlayerModel:Refresh()
 		local income, expense = 0, 0
 		local from, to = 1, transaction:GetSize(player,server) -- transaction:SearchByTime(beginTime, endTime, player, server)
 		if from then
+			ChatFrame1:AddMessage(from..","..to)
 			for i=from, to do
 				local _, amount, cat = transaction:GetData(i,player,server)
-				if not self.filter[cat] then	-- category filter.
+				if not self.filters[transaction.categoryMap[cat]] then	-- category filter.
 					if amount > 0 then
 						income = income + amount
 					else
@@ -301,18 +304,15 @@ end
 
 local CategoryModel = {
 	data = {},
-	filter = {},
+	filters = {},
 	GetSize = PlayerModel.GetSize,
 	GetData = PlayerModel.GetData,
 	Sort = PlayerModel.Sort,
 	SetSorter = PlayerModel.SetSorter,
-	ResetFilter = PlayerModel.ResetFilter
 }
-function PlayerModel:ResetFilter()
-	for k,v in pairs(transaction.categoryMap) do
-		if type(k) == 'string' then
-			self.filter[k] = false
-		end
+function CategoryModel:ResetFilter()
+	for player in transaction:IteratePlayers(server) do
+		self.filters[player] = false
 	end
 end
 function CategoryModel:Refresh()
@@ -322,7 +322,7 @@ function CategoryModel:Refresh()
 	end
 	local cache = acquire()
 	for player in transaction:IteratePlayers(server) do
-		if not self.filter[player] then
+		if not self.filters[player] then
 			local income, expense = 0, 0
 			local from, to = 1, transaction:GetSize(player,server) -- transaction:SearchByTime(beginTime, endTime, player, server)
 			if from then
@@ -352,7 +352,9 @@ function CategoryModel:Refresh()
 end
 
 --[[ Controller ]]--
-local Report = {}
+local Report = {
+	methods = { "ToggleType", "Refresh", "OnClickFilterButton", "OnClickReportHeader", "PopulateFilterMenu" }
+}
 
 function Report:New()
 	local newReport = {}
@@ -391,6 +393,10 @@ function Report:New()
 	newReport:ToggleType()
 	
 	return newReport
+end
+
+function Report:InitEventHandlers()
+
 end
 
 function Report:ToggleType()
@@ -442,7 +448,7 @@ function Report:Refresh()
 	end
 end
 
-function Report:OnClickFilterButton(frame)
+function Report:OnClickFilterButton(frame, button)
 	if not frame.dropdown then
 		frame.dropdown = CreateFrame("Frame", "rAccountantFilterMenu", nil, "UIDropDownMenuTemplate")
 		UIDropDownMenu_Initialize(frame.dropdown, function(level) self:PopulateFilterMenu(level) end, "MENU")
@@ -456,14 +462,21 @@ function Report:OnClickReportHeader()
 end
 function Report:PopulateFilterMenu(level)
 	if level == 1 then
-		for k,v in pairs(self.model.filter) do
+		for k,v in pairs(self.model.filters) do
 			local info = UIDropDownMenu_CreateInfo()
 			info.text = L[k]
 			info.keepShownOnClick = 1
-			info.checked = v
+			info.checked = not v
+			info.func = self.OnCheckFilterOption
+			info.arg1 = self
+			info.arg2 = k
 			UIDropDownMenu_AddButton(info)
 		end
 	end
+end
+function Report:OnCheckFilterOption(filter)
+	self.model.filters[filter] = not self.model.filters[filter]
+	self:Refresh()
 end
 
 
