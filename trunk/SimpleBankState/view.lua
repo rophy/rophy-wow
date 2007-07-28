@@ -96,6 +96,17 @@ local filters = {
 
 }
 
+local function ChatEdit_InsertLink(text)
+	local editbox = SimpleBankStateSearchFrame.editBox
+	if editbox:IsShown() then
+		local itemName = GetItemInfo(text)
+		if itemName then
+			editbox:SetText(itemName)
+			editbox:SetFocus()
+		end
+	end
+end
+
 
 function view:Initialize()
 	
@@ -119,6 +130,9 @@ function view:Initialize()
 	end
 	
 	self:CreateSearchFrame():Hide()
+	
+	-- hook this for search box support.
+	hooksecurefunc("ChatEdit_InsertLink", ChatEdit_InsertLink)
 	
 end
 
