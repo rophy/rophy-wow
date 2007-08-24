@@ -20,10 +20,23 @@ local OnEvent
 local OnUpdate
 local frame
 local timer
-local initializations = {}
-local configurations = {}
-local indexes = {}
 local DELAY_TIME = 2
+
+local addon = {}
+_G["rConfiguration"] = addon
+
+local registry = {}
+
+function addon:Register(order, depAddon, enableFunc, disableFunc)
+	local config = {
+		order = order,
+		dependent = depAddon,
+		enable = enableFunc,
+		disable = disableFunc
+	}
+	table.insert(registry, config)
+end
+
 
 function OnLoad()
 	frame = CreateFrame("Frame")
@@ -33,30 +46,6 @@ end
 
 function OnEvent(frame, event)
 	frame:UnregisterAllEvents()
-	if rConfigurationsData then
-		if rConfigurationsData.initScripts then
-			for k, data in pairs(rConfigurationsData.initScripts) do
-				initializations[k] = {}
-				for m, v in pairs(data) do
-					if m == "func" then
-						v = loadstring(v)
-					end
-					initializations[k][m] = v
-				end
-			end
-		end
-		if rConfigurationsData.confScripts then
-			for k, data in pairs(rConfigurationsData.confScripts) do
-				configurations[k] = {}
-				for m, v in pairs(data) do
-					if m == "func" then
-						v = loadstring(v)
-					end
-					configurations[k][m] = v
-				end
-			end
-		end
-	end
 	frame:SetScript("OnUpdate", OnUpdate)
 	frame:Show()
 end
@@ -76,132 +65,102 @@ end
 
 -- When this function is called, all related addons should have already been initialized.
 function OnInitialize()
-	for k in pairs(indexes) do
-		indexes[k] = nil
-	end
-	for k,t in pairs(initializations) do
-		table.insert(indexes, k)
-	end
-	table.sort(indexes, function(a,b) 
-		return (initializations[a].order or 1000) < (initializations[b].order or 1000)
-	end )
-	for i, index in ipairs(indexes) do
-		if initializations[index].func then
-			initializations[index].func()
+	table.sort(registry, function(a,b)
+		if not a.order then
+			return false
+		elseif not b.order then
+			return true
+		else
+			return a.order < b.order
+		end
+	end)
+	
+	for i, config in ipairs(registry) do
+		if not config.dependent or IsAddOnLoaded(config.dependent) then
+			config.enable()
 		end
 	end
-	initializations = nil
-	rConfigure()
-end
-
-function rConfigure()
-	for k in pairs(indexes) do
-		indexes[k] = nil
-	end
-	for k,t in pairs(configurations) do
-		table.insert(indexes, k)
-	end
-	table.sort(indexes, function(a,b) 
-		return (configurations[a].order or 1000) < (configurations[b].order or 1000)
-	end )
-	for i, index in ipairs(indexes) do
-		if configurations[index].func then
-			configurations[index].func()
-		end
-	end
+	
 end
 
 
-configurations["AutoRack"] = {
-	order = 90,
-	addon = "AutoRack",
-	func = function()
+addon:Register(90, "AutoRack", function()
+	if AutoRackSlots then
+		AutoRackSlots:ClearAllPoints()
+		AutoRackSlots:SetFrameStrata("HIGH")
+		AutoRackSlots:SetClampedToScreen(false)
+		AutoRackSlots:SetPoint("BOTTOMLEFT",  CharacterMicroButton, "BOTTOMLEFT", -12, -8)
+		AutoRackSlots:SetFrameLevel(CharacterMicroButton:GetFrameLevel()+2)
+	end
+end)
+
+addon:Register(95, "ItemRack", function()
+	if ItemRack_InvFrame then
+		ItemRack_InvFrame:SetFrameStrata("HIGH")
+		ItemRack_InvFrame:ClearAllPoints()
+		ItemRack_InvFrame:SetPoint("BOTTOMRIGHT", MainMenuBar, "BOTTOMRIGHT", 2, -7)
+	end
+end )
+
+addon:Register(nil, "Epeen", function()
+	if EpeenTarget_KoSButton then 
+		EpeenTarget_KoSButton:ClearAllPoints()
+		EpeenTarget_FriendlyButton:ClearAllPoints()
+		EpeenTarget_KoSFriendlyFrame:ClearAllPoints()
+		EpeenTarget_KoSButton:SetPoint("TOPLEFT", "TargetFrame", "TOPLEFT")
+		EpeenTarget_FriendlyButton:SetPoint("TOPLEFT", EpeenTarget_KoSButton, "TOPRIGHT")
+		EpeenTarget_KoSFriendlyFrame:SetPoint("BOTTOMRIGHT", "TargetFrame", "TOPRIGHT", -55, -20)
+	end
+	if EpeenWarnWindowFrame then
+		EpeenWarnWindowFrame:ClearAllPoints()
+		EpeenWarnWindowFrame:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", 1,1)
+	end
+end )
+
+addon:Register(nil, nil, function()
+	MainMenuBarLeftEndCap:Hide()
+	MainMenuBarRightEndCap:Hide()
+	MainMenuBar:SetToplevel(false)
+	SpellbookMicroButton:Hide()
+	TalentMicroButton:Hide()
+	QuestLogMicroButton:Hide()
+	SocialsMicroButton:Hide()
+	LFGMicroButton:Hide()
+	MainMenuMicroButton:Hide()
+	HelpMicroButton:Hide()
+	CharacterBag3Slot:Hide()
+	CharacterBag2Slot:Hide()
+	CharacterBag1Slot:Hide()
+	CharacterBag0Slot:Hide()
+	MainMenuBarBackpackButton:Hide()
+end )
+
+
+local ReadjustAutoBar = function()
+	if AutoBarFrame then
+		AutoBarFrame:ClearAllPoints()
+		AutoBarFrame:SetClampedToScreen(false)
 		if AutoRackSlots then
-			AutoRackSlots:ClearAllPoints()
-			AutoRackSlots:SetFrameStrata("HIGH")
-			AutoRackSlots:SetClampedToScreen(false)
-			AutoRackSlots:SetPoint("BOTTOMLEFT",  CharacterMicroButton, "BOTTOMLEFT", -12, -8)
-			AutoRackSlots:SetFrameLevel(CharacterMicroButton:GetFrameLevel()+2)
+			AutoBarFrame:SetPoint("TOPLEFT",  AutoRackSlots, "TOPLEFT", 162, -43)	
+			AutoBarFrame:SetFrameLevel(AutoRackSlots:GetFrameLevel())
+		else
+			AutoBarFrame:SetPoint("BOTTOMLEFT", CharacterMicroButton, "BOTTOMLEFT", 0, 0)
+			AutoBarFrame:SetFrameLevel(CharacterMicroButton:GetFrameLevel()+1)
 		end
 	end
-}
+end
 
-configurations["AutoBar"] = {
-	order = 100,
-	addon = "AutoBar",
-	func = function()
-		if AutoBarFrame then
-			AutoBarFrame:ClearAllPoints()
-			AutoBarFrame:SetClampedToScreen(false)
-			if AutoRackSlots then
-				AutoBarFrame:SetPoint("TOPLEFT",  AutoRackSlots, "TOPLEFT", 162, -43)	
-				AutoBarFrame:SetFrameLevel(AutoRackSlots:GetFrameLevel())
-			else
-				AutoBarFrame:SetPoint("BOTTOMLEFT", CharacterMicroButton, "BOTTOMLEFT", 0, 0)
-				AutoBarFrame:SetFrameLevel(CharacterMicroButton:GetFrameLevel()+1)
-			end
+addon:Register(100, "AutoBar",  ReadjustAutoBar)
+
+addon:Register(200, "AutoBar", function()
+	if AutoBarFrame then
+		local oldLayoutUpdate = AutoBar.LayoutUpdate
+		AutoBar.LayoutUpdate = function(...)
+			oldLayoutUpdate(...)
+			ReadjustAutoBar()
 		end
 	end
-}
-
-configurations["ItemRack"] = {
-	addon = "ItemRack",
-	func = function()
-		if ItemRack_InvFrame then
-			ItemRack_InvFrame:SetFrameStrata("HIGH")
-			ItemRack_InvFrame:ClearAllPoints()
-			ItemRack_InvFrame:SetPoint("BOTTOMRIGHT", MainMenuBar, "BOTTOMRIGHT", 2, -7)
-		end
-	end
-}
-
-configurations["Epeen"] = {
-	addon = "Epeen",
-	func = function()
-		if EpeenTarget_KoSButton then 
-			EpeenTarget_KoSButton:ClearAllPoints()
-			EpeenTarget_FriendlyButton:ClearAllPoints()
-			EpeenTarget_KoSFriendlyFrame:ClearAllPoints()
-			EpeenTarget_KoSButton:SetPoint("TOPLEFT", "TargetFrame", "TOPLEFT")
-			EpeenTarget_FriendlyButton:SetPoint("TOPLEFT", EpeenTarget_KoSButton, "TOPRIGHT")
-			EpeenTarget_KoSFriendlyFrame:SetPoint("BOTTOMRIGHT", "TargetFrame", "TOPRIGHT", -55, -20)
-		end
-		if EpeenWarnWindowFrame then
-			EpeenWarnWindowFrame:ClearAllPoints()
-			EpeenWarnWindowFrame:SetPoint("BOTTOMLEFT", nil, "BOTTOMLEFT", 1,1)
-		end
-	end,
-}
-
-
-initializations["MenuBar"] = {
-	func = function()
-		MainMenuBarLeftEndCap:Hide()
-		MainMenuBarRightEndCap:Hide()
-		MainMenuBar:SetToplevel(false)
-		SpellbookMicroButton:Hide()
-		TalentMicroButton:Hide()
-		QuestLogMicroButton:Hide()
-		SocialsMicroButton:Hide()
-		LFGMicroButton:Hide()
-		MainMenuMicroButton:Hide()
-		HelpMicroButton:Hide()
-		CharacterBag3Slot:Hide()
-		CharacterBag2Slot:Hide()
-		CharacterBag1Slot:Hide()
-		CharacterBag0Slot:Hide()
-		MainMenuBarBackpackButton:Hide()
-	end
-}
-
-initializations["AutoBar"] = {
-	addon = "AutoBar",
-	func = function()
-		if AutoBarFrame then
-			AutoBar.LayoutUpdate = configurations.AutoBar.func
-		end
-	end
-}
+end )
 
 
 OnLoad()
