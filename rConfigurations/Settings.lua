@@ -13,8 +13,11 @@ core:Register("AutoRack", 90, "AutoRack",
 		end
 	end,
 	function() -- Disable
-		AutoRackSlots:SetPoint("CENTER", UIParent, "CENTER")
-		return true
+		if AutoRackSlots then	
+			AutoRackSlots:ClearAllPoints()
+			AutoRackSlots:SetPoint("CENTER", UIParent, "CENTER")
+			return true
+		end
 	end
 )
 
@@ -101,13 +104,28 @@ end
 
 core:Register("AutoBar", 100, "AutoBar",  ReadjustAutoBar)
 
-core:Register(nil, 200, "AutoBar", function()
-	if AutoBarFrame then
-		local oldLayoutUpdate = AutoBar.LayoutUpdate
-		AutoBar.LayoutUpdate = function(...)
-			oldLayoutUpdate(...)
-			ReadjustAutoBar()
+local oldLayoutUpdate
+core:Register("AutoBar - Hook", 200, "AutoBar",
+	function()
+		if AutoBarFrame then
+			if not oldLayoutUpdate then
+				oldLayoutUpdate = AutoBar.LayoutUpdate
+			end
+			if AutoBar.LayoutUpdate == oldLayoutUpdate then
+				AutoBar.LayoutUpdate = function(...)
+					oldLayoutUpdate(...)
+					ReadjustAutoBar()
+				end
+				return true
+			end
 		end
-		return true
+	end,
+	function()
+		if AutoBarFrame then
+			if oldLayoutUpdate and AutoBar.LayoutUpdate ~= oldLayoutUpdate then
+				AutoBar.LayoutUpdate = oldLayoutUpdate
+				return true
+			end
+		end
 	end
-end )
+)
