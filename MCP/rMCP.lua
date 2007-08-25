@@ -11,7 +11,7 @@ MCP_LINEHEIGHT = 16
 -- Special Tables
 --==============
 
---[[	
+--[[
 	masterAddonList : master list of sorted addons.
 	It should be in the following structures:
 		masterAddonList = {
@@ -92,6 +92,17 @@ rMCP.sortedAddonList = sortedAddonList
 local addonListBuilders = {}
 rMCP.addonListBuilders = addonListBuilders
 
+--[[
+	categoryStates : states of the category.
+	
+	If categoryStates["Category1Name"] == true then all addons in that category are enabled.
+	
+	Obviously this only will confuse things when there are categories with identical name, 
+	  where masterAddonList and sortedAddonList works correctly. I'll ignore this problem for now.
+	
+]]
+local categoryStates = {}
+rMCP.categoryStates = categoryStates
 --==============
 -- Reference to tables in saved variables
 --==============
@@ -338,7 +349,7 @@ addonListBuilders["Ace2"] = function()
 
 	local numAddons = GetNumAddOns()
 	for i=1, numAddons do
-		table.insert(t, i)		
+		table.insert(t, i)
 	end
 		
 	-- Sort the addon list by Ace2 Categories.
@@ -367,11 +378,11 @@ addonListBuilders["Ace2"] = function()
 		prevCategory = category
 	end
 	
-	table.insert(t, "Blizzard")
-	
+	--[[
 	for i=1, #MCP_BLIZZARD_ADDONS do
 		table.insert(t, numAddons+i)
 	end
+	]]
 	
 	-- Now build the masterAddonList.
 	for k in pairs(masterAddonList) do
@@ -390,7 +401,13 @@ addonListBuilders["Ace2"] = function()
 		end
 	end
 	
-	
+	t = {}
+	t.category = "Blizzard"
+	for i, bzAddon in ipairs(MCP_BLIZZARD_ADDONS) do
+		table.insert(t,bzAddon)
+	end
+	table.insert(masterAddonList, t)
+
 end
 
 
@@ -428,12 +445,6 @@ addonListBuilders["Author"] = function()
 		prevCategory = category
 	end
 	
-	table.insert(t, "Blizzard")
-	
-	for i=1, #MCP_BLIZZARD_ADDONS do
-		table.insert(t, numAddons+i)
-	end
-	
 	-- Now build the masterAddonList.
 	for k in pairs(masterAddonList) do
 		masterAddonList[k] = nil
@@ -450,7 +461,13 @@ addonListBuilders["Author"] = function()
 			table.insert(currPos, addon)
 		end
 	end
-	
+	t = {}
+	t.category = "Blizzard"
+	for i, bzAddon in ipairs(MCP_BLIZZARD_ADDONS) do
+		table.insert(t,bzAddon)
+	end
+	table.insert(masterAddonList, t)
+
 end
 
 --[[
@@ -635,7 +652,8 @@ function rMCP:CollapseAll(collapse)
 	for i, category in ipairs(categories) do
 		collapsedAddons[category] = collapse
 	end
-		
+	
+	self:CheckCategoryStates()
 	self:RebuildSortedAddonList()
 end
 
@@ -699,6 +717,8 @@ function rMCP:UnloadSet(set)
 	end
 
 	self:Print(L["Addons [%s] Unloaded."]:format(self:GetSetName(set)) )
+	
+	self:CheckCategoryStates()
 	rMCP:AddonList_OnShow()
 end
 
@@ -727,6 +747,7 @@ function rMCP:LoadSet(set)
 	enabledList = nil
 	
 	self:Print(L["Addons [%s] Loaded."]:format(self:GetSetName(set)) )
+	self:CheckCategoryStates()
 	rMCP:AddonList_OnShow()
 	
 end
@@ -740,6 +761,22 @@ function rMCP:RenameSet(set, name)
 	
 	self:Print(L["Addons [%s] renamed to [%s]."]:format(oldName,tostring(name)) )
 
+end
+
+function rMCP:CheckCategoryStates()
+	for i, item in ipairs(masterAddonList) do
+		if type(item) == "table" and item.category then
+			local category = item.category
+			categoryStates[category] = true
+			for i, addonIndex in ipairs(item) do
+				local enabled = select(4,GetAddOnInfo(addonIndex))
+				if not enabled then
+					categoryStates[category] = false
+					break
+				end
+			end
+		end
+	end
 end
 
 -- Rebuild sortedAddonList from masterAddonList
@@ -756,7 +793,7 @@ function rMCP:RebuildSortedAddonList()
 			end
 			if not category or not collapsedAddons[category] then
 				for j, subAddon in ipairs(addon) do
-					table.insert(sortedAddonList, subAddon)
+					table.insert(sortedAddonList, GetAddonIndex(subAddon))
 				end
 			end
 		else
@@ -765,7 +802,7 @@ function rMCP:RebuildSortedAddonList()
 		end
 	end
 	
-	
+	self:CheckCategoryStates()
 end
 
 function rMCP:SetMasterAddonBuilder(sorter)
@@ -810,9 +847,16 @@ function rMCP:SortDropDown_OnClick(sorter)
 
 end
 
+function rMCP:EnableAll_OnClick()
+	EnableAllAddOns()
+	rMCP:CheckCategoryStates()
+	rMCP:AddonList_OnShow()
+end
+
 function rMCP:DisableAll_OnClick()
 	DisableAllAddOns()
 	EnableAddOn(MCP_ADDON_NAME)
+	rMCP:CheckCategoryStates()
 	self:AddonList_OnShow()
 end
 
@@ -901,7 +945,6 @@ function rMCP:AddonList_OnShow()
 				headerText:Show()
 				titleText:Hide()
 				status:Hide()
-				checkbox:Hide()
 				securityButton:Hide()
 				loadnow:Hide()
 				if collapsedAddons[addonIdx] then
@@ -910,6 +953,9 @@ function rMCP:AddonList_OnShow()
 					collapseIcon:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomOutButton-Up")
 				end
 				collapse:Show()
+				checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 0, 0)
+				checkbox:SetChecked(categoryStates[addonIdx])
+				checkbox:Show()
 			else
 				obj.category = nil
 				obj:Show()
@@ -952,6 +998,7 @@ function rMCP:AddonList_OnShow()
 				if (name == MCP_ADDON_NAME or addonIdx > origNumAddons) then
 					checkbox:Hide()
 				else
+					checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 5, 0)
 					checkbox:Show()
 					checkbox:SetChecked(enabled)
 				end
@@ -989,6 +1036,33 @@ function rMCP:SetButton_OnClick()
 		self.dropDownFrame = frame
 	end
 	ToggleDropDownMenu(1, nil, self.dropDownFrame, this, 0, this:GetHeight())
+end
+
+function rMCP:CheckBox_OnClick()
+	local obj = this:GetParent()
+	local checked = this:GetChecked()
+	if obj.addon then
+		self:AddonList_Enable(obj.addon, checked)
+	elseif obj.category then
+		for i, item in ipairs(masterAddonList) do
+			if type(item) == 'table' and item.category == obj.category then
+				enabledList = acquire()
+				for j, addon in ipairs(item) do
+					if checked then
+						self:EnableAddon(addon)
+					else
+						DisableAddOn(addon)
+					end
+				end
+				reclaim(enabledList)
+				enabledList = nil
+				categoryStates[obj.category] = checked
+				break
+			end
+		end
+	end
+	self:CheckCategoryStates()
+	self:AddonList_OnShow()
 end
 
 -- func handlers of UIDropDownMenu.
