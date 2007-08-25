@@ -35,7 +35,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 					<Anchors>
 						<Anchor point="LEFT">
 							<Offset>
-								<AbsDimension x="0" y="0"/>
+								<AbsDimension x="38" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -105,7 +105,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						rMCP:AddonList_Enable(this:GetParent().addon, this:GetChecked());
+						rMCP:CheckBox_OnClick()
 					</OnClick>
 				</Scripts>
 				<NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
@@ -208,8 +208,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						EnableAllAddOns()
-						rMCP:AddonList_OnShow()
+						rMCP:EnableAll_OnClick()
 					</OnClick>
 				</Scripts>
 			</Button>
