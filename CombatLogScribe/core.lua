@@ -16,6 +16,17 @@ local trailerList = {
 	"VULNERABLE_TRAILER",
 }
 local ambiguous
+
+-- A list of patterns which might be ambiguous but cannot be find out by automatically.
+-- e.g. "Hukku's Voidwalker misses you." being treated as SPELLMISSOTHERSELF ("%s's %s misses you.")
+local ambiguousPossible = {
+	"SPELLLOGCRITOTHEROTHER",
+	"SPELLLOGOTHEROTHER",
+	"SPELLLOGOTHERSELF",
+	"SPELLLOGSCHOOLOTHEROTHER",
+	"SPELLLOGSCHOOLOTHERSELF",
+	"SPELLMISSOTHERSELF",
+}
 local eventList = {
 --	"CHAT_MSG_DND",
 --	"CHAT_MSG_EMOTE",
@@ -106,6 +117,7 @@ local ignoreList = {
 	"^COMBAT_TEXT",
 	"COMMAND",
 	"^CONFIRM",
+	"^CONTINUE$",
 	"^EMOTE",
 	"FACTION_ALLIANCE",
 	"FACTION_HORDE",
@@ -125,7 +137,8 @@ local ignoreList = {
 	"^NEWBIE_TOOLTIP",
 	"^OPTION_TOOLTIP",
 	"^PVP",
-	"REPUTATION",
+	"^REFLECT$",
+	"^REPUTATION$",
 	"^RESISTANCE",
 	"RESILIENCE",
 	"^SLASH",
@@ -136,9 +149,10 @@ local ignoreList = {
 	"SPELL_SKILL_LINE",
 	"SPELL_TARGET_TEMPLATE",
 	"SPELL_STAT(%d)_NAME",
-	"STANDING",
+	"^STANDING$",
 	"^TITLE_TEMPLATE",
 	"^TUTORIAL",
+	"UNIT_SKINNABLE_LEATHER",
 	"UNITNAME_TITLE_CHARM",
 	"UNKNOWNOBJECT",
 	"UNKNOWN",
@@ -149,6 +163,7 @@ local ignoreList = {
 
 -- Function List.
 local ConvertAmbiguousPattern
+local ConvertAmgibuousPatternGlobally
 local ConvertPattern
 local Debug
 local FindAmbiguousPatterns
@@ -197,6 +212,11 @@ function OnInitialize()
 		ConvertAmbiguousPattern(name)
 	end
 	debugging = true
+	
+	-- Fix those patterns which might be ambiguous.
+	for i, name in ipairs(ambiguousPossible) do
+		ConvertAmgibuousPatternGlobally(name)
+	end
 	
 	table.sort(patternList, PatternCompare)
 	
@@ -379,11 +399,19 @@ function PatternCompare(a, b)
 	
 end
 
+local converted = {}
+function ConvertAmgibuousPatternGlobally(name)
+	if _G[name] and not converted[name] then
+		_G[name] = _G[name] .. '[' .. name .. ']'
+		converted[name] = true
+	end
+end
+
 function ConvertAmbiguousPattern(name)
 	if ambiguous[name] == nil then
 		Debug("Trying to convert", name, "which does not exist in ambiguousPatterns")
 	elseif ambiguous[name] == false then
-		_G[name] = _G[name] .. '[' .. name .. ']'
+		ConvertAmgibuousPatternGlobally(name)
 		ambiguous[name] = true
 		Debug("Modified ambiguous global pattern " .. name)
 	end
