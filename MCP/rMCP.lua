@@ -886,15 +886,13 @@ function rMCP:CollapseAll_OnClick()
 end
 
 function rMCP:AddonList_Enable(addonIndex,enabled)
-	if (type(addonIndex) == "number") then
-		if (enabled) then
-			enabledList = acquire()
-			self:EnableAddon(addonIndex)
-			reclaim(enabledList)
-			enabledList = nil
-		else
-			DisableAddOn(addonIndex)
-		end
+	if (enabled) then
+		enabledList = acquire()
+		self:EnableAddon(addonIndex)
+		reclaim(enabledList)
+		enabledList = nil
+	else
+		DisableAddOn(addonIndex)
 	end
 	self:AddonList_OnShow()
 end
@@ -968,18 +966,10 @@ function rMCP:AddonList_OnShow()
 				if (addonIdx > origNumAddons) then
 					name = MCP_BLIZZARD_ADDONS[(addonIdx-origNumAddons)]
 					obj.addon = name
-					title = L[name]
-					notes = ""
-					enabled = 1
-					loadable = 1
-					if (IsAddOnLoaded(name)) then
-						reason = "LOADED"
-						loadable = 1
-					end
-					security = "SECURE"
+					name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(name)
 				else
-					name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(addonIdx)
 					obj.addon = addonIdx
+					name, title, notes, enabled, loadable, reason, security = GetAddOnInfo(addonIdx)
 				end
 				local loaded = IsAddOnLoaded(name)
 				local ondemand = IsAddOnLoadOnDemand(name)
@@ -995,13 +985,9 @@ function rMCP:AddonList_OnShow()
 				else
 					titleText:SetText(name)
 				end
-				if (name == MCP_ADDON_NAME or addonIdx > origNumAddons) then
-					checkbox:Hide()
-				else
-					checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 5, 0)
-					checkbox:Show()
-					checkbox:SetChecked(enabled)
-				end
+				checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 5, 0)
+				checkbox:Show()
+				checkbox:SetChecked(enabled)
 				if (security == "SECURE") then
 					setSecurity(securityIcon,1)
 				elseif (security == "INSECURE") then
