@@ -17,7 +17,7 @@ for k, v in pairs(_G) do
 	end
 end
 
-print("function GetGlobalStringList()")
+print("function CLS_GetGlobalStringList()")
 print("\treturn {")
 for _, v in pairs(patterns) do
 	print('\t\t"' .. v .. '",')

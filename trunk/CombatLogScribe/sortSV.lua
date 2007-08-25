@@ -55,7 +55,11 @@ function Sort(t, tab)
 			Sort(value, tab)
 			print(tab.."},")
 		else
-			print(tab.."["..tostring(key).."] = "..tostring(value)..",")
+			if type(key) == "number" then
+				print(tab..tostring(value)..",\t-- " .. tostring(key))
+			else
+				print(tab.."["..tostring(key).."] = "..tostring(value)..",")
+			end
 		end
 	end
 end

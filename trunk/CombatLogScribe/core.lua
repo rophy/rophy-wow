@@ -5,6 +5,7 @@ local frame
 local db
 local debugging = true
 local wowversion
+local enabled
 local patterns = {}
 local patternList = {}
 local trailerList = {
@@ -172,14 +173,15 @@ local LoadPatterns
 local OnCombatEvent
 local OnInitialize
 local OnLoad
+local Enable
+local Disable
+local Toggle
 local PatternCompare
 
 
 function OnLoad()
-
 	local v, b, d = GetBuildInfo()
 	wowversion = v .. "." .. b
-	
 	frame = CreateFrame("Frame")
 	frame:SetScript("OnEvent", OnInitialize)
 	frame:RegisterEvent("VARIABLES_LOADED")
@@ -189,14 +191,10 @@ function OnInitialize()
 	if not CombatLogScribeDB then 
 		CombatLogScribeDB = {}
 	end
-
 	db = CombatLogScribeDB
-	
 	if not db.ambiguous then
 		db.ambiguous = {}
 	end
-	
-	
 	if not db.events then
 		db.events = {}
 	end
@@ -234,15 +232,40 @@ function OnInitialize()
 		end
 	end
 	
-	-- nil out GetGlobalStringList() for gc.
-	_G["GetGlobalStringList"] = nil
+	-- nil out CLS_GetGlobalStringList() for gc.
+	_G["CLS_GetGlobalStringList"] = nil
 	
 	frame:UnregisterAllEvents()
 	frame:SetScript("OnEvent", OnCombatEvent)
+	Enable()
+	
+	SlashCmdList["COMBATLOGSCRIBE"] = Toggle
+	SLASH_COMBATLOGSCRIBE1 = "/cls"
+
+	
+end
+
+
+function Enable()
 	for i, event in ipairs(eventList) do
 		frame:RegisterEvent(event)
 	end
-	
+	ChatFrame1:AddMessage("CombatLogScribe enabled.")
+	enabled = true
+end
+
+function Disable()
+	frame:UnregisterAllEvents()
+	ChatFrame1:AddMessage("CombatLogScribe disabled.")
+	enabled = false
+end
+
+function Toggle()
+	if enabled then
+		Disable()
+	else
+		Enable()
+	end
 end
 
 function OnCombatEvent(frame, event, arg1)
@@ -345,7 +368,7 @@ function LoadPatterns()
 	local ignoredCount = 0
 	local shortCount = 0
 	local totalCount = 0
-	local patTable = GetGlobalStringList()
+	local patTable = CLS_GetGlobalStringList()
 	for k in pairs(patternList) do
 		patternList[k] = nil
 	end
