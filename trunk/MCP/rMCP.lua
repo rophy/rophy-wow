@@ -588,7 +588,6 @@ function rMCP:ReloadAddonList()
 	
 end
 
-
 function rMCP:EnableAddon(addon)
 	local name = GetAddOnInfo(addon)
 	if not enabledList[name] then
@@ -985,9 +984,13 @@ function rMCP:AddonList_OnShow()
 				else
 					titleText:SetText(name)
 				end
-				checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 5, 0)
-				checkbox:Show()
-				checkbox:SetChecked(enabled)
+				if name == MCP_ADDON_NAME then
+					checkbox:Hide()
+				else
+					checkbox:SetPoint("LEFT", checkbox:GetParent(), "LEFT", 5, 0)
+					checkbox:Show()
+					checkbox:SetChecked(enabled)
+				end
 				if (security == "SECURE") then
 					setSecurity(securityIcon,1)
 				elseif (security == "INSECURE") then
