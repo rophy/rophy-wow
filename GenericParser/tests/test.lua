@@ -7,6 +7,7 @@ Include("WoWAPI.lua")
 Include("GlobalStrings.lua")
 Include("../GenericParser.lua")
 
+local Parser = LibStub:GetLibrary("LibParser")
 local eventMap,patternInfo,keywords,frame,clients,OnEvent = Parser:GetInternalTables()
 
 local cache = {}
@@ -18,8 +19,8 @@ function EventHandler(event,message,pattern,...)
 end
 
 local returnEvent,returnMessage
-function UnknownEventHandler(event,message)
-	returnEvent = event
+function UnknownEventHandler(event,unknownEvent,message)
+	returnEvent = unknownEvent
 	returnMessage = message
 end
 
@@ -47,7 +48,7 @@ for event, list in pairs(eventMap) do
 end
 
 -- Test for unknown messages.
-Parser:RegisterForUnknown("Test", UnknownEventHandler)
+Parser:RegisterEvent("Test", "_EVENT_PARSE_FAILED", UnknownEventHandler)
 local actualEvent,actualMessage = "CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS","This is a new message"
 OnEvent(nil,actualEvent,actualMessage)
 assert(actualEvent==returnEvent, string.format("Event: %s->%s",tostring(actualEvent),tostring(returnEvent)))
