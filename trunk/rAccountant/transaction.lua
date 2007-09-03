@@ -1,4 +1,4 @@
---[[
+--[[--
 	transaction.lua : tracks money change transactions.
 	
 	TODO: 
@@ -25,9 +25,9 @@
 			}
 		}
 	}
-]]
+--]]
 
-Transaction = DongleStub("Dongle-1.1"):New("rAccountant_Transaction")
+Transaction = DongleStub("Dongle-1.0"):New("rAccountant_Transaction")
 
 local globalDB, playerDB
 local playerName, serverName = UnitName('player'), GetRealmName() .. ' - ' .. UnitFactionGroup('player')

@@ -483,7 +483,7 @@ end
 
 --[[ External Access Module ]]--
 
-Summary = DongleStub("Dongle-1.1"):New("rAccountant_Summary")
+Summary = DongleStub("Dongle-1.0"):New("rAccountant_Summary")
 
 function Summary:Enable()
 	local cmd = self:InitializeSlashCommand("rAccounantView Slash Command", "RACCOUNTANTVIEW", "account")
