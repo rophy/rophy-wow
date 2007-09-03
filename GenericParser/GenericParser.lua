@@ -41,9 +41,11 @@ if LibParser then
 	local eventMap
 	local patternInfo
 	local keywords
+	local initialized
 	
 	---- Local Functions ----
-	local OnLoad
+	local Activate
+	local Initialize
 	local OnEvent
 	local FindPattern
 	local GenerateEventMap
@@ -74,7 +76,8 @@ if LibParser then
 		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",OnCombatEvent)	-- This has the same effect as 2.
 	-----------------------------------------------------------------------------]]
 	function lib:RegisterEvent(addonID, event, callback)
-		if eventMap[event] and addonID then
+--		if eventMap[event] and addonID then
+		if addonID then
 			if type(callback) == "string" then
 				if type(addonID) == "table" then
 					callback = addonID[callback]
@@ -832,7 +835,7 @@ if LibParser then
 	end
 
 	--[[ Initialization ]]--
-	function OnLoad()
+	function Activate()
 		---- Version Upgrade ----
 		if libParserOldMinor and libParserOldMinor < LIB_PARSER_MINOR then
 		end
@@ -843,15 +846,22 @@ if LibParser then
 			lib.frame = CreateFrame("Frame")
 		end
 		lib.frame:SetScript("OnEvent", OnEvent)
+	end
+	
+	function Initialize()
 		patternInfo = {}
 		eventMap = GenerateEventMap()
 		keywords = GenerateKeywords()
+		initialized = true
 	end
 
 	--[[ Section Block for OnEvent() ]]--
 	do
 		local tokens = {}
 		function OnEvent(frame, event, arg1)
+			if not initialized then -- initialize lazily.
+				Initialize()
+			end
 			if not eventMap[event] then
 				return
 			end
@@ -1058,17 +1068,11 @@ if LibParser then
 					end
 				end )
 				info.nf = nf
-
 			end
 			return patternInfo[patternName]
 		end
 	end
-
-
-
-	OnLoad()
-
-
+	Activate()
 end
 
 
