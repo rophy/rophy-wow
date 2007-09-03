@@ -1,18 +1,48 @@
-local parserName, parserVersion = "Parser", tonumber(string.match("$Revision$", "(%d+)") or 1)
+-- LibStub is a simple versioning stub meant for use in Libraries.  http://www.wowace.com/wiki/LibStub for more info
+-- LibStub is hereby placed in the Public Domain Credits: Kaelten, Cladhaire, ckknight, Mikk, Ammo, Nevcairiel, joshborke
+local LIBSTUB_MAJOR, LIBSTUB_MINOR = "LibStub", 2  -- NEVER MAKE THIS AN SVN REVISION! IT NEEDS TO BE USABLE IN ALL REPOS!
+local LibStub = _G[LIBSTUB_MAJOR]
 
--- Wrap the library in a conditional so that it can be embedded in other libraries.
-if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
+if not LibStub or LibStub.minor < LIBSTUB_MINOR then
+	LibStub = LibStub or {libs = {}, minors = {} }
+	_G[LIBSTUB_MAJOR] = LibStub
+	LibStub.minor = LIBSTUB_MINOR
+	
+	function LibStub:NewLibrary(major, minor)
+		assert(type(major) == "string", "Bad argument #2 to `NewLibrary' (string expected)")
+		minor = assert(tonumber(strmatch(minor, "%d+")), "Minor version must either be a number or contain a number.")
+		
+		local oldminor = self.minors[major]
+		if oldminor and oldminor >= minor then return nil end
+		self.minors[major], self.libs[major] = minor, self.libs[major] or {}
+		return self.libs[major], oldminor
+	end
+	
+	function LibStub:GetLibrary(major, silent)
+		if not self.libs[major] and not silent then
+			error(("Cannot find a library instance of %q."):format(tostring(major)), 2)
+		end
+		return self.libs[major], self.minors[major]
+	end
+	
+	function LibStub:IterateLibraries() return pairs(self.libs) end
+	setmetatable(LibStub, { __call = LibStub.GetLibrary })
+end
 
-	--[[ Local Data ]]--
+local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "LibParser", 1
+local LibParser, libParserOldMinor = LibStub:NewLibrary(LIB_PARSER_MAJOR, LIB_PARSER_MINOR)
+if LibParser then
+
+	-- Special event for debugging.
+	local EVENT_PARSE_FAILED = "_EVENT_PARSE_FAILED"
+
+	---- Local Data ----
+	local lib = LibParser
 	local eventMap
 	local patternInfo
 	local keywords
-	local lib
-	local frame
-	local clients
-
-
-	--[[ Local Functions ]]--
+	
+	---- Local Functions ----
 	local OnLoad
 	local OnEvent
 	local FindPattern
@@ -20,28 +50,108 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 	local GenerateKeywords
 	local LoadPatternInfo
 	local NotifyClients
-	local NotifyUnknown
-	local ProcesStringSearch
 
-	--[[ Version Upgrade ]]--
-	local oldLib = _G[parserName]
-	if oldLib then
-		-- Upgrading, use the old table so that old references still works.
-		frame, clients = oldLib.frame, oldLib.clients
-		for k in pairs(oldLib) do oldLib[k] = nil end
-		lib = oldLib
-	else
-		lib = {}
+	--[[---------------------------------------------------------------------------
+	Notes:
+		* Registers for an event.
+	Arguments:
+		assign an unique addonID.
+		string - the Blizzard event to register for.
+		string or function - the callback function to be called. If type(addonID)=="table" then this will be the method name or method reference of the table object, otherwise this will be the global function name or function reference. The callback function should be in the form Callback(event,message,pattern,...).
+	Example:
+		local obj = {}
+		-- Object method.
+		function obj:OnEvent(event,message,pattern,...)
+			-- Do something.
+		end
+		-- Function.
+		function OnCombatEvent(event,message,pattern,...)
+			-- Do something.
+		end
+		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnEvent")	-- 1
+		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",obj.OnEvent)	-- This has the same effect as 1.
+		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnCombatEvent")	-- 2
+		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",OnCombatEvent)	-- This has the same effect as 2.
+	-----------------------------------------------------------------------------]]
+	function lib:RegisterEvent(addonID, event, callback)
+		if eventMap[event] and addonID then
+			if type(callback) == "string" then
+				if type(addonID) == "table" then
+					callback = addonID[callback]
+				else
+					callback = _G[callback]
+				end
+			end
+			if not callback then
+				error('Usage: RegisterEvent(addonID, "event", callback or "callback")')
+			end
+			if not self.clients[event] then
+				self.clients[event] = {}
+			end
+			self.clients[event][addonID] = callback
+			self.frame:RegisterEvent(event)
+		end
+	end
+
+	--[[---------------------------------------------------------------------------
+	Notes:
+		* Checks if you have registered an event.
+	Arguments:
+		the unique addonID.
+		string - the Blizzard event to register for.
+	Returns:
+		boolean - true if the event has been registered, false otherwise.
+	Example:
+		if Parser:IsEventRegistered("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE") then
+			-- Do somethng.
+		end
+	-----------------------------------------------------------------------------]]
+	function lib:IsEventRegistered(addonID, event)
+		return ( self.clients[event] and self.clients[event][addonID] )
+	end
+
+	--[[---------------------------------------------------------------------------
+	Notes:
+		* Unregisters an event.
+	Arguments:
+		the unique addonID.
+		string - the Blizzard event to register for.
+	Example:
+		Parser:UnregisterEvent("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
+	-----------------------------------------------------------------------------]]
+	function lib:UnregisterEvent(addonID, event)
+		if self.clients[event] and self.clients[event][addonID] then
+			self.clients[event][addonID] = nil
+			if not next(self.clients[event]) then
+				frame:UnregisterEvent(event)
+			end
+		end
+	end
+
+	--[[---------------------------------------------------------------------------
+	Notes:
+		* Unregisters all events.
+	Arguments:
+		the unique addonID.
+	Example:
+		Parser:UnregisterAllEvents("MyAddon")
+	-----------------------------------------------------------------------------]]
+	function lib:UnregisterAllEvents(addonID)
+		for event in pairs(self.clients) do
+			self:UnregisterEvent(addonID, event)
+		end
+	end
+
+	-- #NODOC
+	function lib:GetInternalTables()
+		return eventMap,patternInfo,keywords,frame,clients,OnEvent
 	end
 
 
-
 	function GenerateEventMap()
-
 		-- Provide the optimized eventMap of enUS as the default table.
 		local locale = "enUS"
-
-		eventMap = {
+		local eventMap = {
 			["CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS"] = {
 				"SPELLLOGCRITSCHOOLOTHEROTHER",
 				"SPELLLOGSCHOOLOTHEROTHER",
@@ -558,19 +668,6 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				"TRADESKILL_LOG_THIRDPERSON",
 			},
 		}
-
-		-- Vallid check for the following events.
-		--[[
-		setmetatable(eventMap, {
-			__newindex = function(t,k,v)
-				if v == nil then
-					error("inserting invalid key to eventMap[" .. tostring(k) .. "]")
-				else
-					rawset(t,k,v)
-				end
-			end
-		} )
-		]]
 		eventMap['CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS'] = eventMap['CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS']
 		eventMap['CHAT_MSG_COMBAT_CREATURE_VS_PARTY_MISSES'] = eventMap['CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_MISSES']
 		eventMap['CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS'] = eventMap['CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS']
@@ -601,10 +698,7 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 		eventMap['CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE'] = eventMap['CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE']
 		eventMap['CHAT_MSG_SPELL_PET_BUFF'] = eventMap['CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF']
 		eventMap['CHAT_MSG_SPELL_PET_DAMAGE'] = eventMap['CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE']
-
-
 		if GetLocale() == "deDE" then
-
 			-- Remove ITEMENCHANTMENTADDOTHERSELF, it's ambiguous to SIMPLECASTOTHEROTHER.
 			-- Remove ITEMENCHANTMENTADDSELFSELF, it's ambiguous to SIMPLECASTSELFOTHER.
 			for event, list in pairs(eventMap) do
@@ -615,20 +709,17 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				end
 			end
 		end
-		
 		if GetLocale() ~= locale then
 			-- Get the list of events.
 			local eventList = {}
 			for event in pairs(eventMap) do
 				table.insert(eventList, event)
 			end
-			
 			-- Record the lists which have the same reference, noneed to sort them twice.
 			local map = {}
-			
 			for i, event in ipairs(eventList) do
 				if not map[event] then
-					table.sort(eventMap[event], function(a, b)
+					local CompareFunc = function(a, b)
 						local pa = _G[a]
 						local pb = _G[b]
 						if pa and not pb then
@@ -650,8 +741,9 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 								return pa:len() > pb:len()
 							end
 						end
-					end	)
-				end		
+					end
+					table.sort(eventMap[event], CompareFunc)
+				end
 				for j=i+1, #eventList, 1 do
 					local event2 = eventList[j]
 					if eventMap[event2] == eventMap[event] then
@@ -660,24 +752,22 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				end
 			end
 		end
-		
+		-- Adding this because RegisterEvent() checks for the entry in eventMap.
+		eventMap[EVENT_PARSE_FAILED] = {}
+		return eventMap
 	end
 
 	-- Auto-generate the keywords with the idea suggested by ckknight.
 	function GenerateKeywords()
-
-		keywords = {}
-		
+		local keywords = {}
 		local wordCounts = {}
 		local patterns = {}
-
 		-- Get a list of patterns.
 		for event, list in pairs(eventMap) do
 			for i, pattern in ipairs(list) do
 				patterns[pattern] = true
 			end
 		end
-		
 		-- Count how many GlobalString contains the word.
 		local function CountWord(word)
 			if not wordCounts[word] then
@@ -690,7 +780,6 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				end
 			end
 		end
-			
 		-- Parse for the keywords in each pattern.
 		for pattern in pairs(patterns) do
 			local str = _G[pattern]
@@ -711,7 +800,6 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				end
 			end
 		end
-		
 		-- Parse for the keywords in each pattern again, find the rarest word.
 		for pattern in pairs(patterns) do
 			local str = _G[pattern]
@@ -737,164 +825,27 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 						rarestWord = cap
 					end
 				end
-				
 				keywords[pattern] = rarestWord
 			end
 		end
-
-	end
-
-
-
-	--[[ Public API ]]--
-
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Registers for an event.
-	Arguments:
-		assign an unique addonID.
-		string - the Blizzard event to register for.
-		string or function - the callback function to be called. If type(addonID)=="table" then this will be the method name or method reference of the table object, otherwise this will be the global function name or function reference. The callback function should be in the form Callback(event,message,pattern,...).
-	Example:
-		local obj = {}
-		-- Object method.
-		function obj:OnEvent(event,message,pattern,...)
-			-- Do something.
-		end
-		-- Function.
-		function OnCombatEvent(event,message,pattern,...)
-			-- Do something.
-		end
-		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnEvent")	-- 1
-		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",obj.OnEvent)	-- This has the same effect as 1.
-		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnCombatEvent")	-- 2
-		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",OnCombatEvent)	-- This has the same effect as 2.
-	-----------------------------------------------------------------------------]]
-	function lib:RegisterEvent(addonID, event, callback)
-
-		if eventMap[event] and addonID then
-			
-			if type(callback) == "string" then
-				if type(addonID) == "table" then
-					callback = addonID[callback]
-				else
-					callback = _G[callback]
-				end
-			end
-			
-			if not callback then
-				error('Usage: RegisterEvent(addonID, "event", callback or "callback")')
-			end
-			
-			if not clients[event] then
-				clients[event] = {}
-			end
-			
-			clients[event][addonID] = callback
-			frame:RegisterEvent(event)
-			
-		end
-
-
-	end
-
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Checks if you have registered an event.
-	Arguments:
-		the unique addonID.
-		string - the Blizzard event to register for.
-	Returns:
-		boolean - true if the event has been registered, false otherwise.
-	Example:
-		if Parser:IsEventRegistered("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE") then
-			-- Do somethng.
-		end
-	-----------------------------------------------------------------------------]]
-	function lib:IsEventRegistered(addonID, event)
-		return ( clients[event] and clients[event][addonID] )
-	end
-
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Unregisters an event.
-	Arguments:
-		the unique addonID.
-		string - the Blizzard event to register for.
-	Example:
-		Parser:UnregisterEvent("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
-	-----------------------------------------------------------------------------]]
-	function lib:UnregisterEvent(addonID, event)
-		if clients[event] and clients[event][addonID] then
-			clients[event][addonID] = nil
-			if not next(clients[event]) then
-				frame:UnregisterEvent(event)
-			end
-		end
-	end
-
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Unregisters all events.
-	Arguments:
-		the unique addonID.
-	Example:
-		Parser:UnregisterAllEvents("MyAddon")
-	-----------------------------------------------------------------------------]]
-	function lib:UnregisterAllEvents(addonID)
-		for event in pairs(clients) do
-			self:UnregisterEvent(addonID, event)
-		end
-	end
-
-	-- #NODOC
-	-- This is a special API for helping detect unparsed messages.
-	do 
-		local clientsForUnknown = {}
-		function lib:RegisterForUnknown(addonID,callback)
-			if type(callback) == "string" then
-				if type(addonID) == "table" then
-					callback = addonID[callback]
-				else
-					callback = _G[callback]
-				end
-			end
-			clientsForUnknown[addonID] = callback
-		end
-		function NotifyUnknown(event,message)
-			for addonID, callback in pairs(clientsForUnknown) do
-				local success, ret
-				if type(addonID) == 'table' then
-					success, ret = pcall(callback, addonID, event, message)
-				else
-					success, ret = pcall(callback, event, message)
-				end
-				if not success then
-					geterrorhandler()(ret)
-				end
-			end
-		end
-	end
-
-
-	-- #NODOC
-	function lib:GetInternalTables()
-		return eventMap,patternInfo,keywords,frame,clients,OnEvent
+		return keywords
 	end
 
 	--[[ Initialization ]]--
 	function OnLoad()
+		---- Version Upgrade ----
+		if libParserOldMinor and libParserOldMinor < LIB_PARSER_MINOR then
+		end
+		if not lib.clients then
+			lib.clients = {}
+		end
+		if not lib.frame then
+			lib.frame = CreateFrame("Frame")
+		end
+		lib.frame:SetScript("OnEvent", OnEvent)
 		patternInfo = {}
-		if not clients then
-			clients = {}
-		end
-		if not frame then
-			frame = CreateFrame("Frame")
-		end
-		frame:SetScript("OnEvent", OnEvent)
-		GenerateEventMap()
-		GenerateKeywords()
-		_G[globalName] = lib
+		eventMap = GenerateEventMap()
+		keywords = GenerateKeywords()
 	end
 
 	--[[ Section Block for OnEvent() ]]--
@@ -904,26 +855,24 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 			if not eventMap[event] then
 				return
 			end
-			
 			local pos, pattern = FindPattern(arg1, eventMap[event], tokens)
-			
 			if pattern then
 				NotifyClients(event,arg1,pattern,unpack(tokens))
 			else
-				NotifyUnknown(event,arg1)
+				NotifyClients(EVENT_PARSE_FAILED,event,arg1)
 			end
-			
 		end
 	end
 
-	function NotifyClients(event,message,pattern,...)
-		if clients and clients[event] then
+	function NotifyClients(event, ...)
+		local clients = lib.clients
+		if clients[event] then
 			for addonID, handler in pairs(clients[event]) do
 				local success, ret
 				if type(addonID) == 'table' then
-					success, ret = pcall(handler, addonID, event, message, pattern, ...)
+					success, ret = pcall(handler, addonID, event, ...)
 				else
-					success, ret = pcall(handler, event, message, pattern, ...)
+					success, ret = pcall(handler, event, ...)
 				end
 				if not success then
 					geterrorhandler()(ret)
@@ -1087,7 +1036,6 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 				end
 				
 				info.p, info.map = ProcessReturns(ConvertPattern(fmt,true))
-
 				-- Record index of %d tokens in the field info.nf
 				-- To save space, info.nf is a index number if the pattern has only one %d, and is a table only when there are more than one %d.
 				local i = 0
@@ -1122,3 +1070,5 @@ if not _G[parserName] or _G[parserName]:GetCurrentVersion() < parserVersion then
 
 
 end
+
+

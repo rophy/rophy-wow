@@ -1,0 +1,7 @@
+## Interface: 20100
+## Title: GenericParser
+## Notes: A library which attempts to centralize combat log parsing.
+## OptionalDependencies: LibStub
+
+
+GenericParser.lua
