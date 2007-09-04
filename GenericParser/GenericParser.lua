@@ -29,7 +29,7 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 	setmetatable(LibStub, { __call = LibStub.GetLibrary })
 end
 
-local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "LibParser", 1
+local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "ParserCore-1", 1
 local LibParser, libParserOldMinor = LibStub:NewLibrary(LIB_PARSER_MAJOR, LIB_PARSER_MINOR)
 if LibParser then
 
@@ -147,16 +147,33 @@ if LibParser then
 		end
 	end
 
+	function lib:LoadEverything()
+		if not initialized then
+			Initialize()
+		end
+		for event,patterns in pairs(eventMap) do
+			for i, pattern in ipairs(patterns) do
+				if patternInfo[pattern] == nil then
+					LoadPatternInfo(pattern)
+				end
+			end
+		end
+	end
+	
 	-- #NODOC
-	function lib:GetInternalTables()
-		return eventMap,patternInfo,keywords,frame,clients,OnEvent,Initialize
+	-- This is for debugging.
+	function lib:GetInternals()
+		return eventMap,patternInfo,keywords,frame,clients,OnEvent,Initialize,GenerateEventMap,GenerateKeywords
 	end
 
-
+	-- Return a table of event to patterns.
 	function GenerateEventMap()
-		-- Provide the optimized eventMap of enUS as the default table.
+		
+		-- If locale ~= GetLocale(), the patterns in eventMap will be sorted to make sure the parsing sequence is correct.
 		local locale = "enUS"
-		local eventMap = {
+		
+		-- Here I provide the optimized eventMap of enUS as the default table.
+		eventMap = {
 			["CHAT_MSG_COMBAT_CREATURE_VS_CREATURE_HITS"] = {
 				"SPELLLOGCRITSCHOOLOTHEROTHER",
 				"SPELLLOGSCHOOLOTHEROTHER",
@@ -703,6 +720,8 @@ if LibParser then
 		eventMap['CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE'] = eventMap['CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE']
 		eventMap['CHAT_MSG_SPELL_PET_BUFF'] = eventMap['CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF']
 		eventMap['CHAT_MSG_SPELL_PET_DAMAGE'] = eventMap['CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE']
+		
+		-- Locale-specific processing.
 		if GetLocale() == "deDE" then
 			-- Remove ITEMENCHANTMENTADDOTHERSELF, it's ambiguous to SIMPLECASTOTHEROTHER.
 			-- Remove ITEMENCHANTMENTADDSELFSELF, it's ambiguous to SIMPLECASTSELFOTHER.
@@ -714,16 +733,21 @@ if LibParser then
 				end
 			end
 		end
+		
+		-- Do we need to sort the patterns?
 		if GetLocale() ~= locale then
-			-- Get the list of events.
+			-- Since some events in eventMap are the same tables, 
+			-- use a table to record sorted list to prevent dupcliated sorting.
+			local map = {}
+			-- Make a list of events to iterate through.
 			local eventList = {}
 			for event in pairs(eventMap) do
 				table.insert(eventList, event)
 			end
-			-- Record the lists which have the same reference, noneed to sort them twice.
-			local map = {}
 			for i, event in ipairs(eventList) do
+				-- If this event has not yet been sorted then sort it.
 				if not map[event] then
+					-- The core compare function which makes the pattern sequence correct.
 					local CompareFunc = function(a, b)
 						local pa = _G[a]
 						local pb = _G[b]
@@ -749,22 +773,23 @@ if LibParser then
 					end
 					table.sort(eventMap[event], CompareFunc)
 				end
+				-- Now iterate through the forwarding events, check for same reference tables.
 				for j=i+1, #eventList, 1 do
 					local event2 = eventList[j]
+					-- Mark the event if the it references to the same table to the recently sorted event.
 					if eventMap[event2] == eventMap[event] then
 						map[event2] = true
 					end
 				end
 			end
 		end
-		-- Adding this because RegisterEvent() checks for the entry in eventMap.
+		-- Adding this as a ugly hack because RegisterEvent() checks for the entry in eventMap.
 		eventMap[EVENT_PARSE_FAILED] = {}
-		return eventMap
 	end
 
 	-- Auto-generate the keywords with the idea suggested by ckknight.
 	function GenerateKeywords()
-		local keywords = {}
+		keywords = {}
 		local wordCounts = {}
 		local patterns = {}
 		-- Get a list of patterns.
@@ -833,7 +858,6 @@ if LibParser then
 				keywords[pattern] = rarestWord
 			end
 		end
-		return keywords
 	end
 
 	--[[ Initialization ]]--
@@ -854,8 +878,8 @@ if LibParser then
 	
 	function Initialize()
 		patternInfo = {}
-		eventMap = GenerateEventMap()
-		keywords = GenerateKeywords()
+		GenerateEventMap()
+		GenerateKeywords()
 		initialized = true
 	end
 
@@ -869,10 +893,20 @@ if LibParser then
 			if not eventMap[event] then
 				return
 			end
+			-- Recycles the table.
+			for k in pairs(tokens) do
+				tokens[k] = nil
+			end
+			-- table tokens will store the tokens parsed, in the correct sequence.
 			local pos, pattern = FindPattern(arg1, eventMap[event], tokens)
+			
+			-- NOTE: pos was used in ParserLib-1.1 to speed up trailer parsing, but ParserCore-1 doesn't support trailers (yet).
+			
 			if pattern then
 				NotifyClients(event,arg1,pattern,unpack(tokens))
 			else
+				-- EVENT_PARSE_FAILED is a special internal event for notification of missed combat log messages.
+				-- You can see that the args are different.
 				NotifyClients(EVENT_PARSE_FAILED,event,arg1)
 			end
 		end
@@ -937,19 +971,19 @@ if LibParser then
 	-----------------------------------------------------------------------------]]
 		function FindPattern(message, patternList, tokens)
 			for i, pattern in ipairs(patternList) do
+				-- Load pattern lazily, if it fails to load, patternInfo[pattern] == false.
 				if patternInfo[pattern] == nil then
 					LoadPatternInfo(pattern)
 				end
 				local pi = patternInfo[pattern]
 				if pi then
-					if not keywords
-					or not keywords[pattern]
-					or message:find(keywords[pattern], 1, true) then
-					
-						local pos = ProcessReturns(tokens, pi.map, message:find(pi.p) )
+					-- Do a plain text search first, this is faster than regEx.
+					if not keywords[pattern] or message:find(keywords[pattern], 1, true) then
+						local pos = ProcessReturns(tokens, pi.map, message:find(pi.p))
 						if pos then
 							if pi.nf then
-								-- convert the numberic tokens to number.
+								-- Convert the numberic tokens to number.
+								-- Check ending part of LoadPatternInfo() for the detail of pi.nf
 								if type(pi.nf) == 'number' then
 									tokens[pi.nf] = tonumber(tokens[pi.nf])
 								elseif type(pi.nf) == 'table' then
@@ -976,7 +1010,7 @@ if LibParser then
 		-- Will additionaly return the sequence of tokens, for example:
 		--  "%2$s reflects %3$d %4$s damage to %1$s." will return:
 		--    "(.-) reflects (%+) (.-) damage to (.-)%.", 4 1 2 3.
-		--  (    [1]=2,[2]=3,[3]=4,[4]=1  Reverting indexes and become  [1]=4, [2]=[1],[3]=2,[4]=3. )
+		--  (    [1]=2,[2]=3,[3]=4,[4]=1  Reverting the indexes will become  [1]=4, [2]=[1],[3]=2,[4]=3. )
 		local function ConvertPattern(pattern, anchor)
 			local seq -- fills with ordered list of $s as they appear
 			-- Add % to escape all magic characters used in LUA pattern matching, except $ and %
@@ -1076,7 +1110,10 @@ if LibParser then
 			return patternInfo[patternName]
 		end
 	end
+	
+	-- Load the library.
 	Activate()
+	
 end
 
 
