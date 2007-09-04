@@ -8,7 +8,11 @@ Include("GlobalStrings.lua")
 Include("../GenericParser.lua")
 
 local Parser = LibStub:GetLibrary("LibParser")
-local eventMap,patternInfo,keywords,frame,clients,OnEvent = Parser:GetInternalTables()
+local eventMap,patternInfo,keywords,frame,clients,OnEvent, Initialize = Parser:GetInternalTables()
+
+Initialize()
+
+local eventMap,patternInfo,keywords,frame,clients,OnEvent, Initialize = Parser:GetInternalTables()
 
 local cache = {}
 function EventHandler(event,message,pattern,...)

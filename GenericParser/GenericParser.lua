@@ -41,6 +41,8 @@ if LibParser then
 	local eventMap
 	local patternInfo
 	local keywords
+	local clients
+	local frame
 	local initialized
 	
 	---- Local Functions ----
@@ -88,11 +90,11 @@ if LibParser then
 			if not callback then
 				error('Usage: RegisterEvent(addonID, "event", callback or "callback")')
 			end
-			if not self.clients[event] then
-				self.clients[event] = {}
+			if not clients[event] then
+				clients[event] = {}
 			end
-			self.clients[event][addonID] = callback
-			self.frame:RegisterEvent(event)
+			clients[event][addonID] = callback
+			frame:RegisterEvent(event)
 		end
 	end
 
@@ -110,7 +112,7 @@ if LibParser then
 		end
 	-----------------------------------------------------------------------------]]
 	function lib:IsEventRegistered(addonID, event)
-		return ( self.clients[event] and self.clients[event][addonID] )
+		return ( clients[event] and clients[event][addonID] )
 	end
 
 	--[[---------------------------------------------------------------------------
@@ -123,9 +125,9 @@ if LibParser then
 		Parser:UnregisterEvent("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
 	-----------------------------------------------------------------------------]]
 	function lib:UnregisterEvent(addonID, event)
-		if self.clients[event] and self.clients[event][addonID] then
-			self.clients[event][addonID] = nil
-			if not next(self.clients[event]) then
+		if clients[event] and clients[event][addonID] then
+			clients[event][addonID] = nil
+			if not next(clients[event]) then
 				frame:UnregisterEvent(event)
 			end
 		end
@@ -140,14 +142,14 @@ if LibParser then
 		Parser:UnregisterAllEvents("MyAddon")
 	-----------------------------------------------------------------------------]]
 	function lib:UnregisterAllEvents(addonID)
-		for event in pairs(self.clients) do
+		for event in pairs(clients) do
 			self:UnregisterEvent(addonID, event)
 		end
 	end
 
 	-- #NODOC
 	function lib:GetInternalTables()
-		return eventMap,patternInfo,keywords,frame,clients,OnEvent
+		return eventMap,patternInfo,keywords,frame,clients,OnEvent,Initialize
 	end
 
 
@@ -846,6 +848,8 @@ if LibParser then
 			lib.frame = CreateFrame("Frame")
 		end
 		lib.frame:SetScript("OnEvent", OnEvent)
+		clients = lib.clients
+		frame = lib.frame
 	end
 	
 	function Initialize()
