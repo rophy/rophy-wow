@@ -47,6 +47,7 @@ function OnUpdate(frame, elapsed)
 	end
 	if timer > DELAY_TIME then
 		frame:Hide()
+		timer = nil
 		frame:SetScript("OnUpdate", nil)
 		OnInitialize()
 	end
@@ -54,16 +55,19 @@ end
 
 -- When this function is called, all related addons should have already been initialized.
 function OnInitialize()
-	table.sort(registry, function(a,b) return a.order < b.order end)
-	
-	for i, config in ipairs(registry) do
-		if not config.dependent or IsAddOnLoaded(config.dependent) then
-			if config.enable() then
-				config.enabled = true
+	if InCombatLockdown() then
+		frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+	else
+		table.sort(registry, function(a,b) return a.order < b.order end)
+		
+		for i, config in ipairs(registry) do
+			if not config.dependent or IsAddOnLoaded(config.dependent) then
+				if config.enable() then
+					config.enabled = true
+				end
 			end
 		end
 	end
-	
 end
 
 
