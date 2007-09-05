@@ -937,7 +937,7 @@ if LibParser then
 				assert( map == nil or count == #map )
 				if map then
 					for i=1, count do
-						t[i] = select(map[i],...)
+						t[map[i]] = select(i,...)
 					end
 				else
 					for i=1, count do
@@ -1005,12 +1005,10 @@ if LibParser then
 	--[[ Section Block for LoadPatternInfo() ]]--
 	do
 		local tmp = {}
-		local tmp2 = {}
 		-- Convert "%s hits %s for %d." to "(.+) hits (.+) for (%d+)."
 		-- Will additionaly return the sequence of tokens, for example:
 		--  "%2$s reflects %3$d %4$s damage to %1$s." will return:
-		--    "(.-) reflects (%+) (.-) damage to (.-)%.", 4 1 2 3.
-		--  (    [1]=2,[2]=3,[3]=4,[4]=1  Reverting the indexes will become  [1]=4, [2]=[1],[3]=2,[4]=3. )
+		--    "(.-) reflects (%+) (.-) damage to (.-)%.", 2, 3, 4, 1
 		local function ConvertPattern(pattern, anchor)
 			local seq -- fills with ordered list of $s as they appear
 			-- Add % to escape all magic characters used in LUA pattern matching, except $ and %
@@ -1022,22 +1020,15 @@ if LibParser then
 				end
 				local idx = 1 -- incremental index into field[]
 				local prevIdx = idx
-				local tmpSeq = tmp2
-				for k in pairs(tmpSeq) do
-					tmpSeq[k] = nil
-				end
 				for i in pattern:gmatch("%%(%d?)%$?[sd]") do
 					if tonumber(i) then
-						tmpSeq[idx] = tonumber(i)
+						seq[idx] = tonumber(i)
 						prevIdx = tonumber(i)+1
 					else
-						tmpSeq[idx] = prevIdx
+						seq[idx] = prevIdx
 						prevIdx = idx + 1
 					end
 					idx = idx + 1
-				end
-				for i, j in ipairs(tmpSeq) do
-					seq[j] = i
 				end
 			end
 			
@@ -1108,6 +1099,10 @@ if LibParser then
 				info.nf = nf
 			end
 			return patternInfo[patternName]
+		end
+		-- Expose ConvertPattern as an API since it might be useful.
+		function lib:ConvertPattern(fmt,anchor)
+			return ConvertPattern(fmt,anchor)
 		end
 	end
 	
