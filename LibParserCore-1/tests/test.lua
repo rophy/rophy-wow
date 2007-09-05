@@ -11,7 +11,7 @@ Include("WoWAPI.lua")
 Include("GlobalStrings-zhTW.lua")
 -- Include("GlobalStrings-enUS.lua")
 
-Include("../GenericParser.lua")
+Include("../ParserCore-1/ParserCore-1.lua")
 
 
 
