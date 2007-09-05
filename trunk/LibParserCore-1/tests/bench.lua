@@ -35,8 +35,9 @@ local function ReportMemory(title)
 	print(string.format("Mem [%s] : %.3fKB, %.3fKB",title,mem,totalMem))
 end
 
+
 BeginRecordMemory()
-Include("../GenericParser.lua")
+Include("../ParserCore-1/ParserCore-1.lua")
 parser = LibStub("ParserCore-1")
 EndRecordMemory()
 ReportMemory("Load")

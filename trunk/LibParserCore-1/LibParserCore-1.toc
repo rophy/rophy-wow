@@ -1,0 +1,7 @@
+## Interface: 20100
+## Title: ParserCore-1
+## Notes: A low level combat log parser.
+## OptionalDependencies: LibStub
+
+
+ParserCore-1/ParserCore-1.lua
