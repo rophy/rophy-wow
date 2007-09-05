@@ -88,7 +88,7 @@ if LibParser then
 				end
 			end
 			if not callback then
-				error('Usage: RegisterEvent(addonID, "event", callback or "callback")')
+				error('Usage: RegisterEvent(addonID, "event", callback or "callback")',2)
 			end
 			if not clients[event] then
 				clients[event] = {}
