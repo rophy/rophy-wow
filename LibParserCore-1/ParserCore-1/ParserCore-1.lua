@@ -1089,7 +1089,7 @@ if LibParser then
 				local i = 0
 				local nf
 				string.gsub(fmt, "%%(%d?)%$?([sd])", function(index,capsule)
-					if index then
+					if index ~= '' then
 						i = tonumber(index)
 					else
 						i=i+1
