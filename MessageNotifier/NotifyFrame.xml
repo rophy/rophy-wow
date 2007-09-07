@@ -8,7 +8,7 @@ xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
 			<AbsDimension x="400" y="200" />
 		</Size>
 		<Anchors>
-			<Anchor point="TOPLEFT" />
+			<Anchor point="CENTER" />
 		</Anchors>
     <Layers>
       <Layer level="BACKGROUND">
