@@ -30,19 +30,17 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 end
 
 local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "ParserCore-1", 1
-local LibParser, libParserOldMinor = LibStub:NewLibrary(LIB_PARSER_MAJOR, LIB_PARSER_MINOR)
-if LibParser then
+local ParserCore, ParserCoreOldMinor = LibStub:NewLibrary(LIB_PARSER_MAJOR, LIB_PARSER_MINOR)
+if ParserCore then
 
-	-- Special event for debugging.
+	-- Special event for debugging, this doesn't look like a good design though.
 	local EVENT_PARSE_FAILED = "_EVENT_PARSE_FAILED"
 
 	---- Local Data ----
-	local lib = LibParser
+	local lib = ParserCore
 	local eventMap
 	local patternInfo
 	local keywords
-	local clients
-	local frame
 	local initialized
 	
 	---- Local Functions ----
@@ -55,28 +53,26 @@ if LibParser then
 	local LoadPatternInfo
 	local NotifyClients
 
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Registers for an event.
-	Arguments:
-		assign an unique addonID.
-		string - the Blizzard event to register for.
-		string or function - the callback function to be called. If type(addonID)=="table" then this will be the method name or method reference of the table object, otherwise this will be the global function name or function reference. The callback function should be in the form Callback(event,message,pattern,...).
-	Example:
-		local obj = {}
-		-- Object method.
-		function obj:OnEvent(event,message,pattern,...)
-			-- Do something.
-		end
-		-- Function.
-		function OnCombatEvent(event,message,pattern,...)
-			-- Do something.
-		end
-		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnEvent")	-- 1
-		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",obj.OnEvent)	-- This has the same effect as 1.
-		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnCombatEvent")	-- 2
-		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",OnCombatEvent)	-- This has the same effect as 2.
-	-----------------------------------------------------------------------------]]
+--	Notes:
+--		* Registers for an event.
+--	Arguments:
+--		assign an unique addonID.
+--		string - the Blizzard event to register for.
+--		string or function - the callback function to be called. If type(addonID)=="table" then this will be the method name or method reference of the table object, otherwise this will be the global function name or function reference. The callback function should be in the form Callback(event,message,pattern,...).
+--	Example:
+--		local obj = {}
+--		-- Object method.
+--		function obj:OnEvent(event,message,pattern,...)
+--			-- Do something.
+--		end
+--		-- Function.
+--		function OnCombatEvent(event,message,pattern,...)
+--			-- Do something.
+--		end
+--		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnEvent")	-- 1
+--		Parser:RegisterEvent(obj,"CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",obj.OnEvent)	-- This has the same effect as 1.
+--		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE","OnCombatEvent")	-- 2
+--		Parser:RegisterEvent("MyAddon","CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE",OnCombatEvent)	-- This has the same effect as 2.
 	function lib:RegisterEvent(addonID, event, callback)
 --		if eventMap[event] and addonID then
 		if addonID then
@@ -90,59 +86,53 @@ if LibParser then
 			if not callback then
 				error('Usage: RegisterEvent(addonID, "event", callback or "callback")',2)
 			end
-			if not clients[event] then
-				clients[event] = {}
+			if not lib.clients[event] then
+				lib.clients[event] = {}
 			end
-			clients[event][addonID] = callback
-			frame:RegisterEvent(event)
+			lib.clients[event][addonID] = callback
+			lib.frame:RegisterEvent(event)
 		end
 	end
 
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Checks if you have registered an event.
-	Arguments:
-		the unique addonID.
-		string - the Blizzard event to register for.
-	Returns:
-		boolean - true if the event has been registered, false otherwise.
-	Example:
-		if Parser:IsEventRegistered("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE") then
-			-- Do somethng.
-		end
-	-----------------------------------------------------------------------------]]
+--	Notes:
+--		* Checks if you have registered an event.
+--	Arguments:
+--		the unique addonID.
+--		string - the Blizzard event to register for.
+--	Returns:
+--		boolean - true if the event has been registered, false otherwise.
+--	Example:
+--		if Parser:IsEventRegistered("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE") then
+--			-- Do somethng.
+--		end
 	function lib:IsEventRegistered(addonID, event)
-		return ( clients[event] and clients[event][addonID] )
+		return ( lib.clients[event] and lib.clients[event][addonID] )
 	end
 
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Unregisters an event.
-	Arguments:
-		the unique addonID.
-		string - the Blizzard event to register for.
-	Example:
-		Parser:UnregisterEvent("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
-	-----------------------------------------------------------------------------]]
+--	Notes:
+--		* Unregisters an event.
+--	Arguments:
+--		the unique addonID.
+--		string - the Blizzard event to register for.
+--	Example:
+--		Parser:UnregisterEvent("MyAddon", "CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE")
 	function lib:UnregisterEvent(addonID, event)
-		if clients[event] and clients[event][addonID] then
-			clients[event][addonID] = nil
-			if not next(clients[event]) then
-				frame:UnregisterEvent(event)
+		if lib.clients[event] and lib.clients[event][addonID] then
+			lib.clients[event][addonID] = nil
+			if not next(lib.clients[event]) then
+				lib.frame:UnregisterEvent(event)
 			end
 		end
 	end
 
-	--[[---------------------------------------------------------------------------
-	Notes:
-		* Unregisters all events.
-	Arguments:
-		the unique addonID.
-	Example:
-		Parser:UnregisterAllEvents("MyAddon")
-	-----------------------------------------------------------------------------]]
+--	Notes:
+--		* Unregisters all events.
+--	Arguments:
+--		the unique addonID.
+--	Example:
+--		Parser:UnregisterAllEvents("MyAddon")
 	function lib:UnregisterAllEvents(addonID)
-		for event in pairs(clients) do
+		for event in pairs(lib.clients) do
 			self:UnregisterEvent(addonID, event)
 		end
 	end
@@ -163,7 +153,7 @@ if LibParser then
 	-- #NODOC
 	-- This is for debugging.
 	function lib:GetInternals()
-		return eventMap,patternInfo,keywords,frame,clients,OnEvent,Initialize,GenerateEventMap,GenerateKeywords
+		return eventMap,patternInfo,keywords,lib.frame,lib.clients,OnEvent,Initialize,GenerateEventMap,GenerateKeywords
 	end
 
 	-- Return a table of event to patterns.
@@ -860,22 +850,17 @@ if LibParser then
 		end
 	end
 
-	--[[ Initialization ]]--
+	-- Activation (stuffs which should be intialized on load.)
 	function Activate()
 		---- Version Upgrade ----
-		if libParserOldMinor and libParserOldMinor < LIB_PARSER_MINOR then
+		if ParserCoreOldMinor and ParserCoreOldMinor < LIB_PARSER_MINOR then
 		end
-		if not lib.clients then
-			lib.clients = {}
-		end
-		if not lib.frame then
-			lib.frame = CreateFrame("Frame")
-		end
+		lib.clients = lib.clients or {}
+		lib.frame = lib.frame or CreateFrame("Frame")
 		lib.frame:SetScript("OnEvent", OnEvent)
-		clients = lib.clients
-		frame = lib.frame
 	end
 	
+	-- Initialization (stuffs which can be initialized lazily)
 	function Initialize()
 		patternInfo = {}
 		GenerateEventMap()
@@ -883,8 +868,7 @@ if LibParser then
 		initialized = true
 	end
 
-	--[[ Section Block for OnEvent() ]]--
-	do
+	do -- OnEvent()
 		local tokens = {}
 		function OnEvent(frame, event, arg1)
 			if not initialized then -- initialize lazily.
@@ -900,12 +884,14 @@ if LibParser then
 			-- table tokens will store the tokens parsed, in the correct sequence.
 			local pos, pattern = FindPattern(arg1, eventMap[event], tokens)
 			
-			-- NOTE: pos was used in ParserLib-1.1 to speed up trailer parsing, but ParserCore-1 doesn't support trailers (yet).
+			-- NOTE: pos was used in ParserLib-1.1 to speed up trailer parsing, but ParserCore-1 doesn't support trailers
+			-- It probably won't be implemented unless I can figure out a clean and long-lasting API.
 			
 			if pattern then
 				NotifyClients(event,arg1,pattern,unpack(tokens))
 			else
 				-- EVENT_PARSE_FAILED is a special internal event for notification of missed combat log messages.
+				-- I don't feel this is the good way to go, but got better ideas?
 				-- You can see that the args are different.
 				NotifyClients(EVENT_PARSE_FAILED,event,arg1)
 			end
@@ -913,9 +899,8 @@ if LibParser then
 	end
 
 	function NotifyClients(event, ...)
-		local clients = lib.clients
-		if clients[event] then
-			for addonID, handler in pairs(clients[event]) do
+		if lib.clients[event] then
+			for addonID, handler in pairs(lib.clients[event]) do
 				local success, ret
 				if type(addonID) == 'table' then
 					success, ret = pcall(handler, addonID, event, ...)
@@ -929,8 +914,7 @@ if LibParser then
 		end
 	end
 
-	--[[ Section Block for FindPattern() ]]--
-	do
+	do -- FindPattern()
 		local function ProcessReturns(t,map,from,to,...)
 			if to then
 				local count = select('#',...)
@@ -1002,8 +986,7 @@ if LibParser then
 		end
 	end
 
-	--[[ Section Block for LoadPatternInfo() ]]--
-	do
+	do -- LoadPatternInfo(), ConvertPattern()
 		local tmp = {}
 		-- Convert "%s hits %s for %d." to "(.+) hits (.+) for (%d+)."
 		-- Will additionaly return the sequence of tokens, for example:
@@ -1031,22 +1014,17 @@ if LibParser then
 					idx = idx + 1
 				end
 			end
-			
 			-- Do these AFTER escaping the magic characters.
 			pattern = pattern:gsub("%%%d?%$?s", "(.-)")
 			pattern = pattern:gsub("%%%d?%$?d", "(%-?%%d+)")
-			
 			-- Escape $ now.
 			pattern = pattern:gsub("%$","%%$")
-
 			-- Anchor tag can improve string.find() performance by 100%.
 			if anchor then pattern = "^"..pattern end
-
 			-- If the pattern ends with (.-), replace it with (.+), or the capsule will be lost.
 			if pattern:sub(-4) == "(.-)" then
 				pattern = pattern:sub(0, -5) .. "(.+)"
 			end
-
 			if seq then
 				return pattern, unpack(seq)
 			else
@@ -1064,16 +1042,13 @@ if LibParser then
 		end
 		function LoadPatternInfo(patternName)
 			if patternInfo[patternName] == nil then
-				
 				local info = {}
 				patternInfo[patternName] = info
-				
 				local fmt = _G[patternName]
 				if not fmt then
 					patternInfo[patternName] = false
 					return false
 				end
-				
 				info.p, info.map = ProcessReturns(ConvertPattern(fmt,true))
 				-- Record index of %d tokens in the field info.nf
 				-- To save space, info.nf is a index number if the pattern has only one %d, and is a table only when there are more than one %d.

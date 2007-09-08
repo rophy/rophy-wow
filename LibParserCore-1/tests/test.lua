@@ -22,7 +22,14 @@ Include("../ParserCore-1/ParserCore-1.lua")
 local parser = LibStub:GetLibrary("ParserCore-1")
 
 parser:LoadEverything()
-local eventMap,_,_,_,_,OnEvent = parser:GetInternals()
+local eventMap,_,keywordTable,_,_,OnEvent = parser:GetInternals()
+
+-- Make sure the keyword table is correct.
+for pattern, keyword in pairs(keywordTable) do
+	local str = _G[pattern]
+	assert(str and str:find(keyword, 1, true))
+end
+
 local cache = {}
 function EventHandler(event,message,pattern,...)
 	cache.p = pattern
