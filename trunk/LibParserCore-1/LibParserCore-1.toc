@@ -3,5 +3,4 @@
 ## Notes: A low level combat log parser.
 ## OptionalDependencies: LibStub
 
-
-ParserCore-1/ParserCore-1.lua
+ParserCore-1\ParserCore-1.lua
