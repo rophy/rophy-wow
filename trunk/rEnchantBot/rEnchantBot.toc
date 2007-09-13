@@ -1,0 +1,7 @@
+## Interface: 20100
+## Title: Rophy's Enchant Bot
+## Notes: Search for enchants.
+## Author: Rophy
+## SavedVariables: rEnchantBotDB
+
+rEnchantBot.lua
