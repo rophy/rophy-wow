@@ -25,10 +25,10 @@ function rEB:OnLoad()
 end
 
 function rEB:VARIABLES_LOADED()
-	if not _G["rEnchantBotDB"] then
-		_G["rEnchantBotDB"] = {}
+	if not _G["rEnchantBotDBPerChar"] then
+		_G["rEnchantBotDBPerChar"] = {}
 	end
-	self.db = _G["rEnchantBotDB"]
+	self.db = _G["rEnchantBotDBPerChar"]
 end
 
 local function recycle(t)
