@@ -2,6 +2,6 @@
 ## Title: Rophy's Enchant Bot
 ## Notes: Search for enchants.
 ## Author: Rophy
-## SavedVariables: rEnchantBotDB
+## SavedVariablesPerCharacter: rEnchantBotDBPerChar
 
 rEnchantBot.lua
