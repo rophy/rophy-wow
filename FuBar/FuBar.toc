@@ -4,7 +4,7 @@
 
 ## Author: Rophy
 ## X-Category: Interface Enhancements
-## SavedVariables: FuBar2LegoBlockDB
+## SavedVariables: FuBar2DB, FuBar2LegoBlockDB
 ## OptionalDeps: Ace2, LegoBlock, Tablet
 
 FuBar2LegoBlock.lua
