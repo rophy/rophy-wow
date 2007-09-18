@@ -1,5 +1,5 @@
 -- try "LegoBlock-Beta0" or "LegoBlock-Beta1"
-local LEGO_BLOCK_MAJOR = "LegoBlock-Beta1"
+local LEGO_BLOCK_MAJOR = "LegoBlock-Beta0"
 
 -- The idea is not to make FuBarPlugin-2.0 fully works with LegoBlock, but a temporary hack so that people can use plugins without forcing to use FuBar.
 -- So there are lots of hacks in the current implementation, which probably won't work for every case and won't work forever.
@@ -8,7 +8,13 @@ local LEGO_BLOCK_MAJOR = "LegoBlock-Beta1"
 local MAJOR_VERSION = "9.9"
 local MINOR_VERSION = tonumber((string.gsub("$Revision: 36844 $", "^.-(%d+).-$", "%1")))
 
-local LB = LibStub(LEGO_BLOCK_MAJOR)
+local LB
+if LEGO_BLOCK_MAJOR == "LegoBlock-Beta0" then
+	LB = DongleStub(LEGO_BLOCK_MAJOR)
+elseif LEGO_BLOCK_MAJOR == "LegoBlock-Beta1" then
+	LB = LibStub(LEGO_BLOCK_MAJOR)
+end
+
 local Tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0")
 local FuBarPlugin = AceLibrary:HasInstance("FuBarPlugin-2.0") and AceLibrary("FuBarPlugin-2.0")
 
@@ -132,6 +138,9 @@ function SetupLegoBlock(plugin)
 	if not db.pluginDB[pluginTitle] then
 		db.pluginDB[pluginTitle] = {}
 	end
+	
+	local lbOptions = db.pluginDB[pluginTitle]
+	lbOptions.showText = plugin:IsTextShown()
 	
 	local lbObj = LB:New(plugin.name, nil, nil, db.pluginDB[pluginTitle])
 	plugin.lbObj = lbObj
