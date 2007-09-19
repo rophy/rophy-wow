@@ -6,7 +6,7 @@
 ## X-Category: Interface Enhancements
 ## SavedVariables: FBP2LBDB, FBP2nSBDB
 ## OptionalDeps: FuBarPlugin-2.0, TabletLib
-## Dependencies: Ace3, LegoBlock
+## Dependencies: Ace3, LegoBlock, nSideBar
 
 LegoBlock.lua
 nSideBar.lua
