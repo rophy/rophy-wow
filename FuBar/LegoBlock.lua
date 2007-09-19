@@ -19,15 +19,14 @@ local Tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0")
 local FuBarPlugin = AceLibrary:HasInstance("FuBarPlugin-2.0") and AceLibrary("FuBarPlugin-2.0")
 
 -- Location function declarations.
+local Activate
 local SetupLegoBlock
 local SetupPlugins
 local Initialize
 local AddPlugin
 local donothing = function() end
 
--- Fake FuBar to cheat others.
-FuBar = {}
-local Fubar = FuBar
+local FuBar = {}
 
 -- FuBarPlugin-2.0 checks this version string.
 FuBar.version = MAJOR_VERSION .. "." .. MINOR_VERSION
@@ -154,12 +153,12 @@ function SetupLegoBlock(plugin)
 	-- Frames include textFrame, iconFrame and mainFrame.
 	-- Approach A: let FuBarPlugin-2.0 manage the frame width, but it doesn't work very well because LegoBlock have different backdrop.
 	-- Approach B: let LegoBlock manage the frame width, in this case I need to 
-	--  prevent FuBarPlugin-2.0 from changing width while still giving it access to necessary frame methods.
+	--  prevent FuBarPlugin-2.0 from changing width while still giving it access to other frame methods.
 	
 	
 	
 	-- Approach B : create fake frames to cheat FuBarPlugin-2.0, map those important functions out.
-	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable, which is set by Blizzard C code.
+	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable which is set by Blizzard C code.
 
 	local fakeIconFrame = lbObj:CreateTexture(nil, "ARTWORK")
 	fakeIconFrame.SetTexture = function(frame,path) lbObj:SetIcon(path) end
@@ -206,25 +205,29 @@ function SetupLegoBlock(plugin)
 end
 
 function SetupPlugins()
-	for plugin in pairs(plugins) do
-		local found = false
-		for i, pluginTitle in ipairs(db.ignoredPlugins) do
-			if plugin:GetTitle() == pluginTitle then
-				found = true
-				break
+	if FuBarPlugin then
+		for plugin in pairs(FuBarPlugin.registry) do
+			local found = false
+			for i, pluginTitle in ipairs(db.ignoredPlugins) do
+				if plugin:GetTitle() == pluginTitle then
+					found = true
+					break
+				end
+			end
+			if found and not plugin:IsDisabled() then
+				plugin:Show(0)
+			else
+				AddPlugin(plugin,false)
 			end
 		end
-		if found and not plugin:IsDisabled() then
-			plugin:Show(0)
-		else
-			AddPlugin(plugin,false)
-		end
+	end
+	for plugin in pairs(plugins) do
 	end
 end
 
 function Initialize()
-	if not _G["FuBar2LegoBlockDB"] then
-		_G["FuBar2LegoBlockDB"] = {
+	if not _G["FBP2LBDB"] then
+		_G["FBP2LBDB"] = {
 			ignoredPlugins = {},
 			pluginDB = {}
 		}
@@ -232,13 +235,15 @@ function Initialize()
 	db = _G["FuBar2LegoBlockDB"]
 	SetupPlugins()
 end
-local frame = CreateFrame("Frame")
-frame:SetScript("OnEvent", Initialize)
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
---[[
-HelloFrame =  LibStub("LegoBlock-Beta1"):New("HelloWorld", "Hello!!!", nil, {})
-HelloFrame:SetIcon("Interface\\AddOns\\FuBar_DuraTek\\icon")
-HelloFrame:ShowIcon(true)
-]]
+function Activate()
+	local frame = CreateFrame("Frame")
+	frame:SetScript("OnEvent", Initialize)
+	frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+end
+
+Activate()
+
+
+if true then return end
 

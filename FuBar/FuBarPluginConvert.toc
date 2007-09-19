@@ -1,0 +1,12 @@
+﻿## Interface: 20100
+## Title: FuBarPluginConvert
+## Notes: Converts FuBarPlugin-2.0 plugins something cooler.
+
+## Author: Rophy
+## X-Category: Interface Enhancements
+## SavedVariables: FBP2LBDB, FBP2nSBDB
+## OptionalDeps: FuBarPlugin-2.0, TabletLib
+## Dependencies: Ace3, LegoBlock
+
+LegoBlock.lua
+nSideBar.lua

@@ -1,0 +1,1 @@
+--/dump DongleStub("nSideBar-0.2").AddButton("DuraTek", FuBar_DuraTek.lbObj.Icon:GetTexture(), 100)
