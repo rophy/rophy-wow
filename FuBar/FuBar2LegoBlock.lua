@@ -1,5 +1,5 @@
 -- try "LegoBlock-Beta0" or "LegoBlock-Beta1"
-local LEGO_BLOCK_MAJOR = "LegoBlock-Beta0"
+local LEGO_BLOCK_MAJOR = "LegoBlock-Beta1"
 
 -- The idea is not to make FuBarPlugin-2.0 fully works with LegoBlock, but a temporary hack so that people can use plugins without forcing to use FuBar.
 -- So there are lots of hacks in the current implementation, which probably won't work for every case and won't work forever.
@@ -18,6 +18,7 @@ end
 local Tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0")
 local FuBarPlugin = AceLibrary:HasInstance("FuBarPlugin-2.0") and AceLibrary("FuBarPlugin-2.0")
 
+-- Location function declarations.
 local SetupLegoBlock
 local SetupPlugins
 local Initialize
@@ -146,10 +147,46 @@ function SetupLegoBlock(plugin)
 	plugin.lbObj = lbObj
 	
 	lbObj.self = plugin
-	plugin.iconFrame = lbObj.Icon
-	plugin.textFrame = lbObj.Text
-	plugin:SetIcon(plugin.hasIcon)
+	
+	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture()
+	
+	-- Frame Width Management is a big problem here.
+	-- Frames include textFrame, iconFrame and mainFrame.
+	-- Approach A: let FuBarPlugin-2.0 manage the frame width, but it doesn't work very well because LegoBlock have different backdrop.
+	-- Approach B: let LegoBlock manage the frame width, in this case I need to 
+	--  prevent FuBarPlugin-2.0 from changing width while still giving it access to necessary frame methods.
+	
+	
+	
+	-- Approach B : create fake frames to cheat FuBarPlugin-2.0, map those important functions out.
+	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable, which is set by Blizzard C code.
 
+	local fakeIconFrame = lbObj:CreateTexture(nil, "ARTWORK")
+	fakeIconFrame.SetTexture = function(frame,path) lbObj:SetIcon(path) end
+	fakeIconFrame.SetTexCoord = function(frame,...) lbObj.Icon:SetTexCoord(...) end
+	fakeIconFrame.IsShown = function(frame) return lbObj.Icon:IsShown() end
+	fakeIconFrame.Show = function(frame) lbObj:ShowIcon(true) end
+	fakeIconFrame.Hide = function(frame) lbObj:ShowIcon(false) end
+	plugin.iconFrame = fakeIconFrame
+	if plugin.hasIcon then
+		plugin:SetIcon(iconPath)
+	end
+	
+	local fakeTextFrame = lbObj:CreateFontString(nil, "ARTWORK")
+	fakeTextFrame:SetFontObject(GameFontNormal)
+	fakeTextFrame.SetText = function(frame,text)
+		local isShown = lbObj.Text:IsShown()
+		lbObj:SetText(text)
+		if not isShown then
+			lbObj.Text:Hide()
+		end
+	end
+	fakeTextFrame.GetText = function(frame) return lbObj.Text:GetText() end
+	fakeTextFrame.Show = function(frame) lbObj:ShowText(true) end
+	fakeTextFrame.Hide = function(frame) lbObj:ShowText(false) end
+	fakeTextFrame.IsShown = function(frame) return lbObj.Text:IsShown() end
+	plugin.textFrame = fakeTextFrame
+	
 	local pluginFrame = plugin.frame
 	lbObj:SetScript("OnMouseDown", pluginFrame:GetScript("OnMouseDown"))
 	lbObj:SetScript("OnMouseUp", pluginFrame:GetScript("OnMouseUp"))
@@ -164,19 +201,7 @@ function SetupLegoBlock(plugin)
 		Tablet:Register(lbObj, plugin.frame)
 	end
 	plugin.frame = lbObj
-	local function CheckWidth(self,force)
-		hooks[CheckWidth](self,force)
-		
-		-- This refreshes frame width when it is too small.
-		if force then
-			if lbObj.Icon:IsShown() then
-				lbObj:ShowIcon(true)
-			end
-		end
-	end
-	hooks[CheckWidth] = plugin.CheckWidth
-	plugin.CheckWidth = CheckWidth
-	plugin:CheckWidth(true)
+	plugin.CheckWidth = donothing
 
 end
 
@@ -216,3 +241,4 @@ HelloFrame =  LibStub("LegoBlock-Beta1"):New("HelloWorld", "Hello!!!", nil, {})
 HelloFrame:SetIcon("Interface\\AddOns\\FuBar_DuraTek\\icon")
 HelloFrame:ShowIcon(true)
 ]]
+
