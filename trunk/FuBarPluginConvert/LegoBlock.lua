@@ -19,14 +19,15 @@ local Tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0")
 local FuBarPlugin = AceLibrary:HasInstance("FuBarPlugin-2.0") and AceLibrary("FuBarPlugin-2.0")
 
 -- Location function declarations.
-local Activate
 local SetupLegoBlock
 local SetupPlugins
 local Initialize
 local AddPlugin
 local donothing = function() end
 
-local FuBar = {}
+-- Fake FuBar to cheat others.
+_G["FuBar"] = {}
+local FuBar = _G["FuBar"]
 
 -- FuBarPlugin-2.0 checks this version string.
 FuBar.version = MAJOR_VERSION .. "." .. MINOR_VERSION
@@ -141,8 +142,9 @@ function SetupLegoBlock(plugin)
 	
 	local lbOptions = db.pluginDB[pluginTitle]
 	lbOptions.showText = plugin:IsTextShown()
+	lbOptions.showIcon = plugin:IsIconShown()
 	
-	local lbObj = LB:New(plugin.name, nil, nil, db.pluginDB[pluginTitle])
+	local lbObj = LB:New(pluginTitle, nil, nil, db.pluginDB[pluginTitle])
 	plugin.lbObj = lbObj
 	
 	lbObj.self = plugin
@@ -232,17 +234,12 @@ function Initialize()
 			pluginDB = {}
 		}
 	end
-	db = _G["FuBar2LegoBlockDB"]
+	db = _G["FBP2LBDB"]
 	SetupPlugins()
 end
-
-function Activate()
-	local frame = CreateFrame("Frame")
-	frame:SetScript("OnEvent", Initialize)
-	frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-end
-
-Activate()
+local frame = CreateFrame("Frame")
+frame:SetScript("OnEvent", Initialize)
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 
 if true then return end
