@@ -99,6 +99,14 @@ if true then
 	end
 	function FuBar:RegisterPlugin(plugin)
 		Core.plugins[plugin] = true
+		
+		-- Optional FuBar2nSideBar support.
+		local mapper = FuBar.nSideBarMapper
+		if mapper then
+			if mapper.RegisterPlugin(plugin) then
+				return
+			end
+		end
 		Core.CreatePluginMapper(plugin)
 		table.insert(Core.unreadyPlugins, plugin)
 		if IsLoggedIn() then
@@ -298,7 +306,6 @@ if true then
 	local timer
 	local Callback
 	function Core.StartTimedCallback(delay, callback)
-		ChatFrame3:AddMessage("Start counting for " .. tostring(callback))
 		Callback = callback
 		timer = delay
 		total = 0
@@ -347,6 +354,7 @@ if true then
 	end
 
 
-	if true then return end
 
+	if true then return end
 end
+
