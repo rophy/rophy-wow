@@ -9,7 +9,7 @@ local LegoBlock = LibStub(LEGO_BLOCK_MAJOR)
 local frame
 
 local donothing = function() end
-local Core = {}
+local Core = DongleStub("Dongle-1.1"):New("FuBar2LegoBlock")
 
 Core.plugins = {}
 Core.unreadyPlugins = {}
@@ -135,7 +135,7 @@ function FuBar:RegisterPlugin(plugin)
 	
 		-- Schedule to update plugin after the plugin is fully initialized.
 		if IsLoggedIn() then
-			Core.StartTimedCallback(0.2, Core.SetupPlugins)
+			Core.SetupPluginsLater()
 		end
 		return true
 	end
@@ -254,27 +254,24 @@ function Core.SetupPlugins()
 	end
 end
 
-function Core.Activate()
-	Core.frame = CreateFrame("Frame")
-	Core.frame:SetScript("OnEvent", Core.Initialize)
-	Core.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	Core.frame:Hide()
-	Core.frame:SetScript("OnUpdate", Core.OnUpdate)
+function Core.Enable()
+	local defaultOptions = {
+		profile = {
+			detached = {},
+			pluginDB = {}
+		}
+	}
+	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions)
+	Core:ScheduleTimer("FBP2LB_LOAD_LOD_PLUGINS", Core.LoadLoadOnDemandPlugins, 3)
 end
 
-function Core.Initialize(frame,event,...)
-	if not _G["FuBar2LegoBlockDB"] then
-		_G["FuBar2LegoBlockDB"] = {
-			profile = {
-				detached = {},
-				pluginDB = {}
-			}
-		}
+function Core.SetupPluginsLater()
+	if not Core.waitingToSetup then
+		Core:ScheduleTimer("FBP2LB_SETUP_PLUGINS", Core.SetupPlugins, 2)
+		Core.waitingToSetup = true
 	end
-	Core.db = _G["FuBar2LegoBlockDB"]
-	Core.SetupPlugins()
-	Core.StartTimedCallback(2,Core.LoadLoadOnDemandPlugins)
 end
+
 
 function Core.findFuBarDep(...)
 	for i = 1, select("#", ...) do
@@ -307,26 +304,4 @@ function Core.LoadLoadOnDemandPlugins()
 	end
 end
 
-do -- Simple timed callback implementation.
-	local total = 0
-	local timer
-	local Callback
-	function Core.StartTimedCallback(delay, callback)
-		Callback = callback
-		timer = delay
-		total = 0
-		Core.frame:Show()
-	end
-	function Core.OnUpdate(frame,elapsed)
-		total = total + elapsed
-		if total > timer then
-			total = 0
-			frame:Hide()
-			Callback()
-		end
-	end
-end
-
-
-Core.Activate()
 
