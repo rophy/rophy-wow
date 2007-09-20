@@ -288,7 +288,6 @@ function Core.OnUpdate(frame,elapsed)
 		Callback()
 	end
 end
-Core.Activate()
 
 function Core.findFuBarDep(...)
 	for i = 1, select("#", ...) do
@@ -386,3 +385,6 @@ function Core.IsCorrectPanel(panel)
 	end
 	return true
 end
+
+Core.Activate()
+
