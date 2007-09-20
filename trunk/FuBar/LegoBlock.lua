@@ -28,6 +28,12 @@ FuBar.db = { profile = {} }
 -- A fake FuBarPanel.
 local FakePanel = {}
 
+-- A proper FuBarPlugin should support the following methods:
+-- GetName GetTitle GetCategory SetFontSize GetFrame Show Hide GetPanel SetPanel GetName GetTitle GetCategory GetFrameType IsDiabled
+
+-- A proper FuBarPanel should support the following methods:
+-- AddPlugin RemovePlugin GetNumPlugins GetPlugin HasPlugin GetPluginSide UpdateCenteredPosition SetPluginSide GetAttachPoint
+
 -- FuBar_Panel API Maps.
 
 function FakePanel:AddPlugin(plugin)
@@ -270,25 +276,6 @@ function Core.Initialize(frame,event,...)
 	Core.StartTimedCallback(2,Core.LoadLoadOnDemandPlugins)
 end
 
-local total = 0
-local timer
-local Callback
-function Core.StartTimedCallback(delay, callback)
-	Callback = callback
-	timer = delay
-	total = 0
-	Core.frame:Show()
-end
-
-function Core.OnUpdate(frame,elapsed)
-	total = total + elapsed
-	if total > timer then
-		total = 0
-		Core.frame:Hide()
-		Callback()
-	end
-end
-
 function Core.findFuBarDep(...)
 	for i = 1, select("#", ...) do
 		local dep = select(i, ...)
@@ -320,71 +307,26 @@ function Core.LoadLoadOnDemandPlugins()
 	end
 end
 
--- Copied from FuBar : this defines the core API of a Plugin.
--- Even said so, I found FuBar is calling some plugin methods which aren't listed here *shrug*.
--- Missed core API: SetPanel, IsDiabled
-function Core.IsCorrectPlugin(plugin)
-	if type(plugin) ~= "table" then
-		return false
-	elseif type(plugin.GetName) ~= "function" then
-		return false
-	elseif type(plugin.GetTitle) ~= "function" then
-		return false
-	elseif type(plugin.GetCategory) ~= "function" then
-		return false
-	elseif type(plugin.SetFontSize) ~= "function" then
-		return false
-	elseif type(plugin.GetFrame) ~= "function" then
-		return false
-	elseif type(plugin.Show) ~= "function" then
-		return false
-	elseif type(plugin.Hide) ~= "function" then
-		return false
-	elseif type(plugin.GetPanel) ~= "function" then
-		return false
-	elseif type(plugin:GetName()) ~= "string" then
-		return false
-	elseif type(plugin:GetTitle()) ~= "string" then
-		return false
-	elseif type(plugin:GetCategory()) ~= "string" then
-		return false
+do -- Simple timed callback implementation.
+	local total = 0
+	local timer
+	local Callback
+	function Core.StartTimedCallback(delay, callback)
+		Callback = callback
+		timer = delay
+		total = 0
+		Core.frame:Show()
 	end
-	local frame = plugin:GetFrame()
-	if type(frame) ~= "table" then
-		return false
-	elseif type(frame[0]) ~= "userdata" then
-		return false
-	elseif type(frame.GetFrameType) ~= "function" then
-		return false
-	elseif type(frame:GetFrameType()) ~= "string" then
-		return false
+	function Core.OnUpdate(frame,elapsed)
+		total = total + elapsed
+		if total > timer then
+			total = 0
+			frame:Hide()
+			Callback()
+		end
 	end
-	return true
 end
 
--- Copied from FuBar, this defines the core API of a Panel.
--- Even said so, I found FuBarPlugin-2.0 is calling some panel methods which aren't listed here *shrug*.
--- Missed core API: UpdateCenteredPosition, SetPluginSide, GetAttachPoint
-function Core.IsCorrectPanel(panel)
-	if type(panel) ~= "table" then
-		return false
-	elseif type(panel.AddPlugin) ~= "function" then
-		return false
-	elseif type(panel.RemovePlugin) ~= "function" then
-		return false
-	elseif type(panel.GetNumPlugins) ~= "function" then
-		return false
-	elseif type(panel:GetNumPlugins()) ~= "number" then
-		return false
-	elseif type(panel.GetPlugin) ~= "function" then
-		return false
-	elseif type(panel.HasPlugin) ~= "function" then
-		return false
-	elseif type(panel.GetPluginSide) ~= "function" then
-		return false
-	end
-	return true
-end
 
 Core.Activate()
 
