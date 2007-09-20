@@ -4,9 +4,6 @@ local LEGO_BLOCK_MAJOR = "LegoBlock-Beta1"
 -- So there are lots of hacks in the current implementation, which probably won't work for every case and won't work forever.
 -- The real solution is to actually port the plugins to LegoBlocks, it should be very easy.
 
-local MAJOR_VERSION = "4.0"
-local MINOR_VERSION = tonumber((string.gsub("$Revision: 36844 $", "^.-(%d+).-$", "%1")))
-
 local LegoBlock = LibStub(LEGO_BLOCK_MAJOR)
 
 local frame
@@ -23,122 +20,142 @@ local FuBar = _G["FuBar"]
 FuBar.core = Core
 
 -- FuBarPlugin-2.0 checks this version string.
-FuBar.version = MAJOR_VERSION .. "." .. MINOR_VERSION
+FuBar.version = "4.0.99999"
 
 -- A empty DB to cheat FuBarPlugin-2.0, until I actually implements FuBar configurations map.
 FuBar.db = { profile = {} }
 
 -- A fake FuBarPanel.
-local PanelMap = {}
+local FakePanel = {}
 
--- FuBarPanel API Maps.
+-- FuBar_Panel API Maps.
 
-function PanelMap:AddPlugin(plugin)
-	Core.AddPlugin(plugin,true)
-end
-
-
-function PanelMap:RemovePlugin(plugin)
-	local pluginTitle = Core.GetUniqueID(plugin)
-	table.insert(db.ignoredPlugins,pluginTitle)
-	if plugin.lbObj then
-		plugin.lbObj:Hide()
+function FakePanel:AddPlugin(plugin)
+	local oldPanel = plugin:GetPanel()
+	if oldPanel and oldPanel ~= FakePanel then
+		oldPanel:RemovePlugin(plugin)
 	end
-	plugin:SetPanel(nil)
+	plugin:SetPanel(self)
+	Core.SetupLegoBlock(plugin)
+	plugin.lbObj:Show()
+	local pluginID = Core.GetUniqueID(plugin)
+	Core.db.profile.detached[pluginID] = nil
+	-- the MinimapContainer in FuBarPlugin-2.0 should do this in its :RemovePlugin() IMO.
+	if plugin.minimapFrame then
+		plugin.minimapFrame:Hide()
+	end
+	plugin:Update()
 end
 
-function PanelMap:GetNumPlugins()
-	return 1
-	-- TODO: Implement this.
-end
-
-function PanelMap:GetPlugin(index, side)
-	-- TODO: Implement this.
-end
-
-function PanelMap:HasPlugin(plugin)
-	if Core.plugins[plugin] then
-		return true
+-- The actual API is RemovePlugin(index, side), but index can be either 'plugin index' or 'plugin object'.
+-- FuBarPlugin-2.0 only pass 'plugin object'.
+function FakePanel:RemovePlugin(plugin)
+	if type(plugin) ~= 'table' then
+		return
+	end
+	if plugin:GetPanel() == FakePanel then
+		plugin:SetPanel(nil)
+		plugin:GetFrame():Hide()
+		local pluginID = Core.GetUniqueID(plugin)
+		Core.db.profile.detached[pluginID] = true
 	end
 end
 
-function PanelMap:GetPluginSide(plugin)
-	-- TODO: Implement this.
+function FakePanel:GetNumPlugins()
+	return #(Core.plugins)
 end
 
-function PanelMap:UpdateCenteredPosition()
-	-- TODO: Implement this.
+function FakePanel:GetPlugin(index, side)
+	return Core.plugins[index]
 end
+
+function FakePanel:HasPlugin(plugin)
+	for i, corePlugin in ipairs(Core.plugins) do
+		if plugin == corePlugin then
+			return true
+		end
+	end
+	return false
+end
+
+function FakePanel:GetPluginSide(plugin)
+	return "LEFT"
+end
+
+function FakePanel:SetPluginSide(plugin, side)
+
+end
+
+function FakePanel:UpdateCenteredPosition()
+
+end
+
+
+-- FuBar API Map.
 
 function FuBar:GetPanel(panelId)
-	return PanelMap
+	return FakePanel
 end
 
 function FuBar:IsHidingTooltipsInCombat()
 	-- TODO: Implement this.
 end
+
 function FuBar:ShowPlugin(plugin, panelId)
 	if panelId then
-		PanelMap:AddPlugin(plugin,true)
+		FakePanel:AddPlugin(plugin,true)
 	end
 end
+
 function FuBar:IsChangingProfile()
-	-- TODO: Implement this.
+	return false
 end
+
+-- Plugins is supposed to call this in OnEmbedInitialize, which is called before OnInitialize,
+--   so I can safely assume that the plugin is still not initialized when this is being called.
 function FuBar:RegisterPlugin(plugin)
-	Core.plugins[plugin] = true
+	
+	table.insert(Core.plugins,plugin)
 	
 	-- Optional FuBar2nSideBar support.
 	local mapper = FuBar.nSideBarMapper
-	if mapper then
-		if mapper.RegisterPlugin(plugin) then
-			return
+	if mapper and mapper.RegisterPlugin(plugin) then
+		-- if nSideBarMapper.RegisterPlugin() returns true, this plugin is be a button plugin.
+		--  so do not create LegoBlock for this.
+		return false
+	else
+		Core.CreateLegoBlock(plugin)
+		table.insert(Core.unreadyPlugins, plugin)
+	
+		-- Schedule to update plugin after the plugin is fully initialized.
+		if IsLoggedIn() then
+			Core.StartTimedCallback(0.2, Core.SetupPlugins)
 		end
+		return true
 	end
-	Core.CreatePluginMapper(plugin)
-	table.insert(Core.unreadyPlugins, plugin)
-	if IsLoggedIn() then
-		Core.StartTimedCallback(0.2, Core.SetupPlugins)
-	end
-end
-function FuBar:GetNumPanels()
-	return 0
-	-- TODO: Implement this.
 end
 
+function FuBar:GetNumPanels()
+	return 0
+end
+
+-- Core functions. I'm lazy to declare local functions so I put them all in a table, also useful for easy external access when I want.
+
+-- Get an unique ID for the plugin.
 function Core.GetUniqueID(plugin)
 	return plugin.folderName or plugin:GetTitle()
 end
--- Add plugin to LegoBlock.
-function Core.AddPlugin(plugin,checkDB)
-	if checkDB then
-		for i, pluginTitle in ipairs(Core.db.ignoredPlugins) do
-			if pluginTitle == Core.GetUniqueID(plugin) then
-				table.remove(Core.db.ignoredPlugins, i)
-				break
-			end
-		end
-	end
-	InitPluginMapper(plugin)
-	plugin.lbObj:Show()
-	if plugin.minimapFrame then
-		plugin.minimapFrame:Hide()
-	end
-	plugin:SetPanel(PanelMap)
-end
-
-
 
 -- Create the LegoBlock, the saved variables might not be loaded when this is being called.
-function Core.CreatePluginMapper(plugin)
+function Core.CreateLegoBlock(plugin)
 	
 	if plugin.lbObj then
 		return true
 	end
 
-	local pluginTitle = Core.GetUniqueID(plugin)
+	local pluginID = Core.GetUniqueID(plugin)
 	
-	local lbObj = LegoBlock:New(pluginTitle)
+	local lbObj = LegoBlock:New(pluginID)
 	plugin.lbObj = lbObj
 	
 	lbObj.self = plugin
@@ -157,6 +174,7 @@ function Core.CreatePluginMapper(plugin)
 	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable which is set by Blizzard C code.
 
 	local fakeIconFrame = lbObj:CreateTexture(nil, "ARTWORK")
+	fakeIconFrame.GetTexture = function(frame) return lbObj.Icon:GetTexture() end
 	fakeIconFrame.SetTexture = function(frame,path) lbObj:SetIcon(path) end
 	fakeIconFrame.SetTexCoord = function(frame,...) lbObj.Icon:SetTexCoord(...) end
 	fakeIconFrame.IsShown = function(frame) return lbObj.Icon:IsShown() end
@@ -187,24 +205,26 @@ function Core.CreatePluginMapper(plugin)
 	plugin.frame = lbObj
 	plugin.CheckWidth = donothing
 	
+	-- Do not show the LegoBlock yet, as it is still not correctly initialized (saved DB is not injected yet).
 	lbObj:Hide()
 end
 
--- Create LegoBlock, and map the plugin to work correctly with the LegoBlock.
-function Core.InitPluginMapper(plugin)
+-- Fully initialize the LegoBlock, inject saved DB to it, SV should be loaded when this is being called.
+function Core.SetupLegoBlock(plugin)
+
 	if plugin.lbDataReady then
 		return true
 	end
 	
-	Core.CreatePluginMapper(plugin)
+	Core.CreateLegoBlock(plugin)
 	
-	local pluginTitle = Core.GetUniqueID(plugin)
+	local pluginID = Core.GetUniqueID(plugin)
 	
-	if not Core.db.pluginDB[pluginTitle] then
-		Core.db.pluginDB[pluginTitle] = {}
+	if not Core.db.profile.pluginDB[pluginID] then
+		Core.db.profile.pluginDB[pluginID] = {}
 	end
 	
-	local lbOptions = Core.db.pluginDB[pluginTitle]
+	local lbOptions = Core.db.profile.pluginDB[pluginID]
 	lbOptions.showText = plugin:IsTextShown()
 	lbOptions.showIcon = plugin:IsIconShown()
 	
@@ -212,45 +232,20 @@ function Core.InitPluginMapper(plugin)
 	
 	plugin.lbDataReady = true
 	
-	plugin.lbObj:Show()
-	plugin:Update()
-
-end
-
-function Core.isIgnoredPluginName(name)
-	if not Core.db or not Core.db.ignoredPlugins then
-		return nil
-	end
-	for i, pluginTitle in ipairs(Core.db.ignoredPlugins) do
-		if name == pluginTitle then
-			return true
-		end
-	end
-	return false
-end
-
-function Core.IsIgnoredPlugin(plugin)
-	return Core.isIgnoredPluginName(Core.GetUniqueID(plugin))
-end
-
-function Core.ShowPlugin(plugin,checkDB)
-	if not Core.IsIgnoredPlugin(plugin) and not plugin:IsDisabled() then
-		plugin:Show(0)
-	else
-		Core.AddPlugin(plugin,checkDB)
-	end
 end
 
 function Core.SetupPlugins()
 	for k,plugin in pairs(Core.unreadyPlugins) do
-		Core.InitPluginMapper(plugin)
-		Core.ShowPlugin(plugin)
+		if not plugin:IsDisabled() then
+			local pluginID = Core.GetUniqueID(plugin)
+			if Core.db.profile.detached[pluginID] then
+				plugin:Show(0)
+			else
+				FakePanel:AddPlugin(plugin)
+			end
+		end
 		Core.unreadyPlugins[k] = nil
 	end
-end
-
-function Core.LoadLoDPlugins()
-	
 end
 
 function Core.Activate()
@@ -264,8 +259,10 @@ end
 function Core.Initialize(frame,event,...)
 	if not _G["FuBar2LegoBlockDB"] then
 		_G["FuBar2LegoBlockDB"] = {
-			ignoredPlugins = {},
-			pluginDB = {}
+			profile = {
+				detached = {},
+				pluginDB = {}
+			}
 		}
 	end
 	Core.db = _G["FuBar2LegoBlockDB"]
@@ -316,7 +313,7 @@ function Core.LoadLoadOnDemandPlugins()
 		local name, _, notes, enabled, loadable = GetAddOnInfo(i)
 		if IsAddOnLoadOnDemand(i) and enabled and loadable and not IsAddOnLoaded(i) then
 			if Core.isFuBarDependent(name) then
-				if not Core.isIgnoredPluginName(name) then
+				if not Core.db.profile.detached[name] then
 					LoadAddOn(name)
 				end
 			end
@@ -324,3 +321,68 @@ function Core.LoadLoadOnDemandPlugins()
 	end
 end
 
+-- Copied from FuBar : this defines the core API of a Plugin.
+-- Even said so, I found FuBar is calling some plugin methods which aren't listed here *shrug*.
+-- Missed core API: SetPanel, IsDiabled
+function Core.IsCorrectPlugin(plugin)
+	if type(plugin) ~= "table" then
+		return false
+	elseif type(plugin.GetName) ~= "function" then
+		return false
+	elseif type(plugin.GetTitle) ~= "function" then
+		return false
+	elseif type(plugin.GetCategory) ~= "function" then
+		return false
+	elseif type(plugin.SetFontSize) ~= "function" then
+		return false
+	elseif type(plugin.GetFrame) ~= "function" then
+		return false
+	elseif type(plugin.Show) ~= "function" then
+		return false
+	elseif type(plugin.Hide) ~= "function" then
+		return false
+	elseif type(plugin.GetPanel) ~= "function" then
+		return false
+	elseif type(plugin:GetName()) ~= "string" then
+		return false
+	elseif type(plugin:GetTitle()) ~= "string" then
+		return false
+	elseif type(plugin:GetCategory()) ~= "string" then
+		return false
+	end
+	local frame = plugin:GetFrame()
+	if type(frame) ~= "table" then
+		return false
+	elseif type(frame[0]) ~= "userdata" then
+		return false
+	elseif type(frame.GetFrameType) ~= "function" then
+		return false
+	elseif type(frame:GetFrameType()) ~= "string" then
+		return false
+	end
+	return true
+end
+
+-- Copied from FuBar, this defines the core API of a Panel.
+-- Even said so, I found FuBarPlugin-2.0 is calling some panel methods which aren't listed here *shrug*.
+-- Missed core API: UpdateCenteredPosition, SetPluginSide, GetAttachPoint
+function Core.IsCorrectPanel(panel)
+	if type(panel) ~= "table" then
+		return false
+	elseif type(panel.AddPlugin) ~= "function" then
+		return false
+	elseif type(panel.RemovePlugin) ~= "function" then
+		return false
+	elseif type(panel.GetNumPlugins) ~= "function" then
+		return false
+	elseif type(panel:GetNumPlugins()) ~= "number" then
+		return false
+	elseif type(panel.GetPlugin) ~= "function" then
+		return false
+	elseif type(panel.HasPlugin) ~= "function" then
+		return false
+	elseif type(panel.GetPluginSide) ~= "function" then
+		return false
+	end
+	return true
+end
