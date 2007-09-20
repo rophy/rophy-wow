@@ -8,5 +8,6 @@
 ## OptionalDeps: FuBarPlugin-2.0, TabletLib
 ## Dependencies: LegoBlock, nSideBar
 
+Dongle.lua
 LegoBlock.lua
 nSideBar.lua
