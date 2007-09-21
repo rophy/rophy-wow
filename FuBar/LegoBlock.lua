@@ -8,6 +8,8 @@ local LegoBlock = LibStub(LEGO_BLOCK_MAJOR)
 
 local frame
 
+local L = setmetatable({}, {__index=function(t,k) return k end})
+
 local donothing = function() end
 local Core = DongleStub("Dongle-1.1"):New("FuBar2LegoBlock")
 
@@ -104,7 +106,7 @@ function FuBar:GetPanel(panelId)
 end
 
 function FuBar:IsHidingTooltipsInCombat()
-	-- TODO: Implement this.
+	return Core.db.profile.hidingTooltipsInCombat
 end
 
 function FuBar:ShowPlugin(plugin, panelId)
@@ -262,6 +264,12 @@ function Core.Enable()
 		}
 	}
 	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions)
+	
+	local cmd = Core:InitializeSlashCommand("FuBar2LegoBlock Slash Command", "FUBAR2LEGOBLOCK", "fubar")
+	
+	cmd:InjectDBCommands(Core.db, "copy", "delete", "list", "reset", "set")
+	cmd:RegisterSlashHandler(L["Prevent tooltips from showing in combat"], "combat", "ToggleHidingTooltipsInCombat")
+	
 	Core:ScheduleTimer("FBP2LB_LOAD_LOD_PLUGINS", Core.LoadLoadOnDemandPlugins, 3)
 end
 
@@ -304,4 +312,7 @@ function Core.LoadLoadOnDemandPlugins()
 	end
 end
 
-
+function Core:ToggleHidingTooltipsInCombat()
+	Core.db.profile.hidingTooltipsInCombat = not Core.db.profile.hidingTooltipsInCombat
+	Core:PrintF(L["hideTooltipsInCombat is now set to %s"], tostring(Core.db.profile.hidingTooltipsInCombat))
+end
