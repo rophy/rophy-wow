@@ -263,7 +263,7 @@ function Core.Enable()
 			pluginDB = {}
 		}
 	}
-	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions)
+	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions, "default")
 	
 	local cmd = Core:InitializeSlashCommand("FuBar2LegoBlock Slash Command", "FUBAR2LEGOBLOCK", "fubar")
 	
