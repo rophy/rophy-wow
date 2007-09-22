@@ -119,27 +119,17 @@ function FuBar:IsChangingProfile()
 	return false
 end
 
+FuBar.plugins = Core.plugins
+
 -- Plugins is supposed to call this in OnEmbedInitialize, which is called before OnInitialize,
 --   so I can safely assume that the plugin is still not initialized when this is being called.
 function FuBar:RegisterPlugin(plugin)
-	
 	table.insert(Core.plugins,plugin)
-	
-	-- Optional FuBar2nSideBar support.
-	local mapper = FuBar.nSideBarMapper
-	if mapper and mapper.RegisterPlugin(plugin) then
-		-- if nSideBarMapper.RegisterPlugin() returns true, this plugin is be a button plugin.
-		--  so do not create LegoBlock for this.
-		return false
-	else
-		Core.CreateLegoBlock(plugin)
-		table.insert(Core.unreadyPlugins, plugin)
-	
-		-- Schedule to update plugin after the plugin is fully initialized.
-		if IsLoggedIn() then
-			Core.SetupPluginsLater()
-		end
-		return true
+	Core.CreateLegoBlock(plugin)
+	table.insert(Core.unreadyPlugins, plugin)
+	-- Schedule to update plugin after the plugin is fully initialized.
+	if IsLoggedIn() then
+		Core.SetupPluginsLater()
 	end
 end
 
@@ -266,6 +256,7 @@ function Core.Enable()
 	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions, "default")
 	
 	local cmd = Core:InitializeSlashCommand("FuBar2LegoBlock Slash Command", "FUBAR2LEGOBLOCK", "fubar")
+	FuBar.cmd = cmd
 	
 	cmd:InjectDBCommands(Core.db, "copy", "delete", "list", "reset", "set")
 	cmd:RegisterSlashHandler(L["Prevent tooltips from showing in combat"], "combat", "ToggleHidingTooltipsInCombat")
