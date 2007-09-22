@@ -2,7 +2,7 @@
 ## Title: TinyQueue
 ## Notes: Tiny StinyQueue-compatible AV group queue addon.
 ## Author: Rophy
+## X-Category: Battlegrounds/PvP
 ## X-Credits: Funkydude, Jerbal
-
 TinyQueue.lua
 
