@@ -4,6 +4,7 @@
 ## Author: Rophy
 ## SavedVariables: rConfigurationsData
 ## X-Category: Interface Enhancements
+## OptionalDependencies: Ace2
 
 Core.lua
 Menu.lua

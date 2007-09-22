@@ -11,16 +11,14 @@ _G["rConfiguration"] = addon
 
 local registry = {}
 
-function addon:Register(name, order, depAddon, enableFunc, disableFunc)
-	local config = {
-		name = name,
-		order = order or DEFAULT_ORDER,
-		dependent = depAddon,
-		enable = enableFunc,
-		disable = disableFunc
-	}
+function addon:Register(config)
+	if not config.order then
+		config.order = DEFAULT_ORDER
+	end
 	table.insert(registry, config)
 end
+
+
 
 function addon:GetRegistry()
 	return registry
@@ -61,7 +59,7 @@ function OnInitialize()
 		table.sort(registry, function(a,b) return a.order < b.order end)
 		
 		for i, config in ipairs(registry) do
-			if not config.dependent or IsAddOnLoaded(config.dependent) then
+			if ( not config.dependent or IsAddOnLoaded(config.dependent) ) and config.enable and not config.passive then
 				if config.enable() then
 					config.enabled = true
 				end
