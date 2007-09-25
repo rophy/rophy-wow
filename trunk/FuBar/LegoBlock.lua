@@ -19,6 +19,10 @@ Core.unreadyPlugins = {}
 -- Fake FuBar to cheat others.
 _G["FuBar"] = {}
 local FuBar = _G["FuBar"]
+
+-- Modules should insert themselves to here.
+FuBar.modules = {}
+
 FuBar.core = Core
 
 -- FuBarPlugin-2.0 checks this version string.
@@ -250,7 +254,8 @@ function Core.Enable()
 	local defaultOptions = {
 		profile = {
 			detached = {},
-			pluginDB = {}
+			pluginDB = {},
+			lod = {},
 		}
 	}
 	Core.db = Core:InitializeDB("FBP2LBDB", defaultOptions, "default")
@@ -261,47 +266,20 @@ function Core.Enable()
 	cmd:InjectDBCommands(Core.db, "copy", "delete", "list", "reset", "set")
 	cmd:RegisterSlashHandler(L["Prevent tooltips from showing in combat"], "combat", "ToggleHidingTooltipsInCombat")
 	
-	Core:ScheduleTimer("FBP2LB_LOAD_LOD_PLUGINS", Core.LoadLoadOnDemandPlugins, 3)
+	Core.SetupPluginsLater()
+	
+	local loadManager = FuBar.modules["LoadManager"]
+	if loadManager then
+		loadManager.SetDB(Core.db.profile.lod)
+		Core:ScheduleTimer("FBP2LB_LOAD_LOD_PLUGINS", loadManager.LoadLODPlugins, 3)
+	end
+	
 end
 
 function Core.SetupPluginsLater()
-	if not Core.waitingToSetup then
-		Core:ScheduleTimer("FBP2LB_SETUP_PLUGINS", Core.SetupPlugins, 2)
-		Core.waitingToSetup = true
-	end
+	Core:ScheduleTimer("FBP2LB_SETUP_PLUGINS", Core.SetupPlugins, 2)
 end
 
-
-function Core.findFuBarDep(...)
-	for i = 1, select("#", ...) do
-		local dep = select(i, ...)
-		if dep == "FuBar" then
-			return true
-		end
-	end
-end
-
-function Core.isFuBarDependent(name)
-	local data = GetAddOnMetadata(name, "X-FuBar-Dependent")
-	data = tonumber(data) or data
-	if data and data ~= 0 then
-		return true
-	end
-	return Core.findFuBarDep(GetAddOnDependencies(name))
-end
-
-function Core.LoadLoadOnDemandPlugins()
-	for i = 1, GetNumAddOns() do
-		local name, _, notes, enabled, loadable = GetAddOnInfo(i)
-		if IsAddOnLoadOnDemand(i) and enabled and loadable and not IsAddOnLoaded(i) then
-			if Core.isFuBarDependent(name) then
-				if not Core.db.profile.detached[name] then
-					LoadAddOn(name)
-				end
-			end
-		end
-	end
-end
 
 function Core:ToggleHidingTooltipsInCombat()
 	Core.db.profile.hidingTooltipsInCombat = not Core.db.profile.hidingTooltipsInCombat

@@ -1,32 +1,231 @@
-
-local FuBarPlugin = AceLibrary("FuBarPlugin-2.0")
-local nSideBar = LibStub("nSideBar")
-local FuBar = _G["FuBar"]
-
-if not FuBar then error("NoFuBar") end
-
-local core = FuBar.core
+-- Change "Attach to minimap" to "Add buttons to nSideBar".
 
 --[[
-local NSBMap = {}
-FuBar.nSideBarMapper = NSBMap
+Intended functionalties:
+	* toggle the behavior on and off for any plugin at any time.
+	* let user specify which plugins will be converted on intialize, with two different approaches:
+		* white list : no plugins will be converted except those specified.
+		* black list : all plugins will be converted except those specified.
+	* it is possible to add plugins to nSideBar without hooking the "attach to minimap"
+		but I found the current approach more convenient and easier to configure.
+]]
 
-function NSBMap.IsButtonPlugin(plugin)
-	return ( not plugin.OnTextUpdate and plugin.UpdateText == FuBarPlugin.UpdateText )
+local nSideBar = LibStub("nSideBar")
+
+
+-- The current implementation depends on FuBar.plugins to obtain a list of plugins.
+-- I'll try to find another better approach which does not depend on FuBar.plugins.
+local FuBar = _G["FuBar"]
+if not FuBar then
+	error("Cannot find FuBar: current implementation of FuBar2nSideBar depends on FuBar to function.")
 end
 
-function NSBMap.RegisterPlugin(plugin)
-	if not NSBMap.IsButtonPlugin(plugin) then
+--[[-------------------------------------------------------------------------
+	FuBarPanel Emulation
+---------------------------------------------------------------------------]]
+
+-- A proper FuBarPanel should support the following methods:
+-- AddPlugin RemovePlugin GetNumPlugins GetPlugin HasPlugin GetPluginSide UpdateCenteredPosition SetPluginSide GetAttachPoint
+local Panel = {
+	plugins = {}
+}
+
+function Panel:AddPlugin(plugin)
+	local oldPanel = plugin:GetPanel()
+	if oldPanel and oldPanel ~= self then
+		oldPanel:RemovePlugin(plugin)
+	end
+	plugin:SetPanel(self)
+	table.insert(self.plugins,pugin)
+	Panel.CreateOrShow(plugin)
+	plugin:Update()
+end
+
+-- The actual API is RemovePlugin(index, side), but index can be either 'plugin index' or 'plugin object'.
+-- FuBarPlugin-2.0 only pass 'plugin object'.
+function Panel:RemovePlugin(index, side)
+	local plugin
+	
+	if type(index) == 'number' then
+		plugin = self.plugins[index]
+
+	elseif type(index) == 'table' then
+		for i, iPlugin in ipairs(self.plugins) do
+			if iPlugin == index then
+				plugin = iPlugin
+				index = i
+				break
+			end
+		end
+		
+	else
+		return false
+		
+	end
+	
+	if not plugin then
 		return false
 	end
-	NSBMap.Convert(plugin)
+	
+	if plugin:GetPanel() ~= Panel then
+		return false
+	end
+	
+	table.remove(self.plugins,index)
+	Panel.RestoreMinimapFrame(plugin)
+	plugin:SetPanel(nil)
 	return true
+	
 end
 
-local GetAnchorFrame
-do
-	local anchorFrame
+function Panel:GetNumPlugins()
+	return #self.plugins
+end
+
+function Panel:GetPlugin(index, side)
+	return self.plugins[index]
+end
+
+function Panel:HasPlugin(plugin)
+	return not not self.plugins[index]
+end
+
+function Panel:GetPluginSide(plugin)
+	return "LEFT"
+end
+
+function Panel:SetPluginSide(plugin, side)
+
+end
+
+function Panel:UpdateCenteredPosition()
+
+end
+
+
+local Panel.origMinimapFrames = {}
+
+local optLibs = {}
+
+function Panel.GetLibrary(major)
+	if not optLibs[major] then
+		optLibs[major] = AceLibrary and AceLibrary:HasInstance(major) and AceLibrary(major)
+	end
+	return optLibs[major]
+end
+
+function Panel.GetUniqueID(plugin)
+	return plugin.folderName or plugin:GetTitle()
+end
+
+
+--[[-------------------------------------------------------------------------
+	 nSideBar Button Conversion
+---------------------------------------------------------------------------]]
+
+
+local scriptsToMap = {"OnMouseUp", "OnDoubleClick", "OnClick", "OnEnter", "OnLeave" }
+
+function Panel.ConvertMinimapFrame(plugin)
+
+	local origMinimapFrame = plugin.minimapFrame
+	local buttonID = Panel.GetUniqueID(plugin)
+	local button = nSideBar.GetButton(pluginID)
+
+	if origMinimapFrame and button == origMinimapFrame then
+		return
+	end
 	
+	Panel.origMinimapFrames[plugin] = origMinimapFrame
+	
+	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture() or "Interface\\Icons\\INV_Misc_QuestionMark"
+	
+	if button then
+		
+		nSideBar.ShowButton(buttonID)
+		
+	else
+	
+		-- Create the nSideBar button.
+		button = nSideBar.AddButton(buttonID, iconPath)
+		
+		-- FuBarPlugin-2.0 uses this reference.
+		button.self = plugin
+		
+		local pluginFrame = plugin.frame
+		
+		for i, script in ipairs(scriptsToMap) do
+			local pluginHandler = pluginFrame:GetScript(script)
+			if pluginHandler then
+				local buttonHandler = button:GetScript(script)
+				if buttonHandler then
+					button:SetScript(script, function(...)
+						buttonHandler(...)
+						pluginHandler(...)
+					end)
+				else
+					button:SetScript(script, pluginHandler)
+				end
+			end
+		end
+			
+		-- Special handler for "OnMouseDown" to fix dewdrop menu anchoring.
+		local pluginHandler = pluginFrame:GetScript("OnMouseDown")
+		if pluginHandler then
+			local function frame_OnMouseDown(frame, arg1)
+				if arg1 == "RightButton" and not IsModifierKeyDown() then
+					frame.self:OpenMenu( Panel.GetAnchorFrame(button) )
+				else
+					pluginHandler(frame,arg1)
+				end
+			end
+			local buttonHandler = button:GetScript("OnMouseDown")
+			if buttonHandler then
+				button:SetScript("OnMouseDown", function(...)
+					buttonHandler(...)
+					frame_OnMouseDown(...)
+				end)
+			else
+				button:SetScript("OnMouseDown", frame_OnMouseDown)
+			end
+		end
+		
+		
+		local Tablet = Panel.GetLibrary("Tablet-2.0")
+		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
+
+		if FuBarPlugin and Tablet and not plugin.blizzardTooltip and not plugin.overrideTooltip then
+			-- Note that we have to do this after :SetScript("OnEnter"), etc,
+			-- so that Tablet-2.0 can override it properly.
+			
+			FuBarPlugin.RegisterTablet(plugin)
+			Tablet:Register(button, plugin.frame)
+		end
+
+	end
+	
+	plugin.minimapFrame = button
+	
+end
+
+function Panel.RestoreMinimapFrame(plugin)
+
+	local origMinimapFrame = plugin.minimapFrame
+	local buttonID = Panel.GetUniqueID(plugin)
+	local button = nSideBar.GetButton(pluginID)
+
+	if not origMinimapFrame or button ~= origMinimapFrame then
+		return
+	end
+	
+	nSideBar.HideButton(buttonID)
+	
+	plugin.minimapFrame = Panel.origMinimapFrames[plugin]
+	
+end
+
+do -- Panel.GetAnchorFrame(frame)
+
 	--[[ Positioning, code taken from WindowLib by Mikk]]--
 	local function GetPoints(frame)
 		local abs = math.abs
@@ -63,216 +262,31 @@ do
 		return xOff, yOff, anchor
 	end
 
-	function GetAnchorFrame(frame)
-		if not anchorFrame then
-			anchorFrame = CreateFrame("Frame")
+	function Panel.GetAnchorFrame(frame)
+		if not Panel.anchorFrame then
+			local anchorFrame = CreateFrame("Frame")
 			anchorFrame:SetWidth(3)
 			anchorFrame:SetHeight(3)
+			Panel.anchorFrame = anchorFrame
 		end
+		
 		local xOff, yOff, anchor = GetPoints(frame)
-		anchorFrame:SetPoint(anchor or "CENTER", UIParent, anchor or "CENTER", xOff, yOff)
-		return anchorFrame
-	end
-end
-
-
-
-local scriptsToMap = { "OnMouseDown", "OnMouseUp", "OnDoubleClick", "OnClick", "OnEnter", "OnLeave" }
-
-
-function NSBMap.Convert(plugin)
-	
-	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture()
-	local button = nSideBar.AddButton(plugin:GetTitle(), iconPath)
-	local pluginFrame = plugin.frame
-	button.self = plugin
-	
-	for i, script in ipairs(scriptsToMap) do
-		local pluginHandler = pluginFrame:GetScript(script)
-		if pluginHandler then
-			local buttonHandler = button:GetScript(script)
-			if buttonHandler then
-				button:SetScript(script, function(...)
-					buttonHandler(...)
-					pluginHandler(...)
-				end)
-			else
-				button:SetScript(script, pluginHandler)
-			end
-		end
+		Panel.anchorFrame:ClearAllPoints()
+		Panel.anchorFrame:SetPoint(anchor or "CENTER", UIParent, anchor or "CENTER", xOff, yOff)
+		return Panel.anchorFrame
 	end
 	
-	-- Special handler for "OnMouseDown" to fix dewdrop menu anchoring.
-	local pluginHandler = pluginFrame:GetScript("OnMouseDown")
-	if pluginHandler then
-		local function frame_OnMouseDown(frame, arg1)
-			if arg1 == "RightButton" and not IsModifierKeyDown() then
-				frame.self:OpenMenu(GetAnchorFrame(button))
-			else
-				pluginHandler(frame,arg1)
-			end
-		end
-		local buttonHandler = button:GetScript("OnMouseDown")
-		if buttonHandler then
-			button:SetScript("OnMouseDown", function(...)
-				buttonHandler(...)
-				frame_OnMouseDown(...)
-			end)
-		else
-			button:SetScript("OnMouseDown", frame_OnMouseDown)
-		end
-	end
-	
-	plugin.frame = button
-	
-	plugin.CheckWidth = function() end
 end
 
-]]
 
--- A proper FuBarPanel should support the following methods:
--- AddPlugin RemovePlugin GetNumPlugins GetPlugin HasPlugin GetPluginSide UpdateCenteredPosition SetPluginSide GetAttachPoint
 
-local nSideBarPanel = {
-	plugins = {}
-}
+--[[-------------------------------------------------------------------------
+	"Attach to minimap" Hooking
+---------------------------------------------------------------------------]]
 
-function nSideBarPanel:AddPlugin(plugin)
-	local oldPanel = plugin:GetPanel()
-	if oldPanel and oldPanel ~= self then
-		oldPanel:RemovePlugin(plugin)
-	end
-	plugin:SetPanel(self)
-	table.insert(self.plugins,pugin)
-	self:ConvertMinimapFrame(plugin)
-	plugin:Update()
-end
 
--- The actual API is RemovePlugin(index, side), but index can be either 'plugin index' or 'plugin object'.
--- FuBarPlugin-2.0 only pass 'plugin object'.
-function nSideBarPanel:RemovePlugin(plugin)
-	if type(plugin) ~= 'table' then
-		return
-	end
-	for i, iPlugin in ipairs(self.plugins) do
-		if plugin == iPlugin then
-			table.remove(self.plugins,i)
-			break
-		end
-	end
-	if plugin:GetPanel() == nSideBarPanel then
-		self:RestoreMinimapFrame(plugin)
-	end
-	plugin:SetPanel(nil)
-	return true
-end
+-- Not very working yet, I'll remove the global functions when everything is fixed.
 
-function nSideBarPanel:GetNumPlugins()
-	return 0
-end
-
-function nSideBarPanel:GetPlugin(index, side)
-	return nil
-end
-
-function nSideBarPanel:HasPlugin(plugin)
-	return false
-end
-
-function nSideBarPanel:GetPluginSide(plugin)
-	return "LEFT"
-end
-
-function nSideBarPanel:SetPluginSide(plugin, side)
-
-end
-
-function nSideBarPanel:UpdateCenteredPosition()
-
-end
-
-local origFrames = {}
-local origMinimapFrames = {}
-function GetOrigMinimapFrames()
-	return origMinimapFrames
-end
-
-function nSideBarPanel:ConvertMinimapFrame(plugin)
-	if plugin.minimapFrame and plugin.minimapFrame.isnsb then
-		return
-	end
-	origMinimapFrames[plugin] = plugin.minimapFrame
-	
-	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture() or "Interface\\Icons\\INV_Misc_QuestionMark"
-	local button = nSideBar.AddButton(plugin:GetTitle(), iconPath)
-	
-	if not button.isnsb then
-		local pluginFrame = plugin.frame
-		button.self = plugin
-		button.isnsb = true
-		
-		for i, script in ipairs(scriptsToMap) do
-			local pluginHandler = pluginFrame:GetScript(script)
-			if pluginHandler then
-				local buttonHandler = button:GetScript(script)
-				if buttonHandler then
-					button:SetScript(script, function(...)
-						buttonHandler(...)
-						pluginHandler(...)
-					end)
-				else
-					button:SetScript(script, pluginHandler)
-				end
-			end
-		end
-		
-		-- Special handler for "OnMouseDown" to fix dewdrop menu anchoring.
-		local pluginHandler = pluginFrame:GetScript("OnMouseDown")
-		if pluginHandler then
-			local function frame_OnMouseDown(frame, arg1)
-				if arg1 == "RightButton" and not IsModifierKeyDown() then
-					frame.self:OpenMenu(GetAnchorFrame(button))
-				else
-					pluginHandler(frame,arg1)
-				end
-			end
-			local buttonHandler = button:GetScript("OnMouseDown")
-			if buttonHandler then
-				button:SetScript("OnMouseDown", function(...)
-					buttonHandler(...)
-					frame_OnMouseDown(...)
-				end)
-			else
-				button:SetScript("OnMouseDown", frame_OnMouseDown)
-			end
-		end
-		
-		local Tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0")
-		
-		if not plugin.blizzardTooltip and not plugin.overrideTooltip and Tablet then
-			-- Note that we have to do this after :SetScript("OnEnter"), etc,
-			-- so that Tablet-2.0 can override it properly.
-			FuBarPlugin.RegisterTablet(plugin)
-			Tablet:Register(button, plugin.frame)
-		end
-	end
-	
-	plugin.minimapFrame = button
-	origFrames[plugin] = plugin.frame
-	--plugin.frame = button
-	
-end
-
-function nSideBarPanel:RestoreMinimapFrame(plugin)
-	if not plugin.minimapFrame or not plugin.minimapFrame.isnsb then
-		return
-	end
-	local button = plugin.minimapFrame
-	nSideBar.RemoveButton(plugin:GetTitle())
-	plugin.minimapFrame = origMinimapFrames[plugin]
-	ChatFrame3:AddMessage('minimapFrame = ' .. tostring(origMinimapFrames[plugin]))
-	--plugin.frame = origFrames[plugin]
-end
 
 local origToggleMinimapAttached = {}
 local origIsMinimapAttached = {}
@@ -294,7 +308,6 @@ function HookAllMinimaps()
 	end
 	hookedMinimap = true
 end
-
 
 SLASH_FPB2NSB1 = "/fpb2nsb"
 SlashCmdList["FPB2NSB"] = function(msg)
@@ -321,14 +334,38 @@ function NSB_ToggleMinimapAttached(self)
 			if self.panel then
 				self.panel:RemovePlugin(self)
 			end
-			nSideBarPanel:AddPlugin(self)
+			Panel:AddPlugin(self)
 		end
 	end
 end
 function NSB_IsMinimapAttached(self)
 	if not FuBar then return true end
-	-- Calling origIsMinimapAttached because some plugins might already attached to real minimap.
-	return self.panel == nSideBarPanel or origIsMinimapAttached[self](self)
+	-- Calling origIsMinimapAttached because some plugins might have already attached to real minimap.
+	return self.panel == Panel or origIsMinimapAttached[self](self)
+end
+
+function nSideBar.IsHookedToggleMinimapAttached(plugin)
+	if not origToggleMinimapAttached[plugin] then
+		return false
+	elseif origToggleMinimapAttached[plugin] == plugin.ToggleMinimapAttached then
+		return false
+	elseif plugin.ToggleMinimapAttached == NSB_ToggleMinimapAttached then
+		return true
+	else
+		-- ??
+	end
+end
+
+function nSideBar.IsHookedIsMinimapAttached(plugin)
+	if not origIsMinimapAttached[plugin] then
+		return false
+	elseif origIsMinimapAttached[plugin] == plugin.IsMinimapAttached then
+		return false
+	elseif plugin.IsMinimapAttached == NSB_IsMinimapAttached then
+		return true
+	else
+		-- ??
+	end
 end
 
 function HookMinimap(plugin)
@@ -343,4 +380,4 @@ function UnhookMinimap(plugin)
 	plugin.ToggleMinimapAttached = origToggleMinimapAttached[plugin]
 end
 
---HookAllMinimaps()
+nsb = Panel
