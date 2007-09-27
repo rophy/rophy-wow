@@ -10,7 +10,23 @@ Intended functionalties:
 		but I found the current approach more convenient and easier to configure.
 ]]
 
-local nSideBar = LibStub("nSideBar")
+--[[
+Possible Scenarios:
+	* Hook activated when minimap not being shown.
+		- Replace the methods and minimap frame.
+	* Hook activated when minimap is being shown.
+		- nSBPanel:AddPlugin()
+			- MinimapPanel:RemovePlugin()
+			- plugin.minimapFrame:Hide()
+		- Replace methods and minimap frame.
+	* Hook deactivated when minimap not being shown.
+		- Restore the methods and minimap frame.
+	* Hook deactivated when minimap is being shown.
+		- Restore methods and minimap frame.
+		- MinimapPanel:AddPlugin()
+]]
+
+local nSideBar = LibStub("SlideBar")
 
 
 -- The current implementation depends on FuBar.plugins to obtain a list of plugins.
@@ -35,10 +51,15 @@ function Panel:AddPlugin(plugin)
 	if oldPanel and oldPanel ~= self then
 		oldPanel:RemovePlugin(plugin)
 	end
+	local origMinimapFrame = Panel.origMinimapFrames[plugin] or plugin.minimapFrame
+	if origMinimapFrame then
+		origMinimapFrame:Hide()
+	end
+	plugin.frame:Hide()
 	plugin:SetPanel(self)
-	table.insert(self.plugins,pugin)
-	Panel.CreateOrShow(plugin)
-	plugin:Update()
+	table.insert(self.plugins,plugin)
+	local button, buttonID = Panel.GetOrCreateButton(plugin)
+	nSideBar.ShowButton(buttonID)
 end
 
 -- The actual API is RemovePlugin(index, side), but index can be either 'plugin index' or 'plugin object'.
@@ -50,30 +71,34 @@ function Panel:RemovePlugin(index, side)
 		plugin = self.plugins[index]
 
 	elseif type(index) == 'table' then
-		for i, iPlugin in ipairs(self.plugins) do
-			if iPlugin == index then
-				plugin = iPlugin
-				index = i
-				break
-			end
-		end
-		
+		plugin = index
 	else
-		return false
-		
+		error("index must be number or table")
 	end
 	
 	if not plugin then
 		return false
 	end
-	
+
 	if plugin:GetPanel() ~= Panel then
 		return false
 	end
+
+	plugin:SetPanel(nil)
+	
+	if index == plugin then
+		for i, iPlugin in ipairs(self.plugins) do
+			if iPlugin == index then
+				index = i
+				break
+			end
+		end
+	end
 	
 	table.remove(self.plugins,index)
-	Panel.RestoreMinimapFrame(plugin)
-	plugin:SetPanel(nil)
+	
+	local button, buttonID = Panel.GetOrCreateButton(plugin)
+	nSideBar.HideButton(buttonID)
 	return true
 	
 end
@@ -103,7 +128,7 @@ function Panel:UpdateCenteredPosition()
 end
 
 
-local Panel.origMinimapFrames = {}
+Panel.origMinimapFrames = {}
 
 local optLibs = {}
 
@@ -126,27 +151,14 @@ end
 
 local scriptsToMap = {"OnMouseUp", "OnDoubleClick", "OnClick", "OnEnter", "OnLeave" }
 
-function Panel.ConvertMinimapFrame(plugin)
+function Panel.GetOrCreateButton(plugin)
 
-	local origMinimapFrame = plugin.minimapFrame
 	local buttonID = Panel.GetUniqueID(plugin)
 	local button = nSideBar.GetButton(pluginID)
-
-	if origMinimapFrame and button == origMinimapFrame then
-		return
-	end
-	
-	Panel.origMinimapFrames[plugin] = origMinimapFrame
-	
-	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture() or "Interface\\Icons\\INV_Misc_QuestionMark"
-	
-	if button then
-		
-		nSideBar.ShowButton(buttonID)
-		
-	else
+	if not button then
 	
 		-- Create the nSideBar button.
+		local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture() or "Interface\\Icons\\INV_Misc_QuestionMark"
 		button = nSideBar.AddButton(buttonID, iconPath)
 		
 		-- FuBarPlugin-2.0 uses this reference.
@@ -174,7 +186,16 @@ function Panel.ConvertMinimapFrame(plugin)
 		if pluginHandler then
 			local function frame_OnMouseDown(frame, arg1)
 				if arg1 == "RightButton" and not IsModifierKeyDown() then
-					frame.self:OpenMenu( Panel.GetAnchorFrame(button) )
+					local anchorFrame = Panel.GetAnchorFrame(button)
+					plugin:OpenMenu()
+					--[[
+					local Dewdrop = Panel.GetLibrary("Dewdrop-2.0")
+					-- Dry code: need test.
+				=	-- If this works, then the GetAnchorFrame() code can be removed.
+					if Dewdrop and Dewdrop:IsOpen(anchorFrame) then
+						nSideBar.WaitFor(_G["Dewdrop20Level1"])
+					end
+					]]
 				else
 					pluginHandler(frame,arg1)
 				end
@@ -204,24 +225,15 @@ function Panel.ConvertMinimapFrame(plugin)
 
 	end
 	
-	plugin.minimapFrame = button
-	
+	return button, buttonID
+
 end
 
-function Panel.RestoreMinimapFrame(plugin)
-
-	local origMinimapFrame = plugin.minimapFrame
+function Panel.IsMinimapFrameConverted(plugin)
+	local currMinimapFrame = plugin.minimapFrame
 	local buttonID = Panel.GetUniqueID(plugin)
 	local button = nSideBar.GetButton(pluginID)
-
-	if not origMinimapFrame or button ~= origMinimapFrame then
-		return
-	end
-	
-	nSideBar.HideButton(buttonID)
-	
-	plugin.minimapFrame = Panel.origMinimapFrames[plugin]
-	
+	return (currMinimapFrame and button == currMinimapFrame)
 end
 
 do -- Panel.GetAnchorFrame(frame)
@@ -285,40 +297,14 @@ end
 ---------------------------------------------------------------------------]]
 
 
--- Not very working yet, I'll remove the global functions when everything is fixed.
+-- DRY CODED, NEED MAJOR TESTING.
 
 
-local origToggleMinimapAttached = {}
-local origIsMinimapAttached = {}
+Panel.hookedMinimap = {}
+Panel.origToggleMinimapAttached = {}
+Panel.origIsMinimapAttached = {}
 
-local hookedMinimap = false
-
-function UnhookAllMinimaps()
-	HookMinimap(FuBarPlugin)
-	for i,plugin in pairs(FuBar.plugins) do
-		HookMinimap(plugin)
-	end
-	hookedMinimap = false
-end
-
-function HookAllMinimaps()
-	HookMinimap(FuBarPlugin)
-	for i,plugin in pairs(FuBar.plugins) do
-		HookMinimap(plugin)
-	end
-	hookedMinimap = true
-end
-
-SLASH_FPB2NSB1 = "/fpb2nsb"
-SlashCmdList["FPB2NSB"] = function(msg)
-	if hookedMinimap then
-		UnhookAllMinimaps()
-	else
-		HookAllMinimaps()
-	end
-end
-
-function NSB_ToggleMinimapAttached(self)
+function Panel.ToggleMinimapAttached(self)
 	if not self.cannotAttachToMinimap then
 		local value = self:IsMinimapAttached()
 		if value then
@@ -338,46 +324,130 @@ function NSB_ToggleMinimapAttached(self)
 		end
 	end
 end
-function NSB_IsMinimapAttached(self)
+
+function Panel.IsMinimapAttached(self)
 	if not FuBar then return true end
-	-- Calling origIsMinimapAttached because some plugins might have already attached to real minimap.
-	return self.panel == Panel or origIsMinimapAttached[self](self)
+	-- Calling Panel.origIsMinimapAttached because some plugins might have already attached to real minimap.
+	return self.panel == Panel
 end
 
-function nSideBar.IsHookedToggleMinimapAttached(plugin)
-	if not origToggleMinimapAttached[plugin] then
-		return false
-	elseif origToggleMinimapAttached[plugin] == plugin.ToggleMinimapAttached then
-		return false
-	elseif plugin.ToggleMinimapAttached == NSB_ToggleMinimapAttached then
-		return true
-	else
-		-- ??
+
+function Panel.IsMinimapHooked(plugin)
+	-- Do not compare the reference of related plugin methods, as they might be changed by someone else.
+	return Panel.hookedMinimap[plugin]
+end
+
+function Panel.HookMinimap(plugin)
+	if not Panel.hookedMinimap[plugin] then
+		Panel.origToggleMinimapAttached[plugin] = plugin.ToggleMinimapAttached
+		plugin.ToggleMinimapAttached = Panel.ToggleMinimapAttached
+		Panel.origIsMinimapAttached[plugin] = plugin.IsMinimapAttached
+		plugin.IsMinimapAttached = Panel.IsMinimapAttached
+		Panel.hookedMinimap[plugin] = true
 	end
 end
 
-function nSideBar.IsHookedIsMinimapAttached(plugin)
-	if not origIsMinimapAttached[plugin] then
-		return false
-	elseif origIsMinimapAttached[plugin] == plugin.IsMinimapAttached then
-		return false
-	elseif plugin.IsMinimapAttached == NSB_IsMinimapAttached then
-		return true
-	else
-		-- ??
+function Panel.UnhookMinimap(plugin)
+	if Panel.hookedMinimap[plugin] then
+		plugin.IsMinimapAttached = Panel.origIsMinimapAttached[plugin]
+		plugin.ToggleMinimapAttached = Panel.origToggleMinimapAttached[plugin]
+		Panel.hookedMinimap[plugin] = nil
 	end
 end
 
-function HookMinimap(plugin)
-	origToggleMinimapAttached[plugin] = plugin.ToggleMinimapAttached
-	plugin.ToggleMinimapAttached = NSB_ToggleMinimapAttached
-	origIsMinimapAttached[plugin] = plugin.IsMinimapAttached
-	plugin.IsMinimapAttached = NSB_IsMinimapAttached
+-- Remove this later.
+function UnhookAllMinimaps()
+	HookMinimap(FuBarPlugin)
+	for i,plugin in pairs(FuBar.plugins) do
+		HookMinimap(plugin)
+	end
+	hookedMinimap = false
 end
 
-function UnhookMinimap(plugin)
-	plugin.IsMinimapAttached = origIsMinimapAttached[plugin]
-	plugin.ToggleMinimapAttached = origToggleMinimapAttached[plugin]
+-- Remove this later.
+function HookAllMinimaps()
+	HookMinimap(FuBarPlugin)
+	for i,plugin in pairs(FuBar.plugins) do
+		HookMinimap(plugin)
+	end
+	hookedMinimap = true
 end
 
-nsb = Panel
+-- Remove this later.
+SLASH_FPB2NSB1 = "/fpb2nsb"
+SlashCmdList["FPB2NSB"] = function(msg)
+	if hookedMinimap then
+		UnhookAllMinimaps()
+	else
+		HookAllMinimaps()
+	end
+end
+
+--[[-------------------------------------------------------------------------
+	Combined Conversion.
+---------------------------------------------------------------------------]]
+
+function Panel.Convert(plugin)
+
+	local origMinimapFrame = plugin.minimapFrame
+	local button, buttonID = Panel.GetOrCreateButton(plugin)
+
+	if origMinimapFrame and button == origMinimapFrame then
+		return
+	end
+		
+	-- This should be the original IsMinimapAttached().
+	if plugin:IsMinimapAttached() then
+		Panel:AddPlugin(plugin)
+	end
+
+	-- Replace the minimapFrame.
+	Panel.origMinimapFrames[plugin] = origMinimapFrame
+	plugin.minimapFrame = button
+	
+	Panel.HookMinimap(plugin)
+	
+end
+
+function Panel.Unconvert(plugin)
+	Panel.UnhookMinimap(plugin)
+
+
+	local currMinimapFrame = plugin.minimapFrame
+	local buttonID = Panel.GetUniqueID(plugin)
+	local button = nSideBar.GetButton(pluginID)
+
+	if not currMinimapFrame or button ~= currMinimapFrame then
+		return
+	end
+
+	local origMinimapFrame = Panel.origMinimapFrames[plugin]
+	
+	plugin.minimapFrame = origMinimapFrame
+
+	if button:IsShown() then
+		plugin:Show(0)
+	end
+	
+	nSideBar.HideButton(buttonID)
+	
+end
+
+function Panel.IsConverted(plugin)
+	return Panel.IsMinimapFrameConverted(plugin) and Panel.IsMinimappHooked(plugin)
+end
+
+_G["Panel"] = Panel
+
+--[[-------------------------------------------------------------------------
+	Plugin Initialization
+---------------------------------------------------------------------------]]
+
+Panel.exceptionType = "black"
+Panel.exceptionList = {}
+
+function Panel.SetupPlugins()
+	for i, plugin in ipairs(FuBar.plugins) do
+		
+	end
+end
