@@ -108,7 +108,7 @@ function LoadManager.LoadLODPlugins()
 	for i = 1, GetNumAddOns() do
 		local name, _, _, enabled, loadable = GetAddOnInfo(i)
 		if IsAddOnLoadOnDemand(i) and enabled and loadable and not IsAddOnLoaded(i) then
-			if disabled and not disabled[name] and LoadManager.isFuBarDependent(name) then
+			if LoadManager.IsFuBarDependent(name) then
 				LoadAddOn(name)
 			end
 		end
