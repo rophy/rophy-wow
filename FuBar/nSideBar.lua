@@ -60,6 +60,8 @@ function Panel:AddPlugin(plugin)
 	table.insert(self.plugins,plugin)
 	local button, buttonID = Panel.GetOrCreateButton(plugin)
 	nSideBar.ShowButton(buttonID)
+	plugin.minimapFrame = button
+	plugin:Update()
 end
 
 -- The actual API is RemovePlugin(index, side), but index can be either 'plugin index' or 'plugin object'.
@@ -151,10 +153,11 @@ end
 
 local scriptsToMap = {"OnMouseUp", "OnDoubleClick", "OnClick", "OnEnter", "OnLeave" }
 
+local frame_OnClick, frame_OnDoubleClick, frame_OnMouseDown, frame_OnMouseUp, frame_OnReceiveDrag, frame_OnEnter, frame_OnLeave
 function Panel.GetOrCreateButton(plugin)
 
 	local buttonID = Panel.GetUniqueID(plugin)
-	local button = nSideBar.GetButton(pluginID)
+	local button = nSideBar.GetButton(buttonID)
 	if not button then
 	
 		-- Create the nSideBar button.
@@ -164,8 +167,11 @@ function Panel.GetOrCreateButton(plugin)
 		-- FuBarPlugin-2.0 uses this reference.
 		button.self = plugin
 		
+		
 		local pluginFrame = plugin.frame
 		
+		
+		--[[ Hooking original script handlers didn't work out very well.
 		for i, script in ipairs(scriptsToMap) do
 			local pluginHandler = pluginFrame:GetScript(script)
 			if pluginHandler then
@@ -188,14 +194,12 @@ function Panel.GetOrCreateButton(plugin)
 				if arg1 == "RightButton" and not IsModifierKeyDown() then
 					local anchorFrame = Panel.GetAnchorFrame(button)
 					plugin:OpenMenu()
-					--[[
 					local Dewdrop = Panel.GetLibrary("Dewdrop-2.0")
 					-- Dry code: need test.
 				=	-- If this works, then the GetAnchorFrame() code can be removed.
 					if Dewdrop and Dewdrop:IsOpen(anchorFrame) then
 						nSideBar.WaitFor(_G["Dewdrop20Level1"])
 					end
-					]]
 				else
 					pluginHandler(frame,arg1)
 				end
@@ -211,6 +215,78 @@ function Panel.GetOrCreateButton(plugin)
 			end
 		end
 		
+		]]
+		
+		-- The following implementation is copied from FuBarPlugin-2.0's MinimapPanel.
+		
+		local frame = button
+		if not frame_OnEnter then
+			function frame_OnEnter()
+				if type(this.self.OnEnter) == "function" then
+					this.self:OnEnter()
+				end
+			end
+		end
+		frame:SetScript("OnEnter", frame_OnEnter)
+		if not frame_OnLeave then
+			function frame_OnLeave()
+				if type(this.self.OnLeave) == "function" then
+					this.self:OnLeave()
+				end
+			end
+		end
+		frame:SetScript("OnLeave", frame_OnLeave)
+		if not frame_OnClick then
+			function frame_OnClick()
+				if this.self:IsMinimapAttached() and this.dragged then return end
+				if type(this.self.OnClick) == "function" then
+					this.self:OnClick(arg1)
+				end
+			end
+		end
+		frame:SetScript("OnClick", frame_OnClick)
+		if not frame_OnDoubleClick then
+			function frame_OnDoubleClick()
+				if type(this.self.OnDoubleClick) == "function" then
+					this.self:OnDoubleClick(arg1)
+				end
+			end
+		end
+		frame:SetScript("OnDoubleClick", frame_OnDoubleClick)
+		if not frame_OnReceiveDrag then
+			function frame_OnReceiveDrag()
+				if (this.self:IsMinimapAttached() and not this.dragged) and type(this.self.OnReceiveDrag) == "function" then
+					this.self:OnReceiveDrag()
+				end
+			end
+		end
+		frame:SetScript("OnReceiveDrag", frame_OnReceiveDrag)
+		if not minimap_OnMouseDown then
+			function minimap_OnMouseDown()
+				if arg1 == "LeftButton" and not IsModifierKeyDown() then
+					HideDropDownMenu(1)
+					if type(this.self.OnMouseDown) == "function" then
+						this.self:OnMouseDown(arg1)
+					end
+				elseif arg1 == "RightButton" and not IsModifierKeyDown() then
+					this.self:OpenMenu(this)
+				else
+					HideDropDownMenu(1)
+					if type(this.self.OnMouseDown) == "function" then
+						this.self:OnMouseDown(arg1)
+					end
+				end
+			end
+		end
+		frame:SetScript("OnMouseDown", minimap_OnMouseDown)
+		if not minimap_OnMouseUp then
+			function minimap_OnMouseUp()
+				if type(this.self.OnMouseUp) == "function" then
+					this.self:OnMouseUp(arg1)
+				end
+			end
+		end
+		frame:SetScript("OnMouseUp", minimap_OnMouseUp)
 		
 		local Tablet = Panel.GetLibrary("Tablet-2.0")
 		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
@@ -303,6 +379,7 @@ end
 Panel.hookedMinimap = {}
 Panel.origToggleMinimapAttached = {}
 Panel.origIsMinimapAttached = {}
+Panel.origShow = {}
 
 function Panel.ToggleMinimapAttached(self)
 	if not self.cannotAttachToMinimap then
@@ -325,9 +402,31 @@ function Panel.ToggleMinimapAttached(self)
 	end
 end
 
+do -- hook FuBar:ShowPlugin()
+	local origFuBarShowPlugin = FuBar and FuBar.ShowPlugin
+	function Panel.ShowPlugin(self, plugin, panelId)
+		if panelId == -1 then
+			Panel:AddPlugin(plugin)
+		else
+			origFuBarShowPlugin(FuBar, plugin, panelId)
+		end
+	end
+	if origFuBarShowPlugin then
+		FuBar.ShowPlugin = Panel.ShowPlugin
+	end
+end
+
+local origShow = AceLibrary("FuBarPlugin-2.0").Show
+function Panel.Show(self, panelId)
+	if panelId == 0 then
+		panelId = -1
+	end
+	ChatFrame3:AddMessage(tostring(self)..','..tostring(panelId))
+	origShow(self,panelId)
+end
+
 function Panel.IsMinimapAttached(self)
 	if not FuBar then return true end
-	-- Calling Panel.origIsMinimapAttached because some plugins might have already attached to real minimap.
 	return self.panel == Panel
 end
 
@@ -343,6 +442,8 @@ function Panel.HookMinimap(plugin)
 		plugin.ToggleMinimapAttached = Panel.ToggleMinimapAttached
 		Panel.origIsMinimapAttached[plugin] = plugin.IsMinimapAttached
 		plugin.IsMinimapAttached = Panel.IsMinimapAttached
+		Panel.origShow[plugin] = plugin.Show
+		plugin.Show = Panel.Show
 		Panel.hookedMinimap[plugin] = true
 	end
 end
@@ -351,6 +452,7 @@ function Panel.UnhookMinimap(plugin)
 	if Panel.hookedMinimap[plugin] then
 		plugin.IsMinimapAttached = Panel.origIsMinimapAttached[plugin]
 		plugin.ToggleMinimapAttached = Panel.origToggleMinimapAttached[plugin]
+		plugin.Show = Panel.origShow[plugin]
 		Panel.hookedMinimap[plugin] = nil
 	end
 end
@@ -366,12 +468,17 @@ end
 
 -- Remove this later.
 function HookAllMinimaps()
-	HookMinimap(FuBarPlugin)
+	Panel.HookMinimap(AceLibrary("FuBarPlugin-2.0"))
 	for i,plugin in pairs(FuBar.plugins) do
-		HookMinimap(plugin)
+		ChatFrame3:AddMessage("Converting " .. plugin:GetTitle())
+		Panel.Convert(plugin)
 	end
-	hookedMinimap = true
 end
+
+HookAllMinimaps()
+
+Panel.HookMinimap(AceLibrary("FuBarPlugin-2.0"))
+
 
 -- Remove this later.
 SLASH_FPB2NSB1 = "/fpb2nsb"
@@ -388,24 +495,18 @@ end
 ---------------------------------------------------------------------------]]
 
 function Panel.Convert(plugin)
-
-	local origMinimapFrame = plugin.minimapFrame
-	local button, buttonID = Panel.GetOrCreateButton(plugin)
-
-	if origMinimapFrame and button == origMinimapFrame then
-		return
+	if Panel.IsMinimapHooked(plugin) then
+		return false
 	end
-		
-	-- This should be the original IsMinimapAttached().
-	if plugin:IsMinimapAttached() then
-		Panel:AddPlugin(plugin)
-	end
-
-	-- Replace the minimapFrame.
-	Panel.origMinimapFrames[plugin] = origMinimapFrame
-	plugin.minimapFrame = button
 	
+	local isMinimapAttached = plugin:IsMinimapAttached()
 	Panel.HookMinimap(plugin)
+	
+	
+	-- assumption: if origIsMinimapAttached == true then hookedIsMinimapAttached == false
+	if isMinimapAttached then
+		plugin:ToggleMinimapAttached()
+	end
 	
 end
 
