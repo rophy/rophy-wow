@@ -148,6 +148,7 @@ function Core.GetUniqueID(plugin)
 	return plugin.folderName or plugin:GetTitle()
 end
 
+
 -- Create the LegoBlock, the saved variables might not be loaded when this is being called.
 function Core.CreateLegoBlock(plugin)
 	
@@ -197,10 +198,12 @@ function Core.CreateLegoBlock(plugin)
 	plugin.textFrame = fakeTextFrame
 	
 	local pluginFrame = plugin.frame
+	
+	lbObj:SetScript("OnClick", pluginFrame:GetScript("OnClick"))
+	lbObj:SetScript("OnDoubleClick", pluginFrame:GetScript("OnDoubleClick"))
 	lbObj:SetScript("OnMouseDown", pluginFrame:GetScript("OnMouseDown"))
 	lbObj:SetScript("OnMouseUp", pluginFrame:GetScript("OnMouseUp"))
-	lbObj:SetScript("OnDoubleClick", pluginFrame:GetScript("OnDoubleClick"))
-	lbObj:SetScript("OnClick", pluginFrame:GetScript("OnClick"))
+	lbObj:SetScript("OnReceiveDrag", pluginFrame:GetScript("OnReceiveDrag"))
 	lbObj:SetScript("OnEnter", pluginFrame:GetScript("OnEnter"))
 	lbObj:SetScript("OnLeave", pluginFrame:GetScript("OnLeave"))
 
