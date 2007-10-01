@@ -5,25 +5,9 @@ Intended functionalties:
 	* toggle the behavior on and off for any plugin at any time.
 	* let user specify which plugins will be converted on intialize, with two different approaches:
 		* white list : no plugins will be converted except those specified.
-		* black list : all plugins will be converted except those specified.
+		* (using this one) black list : all plugins will be converted except those specified.
 	* it is possible to add plugins to nSideBar without hooking the "attach to minimap"
 		but I found the current approach more convenient and easier to configure.
-]]
-
---[[
-Possible Scenarios:
-	* Hook activated when minimap not being shown.
-		- Replace the methods and minimap frame.
-	* Hook activated when minimap is being shown.
-		- nSBPanel:AddPlugin()
-			- MinimapPanel:RemovePlugin()
-			- plugin.minimapFrame:Hide()
-		- Replace methods and minimap frame.
-	* Hook deactivated when minimap not being shown.
-		- Restore the methods and minimap frame.
-	* Hook deactivated when minimap is being shown.
-		- Restore methods and minimap frame.
-		- MinimapPanel:AddPlugin()
 ]]
 
 local nSideBar = LibStub("SlideBar")
@@ -32,12 +16,10 @@ local nSideBar = LibStub("SlideBar")
 -- The current implementation depends on FuBar.plugins to obtain a list of plugins.
 -- I'll try to find another better approach which does not depend on FuBar.plugins.
 local FuBar = _G["FuBar"]
-if not FuBar then
-	error("Cannot find FuBar: current implementation of FuBar2nSideBar depends on FuBar to function.")
-end
 
 local Panel = {}
 
+FuBar.modules["nSideBar"] = Panel
 
 --[[-------------------------------------------------------------------------
 	Utility Functions
@@ -55,7 +37,7 @@ function Panel.GetLibrary(major)
 	return optLibs[major]
 end
 
-function Panel.GetUniqueID(plugin)
+function Panel.GetUniqueId(plugin)
 	return plugin.folderName or plugin:GetTitle()
 end
 
@@ -89,8 +71,8 @@ function Panel:AddPlugin(plugin)
 	end
 	plugin.frame:Hide()
 
-	local button, buttonID = Panel.GetOrCreateButton(plugin)
-	nSideBar.ShowButton(buttonID)
+	local button, buttonId = Panel.GetOrCreateButton(plugin)
+	nSideBar.ShowButton(buttonId)
 	
 	Panel.origMinimapFrames[plugin] = origMinimapFrame
 	plugin.minimapFrame = button
@@ -133,8 +115,8 @@ function Panel:RemovePlugin(index, side)
 	
 	table.remove(self.plugins,index)
 	
-	local button, buttonID = Panel.GetOrCreateButton(plugin)
-	nSideBar.HideButton(buttonID)
+	local button, buttonId = Panel.GetOrCreateButton(plugin)
+	nSideBar.HideButton(buttonId)
 	
 	plugin.minimapFrame = Panel.origMinimapFrames[plugin]
 
@@ -173,15 +155,29 @@ end
 --local scriptsToMap = {"OnMouseUp", "OnDoubleClick", "OnClick", "OnEnter", "OnLeave" }
 
 local frame_OnClick, frame_OnDoubleClick, frame_OnMouseDown, frame_OnMouseUp, frame_OnReceiveDrag, frame_OnEnter, frame_OnLeave
+
+local function AddButtonScript(button, script, handler)
+	local buttonScript = button:GetScript(script)
+	if not buttonScript then
+		button:SetScript(script, handler)
+	else
+		button:SetScript(script, function(...)
+			buttonScript(...)
+			handler(...)
+		end)
+	end
+end
+
+
 function Panel.GetOrCreateButton(plugin)
 
-	local buttonID = Panel.GetUniqueID(plugin)
-	local button = nSideBar.GetButton(buttonID)
+	local buttonId = Panel.GetUniqueId(plugin)
+	local button = nSideBar.GetButton(buttonId)
 	if not button then
 	
 		-- Create the nSideBar button.
 		local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture() or "Interface\\Icons\\INV_Misc_QuestionMark"
-		button = nSideBar.AddButton(buttonID, iconPath)
+		button = nSideBar.AddButton(buttonId, iconPath)
 		
 		-- FuBarPlugin-2.0 uses this reference.
 		button.self = plugin
@@ -246,7 +242,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnEnter", frame_OnEnter)
+		AddButtonScript(frame, "OnEnter", frame_OnEnter)
 		if not frame_OnLeave then
 			function frame_OnLeave()
 				if type(this.self.OnLeave) == "function" then
@@ -254,7 +250,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnLeave", frame_OnLeave)
+		AddButtonScript(frame, "OnLeave", frame_OnLeave)
 		if not frame_OnClick then
 			function frame_OnClick()
 				if this.self:IsMinimapAttached() and this.dragged then return end
@@ -263,7 +259,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnClick", frame_OnClick)
+		AddButtonScript(frame, "OnClick", frame_OnClick)
 		if not frame_OnDoubleClick then
 			function frame_OnDoubleClick()
 				if type(this.self.OnDoubleClick) == "function" then
@@ -271,7 +267,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnDoubleClick", frame_OnDoubleClick)
+		AddButtonScript(frame, "OnDoubleClick", frame_OnDoubleClick)
 		if not frame_OnReceiveDrag then
 			function frame_OnReceiveDrag()
 				if (this.self:IsMinimapAttached() and not this.dragged) and type(this.self.OnReceiveDrag) == "function" then
@@ -279,7 +275,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnReceiveDrag", frame_OnReceiveDrag)
+		AddButtonScript(frame, "OnReceiveDrag", frame_OnReceiveDrag)
 		if not minimap_OnMouseDown then
 			function minimap_OnMouseDown()
 				if arg1 == "LeftButton" and not IsModifierKeyDown() then
@@ -298,7 +294,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnMouseDown", minimap_OnMouseDown)
+		AddButtonScript(frame, "OnMouseDown", minimap_OnMouseDown)
 		if not minimap_OnMouseUp then
 			function minimap_OnMouseUp()
 				if type(this.self.OnMouseUp) == "function" then
@@ -306,7 +302,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		frame:SetScript("OnMouseUp", minimap_OnMouseUp)
+		AddButtonScript(frame, "OnMouseUp", minimap_OnMouseUp)
 		
 		local Tablet = Panel.GetLibrary("Tablet-2.0")
 		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
@@ -321,14 +317,14 @@ function Panel.GetOrCreateButton(plugin)
 
 	end
 	
-	return button, buttonID
+	return button, buttonId
 
 end
 
 function Panel.IsMinimapFrameConverted(plugin)
 	local currMinimapFrame = plugin.minimapFrame
-	local buttonID = Panel.GetUniqueID(plugin)
-	local button = nSideBar.GetButton(pluginID)
+	local buttonId = Panel.GetUniqueId(plugin)
+	local button = nSideBar.GetButton(pluginId)
 	return (currMinimapFrame and button == currMinimapFrame)
 end
 
@@ -531,8 +527,8 @@ function Panel.Unconvert(plugin)
 	Panel.UnhookMinimap(plugin)
 
 	local currMinimapFrame = plugin.minimapFrame
-	local buttonID = Panel.GetUniqueID(plugin)
-	local button = nSideBar.GetButton(buttonID)
+	local buttonId = Panel.GetUniqueId(plugin)
+	local button = nSideBar.GetButton(buttonId)
 
 	if not currMinimapFrame or button ~= currMinimapFrame then
 		return
@@ -561,11 +557,21 @@ _G["Panel"] = Panel
 	Plugin Initialization
 ---------------------------------------------------------------------------]]
 
-Panel.exceptionType = "black"
-Panel.exceptionList = {}
 
-function Panel.SetupPlugins()
-	for i, plugin in ipairs(FuBar.plugins) do
-		
+local config = _G["FuBar2SliderBarConfig"]
+
+function Panel.ShouldConvert(plugin)
+	if config then
+		local pluginId = Panel.GetUniqueId(plugin)
+		for i, pluginName in ipairs(config.doNotConvert) do
+			if pluginName == pluginId then
+				return false
+			end
+		end
 	end
+	return true
 end
+
+
+
+

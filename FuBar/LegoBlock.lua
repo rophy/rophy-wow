@@ -248,6 +248,11 @@ function Core.SetupPlugins()
 			else
 				FakePanel:AddPlugin(plugin)
 			end
+			if FuBar.modules.nSideBar then
+				if FuBar.modules.nSideBar.ShouldConvert(plugin) then
+					FuBar.modules.nSideBar.Convert(plugin)
+				end
+			end
 		end
 		Core.unreadyPlugins[k] = nil
 	end
