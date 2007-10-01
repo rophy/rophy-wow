@@ -8,6 +8,9 @@
 ## OptionalDeps: FuBarPlugin-2.0, TabletLib
 ## Dependencies: LegoBlock, SlideBar
 
+config.lua
+
+
 Dongle.lua
 LegoBlock.lua
 LoadManager.lua
