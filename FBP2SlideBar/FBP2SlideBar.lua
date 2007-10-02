@@ -11,15 +11,17 @@ Intended functionalties:
 ]]
 
 local nSideBar = LibStub("SlideBar")
+local FuBar = nil
 
+local Core = {}
 
-local Panel = {}
 
 --[[-------------------------------------------------------------------------
 	Utility Functions
 ---------------------------------------------------------------------------]]
 
-local optLibs = setmetatable({}, {
+-- Get optional AceLibrary-based libraries.
+Core.optLibs = setmetatable({}, {
 	__index = function(t,k)
 		local lib = AceLibrary and AceLibrary:HasInstance(k) and AceLibrary(k)
 		t[k] = lib
@@ -27,28 +29,40 @@ local optLibs = setmetatable({}, {
 	end
 })
 
-function Panel.GetLibrary(major)
-	return optLibs[major]
-end
 
-function Panel.GetUniqueId(plugin)
+function Core.GetUniqueId(plugin)
 	return plugin.folderName or plugin:GetTitle()
 end
 
-do -- Panel.HasFuBar
-	local good = nil
-	function Panel.HasFuBar()
-		if not good then
-			good = _G["FuBar"] and true
+
+--[[-------------------------------------------------------------------------
+Interaction with FuBar
+---------------------------------------------------------------------------]]
+
+-- FuBar should always load before FBP2Slidebar since OptionDependency is set.
+
+if _G["FuBar"] then
+	Core.newFuBarPlugins = {}
+	FuBar = _G["FuBar"]
+	
+	-- Hook ShowPlugin right away,
+	Core.origFuBarShowPlugin = FuBar.ShowPlugin
+	function Core.ShowPlugin(self, plugin, panelId, ...)
+		if panelId == -1 then
+			Panel:AddPlugin(plugin)
+		else
+			Core.origFuBarShowPlugin(FuBar, plugin, panelId, ...)
 		end
-		return good
 	end
+	FuBar.ShowPlugin = Core.ShowPlugin
 end
 
 --[[-------------------------------------------------------------------------
 	FuBarPanel Emulation
 ---------------------------------------------------------------------------]]
 
+local Panel = {}
+Core.Panel = Panel
 
 -- A proper FuBarPanel should support the following methods:
 -- AddPlugin RemovePlugin GetNumPlugins GetPlugin HasPlugin GetPluginSide UpdateCenteredPosition SetPluginSide GetAttachPoint
@@ -73,7 +87,7 @@ function Panel:AddPlugin(plugin)
 	end
 	plugin.frame:Hide()
 
-	local button, buttonId = Panel.GetOrCreateButton(plugin)
+	local button, buttonId = Core.GetOrCreateButton(plugin)
 	nSideBar.ShowButton(buttonId)
 	
 	Panel.origMinimapFrames[plugin] = origMinimapFrame
@@ -117,7 +131,7 @@ function Panel:RemovePlugin(index, side)
 	
 	table.remove(self.plugins,index)
 	
-	local button, buttonId = Panel.GetOrCreateButton(plugin)
+	local button, buttonId = Core.GetOrCreateButton(plugin)
 	nSideBar.HideButton(buttonId)
 	
 	plugin.minimapFrame = Panel.origMinimapFrames[plugin]
@@ -158,7 +172,7 @@ end
 
 local frame_OnClick, frame_OnDoubleClick, frame_OnMouseDown, frame_OnMouseUp, frame_OnReceiveDrag, frame_OnEnter, frame_OnLeave
 
-local function AddButtonScript(button, script, handler)
+function Core.AddButtonScript(button, script, handler)
 	local buttonScript = button:GetScript(script)
 	if not buttonScript then
 		button:SetScript(script, handler)
@@ -171,9 +185,9 @@ local function AddButtonScript(button, script, handler)
 end
 
 
-function Panel.GetOrCreateButton(plugin)
+function Core.GetOrCreateButton(plugin)
 
-	local buttonId = Panel.GetUniqueId(plugin)
+	local buttonId = Core.GetUniqueId(plugin)
 	local button = nSideBar.GetButton(buttonId)
 	if not button then
 	
@@ -197,7 +211,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnEnter", frame_OnEnter)
+		Core.AddButtonScript(frame, "OnEnter", frame_OnEnter)
 		if not frame_OnLeave then
 			function frame_OnLeave()
 				if type(this.self.OnLeave) == "function" then
@@ -205,7 +219,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnLeave", frame_OnLeave)
+		Core.AddButtonScript(frame, "OnLeave", frame_OnLeave)
 		if not frame_OnClick then
 			function frame_OnClick()
 				if this.self:IsMinimapAttached() and this.dragged then return end
@@ -214,7 +228,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnClick", frame_OnClick)
+		Core.AddButtonScript(frame, "OnClick", frame_OnClick)
 		if not frame_OnDoubleClick then
 			function frame_OnDoubleClick()
 				if type(this.self.OnDoubleClick) == "function" then
@@ -222,7 +236,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnDoubleClick", frame_OnDoubleClick)
+		Core.AddButtonScript(frame, "OnDoubleClick", frame_OnDoubleClick)
 		if not frame_OnReceiveDrag then
 			function frame_OnReceiveDrag()
 				if (this.self:IsMinimapAttached() and not this.dragged) and type(this.self.OnReceiveDrag) == "function" then
@@ -230,7 +244,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnReceiveDrag", frame_OnReceiveDrag)
+		Core.AddButtonScript(frame, "OnReceiveDrag", frame_OnReceiveDrag)
 		if not minimap_OnMouseDown then
 			function minimap_OnMouseDown()
 				if arg1 == "LeftButton" and not IsModifierKeyDown() then
@@ -249,7 +263,7 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnMouseDown", minimap_OnMouseDown)
+		Core.AddButtonScript(frame, "OnMouseDown", minimap_OnMouseDown)
 		if not minimap_OnMouseUp then
 			function minimap_OnMouseUp()
 				if type(this.self.OnMouseUp) == "function" then
@@ -257,10 +271,10 @@ function Panel.GetOrCreateButton(plugin)
 				end
 			end
 		end
-		AddButtonScript(frame, "OnMouseUp", minimap_OnMouseUp)
+		Core.AddButtonScript(frame, "OnMouseUp", minimap_OnMouseUp)
 		
-		local Tablet = Panel.GetLibrary("Tablet-2.0")
-		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
+		local Tablet = Core.optLibs["Tablet-2.0"]
+		local FuBarPlugin = Core.optLibs["FuBarPlugin-2.0"]
 
 		if FuBarPlugin and Tablet and not plugin.blizzardTooltip and not plugin.overrideTooltip then
 			-- Note that we have to do this after :SetScript("OnEnter"), etc,
@@ -276,85 +290,32 @@ function Panel.GetOrCreateButton(plugin)
 
 end
 
-function Panel.IsMinimapFrameConverted(plugin)
+function Core.IsMinimapFrameConverted(plugin)
 	local currMinimapFrame = plugin.minimapFrame
-	local buttonId = Panel.GetUniqueId(plugin)
+	local buttonId = Core.GetUniqueId(plugin)
 	local button = nSideBar.GetButton(pluginId)
 	return (currMinimapFrame and button == currMinimapFrame)
 end
-
-do -- Panel.GetAnchorFrame(frame)
-
-	--[[ Positioning, code taken from WindowLib by Mikk]]--
-	local function GetPoints(frame)
-		local abs = math.abs
-		local s = frame:GetScale()
-		local x, y = frame:GetCenter()
-		local right, left = frame:GetRight()*s, frame:GetLeft()*s
-		local top, bottom = frame:GetTop()*s, frame:GetBottom()*s
-		local pwidth, pheight = UIParent:GetWidth(), UIParent:GetHeight()
-		x, y = x*s, y*s
-		local xOff, yOff, anchor
-		if left < (pwidth - right) and left < abs(x - pwidth/2) then
-			xOff = left
-			anchor = "LEFT"
-		elseif (pwidth - right) < abs(x - pwidth/2) then
-			xOff = right - pwidth
-			anchor = "RIGHT"
-		else
-			xOff = x - pwidth/2
-			anchor = ""
-		end
-		if bottom < (pheight - top) and bottom < abs(y - pwidth/2) then
-			yOff = bottom
-			anchor = "BOTTOM"..anchor
-		elseif (pheight - top) < abs(y - pheight/2) then
-			yOff = top - pheight
-			anchor = "TOP"..anchor
-		else
-			yOff = y - pheight/2
-		end
-
-		if anchor == "" then
-			anchor = "CENTER"
-		end
-		return xOff, yOff, anchor
-	end
-
-	function Panel.GetAnchorFrame(frame)
-		if not Panel.anchorFrame then
-			local anchorFrame = CreateFrame("Frame")
-			anchorFrame:SetWidth(3)
-			anchorFrame:SetHeight(3)
-			Panel.anchorFrame = anchorFrame
-		end
-		
-		local xOff, yOff, anchor = GetPoints(frame)
-		Panel.anchorFrame:ClearAllPoints()
-		Panel.anchorFrame:SetPoint(anchor or "CENTER", UIParent, anchor or "CENTER", xOff, yOff)
-		return Panel.anchorFrame
-	end
-	
-end
-
-
 
 --[[-------------------------------------------------------------------------
 	"Attach to minimap" Hooking
 ---------------------------------------------------------------------------]]
 
+
 -- Automatic hooking of FuBarPlugin-2.0	
-Panel.orig = setmetatable({}, {
+Core.orig = setmetatable({}, {
 	__index = function(t,k)
-		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
-		t[k] = FuBarPlugin[k]
-		FuBarPlugin[k] = Panel[k]
+		local FuBarPlugin = Core.optLibs["FuBarPlugin-2.0"]
+		if FuBarPlugin then
+			t[k] = FuBarPlugin[k]
+			FuBarPlugin[k] = Panel[k]
+		end
 		return t[k]
 	end
 } )
 
-function Panel.ToggleMinimapAttached(self)
-	if Panel.HasFuBar() and not self.cannotAttachToMinimap then
+function Core.ToggleMinimapAttached(self)
+	if FuBar and not self.cannotAttachToMinimap then
 		local value = self:IsMinimapAttached()
 		if value then
 			if self.panel then
@@ -372,53 +333,53 @@ function Panel.ToggleMinimapAttached(self)
 			Panel:AddPlugin(self)
 		end
 	end
-	local Dewdrop = Panel.GetLibrary("Dewdrop-2.0")
+	local Dewdrop = Core.optLibs["Dewdrop-2.0"]
 	if Dewdrop then
 		Dewdrop:Close()
 	end
 end
 
-function Panel.Show(self, panelId)
+function Core.Show(self, panelId)
 	if panelId == 0 then
 		panelId = -1
 	end
-	Panel.orig.Show(self,panelId)
+	Core.orig.Show(self,panelId)
 end
 
-function Panel.IsMinimapAttached(self)
-	if not Panel.HasFuBar() then return true end
+function Core.IsMinimapAttached(self)
+	if not FuBar then return true end
 	return self.panel == Panel
 end
 
-function Panel.HookMinimap(plugin)
-	Panel.SmartHook(plugin, "ToggleMinimapAttached")
-	Panel.SmartHook(plugin, "IsMinimapAttached")
-	Panel.SmartHook(plugin, "Show")
+function Core.HookMinimap(plugin)
+	Core.SmartHook(plugin, "ToggleMinimapAttached")
+	Core.SmartHook(plugin, "IsMinimapAttached")
+	Core.SmartHook(plugin, "Show")
 end
 
-function Panel.UnhookMinimap(plugin)
-	Panel.SmartUnhook(plugin, "ToggleMinimapAttached")
-	Panel.SmartUnhook(plugin, "IsMinimapAttached")
-	Panel.SmartUnhook(plugin, "Show")
+function Core.UnhookMinimap(plugin)
+	Core.SmartUnhook(plugin, "ToggleMinimapAttached")
+	Core.SmartUnhook(plugin, "IsMinimapAttached")
+	Core.SmartUnhook(plugin, "Show")
 end
 
-function Panel.IsMinimapHooked(plugin)
-	return ( plugin.ToggleMinimapAttached == Panel.ToggleMinimapAttached )
+function Core.IsMinimapHooked(plugin)
+	return ( plugin.ToggleMinimapAttached == Core.ToggleMinimapAttached )
 end
 
 -- case 1 : plugin[method] == orig[method] -> not yet hooked.
 -- case 2 : plugin[method] == Panel[method] -> already hooked.
 -- case 3 : plugin[method] ~= both -> plugin has a custom defined method. ( do not touch it)
 
-function Panel.SmartHook(plugin, method)
-	if plugin[method] == Panel.orig[method] then
-		plugin[method] = Panel[method]
+function Core.SmartHook(plugin, method)
+	if plugin[method] == Core.orig[method] then
+		plugin[method] = Core[method]
 	end
 end
 
-function Panel.SmartUnhook(plugin, method)
-	if plugin[method] == Panel[method] then
-		plugin[method] = Panel.orig[method]
+function Core.SmartUnhook(plugin, method)
+	if plugin[method] == Core[method] then
+		plugin[method] = Core.orig[method]
 	end
 end
 
@@ -430,21 +391,20 @@ end
 ---------------------------------------------------------------------------]]
 
 
-function Panel.Convert(plugin)
+function Core.Convert(plugin)
 	
-	local AceOO = Panel.GetLibrary("AceOO-2.0")
-	
-	if not AceOO.inherits(plugin, "FuBarPlugin-2.0") then
+	local AceOO = Core.optLibs["AceOO-2.0"]
+	if not AceOO or not AceOO.inherits(plugin, "FuBarPlugin-2.0") then
 		return false
 	end
 	
-	if Panel.IsMinimapHooked(plugin) then
+	if Core.IsMinimapHooked(plugin) then
 		return false
 	end
 	
 	local isMinimapAttached = plugin:IsMinimapAttached()
 	
-	Panel.HookMinimap(plugin)
+	Core.HookMinimap(plugin)
 	
 	-- assumption: if origIsMinimapAttached == true then hookedIsMinimapAttached == false
 	if isMinimapAttached then
@@ -453,16 +413,16 @@ function Panel.Convert(plugin)
 	
 end
 
-function Panel.Unconvert(plugin)
+function Core.Unconvert(plugin)
 
-	if not Panel.IsMinimapHooked(plugin) then
+	if not Core.IsMinimapHooked(plugin) then
 		return false
 	end
 	
-	Panel.UnhookMinimap(plugin)
+	Core.UnhookMinimap(plugin)
 
 	local currMinimapFrame = plugin.minimapFrame
-	local buttonId = Panel.GetUniqueId(plugin)
+	local buttonId = Core.GetUniqueId(plugin)
 	local button = nSideBar.GetButton(buttonId)
 
 	if not currMinimapFrame or button ~= currMinimapFrame then
@@ -474,38 +434,12 @@ function Panel.Unconvert(plugin)
 	-- RemovePlugin() to restore the minimapFrame first, so plugin:Show(0) works.
 	Panel:RemovePlugin(plugin)
 	
-	if isShown then
+	if isShown or not FuBar then
 		plugin:Show(0)
 	else
 		FuBar:GetPanel(1):AddPlugin(plugin)
 	end
 	
-end
-
-function Panel.IsConverted(plugin)
-	return Panel.IsMinimapFrameConverted(plugin) and Panel.IsMinimappHooked(plugin)
-end
-
-
-
---[[-------------------------------------------------------------------------
-Interaction with FuBar
----------------------------------------------------------------------------]]
-
--- FuBar should always load before FBP2Slidebar since OptionDependency is set.
--- Hook ShowPlugin right away,
-if not Panel.origFuBarShowPlugin and Panel.HasFuBar() then
-	Panel.newFuBarRegistry = {}
-	local FuBar = _G["FuBar"]
-	Panel.origFuBarShowPlugin = FuBar.ShowPlugin
-	function Panel.ShowPlugin(self, plugin, panelId, ...)
-		if panelId == -1 then
-			Panel:AddPlugin(plugin)
-		else
-			Panel.origFuBarShowPlugin(FuBar, plugin, panelId, ...)
-		end
-	end
-	FuBar.ShowPlugin = Panel.ShowPlugin
 end
 
 
@@ -514,18 +448,17 @@ end
 	FuBarPlugin Instance Detection
 ---------------------------------------------------------------------------]]
 
--- Since FuBarPlugin-2.0 might be loaded after FBP2SlideBar when embedded,
---  a delayed detection is required.
+-- Since FuBarPlugin-2.0 might be loaded after FBP2SlideBar when embedded, a delayed detection is required.
 
-function Panel.DetectNewPlugins()
-	local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
-	if FuBarPlugin and not Panel.newPlugins then
-		Panel.newPlugins = {}
+function Core.DetectNewPlugins()
+	local FuBarPlugin = Core.optLibs["FuBarPlugin-2.0"]
+	if FuBarPlugin and not Core.newPlugins then
+		Core.newPlugins = {}
 		
 		-- Make use of FuBarPlugin.OnInstanceInit to detect new plugins.
 
-		function Panel.OnInstanceInit(FuBarPlugin, target, ...)
-			Panel.origOnInstanceInit(FuBarPlugin, target, ...)
+		function Core.OnInstanceInit(FuBarPlugin, target, ...)
+			Core.origOnInstanceInit(FuBarPlugin, target, ...)
 			
 			-- FuBarPlugin.OnInstanceInit calls debugstack(),
 			--  which the contents change after hooking, so I have to explicitly fix it here.
@@ -539,54 +472,52 @@ function Panel.DetectNewPlugins()
 			target.folderName = folderName
 			FuBarPlugin.folderNames[target] = folderName
 			
-			table.insert(Panel.newPlugins, target)
-			Panel.ScheduleSetup()
+			table.insert(Core.newPlugins, target)
+			Core.ScheduleSetup()
 		end
 		
-		Panel.origOnInstanceInit = FuBarPlugin.OnInstanceInit
-		FuBarPlugin.OnInstanceInit = Panel.OnInstanceInit
+		Core.origOnInstanceInit = FuBarPlugin.OnInstanceInit
+		FuBarPlugin.OnInstanceInit = Core.OnInstanceInit
 
-		Panel.origOnManualEmbed = Panel.OnManualEmbed
-		FuBarPlugin.OnManualEmbed = Panel.OnInstanceInit
+		Core.origOnManualEmbed = FuBarPlugin.OnManualEmbed
+		FuBarPlugin.OnManualEmbed = Core.OnInstanceInit
 
 	end
 end
 
 
 --[[-------------------------------------------------------------------------
-	Plugin Initialization
+	Initialization
 ---------------------------------------------------------------------------]]
 
+-- Begin actual initialization at 2 seconds after PLAYER_ENTERING_WORLD.
 
-local function TimerFunction(frame,elapsed)
-	if not frame.timer then
-		frame.timer = 0
-	end
+function Core.OnUpdate(frame,elapsed)
 	frame.timer = frame.timer + elapsed
 	if frame.timer > 2 then
-		Panel.ConvertAll()
+		Core.ConvertAll()
 		frame:Hide()
 	end
 end
-
-local frame = CreateFrame("Frame")
-frame:SetScript("OnUpdate", TimerFunction)
-frame:SetScript("OnEvent", function(frame)
+function Core.OnEvent(frame)
 	frame:UnregisterAllEvents()
-	Panel.ScheduleSetup()
-end )
-frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-
-function Panel.ScheduleSetup()
+	Core.ScheduleSetup()
+end
+function Core.ScheduleSetup()
+	Core.frame.timer = 0
 	frame:Show()
 end
 
+Core.frame = CreateFrame("Frame")
+Core.frame:SetScript("OnUpdate", Core.OnUpdate)
+Core.frame:SetScript("OnEvent", Core.OnEvent)
+Core.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-local config = _G["FBP2SlideBarConfig"]
-function Panel.ShouldConvert(plugin)
-	if config then
-		local pluginId = Panel.GetUniqueId(plugin)
-		for i, pluginName in ipairs(config.doNotConvert) do
+Core.config = _G["FBP2SlideBarConfig"]
+function Core.ShouldConvert(plugin)
+	if Core.config then
+		local pluginId = Core.GetUniqueId(plugin)
+		for i, pluginName in ipairs(Core.config.doNotConvert) do
 			if pluginName == pluginId then
 				return false
 			end
@@ -595,22 +526,22 @@ function Panel.ShouldConvert(plugin)
 	return true
 end
 
-function Panel.ConvertAll()
-	if Panel.newPlugins then
-		for i, plugin in ipairs(Panel.newPlugins) do
-			if Panel.ShouldConvert(plugin) then
-				Panel.Convert(plugin)
+function Core.ConvertAll()
+	if Core.newPlugins then
+		for i, plugin in ipairs(Core.newPlugins) do
+			if Core.ShouldConvert(plugin) then
+				Core.Convert(plugin)
 			end
 		end
 	else
-		local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
+		local FuBarPlugin = Core.optLibs["FuBarPlugin-2.0"]
 		if FuBarPlugin and FuBarPlugin.registry then
 			for plugin in pairs(FuBarPlugin.registry) do
-				if Panel.ShouldConvert(plugin) then
-					Panel.Convert(plugin)
+				if Core.ShouldConvert(plugin) then
+					Core.Convert(plugin)
 				end
 			end
-			Panel.DetectNewPlugins()
+			Core.DetectNewPlugins()
 		end
 	end
 end
