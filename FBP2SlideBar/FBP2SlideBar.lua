@@ -523,14 +523,32 @@ function Panel.DetectNewPlugins()
 		Panel.newPlugins = {}
 		
 		-- Make use of FuBarPlugin.OnInstanceInit to detect new plugins.
+
 		function Panel.OnInstanceInit(FuBarPlugin, target, ...)
 			Panel.origOnInstanceInit(FuBarPlugin, target, ...)
+			
+			-- FuBarPlugin.OnInstanceInit calls debugstack(),
+			--  which the contents change after hooking, so I have to explicitly fix it here.
+			local folderName
+			for i = 6, 3, -1 do
+				folderName = debugstack(i, 1, 0):match("\\AddOns\\(.*)\\")
+				if folderName then
+					break
+				end
+			end
+			target.folderName = folderName
+			FuBarPlugin.folderNames[target] = folderName
+			
 			table.insert(Panel.newPlugins, target)
 			Panel.ScheduleSetup()
 		end
 		
 		Panel.origOnInstanceInit = FuBarPlugin.OnInstanceInit
 		FuBarPlugin.OnInstanceInit = Panel.OnInstanceInit
+
+		Panel.origOnManualEmbed = Panel.OnManualEmbed
+		FuBarPlugin.OnManualEmbed = Panel.OnInstanceInit
+
 	end
 end
 
