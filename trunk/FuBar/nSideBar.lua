@@ -13,13 +13,7 @@ Intended functionalties:
 local nSideBar = LibStub("SlideBar")
 
 
--- The current implementation depends on FuBar.plugins to obtain a list of plugins.
--- I'll try to find another better approach which does not depend on FuBar.plugins.
-local FuBar = _G["FuBar"]
-
 local Panel = {}
-
-FuBar.modules["nSideBar"] = Panel
 
 --[[-------------------------------------------------------------------------
 	Utility Functions
@@ -41,7 +35,15 @@ function Panel.GetUniqueId(plugin)
 	return plugin.folderName or plugin:GetTitle()
 end
 
-
+do -- Panel.HasFuBar
+	local good = nil
+	function Panel.HasFuBar()
+		if not good then
+			good = _G["FuBar"] and true
+		end
+		return good
+	end
+end
 
 --[[-------------------------------------------------------------------------
 	FuBarPanel Emulation
@@ -184,53 +186,6 @@ function Panel.GetOrCreateButton(plugin)
 		
 		
 		local pluginFrame = plugin.frame
-		
-		
-		--[[ Hooking original script handlers didn't work out very well.
-		for i, script in ipairs(scriptsToMap) do
-			local pluginHandler = pluginFrame:GetScript(script)
-			if pluginHandler then
-				local buttonHandler = button:GetScript(script)
-				if buttonHandler then
-					button:SetScript(script, function(...)
-						buttonHandler(...)
-						pluginHandler(...)
-					end)
-				else
-					button:SetScript(script, pluginHandler)
-				end
-			end
-		end
-			
-		-- Special handler for "OnMouseDown" to fix dewdrop menu anchoring.
-		local pluginHandler = pluginFrame:GetScript("OnMouseDown")
-		if pluginHandler then
-			local function frame_OnMouseDown(frame, arg1)
-				if arg1 == "RightButton" and not IsModifierKeyDown() then
-					local anchorFrame = Panel.GetAnchorFrame(button)
-					plugin:OpenMenu()
-					local Dewdrop = Panel.GetLibrary("Dewdrop-2.0")
-					-- Dry code: need test.
-				=	-- If this works, then the GetAnchorFrame() code can be removed.
-					if Dewdrop and Dewdrop:IsOpen(anchorFrame) then
-						nSideBar.WaitFor(_G["Dewdrop20Level1"])
-					end
-				else
-					pluginHandler(frame,arg1)
-				end
-			end
-			local buttonHandler = button:GetScript("OnMouseDown")
-			if buttonHandler then
-				button:SetScript("OnMouseDown", function(...)
-					buttonHandler(...)
-					frame_OnMouseDown(...)
-				end)
-			else
-				button:SetScript("OnMouseDown", frame_OnMouseDown)
-			end
-		end
-		
-		]]
 		
 		-- The following implementation is copied from FuBarPlugin-2.0's MinimapPanel.
 		
@@ -399,7 +354,7 @@ Panel.orig = setmetatable({}, {
 } )
 
 function Panel.ToggleMinimapAttached(self)
-	if not self.cannotAttachToMinimap then
+	if Panel.HasFuBar() and not self.cannotAttachToMinimap then
 		local value = self:IsMinimapAttached()
 		if value then
 			if self.panel then
@@ -416,6 +371,10 @@ function Panel.ToggleMinimapAttached(self)
 			end
 			Panel:AddPlugin(self)
 		end
+	end
+	local Dewdrop = Panel.GetLibrary("Dewdrop-2.0")
+	if Dewdrop then
+		Dewdrop:Close()
 	end
 end
 
@@ -441,7 +400,7 @@ function Panel.Show(self, panelId)
 end
 
 function Panel.IsMinimapAttached(self)
-	if not FuBar then return true end
+	if not Panel.HasFuBar() then return true end
 	return self.panel == Panel
 end
 
@@ -558,8 +517,23 @@ _G["Panel"] = Panel
 ---------------------------------------------------------------------------]]
 
 
-local config = _G["FuBar2SliderBarConfig"]
+local function TimerFunction(frame,elapsed)
+	if not frame.timer then
+		frame.timer = 0
+	end
+	frame.timer = frame.timer + elapsed
+	if frame.timer > 2 then
+		Panel.ConvertAll()
+		frame:Hide()
+	end
+end
 
+local frame = CreateFrame("Frame")
+frame:SetScript("OnUpdate", TimerFunction)
+frame:SetScript("OnEvent", function(...) frame:Show() end)
+frame:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+local config = _G["FuBar2SliderBarConfig"]
 function Panel.ShouldConvert(plugin)
 	if config then
 		local pluginId = Panel.GetUniqueId(plugin)
@@ -571,6 +545,18 @@ function Panel.ShouldConvert(plugin)
 	end
 	return true
 end
+
+function Panel.ConvertAll()
+	local FuBarPlugin = Panel.GetLibrary("FuBarPlugin-2.0")
+	if FuBarPlugin and FuBarPlugin.registry then
+		for plugin in pairs(FuBarPlugin.registry) do
+			if Panel.ShouldConvert(plugin) then
+				Panel.Convert(plugin)
+			end
+		end
+	end
+end
+
 
 
 
