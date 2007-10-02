@@ -8,7 +8,7 @@
 ## X-eMail: rophy123@gmail.com
 
 ## SavedVariables:
-## OptionalDeps: FuBarPlugin-2.0, SlideBar
+## OptionalDeps: FuBar, FuBarPlugin-2.0, SlideBar
 
 config.lua
 FBP2SlideBar.lua
