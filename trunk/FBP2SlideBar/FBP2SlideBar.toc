@@ -1,0 +1,15 @@
+## Interface: 20200
+## Title: FuBarPlugin-2.0 to SlideBar
+## Notes: Convert FuBarPlugin-2.0 minimap buttons to SlideBar buttons.
+## Author: Rophy
+
+## Version: 1
+## X-Category: Frame Modification
+## X-eMail: rophy123@gmail.com
+
+## SavedVariables:
+## OptionalDeps: FuBarPlugin-2.0, SlideBar
+
+config.lua
+FBP2SlideBar.lua
+
