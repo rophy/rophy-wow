@@ -437,16 +437,6 @@ function Panel.SmartUnhook(plugin, method)
 end
 
 
--- Remove this later.
-function HookAllMinimaps()
-	for i,plugin in pairs(FuBar.plugins) do
-		Panel.Convert(plugin)
-	end
-end
-
-HookAllMinimaps()
-
-
 
 
 --[[-------------------------------------------------------------------------
@@ -509,8 +499,6 @@ end
 function Panel.IsConverted(plugin)
 	return Panel.IsMinimapFrameConverted(plugin) and Panel.IsMinimappHooked(plugin)
 end
-
-_G["Panel"] = Panel
 
 --[[-------------------------------------------------------------------------
 	Plugin Initialization
