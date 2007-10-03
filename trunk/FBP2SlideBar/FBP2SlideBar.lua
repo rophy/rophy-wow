@@ -35,27 +35,6 @@ function Core.GetUniqueId(plugin)
 end
 
 
---[[-------------------------------------------------------------------------
-Interaction with FuBar
----------------------------------------------------------------------------]]
-
--- FuBar should always load before FBP2Slidebar since OptionDependency is set.
-
-if _G["FuBar"] then
-	Core.newFuBarPlugins = {}
-	FuBar = _G["FuBar"]
-	
-	-- Hook ShowPlugin right away,
-	Core.origFuBarShowPlugin = FuBar.ShowPlugin
-	function Core.ShowPlugin(self, plugin, panelId, ...)
-		if panelId == -1 then
-			Panel:AddPlugin(plugin)
-		else
-			Core.origFuBarShowPlugin(FuBar, plugin, panelId, ...)
-		end
-	end
-	FuBar.ShowPlugin = Core.ShowPlugin
-end
 
 --[[-------------------------------------------------------------------------
 	FuBarPanel Emulation
@@ -487,6 +466,29 @@ end
 
 
 --[[-------------------------------------------------------------------------
+Interaction with FuBar
+---------------------------------------------------------------------------]]
+
+-- FuBar should always load before FBP2Slidebar since OptionalDeps is set.
+
+if _G["FuBar"] then
+	Core.newFuBarPlugins = {}
+	FuBar = _G["FuBar"]
+	
+	-- Hook ShowPlugin right away,
+	Core.origFuBarShowPlugin = FuBar.ShowPlugin
+	function Core.ShowPlugin(self, plugin, panelId, ...)
+		if panelId == -1 then
+			Panel:AddPlugin(plugin)
+		else
+			Core.origFuBarShowPlugin(FuBar, plugin, panelId, ...)
+		end
+	end
+	FuBar.ShowPlugin = Core.ShowPlugin
+end
+
+
+--[[-------------------------------------------------------------------------
 	Initialization
 ---------------------------------------------------------------------------]]
 
@@ -505,7 +507,7 @@ function Core.OnEvent(frame)
 end
 function Core.ScheduleSetup()
 	Core.frame.timer = 0
-	frame:Show()
+	Core.frame:Show()
 end
 
 Core.frame = CreateFrame("Frame")
