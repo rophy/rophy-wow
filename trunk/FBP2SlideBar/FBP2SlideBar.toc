@@ -10,6 +10,8 @@
 ## SavedVariables:
 ## OptionalDeps: FuBar, FuBarPlugin-2.0, SlideBar
 
+embeds.xml
+
 config.lua
 FBP2SlideBar.lua
 
