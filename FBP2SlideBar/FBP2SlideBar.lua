@@ -185,6 +185,7 @@ function Core.GetOrCreateButton(plugin)
 		local frame = button
 		if not frame_OnEnter then
 			function frame_OnEnter()
+				nSideBar.WaitFor(Tablet20Frame)
 				if type(this.self.OnEnter) == "function" then
 					this.self:OnEnter()
 				end
