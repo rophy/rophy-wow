@@ -388,7 +388,14 @@ function Core.Convert(plugin)
 	
 	-- assumption: if origIsMinimapAttached == true then hookedIsMinimapAttached == false
 	if isMinimapAttached then
-		plugin:ToggleMinimapAttached()
+		if not FuBar then
+			if plugin.panel then
+				plugin.panel:RemovePlugin(plugin)
+			end
+			Panel:AddPlugin(plugin)
+		else
+			plugin:ToggleMinimapAttached()
+		end
 	end
 	
 end
