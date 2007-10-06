@@ -1,17 +1,15 @@
-﻿## Interface: 20100
-## Title: FuBarPluginConvert
-## Notes: Converts FuBarPlugin-2.0 plugins something cooler.
-
+﻿## Interface: 20200
+## Title: FuBarPlugin-2.0 to LegoBlock
+## Notes: Convert FuBarPlugin-2.0 plugins to LegoBlock frames.
 ## Author: Rophy
-## X-Category: Interface Enhancements
+
+## X-Category: Frame Modification
+
 ## SavedVariables: FuBar2DB, FBP2LBDB, FBP2nSBDB
 ## OptionalDeps: FuBarPlugin-2.0, TabletLib
-## Dependencies: LegoBlock, SlideBar
-
-config.lua
-
+## Dependencies: LegoBlock
 
 Dongle.lua
 LegoBlock.lua
 LoadManager.lua
-nSideBar.lua
+
