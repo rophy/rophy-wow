@@ -158,12 +158,13 @@ function Core.CreateLegoBlock(plugin)
 
 	local pluginID = Core.GetUniqueID(plugin)
 	
-	local lbObj = LegoBlock:New(pluginID)
+	local lbObj = LegoBlock:New(pluginID, nil, nil, {
+		bg=false,
+		width=4
+	} )
 	plugin.lbObj = lbObj
 	
 	lbObj.self = plugin
-	
-	local iconPath = plugin.iconFrame and plugin.iconFrame:GetTexture()
 	
 	-- Frame Width Management is a big problem here.
 	-- Frames include textFrame, iconFrame and mainFrame.
@@ -171,32 +172,7 @@ function Core.CreateLegoBlock(plugin)
 	-- Approach B: let LegoBlock manage the frame width, in this case I need to 
 	--  prevent FuBarPlugin-2.0 from changing width while still giving it access to other frame methods.
 	
-	
-	
-	-- Approach B : create fake frames to cheat FuBarPlugin-2.0, map those important functions out.
-	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable which is set by Blizzard C code.
 
-	local fakeIconFrame = lbObj:CreateTexture(nil, "ARTWORK")
-	fakeIconFrame.GetTexture = function(frame) return lbObj.Icon:GetTexture() end
-	fakeIconFrame.SetTexture = function(frame,path) lbObj:SetIcon(path) end
-	fakeIconFrame.SetTexCoord = function(frame,...) lbObj.Icon:SetTexCoord(...) end
-	fakeIconFrame.IsShown = function(frame) return lbObj.Icon:IsShown() end
-	fakeIconFrame.Show = function(frame) lbObj:ShowIcon(true) end
-	fakeIconFrame.Hide = function(frame) lbObj:ShowIcon(false) end
-	plugin.iconFrame = fakeIconFrame
-	if plugin.hasIcon then
-		plugin:SetIcon(iconPath)
-	end
-	
-	local fakeTextFrame = lbObj:CreateFontString(nil, "ARTWORK")
-	fakeTextFrame:SetFontObject(GameFontNormal)
-	fakeTextFrame.SetText = function(frame,text) lbObj:SetText(text) end
-	fakeTextFrame.GetText = function(frame) return lbObj.Text:GetText() end
-	fakeTextFrame.Show = function(frame) lbObj:ShowText(true) end
-	fakeTextFrame.Hide = function(frame) lbObj:ShowText(false) end
-	fakeTextFrame.IsShown = function(frame) return lbObj.Text:IsShown() end
-	plugin.textFrame = fakeTextFrame
-	
 	local pluginFrame = plugin.frame
 	
 	lbObj:SetScript("OnClick", pluginFrame:GetScript("OnClick"))
@@ -209,7 +185,6 @@ function Core.CreateLegoBlock(plugin)
 
 	plugin.frame = lbObj
 	plugin.CheckWidth = donothing
-	
 	-- Do not show the LegoBlock yet, as it is still not correctly initialized (saved DB is not injected yet).
 	lbObj:Hide()
 end
@@ -223,11 +198,44 @@ function Core.SetupLegoBlock(plugin)
 	
 	Core.CreateLegoBlock(plugin)
 	
+	local lbObj = plugin.lbObj
+	
+	-- Approach B : map important methods in FuBarPlugin-2.0 frames to LegobLock.
+	-- A table with metatable magic doesn't work because many fontString methods require the 'this' variable which is set by Blizzard C code.
+
+	local iconFrame = plugin.iconFrame
+	if iconFrame then
+		lbObj:SetIcon(iconFrame:GetTexture())
+		iconFrame:Hide()
+		iconFrame.GetTexture = function(frame) return lbObj.Icon:GetTexture() end
+		iconFrame.SetTexture = function(frame,path) lbObj:SetIcon(path) end
+		iconFrame.SetTexCoord = function(frame,...) lbObj.Icon:SetTexCoord(...) end
+		iconFrame.IsShown = function(frame) return lbObj.Icon:IsShown() end
+		iconFrame.Show = function(frame) lbObj:ShowIcon(true) end
+		iconFrame.Hide = function(frame) lbObj:ShowIcon(false) end
+	end
+	
+	local textFrame = plugin.textFrame
+	if textFrame then
+		textFrame:Hide()
+		textFrame.SetText = function(frame,text) lbObj:SetText(text) end
+		textFrame.GetText = function(frame) return lbObj.Text:GetText() end
+		textFrame.Show = function(frame) lbObj:ShowText(true) end
+		textFrame.Hide = function(frame) lbObj:ShowText(false) end
+		textFrame.IsShown = function(frame) return lbObj.Text:IsShown() end
+	end
+
 	local pluginID = Core.GetUniqueID(plugin)
 	
 	if not Core.db.profile.pluginDB[pluginID] then
-		Core.db.profile.pluginDB[pluginID] = {}
+		Core.db.profile.pluginDB[pluginID] = {
+			bg=false,
+			width=4
+		}
 	end
+	
+	Core.db.profile.pluginDB[pluginID].width = 6
+	Core.db.profile.pluginDB[pluginID].bg = false
 	
 	local lbOptions = Core.db.profile.pluginDB[pluginID]
 	lbOptions.showText = plugin:IsTextShown()
@@ -272,7 +280,7 @@ function Core.Enable()
 	FuBar.cmd = cmd
 	
 	cmd:InjectDBCommands(Core.db, "copy", "delete", "list", "reset", "set")
-	cmd:RegisterSlashHandler(L["Prevent tooltips from showing in combat"], "combat", "ToggleHidingTooltipsInCombat")
+	cmd:RegisterSlashHandler(L["combat - Prevent tooltips from showing in combat"], "combat", "ToggleHidingTooltipsInCombat")
 	
 	Core.SetupPluginsLater()
 	
