@@ -288,7 +288,7 @@ Core.orig = setmetatable({}, {
 		local FuBarPlugin = Core.optLibs["FuBarPlugin-2.0"]
 		if FuBarPlugin then
 			t[k] = FuBarPlugin[k]
-			FuBarPlugin[k] = Panel[k]
+			FuBarPlugin[k] = Core[k]
 		end
 		return t[k]
 	end
