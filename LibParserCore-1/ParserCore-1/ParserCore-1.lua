@@ -29,7 +29,7 @@ if not LibStub or LibStub.minor < LIBSTUB_MINOR then
 	setmetatable(LibStub, { __call = LibStub.GetLibrary })
 end
 
-local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "ParserCore-1", 1
+local LIB_PARSER_MAJOR, LIB_PARSER_MINOR = "ParserCore-1", "$Revision$"
 local ParserCore, ParserCoreOldMinor = LibStub:NewLibrary(LIB_PARSER_MAJOR, LIB_PARSER_MINOR)
 if ParserCore then
 
